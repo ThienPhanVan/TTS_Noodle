@@ -28,5 +28,4 @@ public class Role {
     @Column(name = "code", nullable = false, length = 45)
     private String code;
 
-
 }
