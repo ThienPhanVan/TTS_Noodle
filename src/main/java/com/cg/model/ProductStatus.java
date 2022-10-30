@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class ProductStatus {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false, length = 30)
     private String name;
