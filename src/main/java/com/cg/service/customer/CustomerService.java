@@ -1,11 +1,12 @@
-package com.cg.service;
+package com.cg.service.customer;
 
-import com.cg.model.Product;
+
+import com.cg.model.Customer;
 
 import java.util.Optional;
 
 public interface CustomerService {
 
-    Optional<Product> findById(Long id);
+    Optional<Customer> findById(Long id);
 
 }
