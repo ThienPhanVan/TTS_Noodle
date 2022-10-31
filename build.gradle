@@ -47,9 +47,7 @@ dependencies {
     implementation 'commons-fileupload:commons-fileupload:1.4'
 
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-<<<<<<< HEAD
 
-=======
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 
@@ -57,17 +55,10 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
 
-//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-<<<<<<< HEAD
->>>>>>> development
-=======
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
->>>>>>> 63181ebb411d127c825c5c14e381a11433d76352
-=======
->>>>>>> tai_dev
+
 }
 
 tasks.named('test') {
