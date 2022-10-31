@@ -1,5 +1,6 @@
 package com.cg.service;
 
+import com.cg.model.Product;
 import com.cg.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
+    @Autowired(required = false)
     private ProductRepository productRepository;
 
     @Override
