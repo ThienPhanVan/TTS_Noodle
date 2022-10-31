@@ -7,11 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "customer_status")
 public class CustomerStatus {
