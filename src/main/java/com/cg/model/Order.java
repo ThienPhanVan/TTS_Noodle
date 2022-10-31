@@ -8,23 +8,23 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "`order`")
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Column(name = "grand_total", nullable = false, precision = 10, scale = 2)
+    @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
 
     @Column(name = "user_id", nullable = false)
@@ -32,5 +32,7 @@ public class Order {
 
     @Column(name = "status_id", nullable = false)
     private Integer statusId;
+
+
 
 }

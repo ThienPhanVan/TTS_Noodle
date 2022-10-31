@@ -7,21 +7,17 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "customers")
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    private Long id;
 
     @Column(name = "full_name", nullable = false, length = 128)
     private String fullName;
@@ -35,16 +31,10 @@ public class Customer {
     @Column(name = "address", nullable = false, length = 95)
     private String address;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "status_id", nullable = false)
-    private CustomerStatus status;
-
     @Column(name = "username", nullable = false)
     private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
-
-
 
 }
