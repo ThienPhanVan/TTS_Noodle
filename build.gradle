@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -28,6 +28,26 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
 //    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+    implementation group: 'com.github.darrachequesne', name: 'spring-data-jpa-datatables', version: '5.1.0'
+
+    implementation 'org.apache.poi:poi:5.2.2'
+    implementation 'org.apache.poi:poi-ooxml:5.2.2'
+    implementation 'commons-fileupload:commons-fileupload:1.4'
+
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 
@@ -35,9 +55,8 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
 
-//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 
 
 }
