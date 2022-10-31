@@ -16,19 +16,16 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "roles")
+public class Role {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "title", nullable = false, length = 55)
-    private String title;
+    @Column(name = "name", nullable = false, length = 45)
+    private String name;
 
-    @Column(name = "description", nullable = false, length = 155)
-    private String description;
-
-    @Column(name = "status_id", nullable = false)
-    private Integer statusId;
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
 
 }
