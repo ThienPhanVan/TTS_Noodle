@@ -1,8 +1,7 @@
 package com.cg.controller.rest;
 
-import com.cg.model.Customer;
-import com.cg.repository.CustomerRepository;
-import com.cg.service.customer.CustomerService;
+import com.cg.model.User;
+import com.cg.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +16,12 @@ import java.util.List;
 public class HomeRestController {
 
     @Autowired(required = false)
-    private CustomerService customerService;
+    private UserService userService;
 
     @GetMapping()
     public ResponseEntity<?> showList(){
 
-        List<Customer> customerList = customerService.findAll();
+        List<User> customerList = userService.findAll();
 
         return new ResponseEntity<> (customerList, HttpStatus.OK);
     }
