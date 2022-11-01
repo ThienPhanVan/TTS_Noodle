@@ -2,11 +2,9 @@ package com.cg.service.customer;
 
 //import com.cg.model.Customer;
 import com.cg.model.User;
-import com.cg.repository.CustomerRepository;
-import com.cg.service.IGeneralService;
+import com.cg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,15 +12,13 @@ import java.util.Optional;
 
 @Component
 @Transactional
-public class CustomerServiceImpl implements CustomerService {
+public class UserServiceImpl implements UserService {
 
 
-<<<<<<< HEAD
-=======
-    @Autowired(required = false)
-    private CustomerRepository customerRepository;
 
->>>>>>> development
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<User> findAll() {
         return null;
