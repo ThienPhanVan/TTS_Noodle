@@ -16,16 +16,28 @@ import java.util.List;
 @RequestMapping("/api/home")
 public class HomeRestController {
 
+<<<<<<< HEAD
     @Autowired
     private UserService userService;
 
+=======
+    @Autowired(required = false)
+    private CustomerService customerService;
+>>>>>>> development
 
     @GetMapping()
     public ResponseEntity<?> showList() {
 
+<<<<<<< HEAD
         List<User> customerList = userService.findAll();
 
         return new ResponseEntity<>(customerList, HttpStatus.OK);
+=======
+        List<Customer> customerList = customerService.findAll();
+
+        return new ResponseEntity<> (customerList, HttpStatus.OK);
+    }
+>>>>>>> development
 
     }
 }

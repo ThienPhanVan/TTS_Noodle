@@ -12,8 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "order_status")
-public class OrderStatus {
+@Table(name = "customer_status")
+public class CustomerStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -24,5 +24,6 @@ public class OrderStatus {
 
     @Column(name = "code", nullable = false, length = 45)
     private String code;
+
 
 }
