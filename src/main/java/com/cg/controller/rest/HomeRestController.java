@@ -1,8 +1,13 @@
 package com.cg.controller.rest;
 
+<<<<<<< HEAD
 
 //import com.cg.model.User;
 import com.cg.service.customer.UserService;
+=======
+import com.cg.model.User;
+import com.cg.service.user.UserService;
+>>>>>>> development
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +21,18 @@ import java.util.List;
 @RequestMapping("/api/home")
 public class HomeRestController {
 
+<<<<<<< HEAD
+=======
+    @Autowired(required = false)
+    private UserService userService;
+
+    @GetMapping()
+    public ResponseEntity<?> showList(){
+
+        List<User> customerList = userService.findAll();
+
+        return new ResponseEntity<> (customerList, HttpStatus.OK);
+    }
+>>>>>>> development
 
 }
