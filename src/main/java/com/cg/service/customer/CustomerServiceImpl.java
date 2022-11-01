@@ -1,6 +1,6 @@
 package com.cg.service.customer;
 
-
+import com.cg.model.Customer;
 import com.cg.repository.CustomerRepository;
 import com.cg.service.IGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;

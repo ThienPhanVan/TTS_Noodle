@@ -1,22 +1,24 @@
 package com.cg.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-<<<<<<< HEAD
-=======
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
->>>>>>> development
 @Entity
 @Table(name = "`order`")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -32,6 +34,5 @@ public class Order {
     private Integer statusId;
 
 
- 
 
 }
