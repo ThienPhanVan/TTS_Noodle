@@ -16,15 +16,15 @@ import java.util.List;
 @RequestMapping("/api/home")
 public class HomeRestController {
 
-    @Autowired(required = false)
-    private CustomerService customerService;
+//    @Autowired(required = false)
+//    private CustomerService customerService;
 
-    @GetMapping()
-    public ResponseEntity<?> showList(){
-
-        List<Customer> customerList = customerService.findAll();
-
-        return new ResponseEntity<> (customerList, HttpStatus.OK);
-    }
+//    @GetMapping()
+//    public ResponseEntity<?> showList(){
+//
+//        List<Customer> customerList = customerService.findAll();
+//
+//        return new ResponseEntity<> (customerList, HttpStatus.OK);
+//    }
 
 }
