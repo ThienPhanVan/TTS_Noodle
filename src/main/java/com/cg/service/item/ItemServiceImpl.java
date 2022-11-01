@@ -3,17 +3,18 @@ package com.cg.service.item;
 import com.cg.model.Item;
 import com.cg.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Component
 @Transactional
 public class ItemServiceImpl implements ItemService {
 
-    @Autowired
+    @Autowired(required = false)
     private ItemRepository itemRepository;
 
     @Override
