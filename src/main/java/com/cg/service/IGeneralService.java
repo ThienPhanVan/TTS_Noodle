@@ -8,7 +8,6 @@ public interface IGeneralService<T> {
 
     Optional<T> findById(Long id);
 
-
     T getById(Long id);
 
     T save(T t);

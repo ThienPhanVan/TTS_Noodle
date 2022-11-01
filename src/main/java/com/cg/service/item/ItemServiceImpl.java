@@ -14,7 +14,7 @@ import java.util.Optional;
 @Transactional
 public class ItemServiceImpl implements ItemService {
 
-    @Autowired(required = false)
+    @Autowired
     private ItemRepository itemRepository;
 
     @Override
