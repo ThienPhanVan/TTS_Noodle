@@ -10,19 +10,18 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "`order`")
+@Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private User customer;
 
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
@@ -30,9 +29,9 @@ public class Order {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Column(name = "status_id", nullable = false)
-    private Integer statusId;
-
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_status_id", nullable = false)
+    private OrderStatus orderStatus;
 
 
 }

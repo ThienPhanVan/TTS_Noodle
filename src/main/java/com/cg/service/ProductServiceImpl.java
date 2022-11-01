@@ -12,11 +12,15 @@ import java.util.Optional;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired(required = false)
+    @Autowired
     private ProductRepository productRepository;
 
     @Override
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
+
+
+
+
 }
