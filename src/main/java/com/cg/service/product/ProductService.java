@@ -13,7 +13,7 @@ import java.util.Optional;
 @Transactional
 public class ProductService implements IProductService {
 
-    @Autowired(required = false)
+    @Autowired
     private ProductRepository productRepository;
 
     @Override

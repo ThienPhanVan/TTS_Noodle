@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/home")
 public class HomeRestController {
 
-    @Autowired(required = false)
+    @Autowired
     private UserService userService;
 
     @GetMapping()
