@@ -1,18 +1,21 @@
 package com.cg.model;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
+<<<<<<< HEAD
+=======
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+>>>>>>> development
 @Entity
 @Table(name = "order_items")
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id", nullable = false)
@@ -25,6 +28,7 @@ public class OrderItem {
     @Column(name = "quantity", nullable = false, length = 45)
     private String quantity;
 
+<<<<<<< HEAD
     @Column(name = "price", nullable = false, precision = 12)
     private BigDecimal price;
 
@@ -76,4 +80,6 @@ public class OrderItem {
         this.price = price;
     }
 
+=======
+>>>>>>> development
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Transactional
 public class OrderServiceImpl implements OrderService{
 
-    @Autowired
+    @Autowired(required = false)
     private OrderRepository orderRepository;
 
     @Override

@@ -1,9 +1,24 @@
 package com.cg.model;
 
+<<<<<<< HEAD
+=======
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+>>>>>>> development
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+<<<<<<< HEAD
+=======
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+>>>>>>> development
 @Entity
 @Table(name = "items")
 public class Item {
@@ -23,6 +38,14 @@ public class Item {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+
     @Column(name = "price", nullable = false, precision = 12)
     private BigDecimal price;
 
@@ -37,6 +60,7 @@ public class Item {
 
     @Column(name = "createdAtBy", nullable = false)
     private Instant createdAtBy;
+<<<<<<< HEAD
 
     @Column(name = "updatedAt", nullable = false)
     private Instant updatedAt;
@@ -175,5 +199,11 @@ public class Item {
     public void setUpdatedBy1(Long updatedBy1) {
         this.updatedBy1 = updatedBy1;
     }
+=======
+
+    @Column(name = "updatedAt", nullable = false)
+    private Instant updatedAt;
+
+>>>>>>> development
 
 }
