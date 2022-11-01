@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl extends ProductService {
 
-    @Autowired
+    @Autowired(required = false)
     private ProductRepository productRepository;
 
     @Override
