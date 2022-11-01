@@ -14,7 +14,10 @@ import java.util.List;
 @RequestMapping("/api/home")
 public class HomeRestController {
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> development
     @Autowired
     private UserService userService;
 
