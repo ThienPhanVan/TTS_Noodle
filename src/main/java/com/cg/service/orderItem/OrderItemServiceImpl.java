@@ -15,7 +15,7 @@ import java.util.Optional;
 @Transactional
 public class OrderItemServiceImpl implements OrderItemService {
 
-    @Autowired(required = false)
+    @Autowired
     private OrderItemRepository orderItemRepository;
 
     @Override

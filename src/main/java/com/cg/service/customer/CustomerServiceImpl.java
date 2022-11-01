@@ -16,7 +16,7 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
 
-    @Autowired
+    @Autowired(required = false)
     private CustomerRepository customerRepository;
 
     @Override
