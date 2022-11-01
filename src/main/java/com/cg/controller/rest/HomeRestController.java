@@ -19,6 +19,7 @@ public class HomeRestController {
     @Autowired(required = false)
     private CustomerService customerService;
 
+<<<<<<< HEAD
     @GetMapping()
     public ResponseEntity<?> showList(){
 
@@ -26,5 +27,22 @@ public class HomeRestController {
 
         return new ResponseEntity<> (customerList, HttpStatus.OK);
     }
+=======
+<<<<<<< HEAD
+    @GetMapping()
+    public ResponseEntity<?> showList(){
+
+//        List<Customer> customerList = customerService.findAll();
+
+=======
+//    @GetMapping()
+//    public ResponseEntity<?> showList(){
+//
+//        List<Customer> customerList = customerService.findAll();
+//
+>>>>>>> 653e392553cc2a4ee033660845917f5dd8a58387
+//        return new ResponseEntity<> (customerList, HttpStatus.OK);
+//    }
+>>>>>>> development
 
 }

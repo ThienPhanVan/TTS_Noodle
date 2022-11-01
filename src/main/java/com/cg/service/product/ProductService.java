@@ -11,13 +11,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
-<<<<<<< HEAD
-public class ProductServiceImpl implements IProductService{
-=======
-public class ProductServiceImpl extends ProductService {
->>>>>>> development
+public class ProductService implements IProductService {
 
-    @Autowired
+    @Autowired(required = false)
     private ProductRepository productRepository;
 
     @Override

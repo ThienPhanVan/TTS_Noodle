@@ -17,6 +17,12 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
 
+<<<<<<< HEAD
+=======
+    @Autowired(required = false)
+    private CustomerRepository customerRepository;
+
+>>>>>>> development
     @Override
     public List<User> findAll() {
         return null;
