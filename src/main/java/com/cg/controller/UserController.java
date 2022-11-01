@@ -5,26 +5,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
 @Controller
 @RequestMapping("/")
-public class HomeController {
+public class UserController {
 
-    @GetMapping("home")
-    public ModelAndView showHomePage(){
+    @GetMapping("customer")
+    public ModelAndView showListCustomer(){
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/home");
+        modelAndView.setViewName("/user/listCustomer");
         return modelAndView;
     }
 
-    @GetMapping("/thu")
-    public ModelAndView showthu(){
+    @GetMapping("supplier")
+    public ModelAndView showListSupplier(){
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/turnover/thu");
+        modelAndView.setViewName("/user/listSupplier");
         return modelAndView;
     }
 }
-
-

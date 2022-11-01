@@ -1,18 +1,18 @@
-package com.cg.service;
+package com.cg.service.product;
 
 import com.cg.repository.ProductRepository;
-import com.cg.service.product.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService{
 
-//  @Autowired
+    @Autowired
     private ProductRepository productRepository;
 
     @Override
@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
+        return Optional.empty();
     }
 
     @Override
@@ -44,6 +44,4 @@ public class ProductServiceImpl implements ProductService {
     public void softDelete(Product product) {
 
     }
-
-
 }

@@ -1,12 +1,8 @@
 package com.cg.service.customer;
 
+import com.cg.service.IGeneralService;
 
-import com.cg.model.User;
 
-import java.util.Optional;
-
-public interface CustomerService {
-
-    Optional<User> findById(Long id);
+public interface CustomerService extends IGeneralService<User> {
 
 }
