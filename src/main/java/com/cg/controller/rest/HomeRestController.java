@@ -22,9 +22,9 @@ public class HomeRestController {
     @GetMapping()
     public ResponseEntity<?> showList(){
 
-        List<Customer> customerList = customerService.findAll();
+//        List<Customer> customerList = customerService.findAll();
 
-        return new ResponseEntity<> (customerList, HttpStatus.OK);
-    }
+//        return new ResponseEntity<> (customerList, HttpStatus.OK);
+//    }
 
 }
