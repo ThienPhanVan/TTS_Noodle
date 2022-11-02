@@ -1,6 +1,6 @@
 package com.cg.repository;
 
-import com.cg.model1.Order;
+import com.cg.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.cg.model1;
+package com.cg.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,7 +44,7 @@ public class User {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "status_id", nullable = false)
-    private UsersStatus status;
+   private UsersStatus status;
 
     @Column(name = "url_images", nullable = false)
     private String urlImages;
