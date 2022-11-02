@@ -1,4 +1,4 @@
-package com.cg.model;
+package com.cg.model1;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
