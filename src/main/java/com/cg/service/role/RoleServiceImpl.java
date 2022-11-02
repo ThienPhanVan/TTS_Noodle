@@ -1,6 +1,6 @@
 package com.cg.service.role;
 
-import com.cg.model1.Role;
+import com.cg.model.Role;
 import com.cg.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
