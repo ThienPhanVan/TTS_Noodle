@@ -20,11 +20,11 @@ public class UsersStatus {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
-
     @Column(name = "name", nullable = false, length = 30)
     private String name;
+
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
 
 
 }
