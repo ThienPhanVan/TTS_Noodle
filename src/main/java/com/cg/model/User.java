@@ -1,4 +1,4 @@
-package com.cg.model;
+package com.cg.model1;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,6 +46,7 @@ public class User {
     @JoinColumn(name = "status_id", nullable = false)
     private UsersStatus status;
 
-
+    @Column(name = "url_images", nullable = false)
+    private String urlImages;
 
 }

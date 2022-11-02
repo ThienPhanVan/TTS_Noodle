@@ -1,9 +1,7 @@
 package com.cg.service.orderItem;
 
-import com.cg.model.OrderItem;
+import com.cg.model1.OrderItem;
 import com.cg.repository.OrderItemRepository;
-import com.cg.repository.OrderRepository;
-import com.cg.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

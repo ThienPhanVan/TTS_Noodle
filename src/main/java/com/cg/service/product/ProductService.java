@@ -1,7 +1,15 @@
 package com.cg.service.product;
 
+<<<<<<< HEAD
 import com.cg.model.Product;
 import com.cg.service.IGeneralService;
+=======
+import com.cg.model1.Product;
+import com.cg.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+>>>>>>> development
 
 <<<<<<< HEAD
 public interface ProductService extends IGeneralService<Product> {
