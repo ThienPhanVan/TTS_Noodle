@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,5 +25,6 @@ public class OrderStatus {
 
     @Column(name = "code", nullable = false, length = 45)
     private String code;
+
 
 }

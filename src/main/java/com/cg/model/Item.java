@@ -22,8 +22,12 @@ public class Item {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "users_id", nullable = false)
+    private User users;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
@@ -35,17 +39,16 @@ public class Item {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "createdBy", nullable = false)
+    @Column(name = "created_by", nullable = false)
     private Long createdBy;
 
-    @Column(name = "updatedBy", nullable = false)
+    @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
 
-    @Column(name = "createdAtBy", nullable = false)
-    private Instant createdAtBy;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
-
 
 }
