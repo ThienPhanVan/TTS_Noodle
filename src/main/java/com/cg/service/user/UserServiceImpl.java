@@ -1,6 +1,6 @@
 package com.cg.service.user;
 
-import com.cg.model.User;
+import com.cg.model1.User;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
