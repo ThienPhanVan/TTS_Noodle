@@ -1,6 +1,7 @@
 package com.cg.controller.rest;
 
 
+import com.cg.service.user.UserService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,12 @@ import java.util.List;
 public class HomeRestController {
 
     @Autowired
-//    private UserService userService;
+    private UserService userService;
 
     @GetMapping()
     public ResponseEntity<?> showList(){
 
-//        List<User> customerList = userService.findAll();
+//        List<User> userList = userService.findAll();
 
         return new ResponseEntity<> (HttpStatus.OK);
     }
