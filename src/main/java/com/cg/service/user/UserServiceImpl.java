@@ -1,6 +1,15 @@
 package com.cg.service.user;
 
-import com.cg.model.User;
+<<<<<<< HEAD
+<<<<<<< HEAD
+import com.cg.repository.model.User;
+import com.cg.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+=======
+import com.cg.model1.User;
+>>>>>>> development
+=======
+>>>>>>> development
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +20,9 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<User> findAll() {

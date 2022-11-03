@@ -1,4 +1,4 @@
-package com.cg.model;
+package com.cg.repository.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity 
 @Table(name = "items")
 public class Item {
     @Id
