@@ -1,6 +1,6 @@
 package com.cg.service.order;
 
-import com.cg.model1.Order;
+import com.cg.model.Order;
 import com.cg.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.cg.service.item;
 
-import com.cg.model1.Item;
+import com.cg.model.Item;
 import com.cg.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.cg.model1;
+package com.cg.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
 
 @Getter
 @Setter
@@ -24,5 +25,6 @@ public class OrderStatus {
 
     @Column(name = "code", nullable = false, length = 45)
     private String code;
+
 
 }
