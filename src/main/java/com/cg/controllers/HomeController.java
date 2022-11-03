@@ -29,14 +29,14 @@ public class HomeController {
     @GetMapping("purchase")
     public ModelAndView showPurchasePage(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/phieu_nhap_kho");
+        modelAndView.setViewName("/admin/order/phieu_nhap_kho");
 
         return modelAndView;
     }
     @GetMapping("purchase_order")
     public ModelAndView showPurchaseInfo(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/phieu_nhap");
+        modelAndView.setViewName("/admin/order/phieu_nhap");
 
         return modelAndView;
     }
