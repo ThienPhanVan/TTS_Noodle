@@ -1,6 +1,6 @@
 package com.cg.service.product;
 
-import com.cg.model.Product;
+import com.cg.repository.model.Product;
 import com.cg.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,15 +1,6 @@
 package com.cg.repository;
 
-<<<<<<< HEAD
-
-
-
-
-import com.cg.model.User;
-
-=======
-import com.cg.model.User;
->>>>>>> development
+import com.cg.repository.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

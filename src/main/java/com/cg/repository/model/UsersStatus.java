@@ -1,4 +1,4 @@
-package com.cg.model;
+package com.cg.repository.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "order_status")
-public class OrderStatus {
+@Table(name = "users_status")
+public class UsersStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

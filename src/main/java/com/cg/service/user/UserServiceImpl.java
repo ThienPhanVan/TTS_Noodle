@@ -2,14 +2,13 @@ package com.cg.service.user;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-import com.cg.model.User;
+import com.cg.repository.model.User;
 import com.cg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 =======
 import com.cg.model1.User;
 >>>>>>> development
 =======
-import com.cg.model.User;
 >>>>>>> development
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
