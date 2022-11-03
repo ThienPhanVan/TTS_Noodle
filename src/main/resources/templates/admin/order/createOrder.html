@@ -35,10 +35,10 @@
                     <li class="active">
                         <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
                                 class="ripple rippleEffect"></span><i
-                                class="las la-home iq-arrow-left"></i><span>Dashboard</span><i
+                                class="las la-home iq-arrow-left"></i><span>Quản lý</span><i
                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                         <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
-                            <li class="active"><a href="index.html"><i class="las la-laptop-code"></i>Account Dashboard</a>
+                            <li class="active"><a href="index.html"><i class="las la-laptop-code"></i>Tổng quan</a>
                             </li>
 
                         </ul>
@@ -50,8 +50,8 @@
                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                         <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle" style="">
 
-                            <li><a th:href="@{/customer}"><i class="las la-th-list"></i>Customer</a></li>
-                            <li><a href="data-table.html"><i class="ri-database-line"></i>Supplier</a></li>
+                            <li><a th:href="@{/customer}"><i class="las la-th-list"></i>Khách hàng</a></li>
+                            <li><a href="data-table.html"><i class="ri-database-line"></i>Nhà cung cấp</a></li>
                         </ul>
                     </li>
                     <li>
@@ -291,8 +291,8 @@
 
                             <hr style="background: rgb(236, 185, 185); height: 1px;">
                             <div style=" height: 355px; float: left ; background-color: #f1f1f1;"
-                                 class="collapse ml-4" id="customer">
-                                <div class="card" style="width: 9rem;">
+                                 class="collapse ml-4>
+                                <div class="card style="width: 9rem">
                                     <img style="height:150px"
                                          src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
                                          class="card-img-top" alt="...">
@@ -306,7 +306,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style=" height: 355px;  float: left" class="collapse ml-4" id="customer">
+                            <div style=" height: 355px;  float: left" class="collapse ml-4" id="customers">
                                 <div class="card" style="width: 9rem;">
                                     <img style="height:150px"
                                          src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
@@ -397,7 +397,7 @@
 
                     </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
