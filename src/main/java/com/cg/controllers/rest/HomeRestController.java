@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeRestController {
 
 
+<<<<<<< HEAD
     @Autowired
     private UserService userService;
 
@@ -25,5 +26,17 @@ public class HomeRestController {
 
         return new ResponseEntity<> (HttpStatus.OK);
     }
+=======
+//    @Autowired
+//    private UserService userService;
+
+//    @GetMapping()
+//    public ResponseEntity<?> showList(){
+//
+////        List<User> customerList = userService.findAll();
+//
+//        return new ResponseEntity<> (HttpStatus.OK);
+//    }
+>>>>>>> development
 
 }

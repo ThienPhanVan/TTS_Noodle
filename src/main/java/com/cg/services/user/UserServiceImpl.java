@@ -1,3 +1,4 @@
+
 package com.cg.services.user;
 
 import com.cg.repositories.model.User;
@@ -9,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
 @Component
 @Transactional
 public class UserServiceImpl implements UserService {
