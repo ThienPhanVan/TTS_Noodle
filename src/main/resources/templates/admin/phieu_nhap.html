@@ -70,7 +70,7 @@
                                 <ul id="ui-elements" class="iq-submenu collapse" data-parent="#tables">
                                     <li><a href="#"><i class="las la-palette ml-5"></i>Tồn Kho Gạo</a></li>
                                     <li><a href="#"><i class="las la-magnet ml-5"></i>Tồn Kho Bún</a></li>
-<!--                                    <li><a href="ui-tooltips.html"><i class="las la-magnet ml-5"></i>Sắp Hết Gạo</a></li>-->
+                                    <!--                                    <li><a href="ui-tooltips.html"><i class="las la-magnet ml-5"></i>Sắp Hết Gạo</a></li>-->
                                 </ul>
                             </li>
                             <li><a href="#"><i class="ri-database-line"></i>Đơn Hàng</a></li>
@@ -375,83 +375,112 @@
     <div id="content-page" class="content-page">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-primary">
-                                <i class="ri-focus-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Total Sales</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>$18 378</b></h4>
-                                <div id="iq-chart-box1"></div>
-                                <span class="text-primary"><b> +14% <i class="ri-arrow-up-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-danger">
-                                <i class="ri-pantone-line"></i>
-                            </div>
-                            <p class="text-secondary">Sales Today</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>$190</b></h4>
-                                <div id="iq-chart-box2"></div>
-                                <span class="text-danger"><b> -6% <i class="ri-arrow-down-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-success">
-                                <i class="ri-database-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Total Classon</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>45</b></h4>
-                                <div id="iq-chart-box3"></div>
-                                <span class="text-success"><b> +0.36% <i class="ri-arrow-up-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
-                                <i class="ri-pie-chart-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Total Profit</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>60</b></h4>
-                                <div id="iq-chart-box4"></div>
-                                <span class="text-warning"><b> +0.45% <i class="ri-arrow-up-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a class="form-control-sm" href="/purchase">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Kho hàng</span>
+                </a>
             </div>
-
-            <!-- bar chart -->
-            <div class="container min-vh-100 d-flex flex-column justify-content-center">
-                <div class="row my-3">
-                    <div class="col">
-                        <h4>Bootstrap 4 Chart.js - Bar Chart</h4>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <canvas id="chBar" height="100"></canvas>
+            <div class="row">
+                <h3>Phiếu nhập hàng</h3>
+            </div>
+            <div class="row" style="margin-top: 25px;">
+                <div class="list-group col-md-8">
+                    <div class="list-group">
+                        <!-- <div class="supplier-search">
+                           <h5>
+                              Thông tin nhà cung cấp
+                           </h5>
+                           <div class="filter_product_box">
+                              <nav class="navbar navbar-light bg-light">
+                                 <form class="form-inline">
+                                   <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" type="search" placeholder="Tìm kiếm nhà cung cấp" aria-label="Search">
+                                   <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>
+                                 </form>
+                               </nav>
+                           </div>
+                        </div> -->
+                        <div class="supplier-info">
+                            <h5>Thông tin sản phẩm</h5>
+                            <div class="filter_product_box">
+                                <nav class="navbar navbar-light bg-light">
+                                    <form class="form-inline">
+                                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
+                                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>
+                                    </form>
+                                </nav>
+                            </div>
+                            <div class="list-product-purchase">
+                                <table class="table">
+                                    <thead class="bg-primary">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Đơn vị</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Giá nhập</th>
+                                        <th scope="col">Thành tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Kg</td>
+                                        <td>100</td>
+                                        <td>1000</td>
+                                        <td>100000</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Kg</td>
+                                        <td>100</td>
+                                        <td>4000</td>
+                                        <td>400000</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>Kg</td>
+                                        <td>100</td>
+                                        <td>5000</td>
+                                        <td>500000</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+
                     </div>
+                </div>
+                <div class="list-group col-md-4">
+                    <div class="purchase-info">
+                        <h5>Thông tin phiếu nhập hàng</h5>
+                        <div class="filter_product_box">
+                            <nav class="navbar navbar-light bg-light">
+                                <form class="form-inline">
+                                    <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" type="search" placeholder="Nhập tên nhà cung cấp" aria-label="Search">
+                                    <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </form>
+                            </nav>
+                        </div>
+                        <input class="form-control mt-2" type="date" name="dateTime" value="Ngày tạo"/>
+                        <input class="form-control mt-3" type="text" name="description" value="Ghi chú"/>
+                    </div>
+                    <div class="bill_info" style="margin-top: 25px;">
+                        <h5>Thông tin thanh toán</h5>
+                        <p>
+                            <span>Tổng cộng</span>
+                            <span></span>
+                        </p>
+                    </div>
+
+                    <button class="btn btn-primary">
+                        Nhập hàng
+                    </button>
+
                 </div>
             </div>
         </div>

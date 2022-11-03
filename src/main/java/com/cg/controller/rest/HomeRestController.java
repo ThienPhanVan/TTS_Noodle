@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeRestController {
 
 
-    @Autowired
+//    @Autowired
 //    private UserService userService;
 
-    @GetMapping()
-    public ResponseEntity<?> showList(){
-
-//        List<User> customerList = userService.findAll();
-
-        return new ResponseEntity<> (HttpStatus.OK);
-    }
+//    @GetMapping()
+//    public ResponseEntity<?> showList(){
+//
+////        List<User> customerList = userService.findAll();
+//
+//        return new ResponseEntity<> (HttpStatus.OK);
+//    }
 
 }

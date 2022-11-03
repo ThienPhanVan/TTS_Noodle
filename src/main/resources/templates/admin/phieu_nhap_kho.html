@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <th:block th:replace="/layout/script/head :: head"/>
+    <th:block th:replace="/layout/script/head :: head" />
+
 </head>
 
 <body>
@@ -53,7 +54,7 @@
                             </li>
 
 
-                            <li><a href="/purchase"><i class="ri-database-line"></i>Nhà cung cấp</a></li>
+                            <li><a href="data-table.html"><i class="ri-database-line"></i>Nhà cung cấp</a></li>
                         </ul>
                     </li>
                     <li>
@@ -70,7 +71,7 @@
                                 <ul id="ui-elements" class="iq-submenu collapse" data-parent="#tables">
                                     <li><a href="#"><i class="las la-palette ml-5"></i>Tồn Kho Gạo</a></li>
                                     <li><a href="#"><i class="las la-magnet ml-5"></i>Tồn Kho Bún</a></li>
-<!--                                    <li><a href="ui-tooltips.html"><i class="las la-magnet ml-5"></i>Sắp Hết Gạo</a></li>-->
+                                    <!--                                    <li><a href="ui-tooltips.html"><i class="las la-magnet ml-5"></i>Sắp Hết Gạo</a></li>-->
                                 </ul>
                             </li>
                             <li><a href="#"><i class="ri-database-line"></i>Đơn Hàng</a></li>
@@ -373,90 +374,66 @@
 
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
+        <div class="title_menu">
+            <div class="">
+                <p class="font-weight-bold">Kho hàng / Nhập hàng</p>
+            </div>
+        </div>
+        <div class="button_create_order">
+            <a href="/purchase_order" class="btn btn-primary">
+                <i class="fas fa-plus"></i>Nhập hàng
+            </a>
+        </div>
+        <div class="list_form_show">
+            <div class="filter_product_box">
+                <nav class="navbar navbar-light bg-light">
+                    <form class="form-inline">
+                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-primary">
-                                <i class="ri-focus-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Total Sales</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>$18 378</b></h4>
-                                <div id="iq-chart-box1"></div>
-                                <span class="text-primary"><b> +14% <i class="ri-arrow-up-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-danger">
-                                <i class="ri-pantone-line"></i>
-                            </div>
-                            <p class="text-secondary">Sales Today</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>$190</b></h4>
-                                <div id="iq-chart-box2"></div>
-                                <span class="text-danger"><b> -6% <i class="ri-arrow-down-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-success">
-                                <i class="ri-database-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Total Classon</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>45</b></h4>
-                                <div id="iq-chart-box3"></div>
-                                <span class="text-success"><b> +0.36% <i class="ri-arrow-up-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
-                                <i class="ri-pie-chart-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Total Profit</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>60</b></h4>
-                                <div id="iq-chart-box4"></div>
-                                <span class="text-warning"><b> +0.45% <i class="ri-arrow-up-fill"></i></b></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- bar chart -->
-            <div class="container min-vh-100 d-flex flex-column justify-content-center">
-                <div class="row my-3">
-                    <div class="col">
-                        <h4>Bootstrap 4 Chart.js - Bar Chart</h4>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <canvas id="chBar" height="100"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr class="list_product">
+                        <td>ID</td>
+                        <td>Ngày Nhập</td>
+                        <td>Người Nhập</td>
+                        <td>Nhà cung cấp</td>
+                        <td>Trạng thái</td>
+                        <td>Số lượng</td>
+                        <td>Tổng tiền</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="list-product">
+                        <th>1</th>
+                        <th>02-01-1990</th>
+                        <th>Thiện</th>
+                        <th>TTS_Noodes</th>
+                        <th>Đang xử lý</th>
+                        <th>10</th>
+                        <th>5000000</th>
+                    </tr>
+                    <tr class="list-product">
+                        <th>2</th>
+                        <th>02-01-1990</th>
+                        <th>Thiện</th>
+                        <th>TTS_Noodes</th>
+                        <th>Đang xử lý</th>
+                        <th>50</th>
+                        <th>5000000</th>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</div>
+    </div>
 <!-- Wrapper END -->
 <!-- Footer -->
 <footer class="iq-footer">
