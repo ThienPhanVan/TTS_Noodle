@@ -1,0 +1,411 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <th:block th:replace="/layout/script/head :: head"></th:block>
+</head>
+
+<body>
+<!-- loader Start -->
+<!--<div id="loading">-->
+<!--    <div id="loading-center">-->
+<!--    </div>-->
+<!--</div>-->
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <div class="iq-sidebar">
+        <div class="iq-navbar-logo d-flex justify-content-between">
+            <a th:href="@{/home}" class="header-logo">
+                <!-- <img src="/assets/images/logo.png" class="img-fluid rounded" alt=""> -->
+                <img src="/assets/images/nudo.jpg" alt="">
+                <span>Bún Việt</span>
+            </a>
+            <div class="iq-menu-bt align-self-center">
+                <div class="wrapper-menu">
+                    <div class="main-circle"><i class="ri-menu-line"></i></div>
+                    <div class="hover-circle"><i class="ri-close-fill"></i></div>
+                </div>
+            </div>
+        </div>
+        <div id="sidebar-scrollbar">
+            <nav class="iq-sidebar-menu">
+                <ul id="iq-sidebar-toggle" class="iq-menu">
+                    <li class="active">
+                        <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
+                                class="ripple rippleEffect"></span><i
+                                class="las la-home iq-arrow-left"></i><span>Dashboard</span><i
+                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
+                            <li class="active"><a href="index.html"><i class="las la-laptop-code"></i>Account Dashboard</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#userinfo" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
+                                class="ripple rippleEffect"></span><i
+                                class="las la-user-tie iq-arrow-left"></i><span>User</span><i
+                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle" style="">
+
+                            <li><a th:href="@{/customer}"><i class="las la-th-list"></i>Customer</a></li>
+                            <li><a href="data-table.html"><i class="ri-database-line"></i>Supplier</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#tables" class="iq-waves-effect collapsed" data-toggle="collapse"
+                           aria-expanded="false"><i
+                                class="ri-table-line iq-arrow-left"></i><span>Manager</span><i
+                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="tables" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                            <li><a href="tables-basic.html"><i class="ri-table-line"></i>Kho Hàng</a></li>
+                            <li><a href="data-table.html"><i class="ri-database-line"></i>Hàng Hóa</a></li>
+                            <li><a href="data-table.html"><i class="ri-database-line"></i>Xuất Hàng</a></li>
+                            <li><a href="data-table.html"><i class="ri-database-line"></i>Nhập Hàng</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#forms" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
+                                class="lab la-wpforms iq-arrow-left"></i><span>Tiền Bạc</span><i
+                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="forms" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                            <li><a href="form-layout.html"><i class="las la-book"></i>Thu</a></li>
+                            <li><a href="form-validation.html"><i class="las la-edit"></i>Chi</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#charts" class="iq-waves-effect collapsed" data-toggle="collapse"
+                           aria-expanded="false"><i
+                                class="ri-pie-chart-box-line iq-arrow-left"></i><span>Order</span><i
+                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="charts" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Khách Hàng</a></li>
+                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Nhà Cung Cấp</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#authentication" class="iq-waves-effect collapsed" data-toggle="collapse"
+                           aria-expanded="false"><i
+                                class="ri-pages-line iq-arrow-left"></i><span>Authentication</span><i
+                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="authentication" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                            <li><a href="sign-in.html"><i class="las la-sign-in-alt"></i>Login</a></li>
+                            <li><a href="sign-up.html"><i class="ri-login-circle-line"></i>Register</a></li>
+                            <li><a href="pages-recoverpw.html"><i class="ri-record-mail-line"></i>Recover Password</a>
+                            </li>
+                            <li><a href="pages-confirm-mail.html"><i class="ri-file-code-line"></i>Confirm Mail</a></li>
+                            <li><a href="pages-lock-screen.html"><i class="ri-lock-line"></i>Lock Screen</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="p-3"></div>
+        </div>
+    </div>
+    <!-- TOP Nav Bar -->
+    <div class="iq-top-navbar">
+        <div class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0 mt-3">
+
+                <div class="iq-search-bar d-flex">
+                    <a href="/customer_order/">
+                        <i class="fas fa-arrow-left font-size-20 mt-2 mr-2 "></i>
+                    </a>
+                    <h4 class="ml-1 font-size-24">Đặt hàng</h4>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-label="Toggle navigation">
+                    <i class="ri-menu-3-line"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                        <li class="nav-item nav-icon mr-2">
+                            <button class="btn btn-outline-primary">Lưu & Tiếp tục</button>
+
+                        </li>
+
+                        <li class="nav-item nav-icon">
+                            <button class="btn btn-outline-warning">Xác nhận</button>
+
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <!-- TOP Nav Bar END -->
+
+    <!-- Page Content  -->
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div style="max-width: 100% ; height: 500px ; background-color: rgb(240, 240, 240); border-radius: 3px;"
+                         class="">
+                        <div style="border: 1px solid rgb(49, 241, 65) ; border-radius: 4px;"
+                             class="md-form active-pink active-pink-2 bg-white">
+                            <input class="form-control " type="search" placeholder="Nhập tên hàng hóa..."
+                                   aria-label="Search">
+                        </div>
+                        <div class="iq-card mt-4">
+                            <div class="iq-card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col">Hàng Hóa</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Thành tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="text-center">
+                                        <th>Bún</th>
+                                        <td style="width: 150px;margin: 40px auto;">
+                                            <div class="input-group text-center">
+                                                        <span class="">
+                                                            <button type="button" class="btn btn-danger btn-number"
+                                                                    data-type="minus" data-field="quant[2]">
+                                                                <span class="fa fa-minus"></span>
+                                                            </button>
+                                                        </span>
+                                                <input style="height: 35px; border-radius: 5px;" type="text"
+                                                       name="quant[2]" class="form-control  " value="10" min="1"
+                                                       max="100">
+                                                <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-success btn-number"
+                                                                    data-type="plus" data-field="quant[2]">
+                                                                <span class="fa fa-plus"></span>
+                                                            </button>
+                                                        </span>
+                                            </div>
+
+                                        </td>
+                                        <td>12.000</td>
+                                        <td>22.000</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div style="text-align: end" class="col-sm-6 ">
+                                        <div class="">
+                                            <label for="">Thanh toán</label>
+                                        </div>
+                                        <div class="">
+                                            <label for="">Khách đưa</label>
+                                        </div>
+                                        <hr>
+                                        <div class="">
+                                            <label for="">Còn lại</label>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: center" class="col-sm-6">
+                                        <div>
+                                            <p>12000</p>
+                                        </div>
+                                        <div>
+                                            <p>12000</p>
+                                        </div>
+                                        <hr>
+                                        <div>
+                                            <p>12000</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div style="max-width: 100%; border: #e8bdbd 1px solid; border-radius: 5px;">
+                        <div class="text-center font-weight-bold ">
+                            <div>
+                                <a style="height: 100%" class="font-size-24" lass="btn btn-primary"
+                                   data-toggle="collapse" href="#infoOrder" role="button"
+                                   aria-expanded="false" aria-controls="collapseExample">Thông tin đơn
+                                    hàng</a>
+                            </div>
+                            <hr style=" background: rgb(227, 172, 172);height: 1px;">
+                            <div style=" height: 355px ;" class=" collapse" id="infoOrder">
+                                <div>
+                                    <div style="position:relative; height: 50px;  background-color: #f1f1f1;"
+                                         class="card card-body  ">
+                                        <h5 style="top:2px; position: absolute;" class="font-size-14">nhân
+                                            viên
+                                            đặt hàng </h5>
+                                        <span class="font-size-18">sinh</span>
+                                    </div>
+                                </div>
+                                <div class=" mt-2">
+                                    <div style="position:relative; height: 50px; background-color: #f1f1f1;"
+                                         class="card card-body  ">
+                                        <h5 style="top:2px; position: absolute;" class="font-size-14">Ngày đặt hàng
+                                        </h5>
+                                        <span class="font-size-18">23/02/2022</span>
+                                    </div>
+                                </div>
+                                <div class="  mt-2">
+                                    <div style="position:relative; height: 50px; background-color: #f1f1f1;"
+                                         class="card card-body  ">
+                                        <h5 style="top:2px; position: absolute;" class="font-size-14">Dự kiến giao
+                                        </h5>
+                                        <span class="font-size-18">23/02/2022</span>
+                                    </div>
+                                </div>
+                                <div class=" collapse  mt-2" id="collapseExample">
+                                    <div style="position:relative; height: 90px;  background-color: #f1f1f1;"
+                                         class="card card-body  ">
+                                        <h5 style="top:2px; position: absolute;" class="font-size-14">Ghi chú </h5>
+                                        <span class="font-size-18"><textarea style="height:59px;width:540px"
+                                                                             class=" form-control" name="" id=""
+                                                                             cols="20"
+                                                                             rows="10"></textarea></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4" style="max-width: 100% ; border-top: #e8bdbd 1px solid; border-radius: 5px;">
+                        <div class=" font-weight-bold">
+                            <div class="text-center">
+                                <a class="font-size-24" lass="btn btn-primary" data-toggle="collapse"
+                                   href="#customer" role="button" aria-expanded="false"
+                                   aria-controls="collapseExample">Khách Hàng</a>
+                                <a data-toggle="modal" data-target="#createCustomer" class="mr-3"
+                                   style="float: right; font-size: 23px;" href="">
+                                    <i role="button" class="fas fa-plus"></i>
+                                </a>
+                            </div>
+
+                            <hr style="background: rgb(236, 185, 185); height: 1px;">
+                            <div style=" height: 355px; float: left ; background-color: #f1f1f1;"
+                                 class="collapse ml-4" id="customer">
+                                <div class="card" style="width: 9rem;">
+                                    <img style="height:150px"
+                                         src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
+                                         class="card-img-top" alt="...">
+                                    <div style="  padding-top:3px; position: relative;" class=" ">
+                                        <h5 class="card-title">Nguyễn Thị Lisa</h5>
+                                        <p style="position: absolute; top :27px ; left: 44px;" class="card-text">28
+                                            Thái Lan</p>
+                                        <p style="position: absolute; top :55px ; left: 44px;" class="card-text">
+                                            0987654321</p>
+                                        <a href="#" class="btn btn-primary mt-5 mb-1">Thêm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style=" height: 355px;  float: left" class="collapse ml-4" id="customer">
+                                <div class="card" style="width: 9rem;">
+                                    <img style="height:150px"
+                                         src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
+                                         class="card-img-top" alt="...">
+                                    <div style="  padding-top:3px; position: relative;" class=" ">
+                                        <h5 class="card-title">Nguyễn Thị Lisa</h5>
+                                        <p style="position: absolute; top :27px ; left: 44px;" class="card-text">28
+                                            Thái Lan</p>
+                                        <p style="position: absolute; top :55px ; left: 44px;" class="card-text">
+                                            0987654321</p>
+                                        <a href="#" class="btn btn-primary mt-5 mb-1">Thêm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style=" height: 355px;  float: left" class="collapse ml-4 " id="customer">
+                                <div class="card" style="width: 9rem;">
+                                    <img style="height:150px"
+                                         src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
+                                         class="card-img-top" alt="...">
+                                    <div style="  padding-top:3px; position: relative;" class=" ">
+                                        <h5 class="card-title">Nguyễn Thị Lisa</h5>
+                                        <p style="position: absolute; top :27px ; left: 44px;" class="card-text">28
+                                            Thái Lan</p>
+                                        <p style="position: absolute; top :55px ; left: 44px;" class="card-text">
+                                            0987654321</p>
+                                        <a href="#" class="btn btn-primary mt-5 mb-1">Thêm</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Wrapper END -->
+    <!-- Footer -->
+    <footer class="iq-footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 text-right">
+                    Copyright 2020 <a href="#">FinDash</a> All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer END -->
+
+    <!-- Modal- đặt hàng -->
+    <div class="modal fade" id="createCustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog mw-100 w-75  ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tạo Khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Tên Khách hàng</label>
+                                <input type="email" class="form-control" id="inputEmail4">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Số điện thoại</label>
+                                <input type="password" class="form-control" id="inputPassword4">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress">Địa chỉ</label>
+                                <input type="text" class="form-control" id="inputAddress"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress2">Ghi chú</label>
+                                <input type="text" class="form-control" id="inputAddress2">
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="/layout/script/footer :: footer"></th:block>
+</div>
+</body>
+
+</html>
