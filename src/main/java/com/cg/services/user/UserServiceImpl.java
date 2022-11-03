@@ -1,9 +1,5 @@
 package com.cg.services.user;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> development
 import com.cg.repositories.model.User;
 import com.cg.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
