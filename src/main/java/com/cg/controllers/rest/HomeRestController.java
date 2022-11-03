@@ -1,5 +1,6 @@
 package com.cg.controllers.rest;
 
+import com.cg.repositories.model.User;
 import com.cg.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 
 @RestController
@@ -15,28 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeRestController {
 
 
-<<<<<<< HEAD
     @Autowired
     private UserService userService;
 
     @GetMapping()
     public ResponseEntity<?> showList(){
 
-//        List<User> userList = userService.findAll();
+        List<User> customerList = userService.findAll();
 
         return new ResponseEntity<> (HttpStatus.OK);
     }
-=======
-//    @Autowired
-//    private UserService userService;
 
-//    @GetMapping()
-//    public ResponseEntity<?> showList(){
-//
-////        List<User> customerList = userService.findAll();
-//
-//        return new ResponseEntity<> (HttpStatus.OK);
-//    }
->>>>>>> development
 
 }
