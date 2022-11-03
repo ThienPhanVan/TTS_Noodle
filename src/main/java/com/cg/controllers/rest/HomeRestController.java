@@ -1,11 +1,6 @@
 package com.cg.controllers.rest;
 
-
-<<<<<<< HEAD:src/main/java/com/cg/controller/rest/HomeRestController.java
-import com.cg.service.user.UserService;
-import org.apache.catalina.User;
-=======
->>>>>>> development:src/main/java/com/cg/controllers/rest/HomeRestController.java
+import com.cg.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
