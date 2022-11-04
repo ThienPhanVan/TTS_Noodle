@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "roles")
+@Accessors(chain = true)
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +29,10 @@ public class Role {
     private String code;
 
 
+    public Role toRole() {
+        return new Role()
+                .setId(id)
+                .setCode(code)
+                .setName(name);
+    }
 }

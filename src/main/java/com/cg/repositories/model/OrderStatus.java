@@ -23,7 +23,7 @@ public class OrderStatus {
     @Column(name = "name", nullable = false, length = 30)
     private String name;
 
-    @Column(name = "code", nullable = false, length = 45)
+    @Column(name = "code", length = 45)
     private String code;
 
 
