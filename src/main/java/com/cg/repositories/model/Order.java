@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "orders")
 public class Order {
+    
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +32,5 @@ public class Order {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_status_id", nullable = false)
-    private OrderStatus orderStatus;
 
 }
