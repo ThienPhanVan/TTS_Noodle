@@ -13,13 +13,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
 @Accessors(chain = true)
+@Table(name = "users")
+
 public class User {
+    public User(long roleId) {
+         this.role = new Role(this.roleId = roleId);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "role_id", nullable = false, insertable = false, updatable = false)
+    private Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
@@ -37,9 +45,7 @@ public class User {
     @Column(name = "address", nullable = false, length = 95)
     private String address;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "status_id", nullable = false)
-    private UsersStatus status;
+    private UserStatus status;
 
     @Column(name = "username", nullable = false)
     private String username;
