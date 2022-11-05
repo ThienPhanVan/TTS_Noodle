@@ -2,10 +2,10 @@ package com.cg.services;
 
 import com.cg.dto.userDTO.UserParam;
 import com.cg.dto.userDTO.UserResult;
+import com.cg.repositories.model.User;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
+
 
 public interface IUserService  {
 
@@ -13,6 +13,12 @@ public interface IUserService  {
 
     UserResult findByRoleId(long id);
 
+    UserResult findById(long id);
+
     UserResult createUser(UserParam userParam);
+
+    UserResult updateUser(UserResult userResult,User user);
+
+    User findUserById(Long id);
 
 }

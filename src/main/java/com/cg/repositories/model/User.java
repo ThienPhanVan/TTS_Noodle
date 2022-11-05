@@ -26,33 +26,33 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "role_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "role_id", insertable = false, updatable = false)
     private Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @Column(name = "full_name", nullable = false, length = 128)
+    @Column(name = "full_name", length = 128)
     private String fullName;
 
-    @Column(name = "phone", nullable = false, length = 15)
+    @Column(name = "phone", length = 15)
     private String phone;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "address", nullable = false, length = 95)
+    @Column(name = "address", length = 95)
     private String address;
 
     private UserStatus status;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "url_images", nullable = false)
+    @Column(name = "url_images")
     private String urlImage;
 }
