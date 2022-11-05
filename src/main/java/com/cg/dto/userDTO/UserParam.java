@@ -22,6 +22,7 @@ public class UserParam {
     private String email;
 
     private String address;
+
     private UserStatus status ;
 
  }
