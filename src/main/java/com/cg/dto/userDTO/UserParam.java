@@ -1,7 +1,6 @@
 package com.cg.dto.userDTO;
 
-import com.cg.repositories.model.Role;
-import com.cg.repositories.model.UserStatus;
+ import com.cg.repositories.model.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

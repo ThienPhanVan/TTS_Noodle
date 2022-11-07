@@ -19,7 +19,6 @@ public class OrderController {
 
     @GetMapping("/create")
     public ModelAndView showListSupplier(){
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/admin/order/createOrder");
         return modelAndView;

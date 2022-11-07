@@ -25,7 +25,7 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "role_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "role_id")
     private Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
