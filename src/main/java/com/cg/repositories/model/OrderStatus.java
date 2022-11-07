@@ -1,31 +1,31 @@
 package com.cg.repositories.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public enum OrderStatus {
+    PENDING("PENDING"), COMPLETED("COMPLETED"), CANCELLED("BLOCK") ;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Accessors(chain = true)
-@Entity
-@Table(name = "order_status")
-public class OrderStatus {
-    @Id
-    @Column(name = "order_status_id", nullable = false)
-    private Long id;
 
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
+    private final String value;
 
-    @Column(name = "name", nullable = false, length = 30)
-    private String name;
+    OrderStatus(String value) {
+        this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+
+    @JsonCreator
+    public static OrderStatus parseOrderStatus(String value) {
+        OrderStatus[] values = values();
+        for (OrderStatus userStatus : values) {
+            if (userStatus.value.equals(value)) return userStatus;
+        }
+        throw new IllegalArgumentException(value + "invalid");
+    }
 
 
 }
