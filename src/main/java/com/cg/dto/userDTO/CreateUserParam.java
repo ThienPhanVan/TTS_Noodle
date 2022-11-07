@@ -1,5 +1,6 @@
 package com.cg.dto.userDTO;
 
+
 import com.cg.repositories.model.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +25,8 @@ public class CreateUserParam {
 
     private String address;
 
-    private UserStatus status ;
+    private UserStatus status;
 
     private String avatarUrl;
 
- }
+}

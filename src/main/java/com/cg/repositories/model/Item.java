@@ -2,8 +2,8 @@ package com.cg.repositories.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+ import lombok.NoArgsConstructor;
+
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -16,16 +16,39 @@ import java.time.Instant;
 @Entity
 @Accessors(chain = true)
 @Table(name = "items")
-public class Item {
+ public class Item {
+
+     public Item (long productId, long userId, long orderId){
+         this.product = new Product(this.productId = productId);
+         this.users = new User(this.userId = userId);
+         this.order = new Order(this.orderId = orderId);
+
+     }
+
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
+    private Long productId;
 
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @Column(name = "users_id", nullable = false, insertable = false, updatable = false)
+    private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "users_id", nullable = false)
+    private User users;
+
+    @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
+    private Long orderId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     @Column(name = "price", nullable = false, precision = 12)
     private BigDecimal price;
@@ -33,23 +56,17 @@ public class Item {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
+    @Column(name = "created_by", nullable = false)
+    private Long createdBy;
 
     @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "users_id", nullable = false)
-    private User users;
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
 
 
 }
