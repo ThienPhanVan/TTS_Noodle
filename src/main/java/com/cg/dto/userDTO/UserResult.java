@@ -27,5 +27,15 @@ public class UserResult {
 
     private UserStatus status;
 
+    private String avatarUrl;
 
+//    public UserResult(Long id, long roleId, String fullName, String phone, String email, String address, String avatarUrl) {
+//        this.id = id;
+//        this.roleId = roleId;
+//        this.fullName = fullName;
+//        this.phone = phone;
+//        this.email = email;
+//        this.address = address;
+//        this.avatarUrl = avatarUrl;
+//    }
 }

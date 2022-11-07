@@ -1,9 +1,8 @@
 package com.cg.controllers.api;
 
-import com.cg.dto.userDTO.UserParam;
+import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.mapper.UserMapper;
-import com.cg.repositories.model.User;
 import com.cg.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -43,16 +41,26 @@ public class UserApi {
     }
 
   @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody UserParam userParam){
-        UserResult userResult = userService.createUser(userParam);
-      return new ResponseEntity<>(userResult, HttpStatus.OK);
+    public ResponseEntity<?> create(@RequestBody CreateUserParam createUserParam){
+//        createUserParam.setId(0L);
+      return new ResponseEntity<>(userService.createUser(createUserParam), HttpStatus.OK);
   }
 
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user){
-        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
-        UserResult result = userService.updateUser(userResult, user);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user){
+//        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
+//        UserResult result = userService.updateUser(userResult, user);
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
+
+//    @GetMapping("/search/{keyword}")
+//    public ResponseEntity<?> doSearch(@PathVariable String keyword){
+//        String StrKeyword = "%"+keyword+"%";
+//        List<UserResult> userParamList = userService.findUserByFullNameAndPhone(StrKeyword);
+//        if(userParamList.isEmpty()){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(userParamList, HttpStatus.OK);
+//    }
 }

@@ -1,9 +1,8 @@
 package com.cg.mapper;
 
-import com.cg.dto.userDTO.UserParam;
+import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.repositories.model.User;
-import com.cg.repositories.model.UserStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,16 +16,19 @@ public class UserMapper {
                 .setPhone(user.getPhone())
                 .setEmail(user.getEmail())
                 .setAddress(user.getAddress())
-                .setStatus(user.getStatus()) ;
+                .setStatus(user.getStatus())
+                .setAvatarUrl(user.getAvatarUrl());
     }
-    public User toModel (UserParam userParam){
+    public User toModel (CreateUserParam createUserParam){
         return new User()
-                .setRoleId(userParam.getRoleId())
-                .setFullName(userParam.getFullName())
-                .setPhone(userParam.getPhone())
-                .setEmail(userParam.getEmail())
-                .setAddress(userParam.getAddress())
-                .setStatus(UserStatus.NEW);
-    }
+                .setId(createUserParam.getId())
+                .setRoleId(createUserParam.getRoleId())
+                .setFullName(createUserParam.getFullName())
+                .setPhone(createUserParam.getPhone())
+                .setEmail(createUserParam.getEmail())
+                .setAddress(createUserParam.getAddress())
+                .setStatus(createUserParam.getStatus())
+                .setAvatarUrl(createUserParam.getAvatarUrl());
 
+    }
 }
