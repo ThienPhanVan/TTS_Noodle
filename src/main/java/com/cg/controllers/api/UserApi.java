@@ -34,26 +34,11 @@ public class UserApi {
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
-    @GetMapping("/findByRoleId/{id}")
-    public ResponseEntity<?> findByRoleId(@PathVariable long id){
-        UserResult userResults = userService.findByRoleId(id);
-        return new ResponseEntity<>(userResults, HttpStatus.OK);
-    }
-
-<<<<<<< HEAD
     @PostMapping("/create")
-        public ResponseEntity<?> create(@RequestBody UserParam userParam){
-            UserResult userResult = userService.createUser(userParam);
+        public ResponseEntity<?> create(@RequestBody CreateUserParam CreateUserParam){
+            UserResult userResult = userService.createUser(CreateUserParam);
             return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
-=======
-  @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody CreateUserParam createUserParam){
-//        createUserParam.setId(0L);
-      return new ResponseEntity<>(userService.createUser(createUserParam), HttpStatus.OK);
-  }
->>>>>>> development
-
 
 //    @PutMapping("/update/{id}")
 //    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user){

@@ -38,17 +38,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-<<<<<<< HEAD
-=======
-    public UserResult findByRoleId(long id) {
-        return userMapper.toDTO(userRepository.findByRoleId(id));
-    }
-
-    @Override
->>>>>>> development
     public UserResult findById(long id) {
         return userMapper.toDTO(userRepository.findById(id).get());
     }
+
 
     @Override
     public UserResult createUser(CreateUserParam createUserParam) {
@@ -61,28 +54,5 @@ public class UserService implements IUserService {
         return userResult;
     }
 
-<<<<<<< HEAD
-    @Override
-    public UserResult updateUser(UserResult userResult, User user) {
-         user.setId(userResult.getId());
-         UserResult userResults = userMapper.toDTO(userRepository.save(user));
-         return  userResults;
-    }
 
-
-
-=======
-//    @Override
-//    public UserResult updateUser(UserResult userResult, User user) {
-//         user.setId(userResult.getId());
-//         UserResult userResults = userMapper.toDTO(userRepository.save(user));
-//         return  userResults;
-//    }
-//
-//
-//    @Override
-//    public List<UserResult> findUserByFullNameAndPhone(String keyword) {
-//        return userRepository.findUserByFullNameAndPhone(keyword);
-//    }
->>>>>>> development
 }
