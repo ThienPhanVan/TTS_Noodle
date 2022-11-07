@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum UserStatus {
-    NEW("NEW"), CHECKOUT("CHECKOUT"), PAID("PAID"), FAILED("FAILED") ;
+    AVAILABLE("AVAILABLE"), UNAVAILABLE("UNAVAILABLE"), BLOCK("BLOCK") ;
 
 
     private final String value;
@@ -19,11 +19,13 @@ public enum UserStatus {
     }
 
     @JsonCreator
-    public static UserStatus parseOrderStatus(String value) {
+    public static UserStatus parseUserStatus(String value) {
         UserStatus[] values = values();
         for (UserStatus userStatus : values) {
             if (userStatus.value.equals(value)) return userStatus;
         }
         throw new IllegalArgumentException(value + "invalid");
     }
+
+
 }
