@@ -29,9 +29,8 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_status_id", nullable = false)
+    @Column(name = "order_status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
 
 }
