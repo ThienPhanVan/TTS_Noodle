@@ -11,14 +11,11 @@ public interface IUserService  {
 
     List<UserResult> findAll ();
 
-    UserResult findByRoleId(long id);
-
     UserResult findById(long id);
 
     UserResult createUser(UserParam userParam);
 
     UserResult updateUser(UserResult userResult,User user);
 
-    User findUserById(Long id);
 
 }

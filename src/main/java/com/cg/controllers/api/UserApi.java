@@ -42,11 +42,11 @@ public class UserApi {
         return new ResponseEntity<>(userResults, HttpStatus.OK);
     }
 
-  @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody UserParam userParam){
-        UserResult userResult = userService.createUser(userParam);
-      return new ResponseEntity<>(userResult, HttpStatus.OK);
-  }
+    @PostMapping("/create")
+        public ResponseEntity<?> create(@RequestBody UserParam userParam){
+            UserResult userResult = userService.createUser(userParam);
+            return new ResponseEntity<>(userResult, HttpStatus.OK);
+    }
 
 
     @PutMapping("/update/{id}")
