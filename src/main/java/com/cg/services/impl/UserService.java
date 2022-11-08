@@ -70,7 +70,7 @@ public class UserService implements IUserService {
         user.setRole(new Role().setId(2L));
         return userMapper.toDTO(userRepository.save(user));
     }
-    
+
     @Override
     public UserResult createSupplier(CreateUserParam createUserParam) {
         User user = userMapper.toModel(createUserParam);
@@ -118,6 +118,8 @@ public class UserService implements IUserService {
         user.getPassword();
 
         user.getUsername();
+
+        user.getRole();
         return userMapper.toDTO(userRepository.save(user));
     }
 
