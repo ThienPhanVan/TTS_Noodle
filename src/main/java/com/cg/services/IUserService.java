@@ -15,9 +15,13 @@ public interface IUserService  {
 
     UserResult findById(long id);
 
-    UserResult createUser(CreateUserParam createUserParam);
+    UserResult createCustomer(CreateUserParam createUserParam);
+
+    UserResult createSupplier(CreateUserParam createUserParam);
 
     List<UserResult> findByFullNameAndPhone(String keyword);
 
     UserResult updateUser(UpdateUserParam updateUserParam);
+
+
 }

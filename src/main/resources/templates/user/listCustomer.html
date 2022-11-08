@@ -124,7 +124,7 @@
                         <div class="iq-card-body">
                             <div class="table-responsive">
 
-                                <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
+                                <table id="tbUser" class="table table-striped table-bordered mt-4" role="grid"
                                        aria-describedby="user-list-page-info">
 
                                     <thead class="btn-primary">
@@ -134,17 +134,19 @@
                                         <th>Tên</th>
                                         <th>Số điện thoại</th>
                                         <th>Tổng tiền</th>
-                                        <th>Nợ</th>
                                         <th>Tiền trả hàng</th>
+                                        <th>Nợ</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
                                     <tr>
-                                        <td class="text-center"><img class="rounded img-fluid avatar-40"
-
-                                        src="assets/images/user/06.jpg" alt="profile"></td>
+                                        <td class="text-center">
+                                            <img class="rounded img-fluid avatar-40"
+                                                 src="assets/images/user/06.jpg"
+                                                 alt="profile">
+                                        </td>
                                         <td>Eric Shun</td>
                                         <td>054 256 589</td>
 
@@ -154,8 +156,6 @@
 
                                         <td class="w-45">
                                             <div class="flex align-items-center list-user-action">
-
-
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top"
                                                    title=""
                                                    data-original-title="Add" href="#"><i
@@ -164,11 +164,6 @@
                                                    title=""
                                                    data-original-title="Edit" href="#"><i
                                                         class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top"
-                                                   title=""
-
-                                                   data-original-title="Delete" href="#"><i
-                                                        class="ri-delete-bin-line"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -241,9 +236,6 @@
                         </div>
 
 
-
-
-
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -257,9 +249,71 @@
     </div>
 
 </div>
+<script src="/static/assets/js/app.js"></script>
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 
 
 </body>
+<script>
 
+    let user = new User();
+
+    function renderUser(obj) {
+        let str = `
+                <tr id="tr_${obj.id}">
+                    <td>${obj.avatarUrl}</td>
+                    <td>${obj.fullName}</td>
+                    <td>${obj.phone}</td>
+                    <td>${obj.total}</td>
+                    <td>${obj.status}</td>
+                    <td>${obj.status}</td>
+                       <td class="w-45">
+                                            <div class="flex align-items-center list-user-action">
+                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top"
+                                                   title=""
+                                                   data-original-title="Add" href="#"><i
+                                                        class="ri-user-add-line"></i></a>
+                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top"
+                                                   title=""
+                                                   data-original-title="Edit" href="#"><i
+                                                        class="ri-pencil-line"></i></a>
+                                            </div>
+                       </td>
+                </tr>
+            `;
+
+        return str;
+    }
+
+    function loadUsers() {
+        $.ajax({
+            headers: {
+                accept: "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/users?deleted=0"
+        })
+            .done((data) => {
+                console.log(data + " dataa");
+                let tbUser = $("#tbUser tbody");
+
+                data.forEach(item => {
+                    let str = renderUser(item);
+                    tbUser.prepend(str);
+                });
+
+                //  enableTootip();
+
+                //  removeHandleShowModal();
+
+                //  handleShowGroupModal();
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR);
+            })
+    }
+
+    loadUsers();
+</script>
 </html>

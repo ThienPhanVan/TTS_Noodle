@@ -1,6 +1,6 @@
 package com.cg.repositories;
 
-import com.cg.dto.userDTO.UserResult;
+
 import com.cg.repositories.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,16 +59,28 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResult createUser(CreateUserParam createUserParam) {
+    public UserResult createCustomer(CreateUserParam createUserParam) {
         User user = userMapper.toModel(createUserParam);
-//        int desiredLength = 5;
-//        String random = UUID.randomUUID().toString().substring(0, desiredLength);
-//        user.setUsername(random);
-//        user.setPassword("123");
+        int desiredLength = 5;
+        String random = UUID.randomUUID().toString().substring(0, desiredLength);
+        user.setUsername(random);
+        user.setPassword("123");
         user.setId(0L);
         user.setStatus(UserStatus.AVAILABLE);
-        user.setRoleId(createUserParam.getRoleId());
-        user.setRole(new Role().setId(user.getRoleId()));
+        user.setRole(new Role().setId(2L));
+        return userMapper.toDTO(userRepository.save(user));
+    }
+    
+    @Override
+    public UserResult createSupplier(CreateUserParam createUserParam) {
+        User user = userMapper.toModel(createUserParam);
+        int desiredLength = 5;
+        String random = UUID.randomUUID().toString().substring(0, desiredLength);
+        user.setUsername(random);
+        user.setPassword("123");
+        user.setId(0L);
+        user.setStatus(UserStatus.AVAILABLE);
+        user.setRole(new Role().setId(3L));
         return userMapper.toDTO(userRepository.save(user));
     }
 
@@ -83,8 +96,28 @@ public class UserService implements IUserService {
     public UserResult updateUser(UpdateUserParam param) {
         User user = findById(param.getId());
         String fullName = param.getFullName();
-        if (Strings.isNotEmpty(fullName))
+        if (Strings.isNotEmpty(fullName)){
             user.setFullName(fullName);
+        }
+        String phone = param.getPhone();
+        if (Strings.isNotEmpty(phone)){
+            user.setPhone(phone);
+        }
+        String email = param.getEmail();
+        if (Strings.isNotEmpty(email)){
+            user.setEmail(email);
+        }
+        String address = param.getAddress();
+        if (Strings.isNotEmpty(address)){
+            user.setAddress(address);
+        }
+        String avatar = param.getAvatarUrl();
+        if (Strings.isNotEmpty(avatar)){
+            user.setAvatarUrl(avatar);
+        }
+        user.getPassword();
+
+        user.getUsername();
         return userMapper.toDTO(userRepository.save(user));
     }
 

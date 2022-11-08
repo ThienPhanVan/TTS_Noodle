@@ -38,9 +38,14 @@ public class UserApi {
         return new ResponseEntity<>(userResults, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody CreateUserParam createUserParam) {
-        return new ResponseEntity<>(userService.createUser(createUserParam), HttpStatus.OK);
+    @PostMapping("/createCustomer")
+    public ResponseEntity<?> createCustomer(@RequestBody CreateUserParam createUserParam) {
+        return new ResponseEntity<>(userService.createCustomer(createUserParam), HttpStatus.OK);
+    }
+
+    @PostMapping("/createSupplier")
+    public ResponseEntity<?> createSupplier(@RequestBody CreateUserParam createUserParam) {
+        return new ResponseEntity<>(userService.createSupplier(createUserParam), HttpStatus.OK);
     }
 
     @GetMapping("/search/{keyword}")
