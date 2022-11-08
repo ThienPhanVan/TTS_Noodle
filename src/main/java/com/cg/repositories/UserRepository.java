@@ -12,11 +12,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-<<<<<<< HEAD
-
-=======
-    User findByRoleId(long id) ;
-
 //    @Query(value = "SELECT new com.cg.dto.userDTO.UserResult (" +
 //            "u.id, " +
 //            "u.roleId, " +
@@ -31,5 +26,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "OR u.phone LIKE %?1% ")
 //    List<UserResult> findUserByFullNameAndPhone(String keyword);
 //
->>>>>>> development
 }

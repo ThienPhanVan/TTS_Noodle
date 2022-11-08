@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
-public class ITemApi {
+public class ItemApi {
 
     @Autowired
     private IITemService iTemService;
