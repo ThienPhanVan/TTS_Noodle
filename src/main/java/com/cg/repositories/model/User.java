@@ -18,9 +18,11 @@ public class User {
     public User(Long roleId){
         this.role = new Role(this.roleId = roleId);
     }
+
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
+
 
     @Column(name = "address", nullable = false, length = 95)
     private String address;
