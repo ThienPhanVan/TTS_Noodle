@@ -31,7 +31,7 @@ public class User {
     @Column(name = "full_name", nullable = false, length = 128)
     private String fullName;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "phone", nullable = false, length = 15)
@@ -52,6 +52,6 @@ public class User {
     @Column(name = "avatar_url", nullable = false)
     private String avatarUrl;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 }
