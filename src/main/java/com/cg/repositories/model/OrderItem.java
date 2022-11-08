@@ -9,8 +9,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Accessors(chain = true)
 @Entity
 @Table(name = "order_items")

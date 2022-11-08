@@ -50,7 +50,7 @@ public class UserService implements IUserService {
         user.setStatus(UserStatus.AVAILABLE);
         user.setRoleId(createUserParam.getRoleId());
         user.setRole(new Role().setId(user.getRoleId()));
-        UserResult userResult =userMapper.toDTO(userRepository.save(user));
+        UserResult userResult = userMapper.toDTO(userRepository.save(user));
         return userResult;
     }
 
