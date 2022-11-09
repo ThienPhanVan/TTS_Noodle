@@ -15,11 +15,12 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-    public User(Long roleId){
+    public User(Long roleId) {
         this.role = new Role(this.roleId = roleId);
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -39,13 +40,12 @@ public class User {
     @Column(name = "phone", nullable = false, length = 15)
     private String phone;
 
-    @Column(name = "role_id",nullable = false, insertable = false, updatable = false)
+    @Column(name = "role_id", nullable = false, insertable = false, updatable = false)
     private Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
