@@ -1,7 +1,5 @@
 package com.cg.dto.userDTO;
 
-
-import com.cg.repositories.model.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +9,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-public class CreateUserParam {
+public class UpdateUserParam {
 
-    private Long roleId;
+    private Long id;
 
     private String fullName;
 
@@ -23,12 +21,5 @@ public class CreateUserParam {
 
     private String address;
 
-    private UserStatus status;
-
     private String avatarUrl;
-
-    private String username;
-
-    private String password;
-
-}
+ }
