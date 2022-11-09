@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+<<<<<<< HEAD
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
+=======
+>>>>>>> development
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -16,7 +19,10 @@ import java.time.Instant;
 @Data
 @Entity
 @Table(name = "orders")
+<<<<<<< HEAD
 @Accessors(chain = true)
+=======
+>>>>>>> development
 public class Order {
 
     public Order(Long userId){
@@ -28,7 +34,6 @@ public class Order {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
 
@@ -39,11 +44,10 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
     @Column(name = "order_status", nullable = false)
-    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+<<<<<<< HEAD
     @Column(nullable = false)
     private String address;
 
@@ -57,5 +61,19 @@ public class Order {
     public Order(long id){
         this.id = id ;
     }
+=======
+    @Column(name = "created_by", nullable = false)
+    private Long createdBy;
+>>>>>>> development
 
+    @Column(name = "address", nullable = false, length = 95)
+    private String address;
+
+    @Column(name = "created_at")
+    private Instant createdAt;
+
+
+    public Order(Long id) {
+        this.id= id;
+    }
 }
