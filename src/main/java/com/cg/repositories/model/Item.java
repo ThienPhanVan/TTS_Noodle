@@ -5,6 +5,7 @@ import lombok.Data;
  import lombok.NoArgsConstructor;
 
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -22,7 +23,6 @@ import java.time.Instant;
          this.product = new Product(this.productId = productId);
          this.users = new User(this.userId = userId);
          this.order = new Order(this.orderId = orderId);
-
      }
 
     @Id
@@ -62,11 +62,14 @@ import java.time.Instant;
     @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-
+   public Item(Long id) {
+      this.id = id;
+   }
 }
