@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -31,4 +32,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     "WHERE u.fullName LIKE %:keyword% " +
                     "OR u.phone LIKE %:keyword% ")
     List<User> findAllByFullNameOrPhone(String keyword);
+
+
 }

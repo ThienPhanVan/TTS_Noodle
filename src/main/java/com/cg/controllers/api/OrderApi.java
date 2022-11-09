@@ -1,5 +1,6 @@
 package com.cg.controllers.api;
 
+import com.cg.dto.orderDTO.OrderCreate;
 import com.cg.dto.orderDTO.OrderResult;
 import com.cg.services.impl.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,16 +29,16 @@ public class OrderApi {
     @GetMapping("/exports")
     public ResponseEntity<?> getAllOrderByExport(){
 
-        List<OrderResult> orderResult = orderService.findAll();
 
-        return new ResponseEntity<>(orderResult, HttpStatus.OK);
+
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @GetMapping("/create/import")
-    public ResponseEntity<?> doCreateImportOrder(){
+    public ResponseEntity<?> doCreateImportOrder(@Valid @RequestBody OrderCreate orderCreate){
 
+        return new ResponseEntity<>(orderService.createOrderImport(orderCreate), HttpStatus.CREATED);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/create/export")

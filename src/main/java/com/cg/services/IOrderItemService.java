@@ -7,8 +7,10 @@ import java.util.Optional;
 
 public interface IOrderItemService {
 
-    OrderItemResult findById(Long id);
-
-    Optional<OrderItem> findByItemId(Long itemId);
+//    OrderItemResult findById(Long id);
+//
+//    Optional<OrderItem> findByItemId(Long itemId);
+//
+//    Optional<OrderItem> getOrderItemByOrderId(Long oderItemId);
 
 }

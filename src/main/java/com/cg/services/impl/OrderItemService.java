@@ -15,20 +15,25 @@ import java.util.Optional;
 @Transactional
 public class OrderItemService implements IOrderItemService {
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-
-    @Autowired
-    private OrderItemMapper orderItemMapper;
-
-    @Override
-    public OrderItemResult findById(Long id) {
-        return orderItemMapper.toDTO(orderItemRepository.findById(id).get());
-    }
-
-    @Override
-    public Optional<OrderItem> findByItemId(Long itemId) {
-        return orderItemRepository.findByItemId(itemId);
-    }
+//    @Autowired
+//    private OrderItemRepository orderItemRepository;
+//
+//    @Autowired
+//    private OrderItemMapper orderItemMapper;
+//
+//    @Override
+//    public OrderItemResult findById(Long id) {
+//        return orderItemMapper.toDTO(orderItemRepository.findById(id).get());
+//    }
+//
+//    @Override
+//    public Optional<OrderItem> findByItemId(Long itemId) {
+//        return orderItemRepository.findByItemId(itemId);
+//    }
+//
+//    @Override
+//    public Optional<OrderItem> getOrderItemByOrderId(Long oderItemId) {
+//        return orderItemRepository.getOrderItemByOrderId(oderItemId);
+//    }
 
 }
