@@ -1,6 +1,6 @@
 package com.cg.repositories;
 
-import com.cg.dto.userDTO.UserResult;
+
 import com.cg.repositories.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByRoleId(long id) ;
+    User findByRoleId(long id);
 
 //    @Query(value = "SELECT new com.cg.dto.userDTO.UserResult (" +
 //            "u.id, " +
@@ -26,6 +26,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "FROM User AS u " +
 //            "WHERE u.fullName LIKE %?1% " +
 //            "OR u.phone LIKE %?1% ")
-//    List<UserResult> findUserByFullNameAndPhone(String keyword);
-//
+//    List<User> findUserByFullNameOrPhone(String keyword);
+
+    @Query(value =
+            "FROM User AS u " +
+                    "WHERE u.fullName LIKE %:keyword% " +
+                    "OR u.phone LIKE %:keyword% ")
+    List<User> findAllByFullNameOrPhone(String keyword);
 }
