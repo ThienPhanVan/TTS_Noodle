@@ -25,13 +25,22 @@ public class OrderItem {
     @Column(name = "quantity", nullable = false, length = 45)
     private String quantity;
 
+    @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
+    private Long itemId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
+    @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
+    private Long orderId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+
+    @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
+    private Long productId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
