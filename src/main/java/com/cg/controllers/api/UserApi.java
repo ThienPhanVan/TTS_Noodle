@@ -32,26 +32,6 @@ public class UserApi {
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
-    @PostMapping("/create")
-        public ResponseEntity<?> create(@RequestBody CreateUserParam CreateUserParam){
-            UserResult userResult = userService.createUser(CreateUserParam);
-            return new ResponseEntity<>(userResult, HttpStatus.OK);
-    }
-
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user){
-//        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
-//        UserResult result = userService.updateUser(userResult, user);
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-=======
-    @GetMapping("/findByRoleId/{id}")
-    public ResponseEntity<?> findByRoleId(@PathVariable long id) {
-        UserResult userResults = userService.findByRoleId(id);
-        return new ResponseEntity<>(userResults, HttpStatus.OK);
-    }
-
     @PostMapping("/createCustomer")
     public ResponseEntity<?> createCustomer(@RequestBody CreateUserParam createUserParam) {
         return new ResponseEntity<>(userService.createCustomer(createUserParam), HttpStatus.OK);
@@ -71,11 +51,5 @@ public class UserApi {
         }
         return new ResponseEntity<>(userParamList, HttpStatus.OK);
     }
->>>>>>> development
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UpdateUserParam updateParam) {
-        updateParam.setId(id);
-        return new ResponseEntity<>(userService.updateUser(updateParam), HttpStatus.ACCEPTED);
-    }
 }

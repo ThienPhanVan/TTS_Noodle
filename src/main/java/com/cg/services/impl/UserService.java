@@ -63,14 +63,6 @@ public class UserService implements IUserService {
         user.setPassword("123");
         user.setId(0L);
         user.setStatus(UserStatus.AVAILABLE);
-<<<<<<< HEAD
-        user.setRoleId(createUserParam.getRoleId());
-        user.setRole(new Role().setId(user.getRoleId()));
-        UserResult userResult = userMapper.toDTO(userRepository.save(user));
-        return userResult;
-    }
-
-=======
         user.setRole(new Role().setId(2L));
         return userMapper.toDTO(userRepository.save(user));
     }
@@ -127,6 +119,5 @@ public class UserService implements IUserService {
         return userMapper.toDTO(userRepository.save(user));
     }
 
->>>>>>> development
 
 }

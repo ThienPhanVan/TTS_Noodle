@@ -12,11 +12,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-<<<<<<< HEAD
-=======
-    User findByRoleId(long id);
-
->>>>>>> development
 //    @Query(value = "SELECT new com.cg.dto.userDTO.UserResult (" +
 //            "u.id, " +
 //            "u.roleId, " +
