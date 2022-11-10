@@ -26,13 +26,5 @@ public class OrderCreate {
 
     private OrderStatus status;
 
-//    public OrderCreate(Long id, BigDecimal grandTotal, Long userId, Long createdBy, String address, OrderStatus status) {
-//        this.id = id;
-//        this.grandTotal = grandTotal;
-//        this.userId = userId;
-//        this.createdBy = createdBy;
-//        this.address = address;
-//        this.status = status;
-//    }
 }
 

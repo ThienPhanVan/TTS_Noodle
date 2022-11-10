@@ -3,6 +3,7 @@ package com.cg.services;
 import com.cg.dto.orderDTO.OrderCreate;
 import com.cg.dto.orderDTO.OrderResult;
 import com.cg.dto.order_itemDTO.OrderItemResult;
+import com.cg.repositories.model.Order;
 import com.cg.repositories.model.User;
 
 import java.util.List;
@@ -14,5 +15,8 @@ public interface IOrderService {
     OrderResult findById(Long id);
 
     OrderResult createOrderImport(OrderCreate orderCreate);
+
+
+    List<OrderResult> getAllOrderByUserId(Long userId);
 
 }

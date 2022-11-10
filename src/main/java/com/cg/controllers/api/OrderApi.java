@@ -21,7 +21,7 @@ public class OrderApi {
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
 
-        List<OrderResult> orderResult = orderService.findAll();
+        List<OrderResult> orderResult = orderService.getAllOrderByUserId(2L);
 
         return new ResponseEntity<>(orderResult, HttpStatus.OK);
     }
@@ -34,14 +34,14 @@ public class OrderApi {
         return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    @GetMapping("/create/import")
+    @PostMapping("/create/import")
     public ResponseEntity<?> doCreateImportOrder(@Valid @RequestBody OrderCreate orderCreate){
 
         return new ResponseEntity<>(orderService.createOrderImport(orderCreate), HttpStatus.CREATED);
 
     }
 
-    @GetMapping("/create/export")
+    @PostMapping("/create/export")
     public ResponseEntity<?> doCreateExportOrder(){
 
 

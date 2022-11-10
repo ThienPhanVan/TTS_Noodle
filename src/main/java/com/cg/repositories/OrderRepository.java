@@ -13,4 +13,16 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    @Query("SELECT NEW com.cg.dto.orderDTO.OrderResult (" +
+            "o.id, " +
+            "o.grandTotal, " +
+            "o.userId, " +
+            "o.createdBy, " +
+            "o.address, " +
+            "o.orderStatus" +
+            ")" +
+            "FROM Order o " +
+            "WHERE o.userId = ?1")
+    List<OrderResult> getAllOrderByUserId(Long userId);
+
 }

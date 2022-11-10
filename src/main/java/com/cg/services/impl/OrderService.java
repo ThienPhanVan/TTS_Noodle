@@ -58,19 +58,18 @@ public class OrderService implements IOrderService {
     @Override
     public OrderResult createOrderImport(OrderCreate orderCreate) {
 
-        Order newOder = orderMapper.toModelOrder(orderCreate);
-
-        Long userId = newOder.getUserId();
-
-        Optional<Role> roleOptional = roleRepository.findRoleCodeUserById(userId);
-
+        orderCreate.setId(0L);
         orderCreate.setStatus(OrderStatus.PENDING);
-        orderCreate.setCreatedBy(Long.parseLong(roleOptional.get().getCode()));
+        orderCreate.setCreatedBy(1L);
 
         return orderMapper.toDTO(orderRepository.save(orderMapper.toModelOrder(orderCreate)));
 
     }
 
+    @Override
+    public List<OrderResult> getAllOrderByUserId(Long userId) {
+        return orderRepository.getAllOrderByUserId(userId);
+    }
 
 
 }
