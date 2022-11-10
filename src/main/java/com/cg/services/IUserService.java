@@ -11,7 +11,7 @@ public interface IUserService  {
 
     List<UserResult> findAll ();
 
-    UserResult findByRoleId(long id);
+    List<UserResult>  findAllByRoleId(long id);
 
     UserResult findById(long id);
 
@@ -19,7 +19,9 @@ public interface IUserService  {
 
     UserResult createSupplier(CreateUserParam createUserParam);
 
-    List<UserResult> findByFullNameAndPhone(String keyword);
+    List<UserResult> searchCustomer(String keyword);
+
+    List<UserResult> searchSupplier(String keyword);
 
     UserResult updateUser(UpdateUserParam updateUserParam);
 

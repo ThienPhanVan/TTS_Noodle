@@ -13,7 +13,7 @@ public class UserController {
     public ModelAndView showListCustomer(){
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/user/listCustomer");
+        modelAndView.setViewName("/user/customer/listCustomer");
         return modelAndView;
     }
 
@@ -21,7 +21,7 @@ public class UserController {
     public ModelAndView showListSupplier(){
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/user/listSupplier");
+        modelAndView.setViewName("/user/supplier/listSupplier");
         return modelAndView;
     }
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="updateSupplier">
+    <div class="modal fade" id="modalUpdateSup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Thông Tin Khách Hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="" id="frmUpdateSup">
+                        <div class="form-row">
+                            <input type="hidden" id="idSupUp">
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                    <label for="nameSupUp">Tên Khách Hàng</label>
+                                    <input type="text" class="form-control" name="nameSupUp" id="nameSupUp" value="">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="emailSupUp">Email</label>
+                                    <input type="text" class="form-control" name="emailSupUp" id="emailSupUp">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="phoneSupUp">Điện Thoại</label>
+                                    <input type="tel" class="form-control" name="phoneSupUp" id="phoneSupUp">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="addressSupUp">Địa Chỉ</label>
+                                    <input type="text" class="form-control" name="addressSupUp" id="addressSupUp">
+                                </div>
+                            </div>
+<!--                            <div class="col-sm-7 ">-->
+<!--                                <div style="margin-top: 40px" class="text-center">-->
+<!--                                    <img height="200"-->
+<!--                                         src="https://png.pngtree.com/png-vector/20210129/ourlarge/pngtree-boys-default-avatar-png-image_2854357.jpg"-->
+<!--                                         alt="no_avatar">-->
+<!--                                    <input type="text" placeholder="image..." name="avatarUp" id="avatarUp" />-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                        </div>
+                    </form>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="btnUpdateSup" class="btn btn-primary">Cập Nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

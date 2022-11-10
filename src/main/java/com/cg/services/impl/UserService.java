@@ -39,8 +39,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResult findByRoleId(long id) {
-        return userMapper.toDTO(userRepository.findByRoleId(id));
+    public List<UserResult> findAllByRoleId(long id) {
+        return  userRepository.getAllByRoleId(id).stream()
+                .map(userMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -85,8 +86,16 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserResult> findByFullNameAndPhone(String keyword) {
-        return userRepository.findAllByFullNameOrPhone(keyword)
+    public List<UserResult> searchCustomer(String keyword) {
+        return userRepository.searchCustomer(keyword)
+                .stream()
+                .map(userMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserResult> searchSupplier(String keyword) {
+        return userRepository.searchSupplier(keyword)
                 .stream()
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());

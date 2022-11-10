@@ -27,12 +27,9 @@ public class CreateUserParam {
 
     private String avatarUrl;
 
-<<<<<<< HEAD
-}
-=======
     private String username;
 
     private String password;
 
  }
->>>>>>> thien_dev
+

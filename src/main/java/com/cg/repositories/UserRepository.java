@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByRoleId(long id);
+    List<User> getAllByRoleId(long id);
 
 //    @Query(value = "SELECT new com.cg.dto.userDTO.UserResult (" +
 //            "u.id, " +
@@ -28,9 +28,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "OR u.phone LIKE %?1% ")
 //    List<User> findUserByFullNameOrPhone(String keyword);
 
-    @Query(value =
-            "FROM User AS u " +
-                    "WHERE u.fullName LIKE %:keyword% " +
-                    "OR u.phone LIKE %:keyword% ")
-    List<User> findAllByFullNameOrPhone(String keyword);
+
+    @Query(value = "FROM User AS u WHERE u.roleId = 2 and u.fullName LIKE %?1% ")
+    List<User> searchCustomer(String keyword);
+
+    @Query(value = "FROM User AS u WHERE u.roleId = 3 and u.fullName LIKE %?1% ")
+    List<User> searchSupplier(String keyword);
 }
