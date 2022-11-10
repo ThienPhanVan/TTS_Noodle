@@ -1,5 +1,6 @@
 package com.cg.services;
 
+<<<<<<< HEAD
 import com.cg.dto.orderDTO.OrderCreate;
 import com.cg.dto.orderDTO.OrderResult;
 import com.cg.dto.order_itemDTO.OrderItemResult;
@@ -19,4 +20,13 @@ public interface IOrderService {
 
     List<OrderResult> getAllOrderByUserId(Long userId);
 
+=======
+
+import com.cg.dto.orderDTO.OrderParam;
+import com.cg.dto.orderDTO.OrderResult;
+
+public interface IOrderService {
+
+    OrderResult create(OrderParam orderParam);
+>>>>>>> development
 }

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
+<<<<<<< HEAD
 
     @Query("SELECT NEW com.cg.dto.orderDTO.OrderResult (" +
             "o.id, " +
@@ -25,4 +26,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE o.userId = ?1")
     List<OrderResult> getAllOrderByUserId(Long userId);
 
+=======
+//    @Query(value =
+//            "SELECT * FROM orders o join users u  on  o.created_by = u.id")
+//
+>>>>>>> development
 }

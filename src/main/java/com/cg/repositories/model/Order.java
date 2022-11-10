@@ -3,6 +3,7 @@ package com.cg.repositories.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 
 import lombok.experimental.Accessors;
@@ -33,7 +34,11 @@ public class Order {
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
 
+<<<<<<< HEAD
     @Column(name = "user_id",nullable = false, insertable = false, updatable = false)
+=======
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+>>>>>>> development
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -57,5 +62,11 @@ public class Order {
         this.id = id ;
     }
 
+<<<<<<< HEAD
 
+=======
+    public Order(long userId) {
+        this.user = new User(this.userId = userId);
+    }
+>>>>>>> development
 }

@@ -1,5 +1,6 @@
 package com.cg.services.impl;
 
+<<<<<<< HEAD
 import com.cg.dto.orderDTO.OrderCreate;
 import com.cg.dto.orderDTO.OrderResult;
 import com.cg.dto.order_itemDTO.OrderItemResult;
@@ -8,14 +9,29 @@ import com.cg.mapper.OrderItemMapper;
 import com.cg.mapper.OrderMapper;
 import com.cg.repositories.*;
 import com.cg.repositories.model.*;
+=======
+import com.cg.dto.orderDTO.OrderParam;
+import com.cg.dto.orderDTO.OrderResult;
+import com.cg.mapper.OrderMapper;
+import com.cg.repositories.OrderRepository;
+import com.cg.repositories.UserRepository;
+import com.cg.repositories.model.Order;
+import com.cg.repositories.model.OrderStatus;
+import com.cg.repositories.model.User;
+>>>>>>> development
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+=======
+import java.time.Instant;
+
+>>>>>>> development
 
 @Service
 @Transactional
@@ -28,6 +44,7 @@ public class OrderService implements IOrderService {
     private OrderMapper orderMapper;
 
     @Autowired
+<<<<<<< HEAD
     private OrderItemMapper orderItemMapper;
 
     @Autowired
@@ -72,4 +89,16 @@ public class OrderService implements IOrderService {
     }
 
 
+=======
+    private UserRepository userRepository;
+
+    @Override
+    public OrderResult create(OrderParam orderParam) {
+
+        orderParam.setCreatedAt(Instant.now());
+        orderParam.setUserId(orderParam.getUserId());
+        orderParam.setOrderStatus(OrderStatus.PENDING);
+        return orderMapper.toDTO(orderRepository.save(orderMapper.toModel(orderParam)));
+    }
+>>>>>>> development
 }

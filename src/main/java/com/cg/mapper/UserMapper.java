@@ -22,16 +22,6 @@ public class UserMapper {
                 .setAvatarUrl(user.getAvatarUrl());
     }
 
-//    public UpdateUserParam toUpdateDTO (UserResult userResult){
-//        return new UpdateUserParam()
-//                .setId(userResult.getId())
-//                .setFullName(userResult.getFullName())
-//                .setPhone(userResult.getPhone())
-//                .setEmail(userResult.getEmail())
-//                .setAddress(userResult.getAddress())
-//                .setAvatarUrl(userResult.getAvatarUrl());
-//    }
-
     public User toModel(CreateUserParam createUserParam) {
         return new User()
                 .setRoleId(createUserParam.getRoleId())
