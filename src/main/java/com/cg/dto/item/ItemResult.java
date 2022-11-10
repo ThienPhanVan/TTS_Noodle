@@ -1,5 +1,4 @@
-package com.cg.dto.itemDTO;
-
+package com.cg.dto.item;
 
 
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-public class ItemParam {
+public class ItemResult {
     private Long id;
 
     private long  productId;
@@ -25,11 +24,4 @@ public class ItemParam {
     private BigDecimal price;
 
     private Integer quantity;
-
-//    private Long createdBy;
-//
-//    private Long updatedBy;
-//    private Instant createdAt;
-//    private Instant updatedAt;
-
 }

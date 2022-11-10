@@ -1,6 +1,6 @@
 package com.cg.services.impl;
 
-import com.cg.dto.itemDTO.ItemResult;
+import com.cg.dto.item.ItemResult;
 import com.cg.mapper.ItemMapper;
 import com.cg.repositories.ItemRepository;
 import com.cg.services.IITemService;

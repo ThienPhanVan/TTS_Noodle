@@ -28,27 +28,28 @@ public class Order {
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "order_status", nullable = false)
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
-
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
 
     @Column(name = "address", nullable = false, length = 95)
     private String address;
 
+    @Column(name = "created_by", nullable = false)
+    private Long createdBy;
+
     @Column(name = "created_at")
     private Instant createdAt;
 
-
     public Order(Long id) {
-        this.id= id;
+        this.id = id;
     }
 
-    public Order(long userId) {
+    public Order setUserId(Long userId) {
         this.user = new User(this.userId = userId);
+        return this;
     }
+
 }

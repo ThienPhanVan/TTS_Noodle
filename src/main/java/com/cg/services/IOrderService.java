@@ -1,10 +1,10 @@
 package com.cg.services;
 
 
-import com.cg.dto.orderDTO.OrderParam;
-import com.cg.dto.orderDTO.OrderResult;
+import com.cg.dto.order.OrderParam;
+import com.cg.dto.order.OrderResult;
 
 public interface IOrderService {
 
-    OrderResult create(OrderParam orderParam);
+    OrderResult customerOrder(OrderParam orderParam);
 }

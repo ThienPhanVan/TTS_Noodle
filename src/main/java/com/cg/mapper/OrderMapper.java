@@ -1,7 +1,7 @@
 package com.cg.mapper;
 
-import com.cg.dto.orderDTO.OrderParam;
-import com.cg.dto.orderDTO.OrderResult;
+import com.cg.dto.order.OrderParam;
+import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +21,9 @@ public class OrderMapper {
     }
 
     public Order toModel(OrderParam orderParam){
-        return new Order(orderParam.getUserId())
-                .setAddress(orderParam.getAddress())
-                .setGrandTotal(orderParam.getGrandTotal())
-                .setOrderStatus(orderParam.getOrderStatus())
-                .setCreatedAt(orderParam.getCreatedAt())
-                .setCreatedBy(orderParam.getCreatedBy());
+        return new Order()
+                .setUserId(orderParam.getUserId())
+                .setAddress(orderParam.getAddress());
+
     }
 }
