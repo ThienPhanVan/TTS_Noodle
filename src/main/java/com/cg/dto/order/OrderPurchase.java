@@ -1,4 +1,4 @@
-package com.cg.dto.orderDTO;
+package com.cg.dto.order;
 
 import com.cg.repositories.model.OrderStatus;
 import lombok.AllArgsConstructor;
@@ -8,26 +8,21 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class OrderCreate {
-
-    private Long id;
-
-    private BigDecimal grandTotal;
+public class OrderPurchase {
 
     private Long userId;
 
-    private Long createdBy;
-
     private String address;
 
-    private OrderStatus orderStatus;
+    List<OrderItemPurchase> orderItemPurchases;
 
-    private Instant createdAt;
+    private String fullName;
 
 }
 

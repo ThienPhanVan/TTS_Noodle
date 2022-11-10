@@ -38,17 +38,9 @@ public class UserService implements IUserService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-<<<<<<< HEAD
-=======
-    @Transactional(readOnly = true)
-    public UserResult findByRoleId(long id) {
-        return userMapper.toDTO(userRepository.findByRoleId(id));
-    }
 
     @Override
     @Transactional(readOnly = true)
->>>>>>> development
     public UserResult findById(long id) {
         Optional<User> optional = userRepository.findById(id);
         if (!optional.isPresent())
@@ -132,6 +124,11 @@ public class UserService implements IUserService {
         user.getRole();
         return userMapper.toDTO(userRepository.save(user));
 
+    }
+
+    @Override
+    public boolean findUserByRoleId(Long roleId) {
+        return userRepository.findUserByRoleId(roleId);
     }
 
 }

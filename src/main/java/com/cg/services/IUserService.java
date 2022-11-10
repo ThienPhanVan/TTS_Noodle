@@ -23,4 +23,6 @@ public interface IUserService  {
 
     UserResult updateUser(UpdateUserParam updateUserParam);
 
+    boolean findUserByRoleId (Long roleId);
+
 }

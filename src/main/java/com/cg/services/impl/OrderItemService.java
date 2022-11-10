@@ -1,6 +1,6 @@
 package com.cg.services.impl;
 
-import com.cg.dto.order_itemDTO.OrderItemResult;
+import com.cg.dto.order_item.OrderItemResult;
 import com.cg.mapper.OrderItemMapper;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.model.OrderItem;
@@ -15,25 +15,25 @@ import java.util.Optional;
 @Transactional
 public class OrderItemService implements IOrderItemService {
 
-//    @Autowired
-//    private OrderItemRepository orderItemRepository;
-//
-//    @Autowired
-//    private OrderItemMapper orderItemMapper;
-//
-//    @Override
-//    public OrderItemResult findById(Long id) {
-//        return orderItemMapper.toDTO(orderItemRepository.findById(id).get());
-//    }
-//
-//    @Override
-//    public Optional<OrderItem> findByItemId(Long itemId) {
-//        return orderItemRepository.findByItemId(itemId);
-//    }
-//
-//    @Override
-//    public Optional<OrderItem> getOrderItemByOrderId(Long oderItemId) {
-//        return orderItemRepository.getOrderItemByOrderId(oderItemId);
-//    }
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+
+
+    @Override
+    public Optional<OrderItem> findById(Long id) {
+        return orderItemRepository.findById(id);
+    }
+
+    @Override
+    public Optional<OrderItem> findByItemId(Long itemId) {
+        return orderItemRepository.findByItemId(itemId);
+    }
+
+    @Override
+    public Optional<OrderItem> getOrderItemByOrderId(Long oderItemId) {
+        return orderItemRepository.getOrderItemByOrderId(oderItemId);
+    }
 }

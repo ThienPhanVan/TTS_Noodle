@@ -27,6 +27,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "OR u.phone LIKE %?1% ")
 //    List<User> findUserByFullNameOrPhone(String keyword);
 
+    boolean findUserByRoleId (Long roleId);
+
     @Query(value =
             "FROM User AS u " +
                     "WHERE u.fullName LIKE %:keyword% " +

@@ -1,6 +1,6 @@
 package com.cg.controllers.api;
 
-import com.cg.dto.order_itemDTO.OrderItemCreate;
+import com.cg.dto.order.OrderItemPurchase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class OrderItemApi {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> doCreate(@Valid @RequestBody OrderItemCreate orderItemCreate){
+    public ResponseEntity<?> doCreate(@Valid @RequestBody OrderItemPurchase orderItemPurchase){
 
 
 

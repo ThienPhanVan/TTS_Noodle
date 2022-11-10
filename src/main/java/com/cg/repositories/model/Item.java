@@ -16,22 +16,19 @@ import java.time.Instant;
 @Entity
 @Accessors(chain = true)
 @Table(name = "items")
-<<<<<<< HEAD
  public class Item {
 
-     public Item (long productId, long userId, long orderId){
-         this.product = new Product(this.productId = productId);
-         this.users = new User(this.userId = userId);
-         this.order = new Order(this.orderId = orderId);
-     }
-=======
-public class Item {
+//     public Item (long productId, long userId, long orderId){
+//         this.product = new Product(this.productId = productId);
+//         this.users = new User(this.userId = userId);
+//         this.order = new Order(this.orderId = orderId);
+//     }
+//=======
     public Item(long productId, long userId, long orderId) {
         setProductId(productId);
         setUserId(userId);
         setOrderId(orderId);
     }
->>>>>>> development
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,13 +46,8 @@ public class Item {
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-<<<<<<< HEAD
     @JoinColumn(name = "users_id")
-    private User users;
-=======
-    @JoinColumn(name = "users_id", nullable = false)
     private User user;
->>>>>>> development
 
     @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
     private Long orderId;
@@ -90,11 +82,11 @@ public class Item {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-<<<<<<< HEAD
    public Item(Long id) {
       this.id = id;
    }
-=======
+
+
     @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
 
@@ -112,5 +104,4 @@ public class Item {
         this.user = new User(this.userId = userId);
         return this;
     }
->>>>>>> development
 }

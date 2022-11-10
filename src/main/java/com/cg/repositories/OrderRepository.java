@@ -1,19 +1,17 @@
 package com.cg.repositories;
 
-import com.cg.dto.orderDTO.OrderResult;
+import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
-import com.cg.repositories.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query("SELECT NEW com.cg.dto.orderDTO.OrderResult (" +
+    @Query("SELECT NEW com.cg.dto.order.OrderResult (" +
             "o.id, " +
             "o.grandTotal, " +
             "o.userId, " +

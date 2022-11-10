@@ -10,17 +10,17 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    @Query("SELECT new com.cg.dto.orderDTO.OrderCreate (" +
-            "o.id, " +
-            "o.grandTotal, " +
-            "o.userId, " +
-            "o.createdBy, " +
-            "o.address, " +
-            "o.orderStatus, " +
-            "o.createdAt " +
-            ")" +
-            "FROM Order AS o " +
-            "WHERE o.createdBy = ?1"
-    )
+//    @Query("SELECT new com.cg.dto.order.OrderCreate (" +
+//            "o.id, " +
+//            "o.grandTotal, " +
+//            "o.userId, " +
+//            "o.createdBy, " +
+//            "o.address, " +
+//            "o.orderStatus, " +
+//            "o.createdAt " +
+//            ")" +
+//            "FROM Order AS o " +
+//            "WHERE o.createdBy = ?1"
+//    )
     Optional<Role> findRoleCodeUserById(Long id);
 }

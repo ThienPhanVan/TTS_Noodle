@@ -12,6 +12,9 @@ import java.math.BigDecimal;
 @Data
 @Accessors(chain = true)
 public class OrderItemParam {
+
     private int quantity;
+
     private long productId;
+
 }

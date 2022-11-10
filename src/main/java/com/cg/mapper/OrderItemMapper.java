@@ -1,7 +1,7 @@
 package com.cg.mapper;
 
-import com.cg.dto.order_itemDTO.OrderItemCreate;
-import com.cg.dto.order_itemDTO.OrderItemResult;
+import com.cg.dto.order.OrderItemPurchase;
+import com.cg.dto.order_item.OrderItemResult;
 import com.cg.repositories.model.OrderItem;
 import org.springframework.stereotype.Component;
 
@@ -18,13 +18,10 @@ public class OrderItemMapper {
                 .setProductId(orderItem.getProductId());
     }
 
-    public OrderItem toModal(OrderItemCreate orderItemCreate){
+    public OrderItem toModal(OrderItemPurchase orderItemPurchase){
         return new OrderItem()
-                .setId(orderItemCreate.getId())
-                .setPrice(orderItemCreate.getPrice())
-                .setQuantity(orderItemCreate.getQuantity())
-                .setItemId(orderItemCreate.getItemId())
-                .setOrderId(orderItemCreate.getOrderId())
-                .setProductId(orderItemCreate.getProductId());
+                .setPrice(orderItemPurchase.getPrice())
+                .setQuantity(orderItemPurchase.getQuantity())
+                .setProductId(orderItemPurchase.getProductId());
     }
 }
