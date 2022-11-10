@@ -1,4 +1,4 @@
-package com.cg.dto.itemDTO;
+package com.cg.dto.item;
 
 
 

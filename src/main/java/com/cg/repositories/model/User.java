@@ -15,8 +15,8 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-    public User(Long roleId) {
-        this.role = new Role(this.roleId = roleId);
+    public User(Long id) {
+        this.id = id;
     }
 
     @Id
@@ -56,4 +56,10 @@ public class User {
 
     @Column(name = "username", nullable = false)
     private String username;
+
+    public User setRoleId(Long roleId) {
+        this.roleId = roleId;
+        this.role = new Role(roleId);
+        return this;
+    }
 }

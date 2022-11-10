@@ -1,9 +1,6 @@
-package com.cg.dto.itemDTO;
+package com.cg.dto.item;
 
 
-import com.cg.repositories.model.Order;
-import com.cg.repositories.model.Product;
-import com.cg.repositories.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

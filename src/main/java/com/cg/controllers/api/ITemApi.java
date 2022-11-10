@@ -1,6 +1,6 @@
 package com.cg.controllers.api;
 
-import com.cg.dto.itemDTO.ItemResult;
+import com.cg.dto.item.ItemResult;
 import com.cg.services.IITemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

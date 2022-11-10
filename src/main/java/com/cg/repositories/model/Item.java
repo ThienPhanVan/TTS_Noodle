@@ -2,8 +2,7 @@ package com.cg.repositories.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
- import lombok.NoArgsConstructor;
-
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -16,14 +15,12 @@ import java.time.Instant;
 @Entity
 @Accessors(chain = true)
 @Table(name = "items")
- public class Item {
-
-     public Item (long productId, long userId, long orderId){
-         this.product = new Product(this.productId = productId);
-         this.users = new User(this.userId = userId);
-         this.order = new Order(this.orderId = orderId);
-
-     }
+public class Item {
+    public Item(long productId, long userId, long orderId) {
+        setProductId(productId);
+        setUserId(userId);
+        setOrderId(orderId);
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +39,7 @@ import java.time.Instant;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "users_id", nullable = false)
-    private User users;
+    private User user;
 
     @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
     private Long orderId;
@@ -51,23 +48,46 @@ import java.time.Instant;
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
+
     @Column(name = "price", nullable = false, precision = 12)
     private BigDecimal price;
 
     @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private int quantity;
 
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
+    @Column(name = "sold", nullable = false)
+    private int sold;
 
-    @Column(name = "updated_by", nullable = false)
-    private Long updatedBy;
+    @Column(name = "available", nullable = false)
+    private int available;
+
+    @Column(name = "defective", nullable = false)
+    private int defective;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
+    @Column(name = "created_by", nullable = false)
+    private Long createdBy;
+
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+    @Column(name = "updated_by", nullable = false)
+    private Long updatedBy;
 
+    public Item setOrderId(Long orderId) {
+        this.order = new Order(this.orderId = orderId);
+        return this;
+    }
+
+    public Item setProductId(Long productId) {
+        this.product = new Product(this.productId = productId);
+        return this;
+    }
+
+    public Item setUserId(Long userId) {
+        this.user = new User(this.userId = userId);
+        return this;
+    }
 }

@@ -21,7 +21,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class UserService implements IUserService {
 
     @Autowired
@@ -31,6 +30,7 @@ public class UserService implements IUserService {
     private UserMapper userMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserResult> findAll() {
         return userRepository.findAll()
                 .stream()
@@ -39,12 +39,15 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+
     public List<UserResult> findAllByRoleId(long id) {
         return  userRepository.getAllByRoleId(id).stream()
                 .map(userMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResult findById(long id) {
         Optional<User> optional = userRepository.findById(id);
         if (!optional.isPresent())
@@ -60,6 +63,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserResult createCustomer(CreateUserParam createUserParam) {
         User user = userMapper.toModel(createUserParam);
         int desiredLength = 5;
@@ -73,6 +77,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserResult createSupplier(CreateUserParam createUserParam) {
         User user = userMapper.toModel(createUserParam);
         int desiredLength = 5;
@@ -86,6 +91,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public List<UserResult> searchCustomer(String keyword) {
         return userRepository.searchCustomer(keyword)
                 .stream()
@@ -102,6 +108,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserResult updateUser(UpdateUserParam param) {
         User user = findById(param.getId());
         String fullName = param.getFullName();
@@ -130,7 +137,7 @@ public class UserService implements IUserService {
 
         user.getRole();
         return userMapper.toDTO(userRepository.save(user));
-    }
 
+    }
 
 }

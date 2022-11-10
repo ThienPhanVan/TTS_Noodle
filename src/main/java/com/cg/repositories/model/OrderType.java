@@ -3,13 +3,12 @@ package com.cg.repositories.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum OrderStatus {
-    PENDING("PENDING"), COMPLETED("COMPLETED"), CANCELLED("CANCELLED");
-
+public enum OrderType {
+    PURCHASE("PURCHASE"), CUSTOMER("CUSTOMER");
 
     private final String value;
 
-    OrderStatus(String value) {
+    OrderType(String value) {
         this.value = value;
     }
 
@@ -19,13 +18,12 @@ public enum OrderStatus {
     }
 
     @JsonCreator
-    public static OrderStatus parseOrderStatus(String value) {
-        OrderStatus[] values = values();
-        for (OrderStatus userStatus : values) {
-            if (userStatus.value.equals(value)) return userStatus;
+    public static OrderType parseOrderType(String value) {
+        OrderType[] values = values();
+        for (OrderType type : values) {
+            if (type.value.equals(value)) return type;
         }
         throw new IllegalArgumentException(value + "invalid");
     }
-
 
 }
