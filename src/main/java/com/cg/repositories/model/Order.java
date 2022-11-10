@@ -3,6 +3,7 @@ package com.cg.repositories.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
+@Accessors(chain = true)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +23,9 @@ public class Order {
 
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
+
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -41,5 +46,9 @@ public class Order {
 
     public Order(Long id) {
         this.id= id;
+    }
+
+    public Order(long userId) {
+        this.user = new User(this.userId = userId);
     }
 }
