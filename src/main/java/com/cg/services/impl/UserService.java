@@ -21,7 +21,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class UserService implements IUserService {
 
     @Autowired
@@ -31,6 +30,7 @@ public class UserService implements IUserService {
     private UserMapper userMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserResult> findAll() {
         return userRepository.findAll()
                 .stream()
@@ -39,6 +39,16 @@ public class UserService implements IUserService {
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    @Transactional(readOnly = true)
+    public UserResult findByRoleId(long id) {
+        return userMapper.toDTO(userRepository.findByRoleId(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+>>>>>>> development
     public UserResult findById(long id) {
         Optional<User> optional = userRepository.findById(id);
         if (!optional.isPresent())
@@ -55,6 +65,7 @@ public class UserService implements IUserService {
 
 
     @Override
+    @Transactional
     public UserResult createCustomer(CreateUserParam createUserParam) {
         User user = userMapper.toModel(createUserParam);
         int desiredLength = 5;
@@ -68,6 +79,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserResult createSupplier(CreateUserParam createUserParam) {
         User user = userMapper.toModel(createUserParam);
         int desiredLength = 5;
@@ -81,6 +93,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public List<UserResult> findByFullNameAndPhone(String keyword) {
         return userRepository.findAllByFullNameOrPhone(keyword)
                 .stream()
@@ -89,6 +102,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserResult updateUser(UpdateUserParam param) {
         User user = findById(param.getId());
         String fullName = param.getFullName();
@@ -117,6 +131,7 @@ public class UserService implements IUserService {
 
         user.getRole();
         return userMapper.toDTO(userRepository.save(user));
+
     }
 
 }

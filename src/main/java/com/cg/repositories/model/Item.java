@@ -2,8 +2,7 @@ package com.cg.repositories.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
- import lombok.NoArgsConstructor;
-
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,6 +16,7 @@ import java.time.Instant;
 @Entity
 @Accessors(chain = true)
 @Table(name = "items")
+<<<<<<< HEAD
  public class Item {
 
      public Item (long productId, long userId, long orderId){
@@ -24,6 +24,14 @@ import java.time.Instant;
          this.users = new User(this.userId = userId);
          this.order = new Order(this.orderId = orderId);
      }
+=======
+public class Item {
+    public Item(long productId, long userId, long orderId) {
+        setProductId(productId);
+        setUserId(userId);
+        setOrderId(orderId);
+    }
+>>>>>>> development
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +49,13 @@ import java.time.Instant;
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+<<<<<<< HEAD
     @JoinColumn(name = "users_id")
     private User users;
+=======
+    @JoinColumn(name = "users_id", nullable = false)
+    private User user;
+>>>>>>> development
 
     @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
     private Long orderId;
@@ -51,26 +64,53 @@ import java.time.Instant;
     @JoinColumn(name = "order_id")
     private Order order;
 
+
     @Column(name = "price", nullable = false, precision = 12)
     private BigDecimal price;
 
     @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private int quantity;
 
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
+    @Column(name = "sold", nullable = false)
+    private int sold;
 
-    @Column(name = "updated_by", nullable = false)
-    private Long updatedBy;
+    @Column(name = "available", nullable = false)
+    private int available;
+
+    @Column(name = "defective", nullable = false)
+    private int defective;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
+    @Column(name = "created_by", nullable = false)
+    private Long createdBy;
+
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+<<<<<<< HEAD
    public Item(Long id) {
       this.id = id;
    }
+=======
+    @Column(name = "updated_by", nullable = false)
+    private Long updatedBy;
+
+    public Item setOrderId(Long orderId) {
+        this.order = new Order(this.orderId = orderId);
+        return this;
+    }
+
+    public Item setProductId(Long productId) {
+        this.product = new Product(this.productId = productId);
+        return this;
+    }
+
+    public Item setUserId(Long userId) {
+        this.user = new User(this.userId = userId);
+        return this;
+    }
+>>>>>>> development
 }

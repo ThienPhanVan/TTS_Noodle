@@ -1,7 +1,7 @@
 package com.cg.mapper;
 
-import com.cg.dto.itemDTO.ItemParam;
-import com.cg.dto.itemDTO.ItemResult;
+import com.cg.dto.item.ItemParam;
+import com.cg.dto.item.ItemResult;
 import com.cg.repositories.model.Item;
 import org.springframework.stereotype.Component;
 

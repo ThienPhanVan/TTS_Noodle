@@ -1,6 +1,6 @@
 package com.cg.services;
 
-import com.cg.dto.itemDTO.ItemResult;
+import com.cg.dto.item.ItemResult;
 
 import java.util.List;
 

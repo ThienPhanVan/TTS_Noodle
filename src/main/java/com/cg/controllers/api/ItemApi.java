@@ -1,7 +1,12 @@
 package com.cg.controllers.api;
 
+<<<<<<< HEAD:src/main/java/com/cg/controllers/api/ItemApi.java
 import com.cg.dto.itemDTO.ItemResult;
 import com.cg.services.IItemService;
+=======
+import com.cg.dto.item.ItemResult;
+import com.cg.services.IITemService;
+>>>>>>> development:src/main/java/com/cg/controllers/api/ITemApi.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

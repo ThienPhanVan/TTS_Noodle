@@ -1,4 +1,4 @@
-package com.cg.dto.orderDTO;
+package com.cg.dto.order;
 
 import com.cg.repositories.model.OrderStatus;
 import lombok.AllArgsConstructor;
