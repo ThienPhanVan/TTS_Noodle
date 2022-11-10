@@ -37,12 +37,25 @@ public class OrderItem {
     @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
     private Long itemId;
 
+    @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
+    private Long itemId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id")
     private Item item;
 
     @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
     private Long orderId;
+<<<<<<< HEAD
+=======
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+>>>>>>> development
+
+    @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
+    private Long productId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id")

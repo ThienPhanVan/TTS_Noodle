@@ -32,6 +32,15 @@ public class UserApi {
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
+=======
+    @GetMapping("/getUserByRoleId/{id}")
+    public ResponseEntity<?> getUserByRoleId(@PathVariable long id) {
+        List<UserResult> userResults = userService.findAllByRoleId(id);
+        return new ResponseEntity<>(userResults, HttpStatus.OK);
+    }
+
+>>>>>>> development
     @PostMapping("/createCustomer")
     public ResponseEntity<?> createCustomer(@RequestBody CreateUserParam createUserParam) {
         return new ResponseEntity<>(userService.createCustomer(createUserParam), HttpStatus.OK);
@@ -42,10 +51,18 @@ public class UserApi {
         return new ResponseEntity<>(userService.createSupplier(createUserParam), HttpStatus.OK);
     }
 
-    @GetMapping("/search/{keyword}")
-    public ResponseEntity<?> doSearch(@PathVariable String keyword) {
-        String StrKeyword = "%" + keyword + "%";
-        List<UserResult> userParamList = userService.findByFullNameAndPhone(StrKeyword);
+    @GetMapping("/searchCus/{keyword}")
+    public ResponseEntity<?> doSearchCus(@PathVariable String keyword) {
+        List<UserResult> userParamList = userService.searchCustomer(keyword);
+        if (userParamList.isEmpty()) {
+            throw new DataInputException("Không Tìm Thấy Từ Khóa bạn vui lòng nhập lại!");
+        }
+        return new ResponseEntity<>(userParamList, HttpStatus.OK);
+    }
+
+    @GetMapping("/searchSup/{keyword}")
+    public ResponseEntity<?> doSearchSup(@PathVariable String keyword) {
+        List<UserResult> userParamList = userService.searchSupplier(keyword);
         if (userParamList.isEmpty()) {
             throw new DataInputException("Không Tìm Thấy Từ Khóa bạn vui lòng nhập lại!");
         }

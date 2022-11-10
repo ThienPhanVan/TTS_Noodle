@@ -31,4 +31,6 @@ public class CreateUserParam {
 
     private String password;
 
-}
+
+ }
+

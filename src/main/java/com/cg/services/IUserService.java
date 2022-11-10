@@ -13,13 +13,20 @@ public interface IUserService  {
 
     List<UserResult> findAll ();
 
+<<<<<<< HEAD
+=======
+    List<UserResult>  findAllByRoleId(long id);
+
+>>>>>>> development
     UserResult findById(long id);
 
     UserResult createCustomer(CreateUserParam createUserParam);
 
     UserResult createSupplier(CreateUserParam createUserParam);
 
-    List<UserResult> findByFullNameAndPhone(String keyword);
+    List<UserResult> searchCustomer(String keyword);
+
+    List<UserResult> searchSupplier(String keyword);
 
     UserResult updateUser(UpdateUserParam updateUserParam);
 

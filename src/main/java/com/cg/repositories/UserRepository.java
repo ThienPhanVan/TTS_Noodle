@@ -13,6 +13,11 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+<<<<<<< HEAD
+=======
+    List<User> getAllByRoleId(long id);
+
+>>>>>>> development
 //    @Query(value = "SELECT new com.cg.dto.userDTO.UserResult (" +
 //            "u.id, " +
 //            "u.roleId, " +
@@ -27,6 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "OR u.phone LIKE %?1% ")
 //    List<User> findUserByFullNameOrPhone(String keyword);
 
+<<<<<<< HEAD
     boolean findUserByRoleId (Long roleId);
 
     @Query(value =
@@ -36,4 +42,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByFullNameOrPhone(String keyword);
 
 
+=======
+
+    @Query(value = "FROM User AS u WHERE u.roleId = 2 and u.fullName LIKE %?1% ")
+    List<User> searchCustomer(String keyword);
+
+    @Query(value = "FROM User AS u WHERE u.roleId = 3 and u.fullName LIKE %?1% ")
+    List<User> searchSupplier(String keyword);
+>>>>>>> development
 }
