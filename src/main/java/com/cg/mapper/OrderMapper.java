@@ -23,7 +23,7 @@ public class OrderMapper {
     }
 
     public Order toModelOrder(OrderCreate orderCreate){
-        return new Order()
+        return new Order(orderCreate.getUserId())
                 .setId(orderCreate.getId())
                 .setGrandTotal(orderCreate.getGrandTotal())
                 .setAddress(orderCreate.getAddress())

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,8 +44,14 @@ public class OrderService implements IOrderService {
         orderCreate.setId(0L);
         orderCreate.setOrderStatus(OrderStatus.PENDING);
         orderCreate.setCreatedBy(1L);
+        orderCreate.setUserId(orderCreate.getUserId());
+        orderCreate.setCreatedAt(Instant.now());
 
-        return orderMapper.toDTO(orderRepository.save(orderMapper.toModelOrder(orderCreate)));
+        Order newOrder = orderMapper.toModelOrder(orderCreate);
+        orderRepository.save(newOrder);
+
+
+        return orderMapper.toDTO(newOrder);
 
     }
 

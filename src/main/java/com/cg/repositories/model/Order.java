@@ -35,14 +35,14 @@ public class Order {
     private BigDecimal grandTotal;
 
     @Column(name = "user_id",nullable = false, insertable = false, updatable = false)
-
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "order_status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @Column(nullable = false)
