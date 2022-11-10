@@ -34,11 +34,8 @@ public class Order {
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
 
-<<<<<<< HEAD
     @Column(name = "user_id",nullable = false, insertable = false, updatable = false)
-=======
-    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
->>>>>>> development
+
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -62,11 +59,4 @@ public class Order {
         this.id = id ;
     }
 
-<<<<<<< HEAD
-
-=======
-    public Order(long userId) {
-        this.user = new User(this.userId = userId);
-    }
->>>>>>> development
 }

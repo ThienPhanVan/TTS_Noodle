@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +25,9 @@ public class OrderCreate {
 
     private String address;
 
-    private OrderStatus status;
+    private OrderStatus orderStatus;
+
+    private Instant createdAt;
 
 }
 

@@ -11,13 +11,14 @@ import java.util.Optional;
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
     @Query("SELECT new com.cg.dto.orderDTO.OrderCreate (" +
-            "o.id," +
-            "o.grandTotal," +
-            "o.userId," +
+            "o.id, " +
+            "o.grandTotal, " +
+            "o.userId, " +
             "o.createdBy, " +
             "o.address, " +
-            "o.orderStatus " +
-            ") " +
+            "o.orderStatus, " +
+            "o.createdAt " +
+            ")" +
             "FROM Order AS o " +
             "WHERE o.createdBy = ?1"
     )

@@ -7,19 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-<<<<<<< HEAD
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-=======
 import java.time.Instant;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
->>>>>>> development
 @Accessors(chain = true)
 public class OrderResult {
 
@@ -27,15 +20,6 @@ public class OrderResult {
 
     private BigDecimal grandTotal;
 
-<<<<<<< HEAD
-    private Long userId;
-
-    private Long createdBy;
-
-    private String address;
-
-    private OrderStatus status;
-=======
     private long userId;
 
     private OrderStatus orderStatus;
@@ -45,5 +29,5 @@ public class OrderResult {
     private long createdBy;
 
     private Instant createdAt;
->>>>>>> development
+
 }

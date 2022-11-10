@@ -13,11 +13,8 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-<<<<<<< HEAD
 public class ItemService implements IItemService {
-=======
-public class ItemService implements IITemService {
->>>>>>> development
+
     @Autowired
     private ItemRepository itemRepository;
 
