@@ -119,7 +119,7 @@ public class OrderService implements IOrderService {
                 //  int sold = item.getSold();
                 if (quantityCustomer >= available) {
                     quantityCustomer -= available;
-                    System.out.println("available= " + available);
+                    System.out.println("quantityCustomer= " + (quantityCustomer-= available));
                     System.out.println("quantity= " + quantityCustomer);
                     item.setAvailable(0);
                     item.setSold(available);
@@ -128,9 +128,8 @@ public class OrderService implements IOrderService {
                     item.setAvailable(available);
                     item.setSold(item.getSold() + quantityCustomer);
                 }
-
+               
             }
-
         }
         //order Item
         return orderMapper.toDTO(order);
