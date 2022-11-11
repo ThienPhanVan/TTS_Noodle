@@ -99,52 +99,66 @@ public class OrderService implements IOrderService {
         order = orderRepository.save(order);
 
         BigDecimal grandTotal;
-
         //xu ly list orderItems
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
             //kiem tra product ton tai
             //lay toan item theo productId
-
             if (!itemRepository.existsById(itemParam.getProductId()))
                 throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
-
-
             // lay toan item theo productId
             List<Item> items = itemRepository.findAllByProductIdOrderByCreatedAt(itemParam.getProductId());
             long totalAvailable = items.stream()
                     .mapToInt(Item::getAvailable)
                     .sum();
             // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
-            if (totalAvailable < itemParam.getQuantity())
+            if (totalAvailable < itemParam.getQuantity()) {
                 throw new NotEnoughQuantityException("Không đủ số lượng, vui lòng kiểm tra số lượng!");
+            }
             // lấy số lượng order
-            int quantityCustomer = itemParam.getQuantity();
+
+            OrderItem orderItem = new OrderItem();
             for (Item item : items) {
-                if (quantityCustomer == 0)
+                int quantityCustomer = itemParam.getQuantity();
+
+                int soldOrder = 0;
+                soldOrder += quantityCustomer;
+
+                if (quantityCustomer == 0) {
                     throw new NotEnoughQuantityException("Số lượng nhập vào phải lớn hơn 0!");
+                }
                 int available = item.getAvailable();
-                //  int sold = item.getSold();
+                int sold = item.getSold();
                 if (quantityCustomer >= available) {
-                    quantityCustomer -= available;
-                    System.out.println("available= " + available);
-                    System.out.println("quantity= " + quantityCustomer);
+                    quantityCustomer = quantityCustomer - available;
+                    itemParam.setQuantity(quantityCustomer);
                     item.setAvailable(0);
                     item.setSold(available);
+                    if (quantityCustomer == 0) {
+                        break;
+                    }
                 } else {
-                    available -= quantityCustomer;
+                    available = available - quantityCustomer;
                     item.setAvailable(available);
-                    item.setSold(item.getSold() + quantityCustomer);
+                    item.setSold(quantityCustomer);
+                    
+                    orderItem.setQuantity(soldOrder);
+                    orderItem.setProductId(item.getProductId());
+                    orderItem.setItemId(item.getId());
+                    orderItem.setOrderId(order.getId());
+                    orderItem.setPrice(new BigDecimal(7));
+                    orderItemRepository.save(orderItem);
+                    break;
                 }
 
-
-                OrderItem orderItem = new OrderItem();
                 orderItem.setQuantity(item.getQuantity());
+
+                orderItem.setQuantity(soldOrder);
+
                 orderItem.setProductId(item.getProductId());
                 orderItem.setItemId(item.getId());
                 orderItem.setOrderId(order.getId());
                 orderItem.setPrice(new BigDecimal(7));
                 orderItemRepository.save(orderItem);
-
 
             }
         }
