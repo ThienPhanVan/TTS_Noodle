@@ -196,12 +196,11 @@ public class OrderService implements IOrderService {
             newOrder.setAddress(orderPurchase.getAddress());
             newOrder.setUserId(userOptional.get().getId());
             newOrder.setOrderType(OrderType.CUSTOMER);
+            newOrder.setCreatedAt(Instant.now());
 
             orderRepository.save(newOrder);
 
         }
-
-
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
             int quantity = orderItemPurchase.getQuantity();

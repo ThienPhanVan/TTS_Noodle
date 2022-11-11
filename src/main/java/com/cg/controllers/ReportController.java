@@ -30,4 +30,11 @@ public class ReportController {
         modelAndView.setViewName("admin/report/thuChi");
         return modelAndView;
     }
+
+    @GetMapping("warehouse")
+    public ModelAndView showWarehouse(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/report/warehouse");
+        return modelAndView;
+    }
 }
