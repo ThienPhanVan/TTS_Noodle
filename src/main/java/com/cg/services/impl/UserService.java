@@ -40,7 +40,6 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-
     public List<UserResult> findAllByRoleId(long id) {
         return  userRepository.getAllByRoleId(id).stream()
                 .map(userMapper::toDTO).collect(Collectors.toList());
@@ -145,5 +144,6 @@ public class UserService implements IUserService {
     public boolean findUserByRoleId(Long roleId) {
         return userRepository.findUserByRoleId(roleId);
     }
+
 
 }
