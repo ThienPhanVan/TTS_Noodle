@@ -32,11 +32,13 @@ public class UserApi {
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
+
     @GetMapping("/getUserByRoleId/{id}")
     public ResponseEntity<?> getUserByRoleId(@PathVariable long id) {
         List<UserResult> userResults = userService.findAllByRoleId(id);
         return new ResponseEntity<>(userResults, HttpStatus.OK);
     }
+
 
     @PostMapping("/createCustomer")
     public ResponseEntity<?> createCustomer(@RequestBody CreateUserParam createUserParam) {
@@ -66,9 +68,4 @@ public class UserApi {
         return new ResponseEntity<>(userParamList, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UpdateUserParam updateParam) {
-        updateParam.setId(id);
-        return new ResponseEntity<>(userService.updateUser(updateParam), HttpStatus.ACCEPTED);
-    }
 }

@@ -62,6 +62,7 @@ public class UserService implements IUserService {
         return optional.get();
     }
 
+
     @Override
     @Transactional
     public UserResult createCustomer(CreateUserParam createUserParam) {
@@ -138,6 +139,11 @@ public class UserService implements IUserService {
         user.getRole();
         return userMapper.toDTO(userRepository.save(user));
 
+    }
+
+    @Override
+    public boolean findUserByRoleId(Long roleId) {
+        return userRepository.findUserByRoleId(roleId);
     }
 
 }

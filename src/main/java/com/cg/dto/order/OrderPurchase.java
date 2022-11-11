@@ -8,26 +8,21 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Accessors(chain = true)
-public class OrderResult {
+public class OrderPurchase {
 
-    private Long id;
-
-    private BigDecimal grandTotal;
-
-    private long userId;
-
-    private OrderStatus orderStatus;
+    private Long userId;
 
     private String address;
 
-    private long createdBy;
+    List<OrderItemPurchase> orderItemPurchases;
 
-    private Instant createdAt;
+    private String fullName;
 
 }
+

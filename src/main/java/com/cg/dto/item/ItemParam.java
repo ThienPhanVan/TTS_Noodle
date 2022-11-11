@@ -22,6 +22,7 @@ public class ItemParam {
     private long userId;
 
     private long  orderId;
+
     private BigDecimal price;
 
     private Integer quantity;

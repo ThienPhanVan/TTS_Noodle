@@ -7,13 +7,16 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-public class OrderItemParam {
+public class OrderItemPurchase {
 
     private int quantity;
+
+    private BigDecimal price;
 
     private long productId;
 

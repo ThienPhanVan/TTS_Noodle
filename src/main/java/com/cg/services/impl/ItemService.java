@@ -3,7 +3,7 @@ package com.cg.services.impl;
 import com.cg.dto.item.ItemResult;
 import com.cg.mapper.ItemMapper;
 import com.cg.repositories.ItemRepository;
-import com.cg.services.IITemService;
+import com.cg.services.IItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ItemService implements IITemService {
+public class ItemService implements IItemService {
+
     @Autowired
     private ItemRepository itemRepository;
 

@@ -6,6 +6,7 @@ import com.cg.dto.userDTO.UserResult;
 import com.cg.repositories.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface IUserService  {
@@ -26,5 +27,6 @@ public interface IUserService  {
 
     UserResult updateUser(UpdateUserParam updateUserParam);
 
+    boolean findUserByRoleId (Long roleId);
 
 }

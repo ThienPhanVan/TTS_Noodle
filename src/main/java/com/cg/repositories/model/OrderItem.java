@@ -15,6 +15,17 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "order_items")
 public class OrderItem {
+
+    public OrderItem(Long id){
+        this.id = id;
+    }
+
+    public OrderItem (Long productId, Long itemId, Long orderId){
+       setProductId(productId);
+       setOrderId(orderId);
+       setItemId(itemId);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -24,26 +35,41 @@ public class OrderItem {
     private BigDecimal price;
 
     @Column(name = "quantity", nullable = false, length = 45)
-    private String quantity;
+    private Integer quantity;
 
-    @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "item_id", insertable = false, updatable = false)
     private Long itemId;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "item_id")
     private Item item;
 
-    @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
+
+    @Column(name = "order_id", insertable = false, updatable = false)
     private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
+
+    @Column(name = "product_id", insertable = false, updatable = false)
     private Long productId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
+
+
+    public OrderItem setProductId (Long productId){
+        this.product = new Product(this.productId = productId);
+        return this;
+    }
+    public OrderItem setItemId(Long itemId){
+        this.item = new Item(this.itemId = itemId);
+        return this;
+    }
+    public OrderItem setOrderId (Long orderId){
+        this.order = new Order(this.orderId = orderId);
+        return this;
+    }
 }

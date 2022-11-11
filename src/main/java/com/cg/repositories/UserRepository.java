@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
 
     List<User> getAllByRoleId(long id);
 
@@ -28,10 +30,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "OR u.phone LIKE %?1% ")
 //    List<User> findUserByFullNameOrPhone(String keyword);
 
+    boolean findUserByRoleId (Long roleId);
+
+    @Query(value =
+            "FROM User AS u " +
+                    "WHERE u.fullName LIKE %:keyword% " +
+                    "OR u.phone LIKE %:keyword% ")
+    List<User> findAllByFullNameOrPhone(String keyword);
+
+
 
     @Query(value = "FROM User AS u WHERE u.roleId = 2 and u.fullName LIKE %?1% ")
     List<User> searchCustomer(String keyword);
 
     @Query(value = "FROM User AS u WHERE u.roleId = 3 and u.fullName LIKE %?1% ")
     List<User> searchSupplier(String keyword);
+
 }

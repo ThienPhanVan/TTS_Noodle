@@ -4,7 +4,7 @@ import com.cg.dto.item.ItemResult;
 
 import java.util.List;
 
-public interface IITemService {
+public interface IItemService {
 
     List<ItemResult> findAll ();
 }

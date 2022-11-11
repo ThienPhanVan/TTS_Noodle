@@ -436,8 +436,12 @@
                                 </form>
                             </nav>
                         </div>
-                        <input class="form-control mt-2" type="date" name="dateTime" value="Ngày tạo"/>
-                        <input class="form-control mt-3" type="text" name="description" value="Ghi chú"/>
+                        <input class="form-control mt-2" id="dateID" type="date" min= name="dateTime" value="Ngày tạo"/>
+<!--                        <select class="form-control">-->
+<!--                            <option selected disabled >Loại đơn nhập</option>-->
+<!--                            <option value="1">PURCHASE_RICE</option>-->
+<!--                            <option value="2">PURCHASE_NOODLE</option>-->
+<!--                        </select>-->
                     </div>
                     <div class="bill_info" style="margin-top: 25px;">
                         <h5>Thông tin thanh toán</h5>
@@ -517,6 +521,28 @@
 </script>
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
+<script>
+    $(
+        function(){
+            //Display Only Date till today //
+
+            let dtToday = new Date();
+
+            let month = dtToday.getMonth() + 1;
+            let day = dtToday.getDate();
+            let year = dtToday.getFullYear();
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+
+            let minDate= year + '-' + month + '-' + day;
+
+            $('#dateID').attr('min', minDate);
+        }
+    )
+
+</script>
 
 </body>
 

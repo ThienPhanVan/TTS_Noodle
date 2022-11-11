@@ -44,7 +44,7 @@ public class User {
     private Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @Column(name = "status", nullable = false)

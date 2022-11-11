@@ -3,10 +3,11 @@ package com.cg.repositories.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+
 
 @Data
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Entity
 @Table(name = "products")
- public class Product {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -23,10 +24,11 @@ import javax.persistence.*;
     @Column(name = "title", nullable = false, length = 55)
     private String title;
 
+    @Column(name = "price", precision = 12)
+    private BigDecimal price;
 
-    public Product(long id){
-        this.id = id ;
+
+    public Product(long  id) {
+        this.id=id;
     }
-
-
 }
