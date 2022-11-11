@@ -1,8 +1,7 @@
 package com.cg.mapper;
 
 import com.cg.dto.userDTO.CreateUserParam;
-import com.cg.dto.userDTO.UpdateUserParam;
-import com.cg.dto.userDTO.UserResult;
+ import com.cg.dto.userDTO.UserResult;
 import com.cg.repositories.model.User;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +18,7 @@ public class UserMapper {
                 .setAddress(user.getAddress())
                 .setStatus(user.getStatus())
                 .setUsername(user.getUsername())
-                .setAvatarUrl(user.getAvatarUrl())
-                .setStatisticalId(user.getStatisticalId())
-                ;
+                .setAvatarUrl(user.getAvatarUrl());
     }
 
     public User toModel(CreateUserParam createUserParam) {
