@@ -13,11 +13,8 @@ public interface IUserService  {
 
     List<UserResult> findAll ();
 
-<<<<<<< HEAD
-=======
     List<UserResult>  findAllByRoleId(long id);
 
->>>>>>> development
     UserResult findById(long id);
 
     UserResult createCustomer(CreateUserParam createUserParam);

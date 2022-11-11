@@ -22,8 +22,8 @@ import java.time.Instant;
 @Accessors(chain = true)
 public class Order {
 
-    public Order(Long userId){
-        this.user = new User(this.userId = userId);
+    public Order(Long id){
+        this.id = id;
     }
 
     @Id
@@ -47,7 +47,7 @@ public class Order {
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderType orderType;
+    private OrderType orderType;    
 
     @Column(name = "address", nullable = false, length = 95)
     private String address;
@@ -59,17 +59,9 @@ public class Order {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
-    public Order(long id){
-        this.id = id ;
-    }
-
-
-//    public Order(Long id) {
-//        this.id = id;
-//    }
-
     public Order setUserId(Long userId) {
-        this.user = new User(this.userId = userId);
+        this.userId = userId;
+        this.user = new User(userId);
         return this;
     }
 

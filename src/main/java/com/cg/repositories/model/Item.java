@@ -24,7 +24,13 @@ import java.time.Instant;
 //         this.order = new Order(this.orderId = orderId);
 //     }
 //=======
-    public Item(long productId, long userId, long orderId) {
+
+
+    public Item(Long id) {
+    this.id = id;
+}
+
+    public Item(Long productId, Long userId, Long orderId) {
         setProductId(productId);
         setUserId(userId);
         setOrderId(orderId);
@@ -81,10 +87,6 @@ import java.time.Instant;
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
-
-   public Item(Long id) {
-      this.id = id;
-   }
 
 
     @Column(name = "updated_by", nullable = false)

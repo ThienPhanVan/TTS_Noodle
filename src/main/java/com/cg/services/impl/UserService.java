@@ -38,8 +38,6 @@ public class UserService implements IUserService {
                 .collect(Collectors.toList());
     }
 
-<<<<<<< HEAD
-=======
     @Override
     @Transactional(readOnly = true)
 
@@ -47,7 +45,6 @@ public class UserService implements IUserService {
         return  userRepository.getAllByRoleId(id).stream()
                 .map(userMapper::toDTO).collect(Collectors.toList());
     }
->>>>>>> development
 
     @Override
     @Transactional(readOnly = true)

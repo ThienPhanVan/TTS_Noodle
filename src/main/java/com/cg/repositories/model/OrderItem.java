@@ -16,11 +16,14 @@ import java.math.BigDecimal;
 @Table(name = "order_items")
 public class OrderItem {
 
-    public OrderItem (Long productId, Long itemId, Long orderId){
-        this.product = new Product(this.productId = productId);
-        this.item = new Item(this.itemId = itemId);
-        this.order = new Order(this.orderId = orderId);
+    public OrderItem(Long id){
+        this.id = id;
+    }
 
+    public OrderItem (Long productId, Long itemId, Long orderId){
+       setProductId(productId);
+       setOrderId(orderId);
+       setItemId(itemId);
     }
 
     @Id
@@ -37,28 +40,15 @@ public class OrderItem {
     @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
     private Long itemId;
 
-    @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
-    private Long itemId;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id")
     private Item item;
 
     @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
     private Long orderId;
-<<<<<<< HEAD
-=======
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
->>>>>>> development
-
-    @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
-    private Long productId;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id")
     private Order order;
 
     @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
@@ -67,4 +57,17 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    public OrderItem setProductId (Long productId){
+        this.product = new Product(this.productId = productId);
+        return this;
+    }
+    public OrderItem setItemId(Long itemId){
+        this.item = new Item(this.itemId = itemId);
+        return this;
+    }
+    public OrderItem setOrderId (Long orderId){
+        this.order = new Order(this.orderId = orderId);
+        return this;
+    }
 }

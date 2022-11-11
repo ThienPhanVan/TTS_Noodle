@@ -153,7 +153,6 @@ public class OrderService implements IOrderService {
             totalQuantity += quantity;
 
 
-           newOrder.setId(0L);
            newOrder.setGrandTotal(totalAmount);
            newOrder.setOrderStatus(OrderStatus.PENDING);
            newOrder.setCreatedBy(2L);
@@ -172,30 +171,35 @@ public class OrderService implements IOrderService {
             int quantity = orderItemPurchase.getQuantity();
             Long productId = orderItemPurchase.getProductId();
 
+            Item newItem = new Item();
 
             OrderItem newOrderItem = new OrderItem();
-            newOrderItem.setId(0L);
+
             newOrderItem.setPrice(price);
             newOrderItem.setQuantity(quantity);
             newOrderItem.setOrderId(newOrder.getId());
             newOrderItem.setProductId(productId);
 
-            orderItemRepository.save(newOrderItem);
 
-           Item newItem = new Item();
 
-           newItem.setId(0L);
+
+
            newItem.setPrice(newOrderItem.getPrice());
            newItem.setQuantity(quantity);
            newItem.setAvailable(quantity);
            newItem.setSold(0);
            newItem.setDefective(0);
            newItem.setCreatedAt(Instant.now());
+           newItem.setCreatedBy(1L);
            newItem.setUserId(userOptional.get().getId());
            newItem.setOrderId(newOrder.getId());
            newItem.setProductId(productId);
 
            itemRepository.save(newItem);
+
+           newOrderItem.setItemId(newItem.getId());
+
+           orderItemRepository.save(newOrderItem);
        }
         return orderMapper.toDTO(newOrder);
     }

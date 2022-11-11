@@ -32,15 +32,14 @@ public class UserApi {
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
-=======
+
     @GetMapping("/getUserByRoleId/{id}")
     public ResponseEntity<?> getUserByRoleId(@PathVariable long id) {
         List<UserResult> userResults = userService.findAllByRoleId(id);
         return new ResponseEntity<>(userResults, HttpStatus.OK);
     }
 
->>>>>>> development
+
     @PostMapping("/createCustomer")
     public ResponseEntity<?> createCustomer(@RequestBody CreateUserParam createUserParam) {
         return new ResponseEntity<>(userService.createCustomer(createUserParam), HttpStatus.OK);
