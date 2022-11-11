@@ -24,10 +24,6 @@ import java.util.Set;
 @Table(name = "orders")
 public class Order {
 
-    public Order(Long id){
-        this.id = id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -49,6 +45,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderType orderType;    
 
+
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
@@ -68,6 +65,10 @@ public class Order {
 
     @Column(name = "phone", length = 15)
     private String phone;
+
+    public Order(Long id){
+        this.id = id;
+    }
 
 
     public Order setUserId(Long userId) {
