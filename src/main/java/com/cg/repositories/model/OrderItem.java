@@ -39,6 +39,7 @@ public class OrderItem {
 
     @Column(name = "item_id", insertable = false, updatable = false)
     private Long itemId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id")
     private Item item;

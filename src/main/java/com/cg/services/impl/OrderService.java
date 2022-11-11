@@ -7,15 +7,18 @@ import com.cg.exceptions.NotEnoughQuantityException;
 import com.cg.exceptions.NotFoundException;
 import com.cg.repositories.*;
 import com.cg.repositories.model.*;
+
 import com.cg.dto.order.OrderItemParam;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
 import com.cg.mapper.OrderItemMapper;
+
 import com.cg.mapper.UserMapper;
 import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
 import com.cg.repositories.UserRepository;
+
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +43,7 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private OrderItemMapper orderItemMapper;
+
     @Autowired
     private OrderItemRepository orderItemRepository;
     @Autowired
@@ -50,6 +54,10 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private ProductRepository productRepository;
+
+
+    private UserMapper userMapper;
+
 
 
     @Override
@@ -66,11 +74,10 @@ public class OrderService implements IOrderService {
     }
 
 
-    private UserMapper userMapper;
-
     @Override
     @Transactional
     public OrderResult customerOrder(OrderParam orderParam) {
+
 //        Transient
 
         //order Item
@@ -129,8 +136,17 @@ public class OrderService implements IOrderService {
                     item.setSold(item.getSold() + quantityCustomer);
                 }
 
-            }
 
+                OrderItem orderItem = new OrderItem();
+                orderItem.setQuantity(item.getQuantity());
+                orderItem.setProductId(item.getProductId());
+                orderItem.setItemId(item.getId());
+                orderItem.setOrderId(order.getId());
+                orderItem.setPrice(new BigDecimal(7));
+                orderItemRepository.save(orderItem);
+
+
+            }
         }
         //order Item
         return orderMapper.toDTO(order);
