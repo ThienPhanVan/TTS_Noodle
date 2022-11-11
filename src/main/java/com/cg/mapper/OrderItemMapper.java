@@ -1,18 +1,15 @@
 package com.cg.mapper;
 
-<<<<<<< HEAD
 import com.cg.dto.order.OrderItemPurchase;
 import com.cg.dto.order_item.OrderItemResult;
-=======
+
 
 import com.cg.dto.orderItem.OrderItemParam;
->>>>>>> thien_dev
 import com.cg.repositories.model.OrderItem;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderItemMapper {
-<<<<<<< HEAD
 
     public OrderItemResult toDTO(OrderItem orderItem){
         return new OrderItemResult()
@@ -24,12 +21,13 @@ public class OrderItemMapper {
                 .setProductId(orderItem.getProductId());
     }
 
-    public OrderItem toModal(OrderItemPurchase orderItemPurchase){
+    public OrderItem toModal(OrderItemPurchase orderItemPurchase) {
         return new OrderItem()
                 .setPrice(orderItemPurchase.getPrice())
                 .setQuantity(orderItemPurchase.getQuantity())
                 .setProductId(orderItemPurchase.getProductId());
-=======
+    }
+
     public OrderItem toModel(OrderItemParam orderItemParam) {
         return new OrderItem()
                 .setId(orderItemParam.getItemId())
@@ -38,6 +36,5 @@ public class OrderItemMapper {
                 .setItemId(orderItemParam.getItemId())
                 .setOrderId(orderItemParam.getOrderId())
                 .setProductId(orderItemParam.getProductId());
->>>>>>> thien_dev
     }
 }

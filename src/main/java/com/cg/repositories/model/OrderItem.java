@@ -36,44 +36,30 @@ public class OrderItem {
 
     @Column(name = "quantity", nullable = false, length = 45)
     private Integer quantity;
-<<<<<<< HEAD
-
-    @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
-    private Long itemId;
-=======
->>>>>>> thien_dev
 
     @Column(name = "item_id", insertable = false, updatable = false)
     private Long itemId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id")
     private Item item;
 
-<<<<<<< HEAD
-    @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
-    private Long orderId;
-
-=======
     @Column(name = "order_id", insertable = false, updatable = false)
     private Long orderId;
->>>>>>> thien_dev
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id")
     private Order order;
 
-<<<<<<< HEAD
-    @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
-=======
 
     @Column(name = "product_id", insertable = false, updatable = false)
->>>>>>> thien_dev
     private Long productId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id")
     private Product product;
 
-<<<<<<< HEAD
+
     public OrderItem setProductId (Long productId){
         this.product = new Product(this.productId = productId);
         return this;
@@ -83,9 +69,6 @@ public class OrderItem {
         return this;
     }
     public OrderItem setOrderId (Long orderId){
-=======
-    public OrderItem setOrderId(Long orderId) {
->>>>>>> thien_dev
         this.order = new Order(this.orderId = orderId);
         return this;
     }
