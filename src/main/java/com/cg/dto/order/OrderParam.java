@@ -14,6 +14,7 @@ import java.util.List;
 public class OrderParam {
     private Long userId;
     List<OrderItemParam> orderItems;
+
     private String fullName;
     private String phone;
     private String address;

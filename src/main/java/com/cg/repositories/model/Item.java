@@ -27,25 +27,25 @@ public class Item {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "product_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "product_id", insertable = false, updatable = false)
     private Long productId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "users_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "users_id", insertable = false, updatable = false)
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "users_id", nullable = false)
+    @JoinColumn(name = "users_id")
     private User user;
 
-    @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "order_id", insertable = false, updatable = false)
     private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "order_id")
     private Order order;
 
 

@@ -3,16 +3,17 @@ package com.cg.services.impl;
 import com.cg.dto.order.OrderItemParam;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
+import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.exceptions.NotEnoughQuantityException;
 import com.cg.exceptions.NotFoundException;
+import com.cg.mapper.OrderItemMapper;
 import com.cg.mapper.OrderMapper;
+import com.cg.mapper.UserMapper;
 import com.cg.repositories.ItemRepository;
+import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
 import com.cg.repositories.UserRepository;
-import com.cg.repositories.model.Item;
-import com.cg.repositories.model.Order;
-import com.cg.repositories.model.OrderStatus;
-import com.cg.repositories.model.User;
+import com.cg.repositories.model.*;
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,67 +36,86 @@ public class OrderService implements IOrderService {
     private OrderMapper orderMapper;
 
     @Autowired
+    private OrderItemMapper orderItemMapper;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+    @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     @Transactional
     public OrderResult customerOrder(OrderParam orderParam) {
-//        Order order = orderMapper.toModel(orderParam);
-//        order.setUser(new User().setId(order.getUserId()));
-//        orderParam.setCreatedAt(Instant.now());
-//        orderParam.setCreatedBy(2);
-        //orderParam.setUserId(orderParam.getUserId());
-        // orderParam.setOrderStatus(OrderStatus.PENDING);
-        //Transient
 
+//        Transient
         Long userId = orderParam.getUserId();
         if (userId != null) {
             Optional<User> optional = userRepository.findById(userId);
             if (!optional.isPresent())
-                throw new NotFoundException("");
-            //TODO:set full name theo UserId
+                throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
         }
         Order order = orderMapper.toModel(orderParam);
+        order.setFullName(orderParam.getFullName());
+        order.setPhone(orderParam.getPhone());
+        order.setAddress(orderParam.getAddress());
+        order.setCreatedAt(Instant.now());
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(2L);
+        order.setOrderType(OrderType.CUSTOMER);
         order.setGrandTotal(new BigDecimal(355));
-        order.setCreatedAt(Instant.now());
         order = orderRepository.save(order);
+
         BigDecimal grandTotal;
+
         //xu ly list orderItems
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
-//kiem tra product ton tai
-            //lay toan item theo productId
+            //kiem tra product ton tai
+            if (!itemRepository.existsById(itemParam.getProductId()))
+                throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
 
-            List<Item> items = itemRepository.findAllByProductIdOrderByCreatedAt(1L);
+            // lay toan item theo productId
+            List<Item> items = itemRepository.findAllByProductIdOrderByCreatedAt(itemParam.getProductId());
             long totalAvailable = items.stream()
                     .mapToInt(Item::getAvailable)
                     .sum();
+            // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
             if (totalAvailable < itemParam.getQuantity())
                 throw new NotEnoughQuantityException("Không đủ số lượng, vui lòng kiểm tra số lượng!");
+            // lấy số lượng order
             int quantityCustomer = itemParam.getQuantity();
-            Item lastChangeItem = null;
             for (Item item : items) {
-
                 if (quantityCustomer == 0)
-                    break;
+                    throw new NotEnoughQuantityException("Số lượng nhập vào phải lớn hơn 0!");
                 int available = item.getAvailable();
+              //  int sold = item.getSold();
                 if (quantityCustomer >= available) {
                     quantityCustomer -= available;
+                    System.out.println("available= " +available);
+                    System.out.println("quantity= " +quantityCustomer);
                     item.setAvailable(0);
                     item.setSold(available);
                 } else {
                     available -= quantityCustomer;
                     item.setAvailable(available);
-                    item.setSold(quantityCustomer);
+                    item.setSold( item.getSold() + quantityCustomer);
                 }
-                lastChangeItem = item;
-            }
-          //order Item
-        }
 
+                OrderItem orderItem = new OrderItem();
+                orderItem.setQuantity(item.getQuantity());
+                orderItem.setProductId(item.getProductId());
+                orderItem.setItemId(item.getId());
+                orderItem.setOrderId(order.getId());
+                orderItem.setPrice(new BigDecimal(7));
+                orderItemRepository.save(orderItem);
+
+            }
+            //order Item
+        }
         return orderMapper.toDTO(order);
     }
 }

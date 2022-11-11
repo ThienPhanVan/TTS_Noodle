@@ -1,12 +1,10 @@
 package com.cg.dto.orderItem;
 
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
 import java.math.BigDecimal;
 
 
@@ -14,22 +12,19 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-public class OrderItemParam {
+public class OrderItemResult {
+
     private Long id;
 
-    private long  productId;
-
-    private long userId;
-
-    private long  orderId;
     private BigDecimal price;
 
     private Integer quantity;
 
-//    private Long createdBy;
-//
-//    private Long updatedBy;
-//    private Instant createdAt;
-//    private Instant updatedAt;
+    private long itemId;
+
+    private long orderId;
+
+    private long productId;
+
 
 }
