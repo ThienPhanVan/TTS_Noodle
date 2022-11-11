@@ -36,34 +36,23 @@ public class Order {
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
 
-<<<<<<< HEAD
-    @Column(name = "user_id",nullable = false, insertable = false, updatable = false)
-=======
+
     @Column(name = "user_id", insertable = false, updatable = false)
->>>>>>> thien_dev
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-<<<<<<< HEAD
-    @Column(name = "order_status", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderType orderType;    
-=======
+
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, length = 45)
-    private OrderType orderType;
->>>>>>> thien_dev
 
     @Column(name = "address", nullable = false, length = 95)
     private String address;
@@ -71,12 +60,6 @@ public class Order {
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
 
-<<<<<<< HEAD
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-=======
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
@@ -86,11 +69,7 @@ public class Order {
     @Column(name = "phone", length = 15)
     private String phone;
 
-    public Order(Long id) {
-        this.id = id;
-    }
 
->>>>>>> thien_dev
     public Order setUserId(Long userId) {
         this.userId = userId;
         this.user = new User(userId);

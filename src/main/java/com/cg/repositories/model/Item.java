@@ -18,14 +18,6 @@ import java.time.Instant;
 @Table(name = "items")
  public class Item {
 
-//     public Item (long productId, long userId, long orderId){
-//         this.product = new Product(this.productId = productId);
-//         this.users = new User(this.userId = userId);
-//         this.order = new Order(this.orderId = orderId);
-//     }
-//=======
-
-
     public Item(Long id) {
     this.id = id;
 }
