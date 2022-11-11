@@ -17,6 +17,8 @@ public class UserResult {
 
     private long roleId;
 
+    private long statisticalId;
+
     private String fullName;
 
     private String phone;
