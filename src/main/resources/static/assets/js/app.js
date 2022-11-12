@@ -37,3 +37,18 @@ class User {
 
     }
 }
+
+class Order {
+    constructor(id, grandTotal, userId, orderType, orderStatus, address, createdAt, fullName, phone) {
+        this.id = id;
+        this.fullName = fullName;
+        this.grandTotal = grandTotal;
+        this.phone = phone;
+        this.orderStatus = orderStatus;
+        this.address = address;
+        this.orderType = orderType;
+        this.createdAt = createdAt;
+        this.userId = userId;
+
+    }
+}

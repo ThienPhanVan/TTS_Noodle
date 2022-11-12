@@ -44,7 +44,7 @@
                         <div class="iq-card-body">
                             <div class="table-responsive">
                                 <table class="table mb-0">
-                                    <thead class="thead-light">
+                                    <thead class="bg-primary">
                                     <tr>
                                         <th scope="col">Mã Đh</th>
                                         <th scope="col">Ngày đặt</th>
@@ -99,5 +99,48 @@
     <th:block th:replace="/layout/script/footer :: footer"/>
 </div>
 </body>
+
+<script>
+    let orderCustomer = new Order();
+
+    function renderOrder(obj) {
+        let str = `
+                <tr id="tr_${obj.id}">
+                    <td>${obj.fullName}</td>
+                     <td>${obj.orderType}</td>
+                    <td>${obj.phone}</td>
+                    <td>${obj.address}</td>
+                    <td>${obj.grandTotal}</td>
+                     <td>${obj.orderStatus}</td>
+                    <td>${obj.createdAt}</td>
+                    <td>${obj.userId}</td>
+                </tr>
+            `;
+        return str;
+    }
+
+    function loadOrders() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/orders/" + 2,
+        }).done((data) => {
+            console.log(data)
+            data.forEach(item => {
+                let str = renderUser(item);
+                $("#tbCustomer tbody").prepend(str);
+            });
+            enableTootip();
+            showModalUpdateCus();
+        }).fail((jqXHR) => {
+            console.log(jqXHR);
+        })
+    }
+
+    loadUsers();
+</script>
 
 </html>
