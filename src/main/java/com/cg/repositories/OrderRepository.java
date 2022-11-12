@@ -24,4 +24,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE o.userId = ?1")
     List<OrderResult> getAllOrderByUserId(Long userId);
 
+
+    List<Order> findOrderByOrderType(String type);
+
 }

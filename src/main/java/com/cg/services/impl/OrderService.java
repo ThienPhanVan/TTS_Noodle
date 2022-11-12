@@ -46,6 +46,7 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -196,6 +197,7 @@ public class OrderService implements IOrderService {
             newOrder.setAddress(orderPurchase.getAddress());
             newOrder.setUserId(userOptional.get().getId());
             newOrder.setOrderType(OrderType.CUSTOMER);
+            newOrder.setCreatedAt(Instant.now());
 
             orderRepository.save(newOrder);
 
