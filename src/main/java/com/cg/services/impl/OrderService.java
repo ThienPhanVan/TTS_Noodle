@@ -64,7 +64,8 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderResult> findAll() {
         return orderRepository.findAll()
-                .stream().map(order -> orderMapper.toDTO(order))
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
                 .collect(Collectors.toList());
     }
 
@@ -165,6 +166,46 @@ public class OrderService implements IOrderService {
         }
         //order Item
         return orderMapper.toDTO(order);
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderTypePurchase() {
+        return orderRepository.findAllByOrderType(OrderType.PURCHASE)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderTypeCustomer() {
+        return orderRepository.findAllByOrderType(OrderType.CUSTOMER)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderStatusPending() {
+        return orderRepository.findAllByOrderStatus(OrderStatus.PENDING)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderStatusComplete() {
+        return orderRepository.findAllByOrderStatus(OrderStatus.COMPLETED)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderStatusCancel() {
+        return orderRepository.findAllByOrderStatus(OrderStatus.CANCELLED)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
     }
 
 

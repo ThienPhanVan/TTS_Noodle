@@ -21,8 +21,8 @@ public enum OrderStatus {
     @JsonCreator
     public static OrderStatus parseOrderStatus(String value) {
         OrderStatus[] values = values();
-        for (OrderStatus userStatus : values) {
-            if (userStatus.value.equals(value)) return userStatus;
+        for (OrderStatus orderStatus : values) {
+            if (orderStatus.value.equals(value)) return orderStatus;
         }
         throw new IllegalArgumentException(value + "invalid");
     }

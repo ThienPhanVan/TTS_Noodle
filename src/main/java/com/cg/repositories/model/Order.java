@@ -46,8 +46,8 @@ public class Order {
     private OrderType orderType;    
 
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
 

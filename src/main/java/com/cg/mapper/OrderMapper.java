@@ -17,6 +17,7 @@ public class OrderMapper {
                 .setGrandTotal(order.getGrandTotal())
                 .setAddress(order.getAddress())
                 .setOrderStatus(order.getOrderStatus())
+                .setOrderType(order.getOrderType())
                 .setUserId(order.getUserId())
                 .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());

@@ -400,14 +400,14 @@
                         <th>Đang xử lý</th>
                         <th>5000000</th>
                     </tr>
-                    <tr class="list-product">
-                        <th>2</th>
-                        <th>02-01-1990</th>
-                        <th>Thiện</th>
-                        <th>TTS_Noodes</th>
-                        <th>Đang xử lý</th>
-                        <th>5000000</th>
-                    </tr>
+<!--                    <tr class="list-product">-->
+<!--                        <th>2</th>-->
+<!--                        <th>02-01-1990</th>-->
+<!--                        <th>Thiện</th>-->
+<!--                        <th>TTS_Noodes</th>-->
+<!--                        <th>Đang xử lý</th>-->
+<!--                        <th>5000000</th>-->
+<!--                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -476,6 +476,44 @@
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
 <script>
+
+    let order = new Order();
+
+
+    function renderOrder(obj){
+        let str = `
+              <tr class="list-product" id="tr_${obj.id}">
+                        <th>1</th>
+                        <th>02-01-1990</th>
+                        <th>Thiện</th>
+                        <th>TTS_Noodes</th>
+                        <th>Đang xử lý</th>
+                        <th>5000000</th>
+                    </tr>
+        `
+
+        return str;
+    }
+
+
+    function getAllOrder(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/orders/imports"
+        })
+        .done((data) => {
+            $.each(data , (i,item) => {
+                order = item;
+
+                addRowUser();
+            })
+        })
+    }
+
 
 </script>
 

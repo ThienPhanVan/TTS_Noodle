@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
+import com.cg.repositories.model.Order;
+import com.cg.repositories.model.OrderType;
 
 
 public interface IOrderService {
@@ -20,4 +22,14 @@ public interface IOrderService {
     List<OrderResult> getAllOrderByUserId(Long userId);
 
     OrderResult customerOrder(OrderParam orderParam);
+
+    List<OrderResult> findAllByOrderTypePurchase ();
+
+    List<OrderResult> findAllByOrderTypeCustomer ();
+
+    List<OrderResult> findAllByOrderStatusPending ();
+
+    List<OrderResult> findAllByOrderStatusComplete ();
+
+    List<OrderResult> findAllByOrderStatusCancel ();
 }

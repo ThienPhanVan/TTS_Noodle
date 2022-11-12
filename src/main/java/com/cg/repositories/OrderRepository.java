@@ -2,6 +2,8 @@ package com.cg.repositories;
 
 import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
+import com.cg.repositories.model.OrderStatus;
+import com.cg.repositories.model.OrderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,6 +18,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "o.grandTotal, " +
             "o.userId, " +
             "o.orderStatus, " +
+            "o.orderType, " +
             "o.address, " +
             "o.createdBy, " +
             "o.createdAt " +
@@ -25,6 +28,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<OrderResult> getAllOrderByUserId(Long userId);
 
 
-    List<Order> findOrderByOrderType(String type);
+    List<Order> findAllByOrderType(OrderType orderType);
+
+    List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
 }
