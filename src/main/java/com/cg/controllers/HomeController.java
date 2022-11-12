@@ -18,13 +18,14 @@ public class HomeController {
         return modelAndView;
     }
 
-    @GetMapping("/thu")
-    public ModelAndView showthu(){
+    @GetMapping("/donhang")
+    public ModelAndView showOrder(){
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/turnover/thu");
+        modelAndView.setViewName("/admin/manager/donhang");
         return modelAndView;
     }
+
 
     @GetMapping("purchase")
     public ModelAndView showPurchasePage(){

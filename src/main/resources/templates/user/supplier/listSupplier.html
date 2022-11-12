@@ -15,93 +15,6 @@
 <!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Sidebar  -->
-    <div class="iq-sidebar">
-        <div class="iq-navbar-logo d-flex justify-content-between">
-            <a href="/home" class="header-logo">
-                <!-- <img src="assets/images/logo.png" class="img-fluid rounded" alt=""> -->
-                <img src="/assets/images/nudo.jpg" alt="">
-                <span>Bún Việt</span>
-            </a>
-            <div class="iq-menu-bt align-self-center">
-                <div class="wrapper-menu">
-                    <div class="main-circle"><i class="ri-menu-line"></i></div>
-                    <div class="hover-circle"><i class="ri-close-fill"></i></div>
-                </div>
-            </div>
-        </div>
-        <div id="sidebar-scrollbar">
-            <nav class="iq-sidebar-menu">
-                <ul id="iq-sidebar-toggle" class="iq-menu">
-                    <li class="active">
-                        <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-home iq-arrow-left"></i><span>Dashboard</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
-                            <li class="active"><a href="/home"><i class="las la-laptop-code"></i>Tổng Quan</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#userinfo" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-user-tie iq-arrow-left"></i><span>Khách hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="/customer"><i class="las la-th-list"></i>Khách hàng</a>
-                            </li>
-                            <li><a href="/supplier"><i class="ri-database-line"></i>Nhà cung cấp</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#tables" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-table-line iq-arrow-left"></i><span>Quản Lí</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="tables" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-
-                            <li>
-                                <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse"
-                                   aria-expanded="false"><i class="lab la-elementor iq-arrow"></i><span>Kho
-                                 Hàng</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#tables">
-                                    <li><a href="#"><i class="las la-palette ml-5"></i>Tồn Kho Gạo</a></li>
-                                    <li><a href="#"><i class="las la-magnet ml-5"></i>Tồn Kho Bún</a></li>
-                                    <!--                                    <li><a href="ui-tooltips.html"><i class="las la-magnet ml-5"></i>Sắp Hết Gạo</a></li>-->
-                                </ul>
-                            </li>
-                            <li><a href="#"><i class="ri-database-line"></i>Đơn Hàng</a></li>
-
-                            <li><a href="/purchase"><i class="ri-database-line"></i>Nhập Hàng</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#forms" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
-                                class="lab la-wpforms iq-arrow-left"></i><span>Tiền Bạc</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="forms" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="form-layout.html"><i class="las la-book"></i>Thu</a></li>
-                            <li><a href="form-validation.html"><i class="las la-edit"></i>Chi</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#charts" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-pie-chart-box-line iq-arrow-left"></i><span>Đặt hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="charts" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="/customer_order"><i class="ri-folder-chart-2-line"></i>Khách Hàng</a></li>
-                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Nhà Cung Cấp</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <div class="p-3"></div>
-        </div>
-    </div>
     <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
     <th:block th:replace="/layout/topNav/topNav :: topNav"/>
@@ -137,8 +50,9 @@
                                         <th>Email</th>
                                         <th>Điện Thoại</th>
                                         <th>Địa Chỉ</th>
-                                        <th>Lần Cuối Mua Hàng</th>
+                                        <th>Lần Cuối NH</th>
                                         <th>Tổng tiền</th>
+                                        <th>Nợ</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -174,61 +88,11 @@
     <!-- Footer END -->
 
     <!-- modal them khach hang -->
-<<<<<<< HEAD:src/main/resources/templates/user/listSupplier.html
-    <div class="modal fade" id="createCustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog mw-100 w-75  ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tạo Nhà cung cấp</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="inputEmail4">Email</label>
-                                <input type="email" class="form-control" id="inputEmail4">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputPassword4">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4">
-                            </div>
 
-                            <div class="form-group col-md-4">
-                                <label for="inputAddress">Address</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputAddress2">Address 2</label>
-                                <input type="text" class="form-control" id="inputAddress2"
-                                       placeholder="Apartment, studio, or floor">
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="inputCity">City</label>
-                                <input type="text" class="form-control" id="inputCity">
-                            </div>
-
-                        </div>
-
-
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <th:block th:replace="/layout/script/footer :: footer"/>
-=======
     <th:block th:replace="/user/supplier/modalCreateSupplier.html"></th:block>
     <th:block th:replace="/user/supplier/modalUpdateSuplier.html"></th:block>
->>>>>>> development:src/main/resources/templates/user/supplier/listSupplier.html
-</div>
+  </div>
+
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 </body>
 <script>
@@ -251,7 +115,8 @@
                     <td>${obj.phone}</td>
                     <td>${obj.address}</td>
                     <td>${obj.day}</td>
-                    <td>${obj.total}</td>
+                    <td>${obj.day}</td>
+                     <td>${obj.day}</td>
                        <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${obj.id}" data-toggle="tooltip"
                                 data-toggle="modal" data-target="#modalUpdateSup"

@@ -62,4 +62,5 @@ public class User {
         this.role = new Role(roleId);
         return this;
     }
+
 }
