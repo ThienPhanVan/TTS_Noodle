@@ -19,6 +19,7 @@ public class OrderMapper {
                 .setOrderStatus(order.getOrderStatus())
                 .setOrderType(order.getOrderType())
                 .setUserId(order.getUserId())
+                .setFullName(order.getFullName())
                 .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
 
@@ -33,7 +34,9 @@ public class OrderMapper {
     public Order toModel (OrderParam orderParam){
         return new Order()
                 .setUserId(orderParam.getUserId())
+
                 .setAddress(orderParam.getAddress());
+
 
     }
 }

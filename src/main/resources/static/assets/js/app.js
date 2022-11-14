@@ -37,7 +37,6 @@ class User {
 
     }
 }
-<<<<<<< HEAD
 class Order {
     constructor(id ,grandTotal , userId, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
         this.id = id;
@@ -46,8 +45,8 @@ class Order {
         this.orderStatus = orderStatus
         this.orderType = orderType
         this.address = address
-        this.createdBy = createdBy
         this.createdAt = createdAt
+        this.createdBy = createdBy
         this.fullName = fullName;
         this.phone = phone;
     }
@@ -75,20 +74,6 @@ class Item {
         this.createdBy = createdBy;
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
-=======
 
-class Order {
-    constructor(id, grandTotal, userId, orderType, orderStatus, address, createdAt, fullName, phone) {
-        this.id = id;
-        this.fullName = fullName;
-        this.grandTotal = grandTotal;
-        this.phone = phone;
-        this.orderStatus = orderStatus;
-        this.address = address;
-        this.orderType = orderType;
-        this.createdAt = createdAt;
-        this.userId = userId;
-
->>>>>>> thien_dev
     }
 }

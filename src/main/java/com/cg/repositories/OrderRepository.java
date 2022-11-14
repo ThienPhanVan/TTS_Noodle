@@ -13,19 +13,20 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query("SELECT NEW com.cg.dto.order.OrderResult (" +
-            "o.id, " +
-            "o.grandTotal, " +
-            "o.userId, " +
-            "o.orderStatus, " +
-            "o.orderType, " +
-            "o.address, " +
-            "o.createdBy, " +
-            "o.createdAt " +
-            ")" +
-            "FROM Order o " +
-            "WHERE o.userId = ?1")
-    List<OrderResult> getAllOrderByUserId(Long userId);
+    //    @Query("SELECT NEW com.cg.dto.order.Order (" +
+//            "o.id, " +
+//            "o.grandTotal, " +
+//            "o.userId, " +
+//            "o.orderStatus, " +
+//            "o.orderType, " +
+//            "o.address, " +
+//            "o.createdBy, " +
+//            "o.fullName,"+
+//            "o.createdAt " +
+//            ")" +
+//            "FROM Order o " +
+//            "WHERE o.userId = ?1")
+    List<Order> findAllByUserId(Long userId);
 
 
     List<Order> findAllByOrderType(OrderType orderType);

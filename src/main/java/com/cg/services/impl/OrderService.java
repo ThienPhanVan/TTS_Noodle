@@ -60,13 +60,9 @@ public class OrderService implements IOrderService {
     private UserMapper userMapper;
 
 
-
     @Override
     public List<OrderResult> findAll() {
-        return orderRepository.findAll()
-                .stream()
-                .map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
+        return orderRepository.findAll().stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
 
@@ -78,14 +74,13 @@ public class OrderService implements IOrderService {
 
     @Override
     @Transactional
-    public OrderResult customerOrder(OrderParam orderParam) {
+    public OrderResult createOrderExport(OrderParam orderParam) {
 //        Transient
         //order Item
         Long userId = orderParam.getUserId();
         if (userId != null) {
             Optional<User> optional = userRepository.findById(userId);
-            if (!optional.isPresent())
-                throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
+            if (!optional.isPresent()) throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
         }
         Order order = orderMapper.toModel(orderParam);
         order.setFullName(orderParam.getFullName());
@@ -95,71 +90,54 @@ public class OrderService implements IOrderService {
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(2L);
         order.setOrderType(OrderType.CUSTOMER);
-        order.setGrandTotal(new BigDecimal(355));
+        order.setGrandTotal(new BigDecimal(0));
         order = orderRepository.save(order);
 
         BigDecimal grandTotal;
         //xu ly list orderItems
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
+            System.out.println(itemParam);
             //kiem tra product ton tai
             //lay toan item theo productId
-            if (!itemRepository.existsById(itemParam.getProductId()))
+            if (!productRepository.existsById(itemParam.getProductId()))
                 throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
             // lay toan item theo productId
-            List<Item> items = itemRepository.findAllByProductIdOrderByCreatedAt(itemParam.getProductId());
-            long totalAvailable = items.stream()
-                    .mapToInt(Item::getAvailable)
-                    .sum();
+            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(), 0);
+            long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
             // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
             if (totalAvailable < itemParam.getQuantity()) {
                 throw new NotEnoughQuantityException("Không đủ số lượng, vui lòng kiểm tra số lượng!");
             }
             // lấy số lượng order
+            int quantityCustomer = itemParam.getQuantity();
 
-            OrderItem orderItem = new OrderItem();
             for (Item item : items) {
-                int quantityCustomer = itemParam.getQuantity();
-
-                int soldOrder = 0;
-                soldOrder += quantityCustomer;
-
                 if (quantityCustomer == 0) {
-                    throw new NotEnoughQuantityException("Số lượng nhập vào phải lớn hơn 0!");
+                    break;
                 }
                 int available = item.getAvailable();
-                int sold = item.getSold();
+                int orderItemSold;
                 if (quantityCustomer >= available) {
                     quantityCustomer = quantityCustomer - available;
-                    itemParam.setQuantity(quantityCustomer);
                     item.setAvailable(0);
-                    item.setSold(available);
-                    if (quantityCustomer == 0) {
-                        break;
-                    }
+                    orderItemSold = available;
+                    int itemSold = item.getSold() + available;
+                    item.setSold(itemSold);
                 } else {
                     available = available - quantityCustomer;
                     item.setAvailable(available);
-                    item.setSold(quantityCustomer);
-                    
-                    orderItem.setQuantity(soldOrder);
-                    orderItem.setProductId(item.getProductId());
-                    orderItem.setItemId(item.getId());
-                    orderItem.setOrderId(order.getId());
-                    orderItem.setPrice(new BigDecimal(7));
-                    orderItemRepository.save(orderItem);
-                    break;
+                    orderItemSold = quantityCustomer;
+                    int itemSold = item.getSold() + quantityCustomer;
+                    item.setSold(itemSold);
+                    quantityCustomer = 0;
                 }
-
-                orderItem.setQuantity(item.getQuantity());
-
-                orderItem.setQuantity(soldOrder);
-
+                OrderItem orderItem = new OrderItem();
+                orderItem.setQuantity(orderItemSold);
                 orderItem.setProductId(item.getProductId());
                 orderItem.setItemId(item.getId());
                 orderItem.setOrderId(order.getId());
-                orderItem.setPrice(new BigDecimal(7));
+                orderItem.setPrice(item.getPrice());
                 orderItemRepository.save(orderItem);
-
             }
         }
         //order Item
@@ -168,42 +146,27 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderResult> findAllByOrderTypePurchase() {
-        return orderRepository.findAllByOrderType(OrderType.PURCHASE)
-                .stream()
-                .map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
+        return orderRepository.findAllByOrderType(OrderType.PURCHASE).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
     @Override
     public List<OrderResult> findAllByOrderTypeCustomer() {
-        return orderRepository.findAllByOrderType(OrderType.CUSTOMER)
-                .stream()
-                .map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
+        return orderRepository.findAllByOrderType(OrderType.CUSTOMER).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
     @Override
     public List<OrderResult> findAllByOrderStatusPending() {
-        return orderRepository.findAllByOrderStatus(OrderStatus.PENDING)
-                .stream()
-                .map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
+        return orderRepository.findAllByOrderStatus(OrderStatus.PENDING).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
     @Override
     public List<OrderResult> findAllByOrderStatusComplete() {
-        return orderRepository.findAllByOrderStatus(OrderStatus.COMPLETED)
-                .stream()
-                .map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
+        return orderRepository.findAllByOrderStatus(OrderStatus.COMPLETED).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
     @Override
     public List<OrderResult> findAllByOrderStatusCancel() {
-        return orderRepository.findAllByOrderStatus(OrderStatus.CANCELLED)
-                .stream()
-                .map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
+        return orderRepository.findAllByOrderStatus(OrderStatus.CANCELLED).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
 
@@ -291,8 +254,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<OrderResult> getAllOrderByUserId(Long userId) {
-        return orderRepository.getAllOrderByUserId(userId);
+    public List<Order> findAllByUserId(Long userId) {
+        return orderRepository.findAllByUserId(userId);
     }
 
 }

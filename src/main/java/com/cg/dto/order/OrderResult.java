@@ -33,4 +33,7 @@ public class OrderResult {
 
     private Instant createdAt;
 
+    private String fullName;
+
+
 }

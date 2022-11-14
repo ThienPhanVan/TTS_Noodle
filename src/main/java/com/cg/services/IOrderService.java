@@ -18,10 +18,11 @@ public interface IOrderService {
 
     OrderResult createOrderImport(OrderPurchase orderPurchase);
 
+    List<Order> findAllByUserId(Long userId);
 
-    List<OrderResult> getAllOrderByUserId(Long userId);
+//    List<OrderResult> getAllOrderByUserId(Long userId);
 
-    OrderResult customerOrder(OrderParam orderParam);
+    OrderResult createOrderExport(OrderParam orderParam);
 
     List<OrderResult> findAllByOrderTypePurchase ();
 
