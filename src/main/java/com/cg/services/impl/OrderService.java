@@ -48,6 +48,7 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -64,7 +65,8 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderResult> findAll() {
         return orderRepository.findAll()
-                .stream().map(order -> orderMapper.toDTO(order))
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
                 .collect(Collectors.toList());
     }
 
@@ -78,9 +80,7 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public OrderResult customerOrder(OrderParam orderParam) {
-
 //        Transient
-
         //order Item
         Long userId = orderParam.getUserId();
         if (userId != null) {
@@ -100,57 +100,119 @@ public class OrderService implements IOrderService {
         order = orderRepository.save(order);
 
         BigDecimal grandTotal;
-
         //xu ly list orderItems
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
             //kiem tra product ton tai
             //lay toan item theo productId
-
             if (!itemRepository.existsById(itemParam.getProductId()))
                 throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
-
-
             // lay toan item theo productId
             List<Item> items = itemRepository.findAllByProductIdOrderByCreatedAt(itemParam.getProductId());
             long totalAvailable = items.stream()
                     .mapToInt(Item::getAvailable)
                     .sum();
             // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
-            if (totalAvailable < itemParam.getQuantity())
+            if (totalAvailable < itemParam.getQuantity()) {
                 throw new NotEnoughQuantityException("Không đủ số lượng, vui lòng kiểm tra số lượng!");
+            }
             // lấy số lượng order
-            int quantityCustomer = itemParam.getQuantity();
+
+            OrderItem orderItem = new OrderItem();
             for (Item item : items) {
-                if (quantityCustomer == 0)
+                int quantityCustomer = itemParam.getQuantity();
+
+                int soldOrder = 0;
+                soldOrder += quantityCustomer;
+
+                if (quantityCustomer == 0) {
                     throw new NotEnoughQuantityException("Số lượng nhập vào phải lớn hơn 0!");
+                }
                 int available = item.getAvailable();
-                //  int sold = item.getSold();
+                int sold = item.getSold();
                 if (quantityCustomer >= available) {
-                    quantityCustomer -= available;
-                    System.out.println("available= " + available);
-                    System.out.println("quantity= " + quantityCustomer);
+                    quantityCustomer = quantityCustomer - available;
+                    itemParam.setQuantity(quantityCustomer);
                     item.setAvailable(0);
                     item.setSold(available);
+                    if (quantityCustomer == 0) {
+                        break;
+                    }
                 } else {
-                    available -= quantityCustomer;
+                    available = available - quantityCustomer;
                     item.setAvailable(available);
-                    item.setSold(item.getSold() + quantityCustomer);
+                    item.setSold(quantityCustomer);
+                    
+                    orderItem.setQuantity(soldOrder);
+                    orderItem.setProductId(item.getProductId());
+                    orderItem.setItemId(item.getId());
+                    orderItem.setOrderId(order.getId());
+                    orderItem.setPrice(new BigDecimal(7));
+                    orderItemRepository.save(orderItem);
+                    break;
                 }
 
-
-                OrderItem orderItem = new OrderItem();
                 orderItem.setQuantity(item.getQuantity());
+
+                orderItem.setQuantity(soldOrder);
+
                 orderItem.setProductId(item.getProductId());
                 orderItem.setItemId(item.getId());
                 orderItem.setOrderId(order.getId());
                 orderItem.setPrice(new BigDecimal(7));
                 orderItemRepository.save(orderItem);
 
-
             }
         }
         //order Item
         return orderMapper.toDTO(order);
+    }
+
+    @Override
+    public List<OrderListPurchase> findAllByOrderTypePurchaseList() {
+        return orderRepository.findAllByOrderType(OrderType.PURCHASE)
+                .stream()
+                .map(order -> orderMapper.toDTOList(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderTypePurchase() {
+        return orderRepository.findAllByOrderType(OrderType.PURCHASE)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderTypeCustomer() {
+        return orderRepository.findAllByOrderType(OrderType.CUSTOMER)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderStatusPending() {
+        return orderRepository.findAllByOrderStatus(OrderStatus.PENDING)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderStatusComplete() {
+        return orderRepository.findAllByOrderStatus(OrderStatus.COMPLETED)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findAllByOrderStatusCancel() {
+        return orderRepository.findAllByOrderStatus(OrderStatus.CANCELLED)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
     }
 
 
@@ -166,11 +228,12 @@ public class OrderService implements IOrderService {
 
         }
 
+        Long userId = userOptional.get().getId();
+
         List<OrderItemPurchase> orderItemPurchaseList = orderPurchase.getOrderItemPurchases();
 
         BigDecimal totalAmount = BigDecimal.valueOf(0);
 
-        int totalQuantity = 0;
 
         Order newOrder = new Order();
 
@@ -191,29 +254,26 @@ public class OrderService implements IOrderService {
 
             totalAmount = totalAmount.add(price.multiply(new BigDecimal(quantity)));
 
-            totalQuantity += quantity;
-
-
             newOrder.setGrandTotal(totalAmount);
-            newOrder.setOrderStatus(OrderStatus.PENDING);
-            newOrder.setCreatedBy(2L);
-            newOrder.setAddress(orderPurchase.getAddress());
-            newOrder.setUserId(userOptional.get().getId());
-            newOrder.setOrderType(OrderType.CUSTOMER);
-            newOrder.setCreatedAt(Instant.parse(Instant.now().toString()));
-//
-            orderRepository.save(newOrder);
-
-            // lấy tổng tiền order của 1 user
-            BigDecimal total = userRepository.totalOrderOfUser(userOptional.get().getId());
-           // set lại orderTotal, CurrencyNames_ceb, cra mới
-            userOptional.get().setTotalOrder(total);
-            userOptional.get().setCreatedAt(newOrder.getCreatedAt().toString());
-            userOptional.get().setCreatedBy(newOrder.getCreatedBy());
-
 
         }
-        System.out.println(userOptional);
+        newOrder.setOrderStatus(OrderStatus.PENDING);
+        newOrder.setCreatedBy(2L);
+        newOrder.setAddress(orderPurchase.getAddress());
+        newOrder.setUserId(userId);
+        newOrder.setOrderType(OrderType.PURCHASE);
+        newOrder.setCreatedAt(Instant.parse(Instant.now().toString()));
+
+        orderRepository.save(newOrder);
+
+        // lấy tổng tiền order của 1 user
+        BigDecimal total = userRepository.totalOrderOfUser(userId);
+        // set lại orderTotal, CurrencyNames_ceb, cra mới
+        userOptional.get().setTotalOrder(total);
+        userOptional.get().setCreatedAt(newOrder.getCreatedAt().toString());
+        userOptional.get().setCreatedBy(newOrder.getCreatedBy());
+
+
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
             int quantity = orderItemPurchase.getQuantity();
@@ -221,33 +281,40 @@ public class OrderService implements IOrderService {
 
             Item newItem = new Item();
 
-
-            OrderItem newOrderItem = new OrderItem();
-
-            newOrderItem.setPrice(price);
-            newOrderItem.setQuantity(quantity);
-            newOrderItem.setOrderId(newOrder.getId());
-            newOrderItem.setProductId(productId);
-
-
-            newItem.setPrice(newOrderItem.getPrice());
+            newItem.setPrice(orderItemPurchase.getPrice());
             newItem.setQuantity(quantity);
             newItem.setAvailable(quantity);
             newItem.setSold(0);
             newItem.setDefective(0);
             newItem.setCreatedAt(Instant.now());
             newItem.setCreatedBy(1L);
-            newItem.setUserId(userOptional.get().getId());
+            newItem.setUserId(userId);
             newItem.setOrderId(newOrder.getId());
             newItem.setProductId(productId);
 
             itemRepository.save(newItem);
 
+            OrderItem newOrderItem = new OrderItem();
+            newOrderItem.setPrice(price);
+            newOrderItem.setQuantity(quantity);
+            newOrderItem.setOrderId(newOrder.getId());
+            newOrderItem.setProductId(productId);
             newOrderItem.setItemId(newItem.getId());
 
             orderItemRepository.save(newOrderItem);
+
         }
         return orderMapper.toDTO(newOrder);
+    }
+
+
+    @Override
+    public List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword) {
+        return null;
+//        return orderRepository.searchOrderBySupplierOOrCreatedAt(keyword)
+//                .stream()
+//                .map(order -> orderMapper.toDTOList(order))
+//                .collect(Collectors.toList());
     }
 
     @Override

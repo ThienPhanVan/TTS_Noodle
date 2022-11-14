@@ -1,9 +1,11 @@
 package com.cg.controllers.api;
 
 
+import com.cg.dto.order.OrderListPurchase;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderPurchase;
 import com.cg.dto.order.OrderResult;
+import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,26 @@ public class OrderApi {
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
 
-        List<OrderResult> orderResult = orderService.getAllOrderByUserId(2L);
+        List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypePurchaseList();
 
-        return new ResponseEntity<>(orderResult, HttpStatus.OK);
+        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
     @GetMapping("/exports")
     public ResponseEntity<?> getAllOrderByExport(){
 
+        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
 
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+    }
+
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllOrder(){
+
+        List<OrderResult> orderResultList = orderService.findAll();
+
+        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
     @PostMapping("/create/import")
@@ -54,8 +66,9 @@ public class OrderApi {
     @PostMapping("/search/{keyword}")
     public ResponseEntity<?> doSearch(@PathVariable String keyword) {
 
+        List<OrderListPurchase> orderListPurchaseList = orderService.searchOrderBySupplierOOrCreatedAt(keyword);
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
 
     }
     @PostMapping("/create")

@@ -1,5 +1,6 @@
 package com.cg.services.impl;
 
+import com.cg.dto.item.ItemPurchase;
 import com.cg.dto.item.ItemResult;
 import com.cg.mapper.ItemMapper;
 import com.cg.repositories.ItemRepository;
@@ -26,5 +27,13 @@ public class ItemService implements IItemService {
          return itemRepository.findAll()
                  .stream().map(item -> itemMapper.toDTO(item))
                  .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ItemPurchase> findAllItemPurChase() {
+        return itemRepository.findAll()
+                .stream()
+                .map(item -> itemMapper.toDTOItemPurchase(item))
+                .collect(Collectors.toList());
     }
 }
