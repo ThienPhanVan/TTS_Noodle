@@ -1,7 +1,7 @@
 package com.cg.dto.item;
 
-
-
+import com.cg.dto.userDTO.UserResult;
+import com.cg.repositories.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,28 +9,23 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-public class ItemParam {
+public class ItemPurchase {
+
     private Long id;
 
     private Long  productId;
 
+    private Product product;
+
     private Long userId;
+
+    private UserResult user;
 
     private Long  orderId;
 
     private BigDecimal price;
-
-    private Integer quantity;
-
-//    private Long createdBy;
-//
-//    private Long updatedBy;
-//    private Instant createdAt;
-//    private Instant updatedAt;
-
 }

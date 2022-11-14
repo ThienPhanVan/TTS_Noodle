@@ -169,6 +169,14 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    public List<OrderListPurchase> findAllByOrderTypePurchaseList() {
+        return orderRepository.findAllByOrderType(OrderType.PURCHASE)
+                .stream()
+                .map(order -> orderMapper.toDTOList(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<OrderResult> findAllByOrderTypePurchase() {
         return orderRepository.findAllByOrderType(OrderType.PURCHASE)
                 .stream()
@@ -219,11 +227,12 @@ public class OrderService implements IOrderService {
             throw new NotFoundException("Không tìm thấy nhà cung cấp!");
         }
 
+        Long userId = userOptional.get().getId();
+
         List<OrderItemPurchase> orderItemPurchaseList = orderPurchase.getOrderItemPurchases();
 
         BigDecimal totalAmount = BigDecimal.valueOf(0);
 
-        int totalQuantity = 0;
 
         Order newOrder = new Order();
 
@@ -243,20 +252,19 @@ public class OrderService implements IOrderService {
 
             totalAmount = totalAmount.add(price.multiply(new BigDecimal(quantity)));
 
-            totalQuantity += quantity;
-
-
             newOrder.setGrandTotal(totalAmount);
-            newOrder.setOrderStatus(OrderStatus.PENDING);
-            newOrder.setCreatedBy(2L);
-            newOrder.setAddress(orderPurchase.getAddress());
-            newOrder.setUserId(userOptional.get().getId());
-            newOrder.setOrderType(OrderType.CUSTOMER);
-            newOrder.setCreatedAt(Instant.now());
-
-            orderRepository.save(newOrder);
 
         }
+        newOrder.setOrderStatus(OrderStatus.PENDING);
+        newOrder.setCreatedBy(2L);
+        newOrder.setAddress(orderPurchase.getAddress());
+        newOrder.setUserId(userId);
+        newOrder.setOrderType(OrderType.PURCHASE);
+        newOrder.setCreatedAt(Instant.now());
+
+        orderRepository.save(newOrder);
+
+
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
             int quantity = orderItemPurchase.getQuantity();
@@ -264,32 +272,39 @@ public class OrderService implements IOrderService {
 
             Item newItem = new Item();
 
-            OrderItem newOrderItem = new OrderItem();
-
-            newOrderItem.setPrice(price);
-            newOrderItem.setQuantity(quantity);
-            newOrderItem.setOrderId(newOrder.getId());
-            newOrderItem.setProductId(productId);
-
-
-            newItem.setPrice(newOrderItem.getPrice());
+            newItem.setPrice(orderItemPurchase.getPrice());
             newItem.setQuantity(quantity);
             newItem.setAvailable(quantity);
             newItem.setSold(0);
             newItem.setDefective(0);
             newItem.setCreatedAt(Instant.now());
             newItem.setCreatedBy(1L);
-            newItem.setUserId(userOptional.get().getId());
+            newItem.setUserId(userId);
             newItem.setOrderId(newOrder.getId());
             newItem.setProductId(productId);
 
             itemRepository.save(newItem);
 
+            OrderItem newOrderItem = new OrderItem();
+            newOrderItem.setPrice(price);
+            newOrderItem.setQuantity(quantity);
+            newOrderItem.setOrderId(newOrder.getId());
+            newOrderItem.setProductId(productId);
             newOrderItem.setItemId(newItem.getId());
 
             orderItemRepository.save(newOrderItem);
+
         }
         return orderMapper.toDTO(newOrder);
+    }
+
+
+    @Override
+    public List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword) {
+        return orderRepository.searchOrderBySupplierOOrCreatedAt(keyword)
+                .stream()
+                .map(order -> orderMapper.toDTOList(order))
+                .collect(Collectors.toList());
     }
 
     @Override

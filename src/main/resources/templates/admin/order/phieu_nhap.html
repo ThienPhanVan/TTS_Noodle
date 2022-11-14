@@ -380,12 +380,11 @@
                                 </nav>
                             </div>
                             <div class="list-product-purchase">
-                                <table class="table">
+                                <table class="table" id="tbItemPurchase">
                                     <thead class="bg-primary">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Đơn vị</th>
                                         <th scope="col">Số lượng</th>
                                         <th scope="col">Giá nhập</th>
                                         <th scope="col">Thành tiền</th>
@@ -395,26 +394,9 @@
                                     <tr>
                                         <th scope="row">1</th>
                                         <td>Mark</td>
-                                        <td>Kg</td>
                                         <td>100</td>
                                         <td>1000</td>
                                         <td>100000</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Kg</td>
-                                        <td>100</td>
-                                        <td>4000</td>
-                                        <td>400000</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>Kg</td>
-                                        <td>100</td>
-                                        <td>5000</td>
-                                        <td>500000</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -429,7 +411,7 @@
                         <div class="filter_product_box">
                             <nav class="navbar navbar-light bg-light">
                                 <form class="form-inline">
-                                    <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" type="search" placeholder="Nhập tên nhà cung cấp" aria-label="Search">
+                                    <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" id="supplierOrder" type="search" placeholder="Nhập tên nhà cung cấp" aria-label="Search">
                                     <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">
                                         <i class="fas fa-plus"></i>
                                     </button>
@@ -437,11 +419,6 @@
                             </nav>
                         </div>
                         <input class="form-control mt-2" id="dateID" type="date" min= name="dateTime" value="Ngày tạo"/>
-<!--                        <select class="form-control">-->
-<!--                            <option selected disabled >Loại đơn nhập</option>-->
-<!--                            <option value="1">PURCHASE_RICE</option>-->
-<!--                            <option value="2">PURCHASE_NOODLE</option>-->
-<!--                        </select>-->
                     </div>
                     <div class="bill_info" style="margin-top: 25px;">
                         <h5>Thông tin thanh toán</h5>
@@ -451,7 +428,7 @@
                         </p>
                     </div>
 
-                    <button class="btn btn-primary">
+                    <button id="btnImportOrder" class="btn btn-primary">
                         Nhập hàng
                     </button>
 
@@ -522,6 +499,17 @@
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
 <script>
+
+    let order = new Order();
+
+    let user = new User();
+
+    let item = new Item();
+
+    let product = new Product();
+
+
+
     $(
         function(){
             //Display Only Date till today //
@@ -541,6 +529,49 @@
             $('#dateID').attr('min', minDate);
         }
     )
+
+    function importPurchaseOrder(){
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/orders/create/import"
+        })
+        .done(() => {
+
+            iziToast.success({
+                title: 'OK',
+                position: 'bottomLeft',
+                timeout: 1500,
+                message: 'Nhập hàng thành công!!'
+            });
+
+        })
+        .fail((jqXHR)=> {
+
+            console.log(jqXHR);
+
+            iziToast.error({
+                title: 'ERROR',
+                position: 'bottomLeft',
+                timeout: 2000,
+                message: 'Nhập hàng thất bại!'
+            });
+
+        })
+    }
+
+    function handleImportOrder(){
+        $("btnImport").on("click", () => {
+            importPurchaseOrder();
+        })
+    }
+
+    $(()=> {
+        handleImportOrder();
+    })
 
 </script>
 
