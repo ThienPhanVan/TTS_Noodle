@@ -79,9 +79,7 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public OrderResult customerOrder(OrderParam orderParam) {
-
 //        Transient
-
         //order Item
         Long userId = orderParam.getUserId();
         if (userId != null) {
