@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+  import java.math.BigDecimal;
+ import java.time.Instant;
 
 
 @AllArgsConstructor
@@ -31,8 +33,15 @@ public class UserResult {
 
     private String username;
 
+    private long createdBy;
 
-    public UserResult(Long id, long roleId, String fullName, String phone, String email, String address, String avatarUrl) {
+    private String createdAt;
+
+    private BigDecimal totalOrder;
+
+
+    public UserResult(Long id, long roleId, String fullName, String phone, String email, String address, String avatarUrl,
+                      long createdBy, String createdAt, BigDecimal totalOrder) {
         this.id = id;
         this.roleId = roleId;
         this.fullName = fullName;
@@ -40,5 +49,8 @@ public class UserResult {
         this.email = email;
         this.address = address;
         this.avatarUrl = avatarUrl;
+        this.createdAt = createdAt;
+        this.createdBy = createdBy;
+        this.totalOrder = totalOrder;
     }
 }

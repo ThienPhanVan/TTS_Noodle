@@ -36,6 +36,7 @@ public class UserApi {
     @GetMapping("/getUserByRoleId/{id}")
     public ResponseEntity<?> getUserByRoleId(@PathVariable long id) {
         List<UserResult> userResults = userService.findAllByRoleId(id);
+        System.out.println(userResults);
         return new ResponseEntity<>(userResults, HttpStatus.OK);
     }
 
@@ -50,6 +51,11 @@ public class UserApi {
         return new ResponseEntity<>(userService.createSupplier(createUserParam), HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UpdateUserParam updateParam) {
+        updateParam.setId(id);
+        return new ResponseEntity<>(userService.updateUser(updateParam), HttpStatus.ACCEPTED);
+    }
     @GetMapping("/searchCus/{keyword}")
     public ResponseEntity<?> doSearchCus(@PathVariable String keyword) {
         List<UserResult> userParamList = userService.searchCustomer(keyword);

@@ -2,6 +2,7 @@ package com.cg.services.impl;
 
 
 import com.cg.dto.order.*;
+import com.cg.dto.userDTO.UserResult;
 import com.cg.mapper.OrderMapper;
 import com.cg.exceptions.NotEnoughQuantityException;
 import com.cg.exceptions.NotFoundException;
@@ -23,6 +24,7 @@ import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.util.resources.cldr.ext.CurrencyNames_ceb;
 
 
 import java.math.BigDecimal;
@@ -57,7 +59,6 @@ public class OrderService implements IOrderService {
 
 
     private UserMapper userMapper;
-
 
 
     @Override
@@ -159,8 +160,10 @@ public class OrderService implements IOrderService {
 
         Optional<User> userOptional = userRepository.findById(orderPurchase.getUserId());
 
+
         if (!userOptional.isPresent()) {
             throw new NotFoundException("Không tìm thấy nhà cung cấp!");
+
         }
 
         List<OrderItemPurchase> orderItemPurchaseList = orderPurchase.getOrderItemPurchases();
@@ -170,6 +173,7 @@ public class OrderService implements IOrderService {
         int totalQuantity = 0;
 
         Order newOrder = new Order();
+
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
 
@@ -196,17 +200,27 @@ public class OrderService implements IOrderService {
             newOrder.setAddress(orderPurchase.getAddress());
             newOrder.setUserId(userOptional.get().getId());
             newOrder.setOrderType(OrderType.CUSTOMER);
-            newOrder.setCreatedAt(Instant.now());
-
+            newOrder.setCreatedAt(Instant.parse(Instant.now().toString()));
+//
             orderRepository.save(newOrder);
 
+            // lấy tổng tiền order của 1 user
+            BigDecimal total = userRepository.totalOrderOfUser(userOptional.get().getId());
+           // set lại orderTotal, CurrencyNames_ceb, cra mới
+            userOptional.get().setTotalOrder(total);
+            userOptional.get().setCreatedAt(newOrder.getCreatedAt().toString());
+            userOptional.get().setCreatedBy(newOrder.getCreatedBy());
+
+
         }
+        System.out.println(userOptional);
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
             int quantity = orderItemPurchase.getQuantity();
             Long productId = orderItemPurchase.getProductId();
 
             Item newItem = new Item();
+
 
             OrderItem newOrderItem = new OrderItem();
 

@@ -4,8 +4,10 @@ package com.cg.repositories;
 import com.cg.repositories.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,4 +48,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "FROM User AS u WHERE u.roleId = 3 and u.fullName LIKE %?1% ")
     List<User> searchSupplier(String keyword);
 
+    @Query(value = "SELECT SUM(o.grandTotal) FROM  Order o where o.userId = :id")
+    BigDecimal totalOrderOfUser(@Param("id") Long id);
 }
