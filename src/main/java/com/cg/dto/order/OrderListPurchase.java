@@ -20,8 +20,8 @@ import java.time.Instant;
 @Accessors(chain = true)
 public class OrderListPurchase {
 
-    @Autowired
-    private UserMapper userMapper;
+//    @Autowired
+//    UserMapper userMapper;
 
     private Long id;
 
@@ -37,13 +37,13 @@ public class OrderListPurchase {
 
     private Instant createdAt;
 
-    public OrderListPurchase(Long id, BigDecimal grandTotal, User user, long userId, OrderStatus orderStatus, long createdBy, Instant createdAt) {
-        this.id = id;
-        this.grandTotal = grandTotal;
-        this.user = userMapper.toDTO(user);
-        this.userId = userId;
-        this.orderStatus = orderStatus;
-        this.createdBy = createdBy;
-        this.createdAt = createdAt;
-    }
+//    public OrderListPurchase(Long id, BigDecimal grandTotal, UserResult user, long userId, OrderStatus orderStatus, long createdBy, Instant createdAt) {
+//        this.id = id;
+//        this.grandTotal = grandTotal;
+//        this.user = user;
+//        this.userId = userId;
+//        this.orderStatus = orderStatus;
+//        this.createdBy = createdBy;
+//        this.createdAt = createdAt;
+//    }
 }

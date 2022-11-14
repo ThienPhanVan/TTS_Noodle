@@ -299,10 +299,11 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword) {
-        return orderRepository.searchOrderBySupplierOOrCreatedAt(keyword)
-                .stream()
-                .map(order -> orderMapper.toDTOList(order))
-                .collect(Collectors.toList());
+        return null;
+//        return orderRepository.searchOrderBySupplierOOrCreatedAt(keyword)
+//                .stream()
+//                .map(order -> orderMapper.toDTOList(order))
+//                .collect(Collectors.toList());
     }
 
     @Override

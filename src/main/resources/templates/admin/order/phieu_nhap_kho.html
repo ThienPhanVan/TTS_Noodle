@@ -485,17 +485,12 @@
     function renderOrder(obj){
 
 
-       //  user = getUserById(obj.createdBy);
-       //
-       // let createUser = getUserById(obj.createdBy);
-
-
         let str = `
               <tr class="list-product" id="tr_${obj.id}">
                         <th>${obj.id}</th>
                         <th>${obj.createdAt}</th>
-                        <th>${user.fullName}</th>
                         <th>${obj.fullName}</th>
+                        <th>${user.fullName}</th>
                         <th>${obj.orderStatus}</th>
                         <th>${obj.grandTotal}</th>
                     </tr>
@@ -514,7 +509,7 @@
                 type: "GET",
                 url: "http://localhost:8080/api/users/" + userId,
             }).done((data) => {
-                // showModalUpdateCus(data);
+
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })

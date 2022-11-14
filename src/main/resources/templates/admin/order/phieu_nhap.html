@@ -391,13 +391,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>100</td>
-                                        <td>1000</td>
-                                        <td>100000</td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <th scope="row">1</th>-->
+<!--                                        <td>Mark</td>-->
+<!--                                        <td>100</td>-->
+<!--                                        <td>1000</td>-->
+<!--                                        <td>100000</td>-->
+<!--                                    </tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -424,7 +424,7 @@
                         <h5>Thông tin thanh toán</h5>
                         <p>
                             <span>Tổng cộng</span>
-                            <span></span>
+                            <span id="grandTotal"></span>
                         </p>
                     </div>
 
@@ -530,6 +530,142 @@
         }
     )
 
+    function renderProduct(obj){
+
+        let str = `
+                 <tr id = "tr_${obj.id}">
+                    <th scope="row">${obj.id}</th>
+                    <td>${obj.title}</td>
+                    <td >
+                        <input class="form-control-sm-2 quantityItemPurchase" type="text" value="0">
+                    </td>
+                    <td>
+                        <input class="form-control-sm-2 priceItemPurchase" type="text" value="${obj.price}">
+                        </td>
+                    <td>
+                        <input disabled class="form-control-sm-2 itemTotalAmount" type="text" value="0">
+                    </td>
+                </tr>
+        `
+        return str;
+    }
+
+    function amountTotalQuantity(){
+        $("#quantityItemPurchase").on("input", function () {
+
+            let quantity = +$(this).val();
+
+            let price = $("#priceItemPurchase").val();
+
+            let totalAmount = quantity * price;
+
+            $("#itemTotalAmount").val(totalAmount);
+        })
+    }
+
+    function amountTotalPrice(){
+        $("#priceItemPurchase").on("input", function () {
+
+            let price = +$(this).val();
+
+            let quantity = $("#quantityItemPurchase").val();
+
+            let totalAmount = quantity * price;
+
+            $("#itemTotalAmount").val(totalAmount);
+        })
+    }
+
+
+    function handleQuantityItemPurchase() {
+        $(".quantityItemPurchase").on("input", function () {
+            let quantity = +$(this).val();
+
+            let rowId = $(this).parents().parents().attr("id");
+
+            console.log(rowId)
+
+            let price = $("#" + rowId + " .priceItemPurchase").val();
+
+            // let currentAmount = $(this).parents().find(".itemTotalAmount").val();
+
+            let newAmount = quantity * price;
+
+            $("#" + rowId + " .itemTotalAmount").val(newAmount)
+        })
+    }
+
+    function handlePriceItemPurchase() {
+        $(".priceItemPurchase").on("input", function () {
+            let price = +$(this).val();
+
+            console.log(price)
+
+            let rowId = $(this).parents().parents().attr("id");
+
+            let quantity = $("#" + rowId + " .quantityItemPurchase").val();
+
+            console.log(quantity)
+
+            let newAmount = quantity * price;
+
+            console.log(newAmount)
+
+            $("#" + rowId + " .itemTotalAmount").val(newAmount)
+        })
+    }
+
+    // function handleItemTotalAmount() {
+    //     $(".itemTotalAmount").on("input", function () {
+    //
+    //     })
+    // }
+
+    function getAllProduct(){
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/products"
+        })
+        .done((data)=>{
+            $.each(data, (i,item)=>{
+                product = item;
+
+                let str = renderProduct(item)
+
+                $("#tbItemPurchase tbody").prepend(str);
+
+                groupEvent();
+
+            })
+
+
+
+            handleImportOrder();
+
+        })
+        .fail((jqXHR)=>{
+            console.log(jqXHR)
+        })
+    }
+
+    function groupEvent(){
+        handleQuantityItemPurchase();
+
+        handlePriceItemPurchase();
+
+        // $("#tbItemPurchase tbody tr").on('click', function () {
+        //
+        //     productId =$(this).attr('id').replace('tr_', '');
+        //
+        //     amountTotalQuantity();
+        //     amountTotalPrice();
+        // })
+    }
+
     function importPurchaseOrder(){
         $.ajax({
             headers: {
@@ -570,7 +706,7 @@
     }
 
     $(()=> {
-        handleImportOrder();
+        getAllProduct();
     })
 
 </script>

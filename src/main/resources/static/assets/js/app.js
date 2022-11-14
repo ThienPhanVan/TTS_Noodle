@@ -37,7 +37,7 @@ class User {
 
     }
 }
-<<<<<<< HEAD
+
 class Order {
     constructor(id ,grandTotal , userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
         this.id = id;
@@ -64,10 +64,12 @@ class OrderItem {
     }
 }
 class Item {
-    constructor(id, productId, userId, orderId, price, quantity, sold, available, defective, createdAt, createdBy, updatedAt, updatedBy) {
+    constructor(id, productId, product, userId, user, orderId, price, quantity, sold, available, defective, createdAt, createdBy, updatedAt, updatedBy) {
         this.id = id;
         this.productId = productId;
+        this.product = product
         this.userId = userId;
+        this.user = user
         this.price = price;
         this.quantity = quantity;
         this.available = available;
@@ -76,21 +78,7 @@ class Item {
         this.createdBy = createdBy;
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
-=======
 
-class Order {
-    constructor(id, grandTotal, userId, orderType, orderStatus, address, createdAt, fullName, phone) {
-        this.id = id;
-        this.fullName = fullName;
-        this.grandTotal = grandTotal;
-        this.phone = phone;
-        this.orderStatus = orderStatus;
-        this.address = address;
-        this.orderType = orderType;
-        this.createdAt = createdAt;
-        this.userId = userId;
-
->>>>>>> thien_dev
     }
 }
 

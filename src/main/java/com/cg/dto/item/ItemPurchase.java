@@ -1,5 +1,6 @@
 package com.cg.dto.item;
 
+import com.cg.dto.product.ProductResult;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.repositories.model.Product;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class ItemPurchase {
 
     private Long  productId;
 
-    private Product product;
+    private ProductResult product;
 
     private Long userId;
 
