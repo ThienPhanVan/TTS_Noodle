@@ -8,6 +8,7 @@ import java.util.List;
 import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
+import org.springframework.data.domain.Sort;
 
 
 public interface IOrderService {
@@ -17,10 +18,11 @@ public interface IOrderService {
 
     OrderResult createOrderImport(OrderPurchase orderPurchase);
 
+    List<Order> findAllByUserId(Long userId);
 
-    List<OrderResult> getAllOrderByUserId(Long userId);
+//    List<OrderResult> getAllOrderByUserId(Long userId);
 
-    OrderResult customerOrder(OrderParam orderParam);
+    OrderResult createOrderExport(OrderParam orderParam);
 
     List<OrderListPurchase> findAllByOrderTypePurchaseList ();
 
@@ -36,7 +38,13 @@ public interface IOrderService {
 
     List<OrderResult> findAllByOrderStatusCancel ();
 
+<<<<<<< HEAD
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
+<<<<<<< HEAD
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
+=======
+=======
+>>>>>>> thien_dev
+>>>>>>> development
 }

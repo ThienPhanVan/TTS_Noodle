@@ -13,6 +13,7 @@
 <!--</div>-->
 <!-- loader END -->
 <!-- Wrapper Start -->
+
 <div class="wrapper">
     <!-- Sidebar  -->
     <div class="iq-sidebar">
@@ -135,18 +136,13 @@
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
-    <div id="content-page" class="content-page">
+    <div id="${items.id}" class="content-page">
         <div class="container-fluid">
 
             <div class="row">
                 <div class="col-sm-6">
                     <div style="max-width: 100% ; height: 500px ; background-color: rgb(240, 240, 240); border-radius: 3px;"
                          class="">
-                        <!--                        <div style="border: 1px solid rgb(49, 241, 65) ; border-radius: 4px;"-->
-                        <!--                             class="md-form active-pink active-pink-2 bg-white">-->
-                        <!--                            <input class="form-control " type="search" placeholder="Nhập tên hàng hóa..."-->
-                        <!--                                   aria-label="Search">-->
-                        <!--                        </div>-->
                         <div class="iq-card mt-4">
                             <div class="iq-card-body">
                                 <table class="table">
@@ -162,16 +158,20 @@
                                         <td style="width: 150px;margin: 40px auto;">
                                             <div class="input-group text-center">
                                                         <span class="">
-                                                            <button type="button" class="btn btn-danger btn-number"
+                                                            <button type="button" class="btn btn-info btn-number item-quantity"
+                                                                    title="Giảm số lượng bún"
+                                                                    onclick="handleDecreaseQuantity(${item.id})"
                                                                     data-type="minus" data-field="quant[2]">
                                                                 <span class="fa fa-minus"></span>
                                                             </button>
                                                         </span>
                                                 <input style="height: 35px; border-radius: 5px;" type="text"
-                                                       name="quant[2]" class="form-control  " value="10" min="1"
-                                                       max="100">
+                                                       name="quant[2]" class="form-control  " value="50" min="10"
+                                                       max="500">
                                                 <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-success btn-number"
+                                                            <button type="button" class="btn btn-primary btn-number item-quantity"
+                                                                    title="Tăng số lượng món"
+                                                                    onclick="handleIncreaseQuantity(${item.id})">
                                                                     data-type="plus" data-field="quant[2]">
                                                                 <span class="fa fa-plus"></span>
                                                             </button>
@@ -179,7 +179,9 @@
                                             </div>
 
                                         </td>
-                                        <td>12.000</td>
+                                        <td>
+                                            <input class="text-center price" id="price" name="price" value="7.000đ">
+                                        </td>
                                         <td>22.000</td>
                                     </tr>
                                     </tbody>
@@ -202,11 +204,12 @@
                                             <p>12000</p>
                                         </div>
                                         <div>
-                                            <p>12000</p>
+                                            <input class="text-center" type="number" value="0đ"/>
                                         </div>
                                         <hr>
                                         <div>
                                             <p>12000</p>
+
                                         </div>
                                     </div>
 
@@ -257,10 +260,16 @@
                                     <div style="position:relative; height: 90px;  background-color: #f1f1f1;"
                                          class="card card-body  ">
                                         <h5 style="top:2px; position: absolute;" class="font-size-14">Ghi chú </h5>
-                                        <span class="font-size-18"><textarea style="height:59px;width:540px"
-                                                                             class=" form-control" name="" id=""
-                                                                             cols="20"
-                                                                             rows="10"></textarea></span>
+                                        <span class="font-size-18">
+                                            <textarea style="height:59px;
+                                                      width:540px"
+                                                      class=" form-control"
+                                                      name="" id=""
+                                                      cols="20"
+                                                      rows="10">
+
+                                            </textarea>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -394,8 +403,39 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <th:block th:replace="/layout/script/footer :: footer"/>
+=======
+
+    <th:block th:replace="/layout/script/footer :: footer"></th:block>
+>>>>>>> development
 </div>
+
+<script>
+
+    function handleIncreaseQuantity(ItemId) {
+        for (const bookingItem of bookingItems) {
+            if (ItemId === bookingItem.itemId) {
+                let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text());
+                let price = parseInt($(`#${bookingItem.id} .item-price`).text());
+                quantity += 1;
+                $(`#${bookingItem.id} .item-quantity`).text(quantity)
+                $(`#${bookingItem.id} .cell-price`).text(new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(quantity * price))
+                api.bookingItem.increaseQuantity(bookingItem.id, quantity, (data) => {
+                    updateQuantityBookingItem(bookingItem.id, quantity)
+                    handleGrandTotal(tableTopId);
+                }, (jqXHR) => {
+                });
+                return;
+            }
+
+        }
+    }
+
+</script>
 </body>
 
 </html>
