@@ -102,11 +102,11 @@
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
     }
-
     enableTootip();
 
 
     function renderUser(obj) {
+        console.log()
         let str = ` <tr id="tr_${obj.id}">
                     <td><img height="50" src=${obj.avatarUrl} alt="noavatar"></td>
 <!--                    <td>${obj.id}</td>-->
@@ -114,7 +114,7 @@
                     <td>${obj.email}</td>
                     <td>${obj.phone}</td>
                     <td>${obj.address}</td>
-                    <td id="cra">${obj.createdAt}</td>
+                    <td id="cra">${moment(obj.createdAt).format("DD/MM/YYYY -- h:mm")}</td>
                     <td id="to">${new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND'

@@ -19,13 +19,28 @@ class App {
                 message: t
             });
         }
+    };
+
+    static sweetAlert = class {
+        static showDelete() {
+            return Swal.fire({
+                title: 'Lưu Ý !',
+                text: "Bạn Có Chắc Muốn Xóa Đơn Hàng Này ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+
+            })
+        }
     }
 }
 
 
 class User {
     constructor(id, fullName, roleId, phone, email, address, status, avatarUrl, username,
-                  createdBy,   createdAt,   totalOrder) {
+                createdBy, createdAt, totalOrder) {
         this.id = id;
         this.fullName = fullName;
         this.roleId = roleId;
@@ -42,7 +57,7 @@ class User {
 }
 
 class Order {
-    constructor(id ,grandTotal , userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
+    constructor(id, grandTotal, userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone) {
         this.id = id;
         this.grandTotal = grandTotal;
         this.userId = userId;
@@ -56,6 +71,7 @@ class Order {
         this.phone = phone;
     }
 }
+
 class OrderItem {
     constructor(id, price, quantity, itemId, orderId, productId) {
         this.id = id;
@@ -66,6 +82,7 @@ class OrderItem {
         this.productId = productId;
     }
 }
+
 class Item {
     constructor(id, productId, product, userId, user, orderId, price, quantity, sold, available, defective, createdAt, createdBy, updatedAt, updatedBy) {
         this.id = id;
@@ -85,10 +102,12 @@ class Item {
     }
 }
 
-class Product{
-    constructor(id, title, price) {
+class Product {
+    constructor(id, title, price , quantity, funds) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.quantity = quantity;
+        this.funds = funds ;
     }
 }

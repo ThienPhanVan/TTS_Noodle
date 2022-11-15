@@ -15,4 +15,8 @@ public class ProductResult {
 
     private BigDecimal price;
 
+    private Integer quantity ;
+
+    private BigDecimal funds ;
+
 }
