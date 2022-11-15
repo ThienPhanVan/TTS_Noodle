@@ -35,7 +35,7 @@ public class OrderApi {
     @GetMapping("/exports")
     public ResponseEntity<?> getAllOrderByExport(){
 
-        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
+        List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypeCustomerList();
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }

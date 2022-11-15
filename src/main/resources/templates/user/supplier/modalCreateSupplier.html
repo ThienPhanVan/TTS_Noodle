@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <th:block th:fragment="createSupplier">
     <div class="modal fade" id="modalCreateSupplier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm ">
+        <div class="modal-dialog modal-lg ">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tạo Khách Hàng</h5>
@@ -15,38 +15,26 @@
 
                     <form class="" id="frmCreateSup">
                         <div class="form-row">
-
-                            <div class="col-sm-12">
-                                <div class="form-group ">
+                                <div class="form-group col-sm-6 ">
                                     <label for="nameSup">Tên Khách Hàng</label>
                                     <input type="text" class="form-control" name="nameSup" id="nameSup"
                                            placeholder="Nguyễn Văn A">
                                 </div>
-                                <div class="form-group ">
+                                <div class="form-group col-sm-6  ">
                                     <label for="emailSup">Email</label>
                                     <input type="text" class="form-control" name="emailSup" id="emailSup"
                                            placeholder="24 Nguyễn Tri Phương">
                                 </div>
-                                <div class="form-group ">
+                                <div class="form-group col-sm-6 ">
                                     <label for="phoneSup">Điện Thoại</label>
                                     <input type="tel" class="form-control" name="phoneSup" id="phoneSup"
                                            placeholder="0123456789">
                                 </div>
-                                <div class="form-group ">
+                                <div class="form-group col-sm-6 ">
                                     <label for="addressSup">Địa Chỉ</label>
                                     <input type="text" class="form-control" name="addressSup" id="addressSup"
                                            placeholder="24 Nguyễn Tri Phương">
                                 </div>
-                            </div>
-<!--                            <div class="col-sm-7 ">-->
-<!--                                <div style="margin-top: 40px" class="text-center">-->
-<!--                                    <img height="200"-->
-<!--                                         src="https://png.pngtree.com/png-vector/20210129/ourlarge/pngtree-boys-default-avatar-png-image_2854357.jpg"-->
-<!--                                         alt="no_avatar">-->
-<!--                                    <input type="text" placeholder="image..." name="avatar" id="avatar">-->
-<!--                                </div>-->
-<!--                            </div>-->
-
                         </div>
                     </form>
 
