@@ -24,7 +24,6 @@ import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.util.resources.cldr.ext.CurrencyNames_ceb;
 
 
 import java.math.BigDecimal;
@@ -258,7 +257,7 @@ public class OrderService implements IOrderService {
 
         }
         newOrder.setOrderStatus(OrderStatus.PENDING);
-        newOrder.setCreatedBy(2L);
+        newOrder.setCreatedBy(1L);
         newOrder.setAddress(orderPurchase.getAddress());
         newOrder.setUserId(userId);
         newOrder.setOrderType(OrderType.PURCHASE);

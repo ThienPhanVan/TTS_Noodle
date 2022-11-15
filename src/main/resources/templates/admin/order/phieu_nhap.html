@@ -537,43 +537,17 @@
                     <th scope="row">${obj.id}</th>
                     <td>${obj.title}</td>
                     <td >
-                        <input class="form-control-sm-2 quantityItemPurchase" type="text" value="0">
+                        <input class="form-control form-control-sm quantityItemPurchase" type="text" value="1">
                     </td>
                     <td>
-                        <input class="form-control-sm-2 priceItemPurchase" type="text" value="${obj.price}">
+                        <input class="form-control form-control-sm priceItemPurchase" type="text" value="${obj.price}">
                         </td>
                     <td>
-                        <input disabled class="form-control-sm-2 itemTotalAmount" type="text" value="0">
+                        <input disabled class="form-control form-control-sm itemTotalAmount" type="text" value="0">
                     </td>
                 </tr>
         `
         return str;
-    }
-
-    function amountTotalQuantity(){
-        $("#quantityItemPurchase").on("input", function () {
-
-            let quantity = +$(this).val();
-
-            let price = $("#priceItemPurchase").val();
-
-            let totalAmount = quantity * price;
-
-            $("#itemTotalAmount").val(totalAmount);
-        })
-    }
-
-    function amountTotalPrice(){
-        $("#priceItemPurchase").on("input", function () {
-
-            let price = +$(this).val();
-
-            let quantity = $("#quantityItemPurchase").val();
-
-            let totalAmount = quantity * price;
-
-            $("#itemTotalAmount").val(totalAmount);
-        })
     }
 
 
@@ -583,11 +557,7 @@
 
             let rowId = $(this).parents().parents().attr("id");
 
-            console.log(rowId)
-
             let price = $("#" + rowId + " .priceItemPurchase").val();
-
-            // let currentAmount = $(this).parents().find(".itemTotalAmount").val();
 
             let newAmount = quantity * price;
 
@@ -599,17 +569,11 @@
         $(".priceItemPurchase").on("input", function () {
             let price = +$(this).val();
 
-            console.log(price)
-
             let rowId = $(this).parents().parents().attr("id");
 
             let quantity = $("#" + rowId + " .quantityItemPurchase").val();
 
-            console.log(quantity)
-
             let newAmount = quantity * price;
-
-            console.log(newAmount)
 
             $("#" + rowId + " .itemTotalAmount").val(newAmount)
         })
@@ -642,8 +606,6 @@
 
             })
 
-
-
             handleImportOrder();
 
         })
@@ -653,17 +615,11 @@
     }
 
     function groupEvent(){
+
         handleQuantityItemPurchase();
 
         handlePriceItemPurchase();
 
-        // $("#tbItemPurchase tbody tr").on('click', function () {
-        //
-        //     productId =$(this).attr('id').replace('tr_', '');
-        //
-        //     amountTotalQuantity();
-        //     amountTotalPrice();
-        // })
     }
 
     function importPurchaseOrder(){
