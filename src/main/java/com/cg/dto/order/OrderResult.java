@@ -1,7 +1,9 @@
 package com.cg.dto.order;
 
+import com.cg.dto.userDTO.UserResult;
 import com.cg.repositories.model.OrderStatus;
 import com.cg.repositories.model.OrderType;
+import com.cg.repositories.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,8 @@ public class OrderResult {
     private BigDecimal grandTotal;
 
     private long userId;
+
+//    private UserResult user;
 
     private OrderStatus orderStatus;
 

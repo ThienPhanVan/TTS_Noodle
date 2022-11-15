@@ -38,10 +38,11 @@ class User {
     }
 }
 class Order {
-    constructor(id ,grandTotal , userId, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
+    constructor(id ,grandTotal , userId,user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
         this.id = id;
         this.grandTotal = grandTotal;
         this.userId = userId
+        this.user=user
         this.orderStatus = orderStatus
         this.orderType = orderType
         this.address = address

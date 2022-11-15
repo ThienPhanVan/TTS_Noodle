@@ -9,6 +9,7 @@ import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
+import org.springframework.data.domain.Sort;
 
 
 public interface IOrderService {
@@ -33,4 +34,5 @@ public interface IOrderService {
     List<OrderResult> findAllByOrderStatusComplete ();
 
     List<OrderResult> findAllByOrderStatusCancel ();
+
 }

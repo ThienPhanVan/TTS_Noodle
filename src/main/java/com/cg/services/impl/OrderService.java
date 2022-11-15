@@ -21,6 +21,7 @@ import com.cg.repositories.UserRepository;
 
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,30 +78,48 @@ public class OrderService implements IOrderService {
     public OrderResult createOrderExport(OrderParam orderParam) {
 //        Transient
         //order Item
-        Long userId = orderParam.getUserId();
-        if (userId != null) {
-            Optional<User> optional = userRepository.findById(userId);
-            if (!optional.isPresent()) throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
-        }
-        Order order = orderMapper.toModel(orderParam);
-        order.setFullName(orderParam.getFullName());
-        order.setPhone(orderParam.getPhone());
-        order.setAddress(orderParam.getAddress());
-        order.setCreatedAt(Instant.now());
-        order.setOrderStatus(OrderStatus.PENDING);
-        order.setCreatedBy(2L);
-        order.setOrderType(OrderType.CUSTOMER);
-        order.setGrandTotal(new BigDecimal(0));
-        order = orderRepository.save(order);
+            Long userId = orderParam.getUserId();
+            if (userId != null) {
+                Optional<User> optional = userRepository.findById(userId);
+                if (!optional.isPresent())
+                    throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
+            }
 
-        BigDecimal grandTotal;
+//            order.setFullName(orderParam.getFullName());
+//            order.setPhone(orderParam.getPhone());
+////            order.setUserId(orderParam.getUserId());
+//            order.setAddress(orderParam.getAddress());
+//            order.setCreatedAt(Instant.now());
+//            order.setOrderStatus(OrderStatus.PENDING);
+//            order.setCreatedBy(2L);
+//            order.setOrderType(OrderType.CUSTOMER);
+//            order.setGrandTotal(new BigDecimal(0));
+//            order = orderRepository.save(order);
+//
+//            BigDecimal grandTotal = BigDecimal.valueOf(0);
+
+//        } else {
+
+            Order order = orderMapper.toModel(orderParam);
+            order.setFullName(orderParam.getFullName());
+            order.setPhone(orderParam.getPhone());
+            order.setAddress(orderParam.getAddress());
+            order.setCreatedAt(Instant.now());
+            order.setOrderStatus(OrderStatus.PENDING);
+            order.setCreatedBy(2L);
+            order.setOrderType(OrderType.CUSTOMER);
+            order.setGrandTotal(new BigDecimal(0));
+            order = orderRepository.save(order);
+
+//        }
         //xu ly list orderItems
+        BigDecimal grandTotal = BigDecimal.valueOf(0);
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
-            System.out.println(itemParam);
             //kiem tra product ton tai
             //lay toan item theo productId
-            if (!productRepository.existsById(itemParam.getProductId()))
+            if (!productRepository.existsById(itemParam.getProductId())) {
                 throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
+            }
             // lay toan item theo productId
             List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(), 0);
             long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
@@ -108,8 +127,15 @@ public class OrderService implements IOrderService {
             if (totalAvailable < itemParam.getQuantity()) {
                 throw new NotEnoughQuantityException("Không đủ số lượng, vui lòng kiểm tra số lượng!");
             }
+            Long productId = itemParam.getProductId();
+
+            Optional<Product> productOptional = productRepository.findById(productId);
+            BigDecimal price = (productOptional.get().getPrice());
             // lấy số lượng order
             int quantityCustomer = itemParam.getQuantity();
+            //tổng giá sản phẩm = giá sản phẩm * số lượng sản phẩm khách hàng order
+            grandTotal = grandTotal.add(price.multiply(new BigDecimal(quantityCustomer)));
+            order.setGrandTotal(grandTotal);
 
             for (Item item : items) {
                 if (quantityCustomer == 0) {
@@ -140,9 +166,9 @@ public class OrderService implements IOrderService {
                 orderItemRepository.save(orderItem);
             }
         }
-        //order Item
         return orderMapper.toDTO(order);
     }
+
 
     @Override
     public List<OrderResult> findAllByOrderTypePurchase() {

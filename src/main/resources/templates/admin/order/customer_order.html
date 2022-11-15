@@ -38,7 +38,7 @@
                                 <i class="fas fa-grip-lines-vertical text-warning"></i>
                                 <a class="m-1 font-weight-bolder" href="">Đang xử lí</a>
                                 <i class="fas fa-grip-lines-vertical text-warning"></i>
-                                <a class="m-1 font-weight-bolder" href="">Hoàng thành</a>
+                                <a class="m-1 font-weight-bolder" href="">Hoàn thành</a>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -104,7 +104,6 @@
     let order = new Order();
     let user = new User();
 
-
     function renderOrderCustomer(order) {
         let str = `
                 <tr id="tr_${order.id}">
@@ -113,7 +112,10 @@
                     <td>${order.fullName}</td>
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
-                    <td>${order.grandTotal}</td>
+                    <td>${new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                     }).format(order.grandTotal)}</td>
 
                 </tr>
             `;
@@ -130,9 +132,12 @@
             url: "http://localhost:8080/api/orders/exports",
         }).done((data) => {
             console.log(data)
+            order = data;
+            user = order.user;
             data.forEach(item => {
                 let str = renderOrderCustomer(item);
                 $("#tbOrder tbody").prepend(str);
+
             });
             // enableTootip();
             // showModalUpdateCus();
