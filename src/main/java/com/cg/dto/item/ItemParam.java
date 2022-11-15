@@ -27,10 +27,5 @@ public class ItemParam {
 
     private Integer quantity;
 
-//    private Long createdBy;
-//
-//    private Long updatedBy;
-//    private Instant createdAt;
-//    private Instant updatedAt;
 
 }

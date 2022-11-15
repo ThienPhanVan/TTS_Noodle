@@ -1,8 +1,8 @@
 window.onload = ()=>{
     console.log("aaaaaa")
     let x = 5;
-    let input = document.querySelector('.input-group .counter-input.w-input')
-    let buttons = document.querySelectorAll('.input-group .counter-button')
+    let input = document.querySelector('.input-group .form-control')
+    let buttons = document.querySelectorAll('.input-group .item-quantity')
 
     buttons.forEach(b => {
         b.addEventListener('click', function() {
