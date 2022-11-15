@@ -48,14 +48,14 @@
 <!--                                                <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>-->
 <!--                                            </form>-->
 <!--                                        </div>-->
-                                        <div class="list-group">
+<!--                                        <div class="list-group">-->
 <!--                                            <div class="card-body">-->
 <!--                                                <h5 class="card-title">Card title</h5>-->
 <!--                                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
 <!--                                            </div>-->
-                                        </div>
+<!--                                        </div>-->
                                         <div class="dropdown">
-                                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                                                 <input class="form-control search" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -375,7 +375,7 @@
             type: "POST",
             url: "http://localhost:8080/api/orders/create/import"
         })
-        .done(() => {
+        .done((data) => {
 
             iziToast.success({
                 title: 'OK',
@@ -400,7 +400,7 @@
     }
 
     function handleImportOrder(){
-        $("btnImport").on("click", () => {
+        $("#btnImportOrder").on("click", () => {
             importPurchaseOrder();
         })
     }

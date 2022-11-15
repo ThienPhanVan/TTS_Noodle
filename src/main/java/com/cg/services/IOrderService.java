@@ -38,13 +38,7 @@ public interface IOrderService {
 
     List<OrderResult> findAllByOrderStatusCancel ();
 
-<<<<<<< HEAD
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
-<<<<<<< HEAD
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
-=======
-=======
->>>>>>> thien_dev
->>>>>>> development
 }

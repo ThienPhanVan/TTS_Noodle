@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMapper {
-@Autowired
-    UserMapper userMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -50,16 +48,11 @@ public class OrderMapper {
                 .setUserId(orderPurchase.getUserId());
 
     }
-    public Order toModel (OrderParam orderParam){
+    public Order toModel (OrderParam orderParam) {
         return new Order()
                 .setId(orderParam.getId())
                 .setUserId(orderParam.getUserId())
 
                 .setAddress(orderParam.getAddress());
-<<<<<<< HEAD
-=======
-
-
->>>>>>> thien_dev
     }
 }
