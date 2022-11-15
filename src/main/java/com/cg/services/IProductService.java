@@ -10,4 +10,6 @@ public interface IProductService {
     Optional<Product> findById(Long id);
 
     List<ProductResult> findAll();
+
+    List<ProductResult> findProductByTitle (String title);
 }

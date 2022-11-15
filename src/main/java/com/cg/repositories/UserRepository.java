@@ -50,4 +50,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT SUM(o.grandTotal) FROM  Order o where o.userId = :id")
     BigDecimal totalOrderOfUser(@Param("id") Long id);
+
 }

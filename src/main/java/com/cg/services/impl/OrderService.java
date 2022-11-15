@@ -329,4 +329,8 @@ public class OrderService implements IOrderService {
         return orderRepository.getAllOrderByUserId(userId);
     }
 
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchase() {
+        return orderRepository.findAllOrderPurchase();
+    }
 }

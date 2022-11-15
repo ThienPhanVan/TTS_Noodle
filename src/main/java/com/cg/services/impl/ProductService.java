@@ -31,7 +31,15 @@ public class ProductService implements IProductService {
 
     @Override
     public List<ProductResult> findAll() {
-        return productRepository.findAll()
+        return productRepository.findAllByOrderByIdDesc()
+                .stream()
+                .map(product -> productMapper.toDTO(product))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductResult> findProductByTitle(String title) {
+        return productRepository.findProductByTitleContains(title)
                 .stream()
                 .map(product -> productMapper.toDTO(product))
                 .collect(Collectors.toList());

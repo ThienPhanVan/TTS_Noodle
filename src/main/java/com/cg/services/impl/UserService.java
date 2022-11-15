@@ -108,10 +108,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public List<UserResult> searchSupplier(String keyword) {
         return userRepository.searchSupplier(keyword)
                 .stream()
-                .map(userMapper::toDTO)
+                .map( userMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -157,4 +158,5 @@ public class UserService implements IUserService {
     public BigDecimal totalOrderOfUser(long id) {
         return userRepository.totalOrderOfUser(id);
     }
+
 }
