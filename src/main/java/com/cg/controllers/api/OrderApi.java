@@ -1,6 +1,7 @@
 package com.cg.controllers.api;
 
 
+import com.cg.dto.order.OrderListPurchase;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderPurchase;
 import com.cg.dto.order.OrderResult;
@@ -26,7 +27,15 @@ public class OrderApi {
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
 
-        List<OrderResult> orderResultList = orderService.findAllByOrderTypePurchase();
+        List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypePurchaseList();
+
+        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+    }
+
+    @GetMapping("/exports")
+    public ResponseEntity<?> getAllOrderByExport(){
+
+        List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypeCustomerList();
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
@@ -36,14 +45,6 @@ public class OrderApi {
     public ResponseEntity<?> getAllOrder(){
 
         List<OrderResult> orderResultList = orderService.findAll();
-
-        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
-    }
-
-    @GetMapping("/exports")
-    public ResponseEntity<?> getAllOrderByExport(){
-
-        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
@@ -65,8 +66,9 @@ public class OrderApi {
     @PostMapping("/search/{keyword}")
     public ResponseEntity<?> doSearch(@PathVariable String keyword) {
 
+        List<OrderListPurchase> orderListPurchaseList = orderService.searchOrderBySupplierOOrCreatedAt(keyword);
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
 
     }
     @PostMapping("/create")

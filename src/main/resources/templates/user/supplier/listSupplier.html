@@ -111,18 +111,20 @@
                     <td><img height="50" src=${obj.avatarUrl} alt="noavatar"></td>
 <!--                    <td>${obj.id}</td>-->
                     <td>${obj.fullName}</td>
-                     <td>${obj.email}</td>
+                    <td>${obj.email}</td>
                     <td>${obj.phone}</td>
                     <td>${obj.address}</td>
-                    <td>${obj.day}</td>
-                    <td>${obj.day}</td>
-                     <td>${obj.day}</td>
+                    <td id="cra">${obj.createdAt}</td>
+                    <td id="to">${new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(obj.totalOrder)}</td>
+                     <td id="crb">${obj.createdBy}</td>
                        <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${obj.id}" data-toggle="tooltip"
                                 data-toggle="modal" data-target="#modalUpdateSup"
                                 data-original-title="Edit" >
-                                Edit
-<!--                                  <i class="ri-pencil-line"></i>-->
+                                  <i class="ri-pencil-line"></i>
                                </a>
                        </td>
                 </tr>
@@ -225,6 +227,9 @@
                 $('#emailSupUp').val(data.email);
                 $('#phoneSupUp').val(data.phone);
                 $('#addressSupUp').val(data.address);
+                $('#to').val(data.totalOrder);
+                $('#cra').val(data.createdAt);
+                $('#crb').val(data.createdBy);
                 //$('#avatarUp').val(data.avatarUrl)
                 $('#modalUpdateSup').modal('show');
             })
@@ -240,6 +245,9 @@
             "email": $('#emailSupUp').val(),
             "address": $('#addressSupUp').val(),
             // "avatarUrl": $('#avatar').val(),
+            "totalOrder": $('#to').val(),
+            "createdAt": $('#cra').val(),
+            "createdBy": $('#crb').val(),
         }
         $.ajax({
             headers: {

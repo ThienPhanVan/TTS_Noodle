@@ -1,10 +1,7 @@
 package com.cg.controllers.api;
 
-import com.cg.dto.item.ItemPurchase;
-import com.cg.dto.item.ItemResult;
-import com.cg.services.IItemService;
-import com.cg.dto.item.ItemResult;
-import com.cg.services.IItemService;
+import com.cg.dto.product.ProductResult;
+import com.cg.services.impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/items")
-public class ItemApi {
+@RequestMapping("/api/products")
+public class ProductApi {
 
     @Autowired
-    private IItemService itemService;
+    private ProductService productService;
 
     @GetMapping("")
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> showListProduct(){
 
-        List<ItemPurchase> itemResult = itemService.findAllItemPurChase();
+        List<ProductResult> productResultList = productService.findAll();
 
-        return new ResponseEntity<>(itemResult, HttpStatus.OK);
-
+        return new ResponseEntity<>(productResultList, HttpStatus.OK);
     }
-
 }

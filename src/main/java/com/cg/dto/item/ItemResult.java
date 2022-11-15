@@ -16,11 +16,11 @@ import java.math.BigDecimal;
 public class ItemResult {
     private Long id;
 
-    private long  productId;
+    private Long  productId;
 
-    private long userId;
+    private Long userId;
 
-    private long  orderId;
+    private Long  orderId;
 
     private BigDecimal price;
 

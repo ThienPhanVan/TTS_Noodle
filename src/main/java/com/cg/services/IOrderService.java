@@ -1,11 +1,10 @@
 package com.cg.services;
 
 
-import com.cg.dto.order.OrderPurchase;
-import com.cg.dto.order.OrderResult;
+import com.cg.dto.order.*;
+
 import java.util.List;
 
-import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
@@ -25,6 +24,9 @@ public interface IOrderService {
 
     OrderResult createOrderExport(OrderParam orderParam);
 
+    List<OrderListPurchase> findAllByOrderTypePurchaseList ();
+
+    List<OrderListPurchase> findAllByOrderTypeCustomerList();
     List<OrderResult> findAllByOrderTypePurchase ();
 
     List<OrderResult> findAllByOrderTypeCustomer ();
@@ -35,4 +37,8 @@ public interface IOrderService {
 
     List<OrderResult> findAllByOrderStatusCancel ();
 
+<<<<<<< HEAD
+    List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
+=======
+>>>>>>> thien_dev
 }

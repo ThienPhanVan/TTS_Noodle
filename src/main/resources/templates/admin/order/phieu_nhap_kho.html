@@ -371,8 +371,8 @@
             <div class="filter_product_box">
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline">
-                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>
+                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" id="btnSearch" type="submit">Tìm kiếm</button>
                     </form>
                 </nav>
             </div>
@@ -380,7 +380,7 @@
 
         <div class="container-fluid">
             <div class="row">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered" id = "tbListOrder">
                     <thead>
                     <tr class="list_product">
                         <td>ID</td>
@@ -479,20 +479,75 @@
 
     let order = new Order();
 
+    let user = new User();
+
 
     function renderOrder(obj){
+
+
         let str = `
               <tr class="list-product" id="tr_${obj.id}">
-                        <th>1</th>
-                        <th>02-01-1990</th>
-                        <th>Thiện</th>
-                        <th>TTS_Noodes</th>
-                        <th>Đang xử lý</th>
-                        <th>5000000</th>
+                        <th>${obj.id}</th>
+                        <th>${obj.createdAt}</th>
+                        <th>${obj.fullName}</th>
+                        <th>${user.fullName}</th>
+                        <th>${obj.orderStatus}</th>
+                        <th>${obj.grandTotal}</th>
                     </tr>
         `
 
         return str;
+    }
+
+    function getUserById(userId) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/users/" + userId,
+            }).done((data) => {
+
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+
+    }
+
+    $('#btnSearch').on('click', function (){
+        let keyword = $('#searchOrder').val();
+        searchByName(keyword);
+    })
+
+    function searchByName(keySearch){
+        return $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "POST",
+            "url": "http://localhost:8080/api/orders/search/" + keySearch
+        })
+        .done((data) => {
+            $.each(data , (i,item) => {
+                order = item;
+
+                user = order.user;
+
+                let str =  renderOrder(item);
+
+
+                $("#tbListOrder tbody").prepend(str);
+
+
+            })
+        })
+        .fail((jqXHR) => {
+            console.log(jqXHR);
+        })
     }
 
 
@@ -509,10 +564,19 @@
             $.each(data , (i,item) => {
                 order = item;
 
-                addRowUser();
+                user = order.user;
+
+                let str =  renderOrder(item);
+
+
+                $("#tbListOrder tbody").prepend(str);
+
+
             })
         })
     }
+
+    getAllOrder();
 
 
 </script>

@@ -115,6 +115,7 @@
  </div>
 
 <script src="/static/assets/js/app.js"></script>
+
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 
 
@@ -139,15 +140,15 @@
                      <td>${obj.email}</td>
                     <td>${obj.phone}</td>
                     <td>${obj.address}</td>
-                    <td>${obj.total}</td>
-                     <td>${obj.total}</td>
-                    <td>${obj.day}</td>
+                    <td id="to">  ${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'})
+            .format(obj.totalOrder)}  </td>
+                    <td id="crb">${obj.createdBy}</td>
+                    <td id="cra">${obj.createdAt} </td>
                        <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${obj.id}" data-toggle="tooltip"
                                 data-toggle="modal" data-target="#modalUpdateCus"
                                 data-original-title="Edit" >
-                                Edit
-<!--                                  <i class="ri-pencil-line"></i>-->
+                                  <i class="ri-pencil-line"></i>
                                </a>
                        </td>
                 </tr>
@@ -210,7 +211,9 @@
             "email": $('#emailCus').val(),
             "address": $('#addressCus').val(),
             "avatarUrl": $('#avatar').val(),
+
         }
+
         console.log(createUser)
         $.ajax({
             headers: {
@@ -245,12 +248,19 @@
         $(".update").on('click', function () {
             let userId = $(this).data("id");
             getUserById(userId).then((data) => {
+                // let to =
+                // let crb = data.createdBy;
+                // let cra = data.createdAt;
                 $('#idCusUp').val(userId)
                 $('#nameCusUp').val(data.fullName);
                 $('#emailCusUp').val(data.email);
                 $('#phoneCusUp').val(data.phone);
                 $('#addressCusUp').val(data.address);
-                $('#avatarUp').val(data.avatarUrl)
+                $('#avatarUp').val(data.avatarUrl);
+                $('#to').val(data.totalOrder);
+                $('#cra').val(data.createdAt);
+                $('#crb').val(data.createdBy);
+
                 $('#modalUpdateCus').modal('show');
             })
         })
@@ -259,13 +269,20 @@
     let btnUpdateCus = $('#btnUpdateCus');
     btnUpdateCus.on('click', function () {
         let userId = $('#idCusUp').val();
-        let createUser = {
+
+        let updateUser = {
             "fullName": $('#nameCusUp').val(),
             "phone": $('#phoneCusUp').val(),
             "email": $('#emailCusUp').val(),
             "address": $('#addressCusUp').val(),
             "avatarUrl": $('#avatarUp').val(),
+            "totalOrder": $('#to').val(),
+            "createdAt": $('#cra').val(),
+            "createdBy": $('#crb').val(),
+
         }
+        console.log(updateUser, "2")
+
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -273,7 +290,7 @@
             },
             type: "PUT",
             url: "http://localhost:8080/api/users/update/" + userId,
-            data: JSON.stringify(createUser)
+            data: JSON.stringify(updateUser)
         }).done((data) => {
             console.log(data)
             let str = renderUser(data)
@@ -284,6 +301,7 @@
         }).fail((jqHRX) => {
             console.log(jqHRX)
         });
+
     })
 
     function doSearchUser() {

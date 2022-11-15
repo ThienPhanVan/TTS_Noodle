@@ -5,6 +5,7 @@ import com.cg.dto.userDTO.UpdateUserParam;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.repositories.model.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,4 +30,5 @@ public interface IUserService  {
 
     boolean findUserByRoleId (Long roleId);
 
+    BigDecimal totalOrderOfUser (long id);
 }

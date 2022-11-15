@@ -24,7 +24,8 @@ class App {
 
 
 class User {
-    constructor(id, fullName, roleId, phone, email, address, status, avatarUrl, username) {
+    constructor(id, fullName, roleId, phone, email, address, status, avatarUrl, username,
+                  createdBy,   createdAt,   totalOrder) {
         this.id = id;
         this.fullName = fullName;
         this.roleId = roleId;
@@ -34,9 +35,25 @@ class User {
         this.status = status;
         this.avatarUrl = avatarUrl;
         this.username = username;
-
+        this.createdAt = createdAt;
+        this.createdBy = createdBy;
+        this.totalOrder = totalOrder;
     }
 }
+<<<<<<< HEAD
+
+class Order {
+    constructor(id ,grandTotal , userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
+        this.id = id;
+        this.grandTotal = grandTotal;
+        this.userId = userId;
+        this.user = user;
+        this.orderStatus = orderStatus;
+        this.orderType = orderType;
+        this.address = address;
+        this.createdBy = createdBy;
+        this.createdAt = createdAt;
+=======
 class Order {
     constructor(id ,grandTotal , userId,user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
         this.id = id;
@@ -48,6 +65,7 @@ class Order {
         this.address = address
         this.createdAt = createdAt
         this.createdBy = createdBy
+>>>>>>> thien_dev
         this.fullName = fullName;
         this.phone = phone;
     }
@@ -63,10 +81,12 @@ class OrderItem {
     }
 }
 class Item {
-    constructor(id, productId, userId, orderId, price, quantity, sold, available, defective, createdAt, createdBy, updatedAt, updatedBy) {
+    constructor(id, productId, product, userId, user, orderId, price, quantity, sold, available, defective, createdAt, createdBy, updatedAt, updatedBy) {
         this.id = id;
         this.productId = productId;
+        this.product = product
         this.userId = userId;
+        this.user = user
         this.price = price;
         this.quantity = quantity;
         this.available = available;
@@ -76,5 +96,16 @@ class Item {
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
 
+<<<<<<< HEAD
+    }
+}
+
+class Product{
+    constructor(id, title, price) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+=======
+>>>>>>> thien_dev
     }
 }

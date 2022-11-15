@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,7 +43,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public List<UserResult> findAllByRoleId(long id) {
-        return  userRepository.getAllByRoleId(id).stream()
+        return userRepository.getAllByRoleId(id).stream()
                 .map(userMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -71,6 +73,9 @@ public class UserService implements IUserService {
         user.setUsername(random);
         user.setPassword("123");
         user.setId(0L);
+        user.setTotalOrder(BigDecimal.valueOf(0L));
+        user.setCreatedBy(2L);
+        user.setCreatedAt("Chưa Mua Hàng");
         user.setStatus(UserStatus.AVAILABLE);
         user.setRole(new Role().setId(2L));
         return userMapper.toDTO(userRepository.save(user));
@@ -86,6 +91,9 @@ public class UserService implements IUserService {
         user.setPassword("123");
         user.setId(0L);
         user.setStatus(UserStatus.AVAILABLE);
+        user.setTotalOrder(BigDecimal.valueOf(0L));
+        user.setCreatedBy(2L);
+        user.setCreatedAt("Chưa Nhập Hàng");
         user.setRole(new Role().setId(3L));
         return userMapper.toDTO(userRepository.save(user));
     }
@@ -112,23 +120,23 @@ public class UserService implements IUserService {
     public UserResult updateUser(UpdateUserParam param) {
         User user = findById(param.getId());
         String fullName = param.getFullName();
-        if (Strings.isNotEmpty(fullName)){
+        if (Strings.isNotEmpty(fullName)) {
             user.setFullName(fullName);
         }
         String phone = param.getPhone();
-        if (Strings.isNotEmpty(phone)){
+        if (Strings.isNotEmpty(phone)) {
             user.setPhone(phone);
         }
         String email = param.getEmail();
-        if (Strings.isNotEmpty(email)){
+        if (Strings.isNotEmpty(email)) {
             user.setEmail(email);
         }
         String address = param.getAddress();
-        if (Strings.isNotEmpty(address)){
+        if (Strings.isNotEmpty(address)) {
             user.setAddress(address);
         }
         String avatar = param.getAvatarUrl();
-        if (Strings.isNotEmpty(avatar)){
+        if (Strings.isNotEmpty(avatar)) {
             user.setAvatarUrl(avatar);
         }
         user.getPassword();
@@ -145,5 +153,8 @@ public class UserService implements IUserService {
         return userRepository.findUserByRoleId(roleId);
     }
 
-
+    @Override
+    public BigDecimal totalOrderOfUser(long id) {
+        return userRepository.totalOrderOfUser(id);
+    }
 }
