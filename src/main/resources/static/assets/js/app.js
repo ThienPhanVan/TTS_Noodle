@@ -40,6 +40,7 @@ class User {
         this.totalOrder = totalOrder;
     }
 }
+<<<<<<< HEAD
 
 class Order {
     constructor(id ,grandTotal , userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
@@ -52,6 +53,19 @@ class Order {
         this.address = address;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
+=======
+class Order {
+    constructor(id ,grandTotal , userId,user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone){
+        this.id = id;
+        this.grandTotal = grandTotal;
+        this.userId = userId
+        this.user=user
+        this.orderStatus = orderStatus
+        this.orderType = orderType
+        this.address = address
+        this.createdAt = createdAt
+        this.createdBy = createdBy
+>>>>>>> thien_dev
         this.fullName = fullName;
         this.phone = phone;
     }
@@ -82,6 +96,7 @@ class Item {
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
 
+<<<<<<< HEAD
     }
 }
 
@@ -90,5 +105,7 @@ class Product{
         this.id = id;
         this.title = title;
         this.price = price;
+=======
+>>>>>>> thien_dev
     }
 }

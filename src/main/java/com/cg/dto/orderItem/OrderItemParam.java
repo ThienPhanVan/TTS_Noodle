@@ -24,4 +24,6 @@ public class OrderItemParam {
 
     private long productId;
 
+
+
 }
