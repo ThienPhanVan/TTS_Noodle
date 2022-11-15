@@ -62,7 +62,7 @@
                                         <th>NV Bán</th>
                                         <th>Khách Hàng</th>
                                         <th>Trạng Thái
-                                        <th>Tổng tiền</th>
+                                        <th>Tổng tiền (đ)</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -71,9 +71,7 @@
                                     </tbody>
                                 </table>
                                 <div id="totalO">
-                                    <span>Tổng số đơn: 4, </span>
-                                    <span class="bold text-primary">Tổng tiền: 83,000</span>,
-                                    <span class="i text-warning">Tổng nợ: 68,000 </span>
+
                                 </div>
                             </div>
 
@@ -122,9 +120,11 @@
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
     }
+
     enableTootip();
 
     console.log(user)
+
     function renderOrderCustomer(orderItem) {
         let str = `
                    <tr id="tr_${orderItem.id}">
@@ -133,7 +133,7 @@
                           <td> ${orderItem.createdBy}</td>
                           <td>${orderItem.user.fullName}</td>
                           <td>${orderItem.orderStatus}</td>
-                          <td>${new Intl.NumberFormat('vi-VN', {style : 'currency', currency : 'VND'}).format(orderItem.grandTotal)}</td>
+                          <td>${new Intl.NumberFormat('vi-VN').format(orderItem.grandTotal)}</td>
                           <td class="w-45">
                                     <a class="btn btn-outline-warning delete"
                                     data-id="${orderItem.id}"
@@ -143,25 +143,32 @@
                                     </a>
                           </td>
                           </tr> `
-        return str ;
+        return str;
     }
 
-    function loadOrderCustomer(){
+    function loadOrderCustomer() {
         $.ajax({
-            headers : {
-                'accept' : "application/json",
-                'content-type' : "application/json"
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
             },
-            type : "GET",
-            url : "http://localhost:8080/api/orders/exports"
-        }).done((date) =>{
-            console.log(date, "2")
-            date.forEach(orderItem =>{
-                console.log(orderItem)
+            type: "GET",
+            url: "http://localhost:8080/api/orders/exports"
+        }).done((data) => {
+            let sumTotal = 0;
+            data.forEach(orderItem => {
                 let str = renderOrderCustomer(orderItem);
+                     sumTotal += orderItem.grandTotal ;
                 $("#tbOrderCus tbody").prepend(str);
             })
-        }).fail((jqXHR) =>{
+            console.log(data, "1")
+            let sum = `
+                <span>Tổng số đơn: ${data.length} / </span>
+                <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN' , {style : "currency", currency :'VND'}).format(sumTotal)}</span> /
+                <span class="i text-warning">Tổng nợ: 68,000 </span> `;
+
+            $("#totalO ").prepend(sum);
+        }).fail((jqXHR) => {
             console.log(jqXHR)
         })
     }
@@ -174,9 +181,9 @@
         showModalDelete();
     });
 
-    function showModalDelete(){
+    function showModalDelete() {
         let orderId = order.id;
-        console.log(orderId , "1")
+        console.log(orderId, "1")
         App.sweetAlert.showDelete()
             .then((result) => {
                 if (result.isConfirmed) {
@@ -185,26 +192,6 @@
             })
     }
 
-    function doDelete(orderId){
-        return $.ajax({
-            headers: {
-                'accept' : 'application/json',
-                'content-type' : 'application/json'
-            },
-            type: "DELETE",
-            url : "http://localhost:8080/api/orders/delete/" + orderId
-        }).done(() =>{
-            $('#tr_' + orderId).remove();
-            $('.delete').off('click');
-
-            iziToast.success({
-                title: 'OK',
-                position: 'topRight',
-                timeout: 2100,
-                message: "Xóa Đơn Hàng Thành Công !"
-            });
-        })
-    }
 
 </script>
 

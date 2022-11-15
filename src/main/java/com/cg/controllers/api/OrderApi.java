@@ -73,7 +73,7 @@ public class OrderApi {
     }
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody OrderParam orderParam) {
-        return new ResponseEntity<>(orderService.customerOrder(orderParam), HttpStatus.OK);
+        return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
     }
 
  
