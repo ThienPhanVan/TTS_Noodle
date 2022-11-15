@@ -175,6 +175,14 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    public List<OrderListPurchase> findAllByOrderTypeCustomerList() {
+        return orderRepository.findAllByOrderType(OrderType.CUSTOMER)
+                .stream()
+                .map(order -> orderMapper.toDTOList(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<OrderResult> findAllByOrderTypePurchase() {
         return orderRepository.findAllByOrderType(OrderType.PURCHASE)
                 .stream()
