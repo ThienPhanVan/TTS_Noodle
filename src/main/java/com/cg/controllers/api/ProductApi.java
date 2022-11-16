@@ -34,4 +34,12 @@ public class ProductApi {
 
         return new ResponseEntity<>(productResultList, HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable Long id){
+
+        ProductResult productResult = productService.findProductById(id);
+
+        return new ResponseEntity<>(productResult, HttpStatus.OK);
+    }
 }

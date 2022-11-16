@@ -44,4 +44,10 @@ public class ProductService implements IProductService {
                 .map(product -> productMapper.toDTO(product))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ProductResult findProductById(Long productId) {
+        Optional<Product> productResult = productRepository.findById(productId);
+        return productMapper.toDTO(productResult.get());
+    }
 }
