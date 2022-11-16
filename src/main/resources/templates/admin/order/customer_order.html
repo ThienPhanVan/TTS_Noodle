@@ -51,22 +51,22 @@
                                         <th scope="col">Khách hàng</th>
                                         <th scope="col">Địa chỉ giao hàng</th>
                                         <th scope="col">Trạng thái</th>
-                                        <th scope="col">Tổng tiền</th>
+                                        <th scope="col">Tổng tiền (đ)</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>11/10/2022</td>
-                                        <td>sinhcute</td>
-                                        <td>28 Nguyễn tri phương</td>
-                                        <td>
-                                            <div class="badge badge-pill badge-success">Pending</div>
-                                        </td>
-                                        <td>50.000đ</td>
-                                        <td><i class="fa fa-crown"></i></td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td>123</td>-->
+<!--                                        <td>11/10/2022</td>-->
+<!--                                        <td>sinhcute</td>-->
+<!--                                        <td>28 Nguyễn tri phương</td>-->
+<!--                                        <td>-->
+<!--                                            <div class="badge badge-pill badge-success">Pending</div>-->
+<!--                                        </td>-->
+<!--                                        <td>50.000đ</td>-->
+<!--                                        <td><i class="fa fa-crown"></i></td>-->
+<!--                                    </tr>-->
                                     </tbody>
 
                                 </table>
@@ -104,13 +104,13 @@
 <script>
     let order = new Order();
     let user = new User();
-
     function renderOrderCustomer(order) {
+        console.log("order",order)
         let str = `
                 <tr id="tr_${order.id}">
                     <td>${order.id}</td>
                     <td>${order.createdAt}</td>
-                    <td>${order.fullName}</td>
+                        <td>${(order.fullName === null) ? user.fullName : order.fullName}</td>
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
                     <td>${new Intl.NumberFormat('vi-VN', {
@@ -130,11 +130,12 @@
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/orders/exports",
+            url: "http://localhost:8080/api/orders/exportsNoodle",
         }).done((data) => {
-            console.log(data)
             order = data;
-            user = order.user;
+            console.log("order", order)
+            // user = order.user;
+            // console.log("user",user)
             data.forEach(item => {
                 let str = renderOrderCustomer(item);
                 $("#tbOrder tbody").prepend(str);
@@ -147,7 +148,29 @@
         })
     }
 
+    function findUserById() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/users",
+        }).done((data) => {
+            user = data;
+            console.log("user",user)
+            data.forEach(item => {
+                let str = renderOrderCustomer(item);
+                $("#tbOrder tbody").prepend(str);
+
+            });
+        }).fail((jqXHR) => {
+            console.log(jqXHR);
+        })
+    }
+
     loadOrders();
+    findUserById()
 </script>
 
 </html>

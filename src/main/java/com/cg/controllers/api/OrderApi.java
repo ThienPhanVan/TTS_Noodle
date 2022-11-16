@@ -40,6 +40,14 @@ public class OrderApi {
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
+    @GetMapping("/exportsNoodle")
+    public ResponseEntity<?> getAllOrderByExportNoodle(){
+
+        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
+
+        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+    }
+
 
     @GetMapping("")
     public ResponseEntity<?> getAllOrder(){

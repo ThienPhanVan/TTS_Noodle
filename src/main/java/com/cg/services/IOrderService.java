@@ -27,6 +27,8 @@ public interface IOrderService {
     List<OrderListPurchase> findAllByOrderTypePurchaseList ();
 
     List<OrderListPurchase> findAllByOrderTypeCustomerList();
+
+
     List<OrderResult> findAllByOrderTypePurchase ();
 
     List<OrderResult> findAllByOrderTypeCustomer ();
