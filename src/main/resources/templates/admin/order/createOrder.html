@@ -145,53 +145,56 @@
                          class="">
                         <div class="iq-card mt-4">
                             <div class="iq-card-body">
-                                <table class="table">
+                                <table id="tbItemCustomer" class="table">
                                     <thead class="bg-primary">
                                     <tr class="text-center">
                                         <th scope="col">Số lượng (Kg)</th>
-                                        <th scope="col">Giá</th>
-                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Giá (đ)</th>
+                                        <th scope="col">Thành tiền (đ)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                                <tr class="text-center">
-                                                    <td style="width: 150px;margin: 40px auto;">
-                                                        <div class="input-group text-center">
+                                    <!--                                            <tr class="text-center">-->
+                                    <!--                                                <td style="width: 150px;margin: 40px auto;">-->
+                                    <!--                                                    <div class="input-group text-center">-->
 
-                                                            <span class="input-group-btn">
-                                                                        <button type="button"
-                                                                                class="btn btn-info btn-number item-quantity"
-                                                                                title="Tăng số lượng món"
-                                                                                data-type="plus" data-field="quant[2]">
-            <!--                                                                    onclick="handleIncreaseQuantity(${item.id})"-->
-                                                                             <span class="fa fa-minus"></span>
+                                    <!--                                                <span class="input-group-btn">-->
+                                    <!--                                                            <button type="button"-->
+                                    <!--                                                                    class="btn btn-info btn-number item-quantity"-->
+                                    <!--                                                                    title="Tăng số lượng món"-->
+                                    <!--                                                                    data-type="plus" data-field="quant[2]">-->
+                                    <!--&lt;!&ndash;                                                                    onclick="handleIncreaseQuantity(${item.id})"&ndash;&gt;-->
+                                    <!--                                                                 <span class="fa fa-minus"></span>-->
 
-                                                                        </button>
-                                                            </span>
-                                                            <input style="height: 35px; border-radius: 5px;" type="text"
-                                                                   name="quant[2]" class="form-control" value="50" min="10"
-                                                                   max="500">
+                                    <!--                                                            </button>-->
+                                    <!--                                                </span>-->
+                                    <!--                                                        <input style="height: 35px; border-radius: 5px;" type="text"-->
+                                    <!--                                                               name="quant[2]" class="form-control" value="50" min="10"-->
+                                    <!--                                                               max="500">-->
 
-                                                            <span class="">
-                                                                        <button type="button"
-                                                                                class="btn btn-primary btn-number item-quantity counter-up"
-                                                                                title="Giảm số lượng bún"
-                                                                                data-type="minus" data-field="quant[2]">
-            <!--                                                                    onclick="handleDecreaseQuantity(${item.id})"-->
-                                                                           <span class="fa fa-plus"></span>
-                                                                        </button>
-                                                                    </span>
-                                                        </div>
+                                    <!--                                                        <span class="">-->
+                                    <!--                                                            <button type="button"-->
+                                    <!--                                                                    class="btn btn-primary btn-number item-quantity counter-up"-->
+                                    <!--                                                                    title="Giảm số lượng bún"-->
+                                    <!--                                                                    data-type="minus" data-field="quant[2]">-->
+                                    <!--&lt;!&ndash;                                                                    onclick="handleDecreaseQuantity(${item.id})"&ndash;&gt;-->
+                                    <!--                                                               <span class="fa fa-plus"></span>-->
+                                    <!--                                                            </button>-->
+                                    <!--                                                        </span>-->
+                                    <!--                                                    </div>-->
 
-                                                    </td>
-                                                    <td>
-                                                        <input class="text-center price" id="price" name="price" value="7.000đ">
-                                                    </td>
-                                                    <td onclick="handleIncreaseQuantity()"></td>
-                                                </tr>
+                                    <!--                                                </td>-->
+                                    <!--                                                <td>-->
+                                    <!--                                                    <input class="text-center price" id="price" name="price"-->
+                                    <!--                                                           value="7.000đ">-->
+                                    <!--                                                </td>-->
+                                    <!--                                                <td>40.000đ</td>-->
+                                    <!--                                            </tr>-->
+
                                     </tbody>
+
                                 </table>
-                                <div class="row">
+                                <div class="p-2 row">
                                     <div style="text-align: end" class="col-sm-6 ">
                                         <div class="">
                                             <label for="">Thanh toán</label>
@@ -206,7 +209,7 @@
                                     </div>
                                     <div style="text-align: center" class="col-sm-6">
                                         <div>
-                                            <p>grandTotal</p>
+                                            <p class="handleInputQuantity">grandTotal</p>
                                         </div>
                                         <div>
                                             <input class="text-center" type="number" value="0đ"/>
@@ -408,31 +411,33 @@
             </div>
         </div>
     </div>
+    <script src="/static/assets/js/createexports.js"/>
     <script src="/static/assets/js/app.js"/>
     <th:block th:replace="/layout/script/footer :: footer"></th:block>
 </div>
 
 <script>
-    item = new Item();
-    productId = item.productId;
+    let item = new Item();
+    let product = new Product();
+    let user = new User();
+    let order = new Order();
 
     function renderCartItem(obj) {
         let str = `
-             <tr class="text-center">
+             <tr class="text-center" id="tr_${obj.id}">
+
                                         <td style="width: 150px;margin: 40px auto;">
                                             <div class="input-group text-center">
-
                                                 <span class="input-group-btn">
                                                             <button type="button"
                                                                     class="btn btn-info btn-number item-quantity"
                                                                     title="Tăng số lượng món"
                                                                     data-type="plus" data-field="quant[2]">
                                                                  <span class="fa fa-minus"></span>
-
                                                             </button>
                                                 </span>
                                                 <input style="height: 35px; border-radius: 5px;" type="text"
-                                                       name="quant[2]" class="form-control inputQuantity" value="50" min="10"
+                                                       name="quant[2]" class="form-control" id ="inputQuantity" value="50" min="10"
                                                        max="500">
 
                                                 <span class="">
@@ -444,35 +449,76 @@
                                                             </button>
                                                         </span>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <input class="text-center" id="price" name="price"
+                                            value="${product.price}"
+                                            />
 
                                         </td>
                                         <td>
-                                            <input class="text-center price" id="price" name="price" value="7.000đ">
+                                            <input disabled class="form-control-sm-2" id="itemTotalAmount" type="text" value="0">
                                         </td>
-
                                     </tr>`
         return str;
     }
 
-    function inputItemQuantity(){
-        $(".inputQuantity").on("input"), function (){
-            let quantity = +$(this).val();
-
-        }
+    function getProductById() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/products/1"
+        })
+            .done((data) => {
+                    product = data;
+                    let str = renderCartItem(data)
+                    //
+                    $("#tbItemCustomer tbody").prepend(str);
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR)
+            })
     }
+
+    getProductById();
 
 
     function handleIncreaseQuantity() {
-        let quantity = document.querySelector('.input-group .form-control').value;
-        let price = document.querySelector('#price').value;
-        let grandTotal = parseInt(quantity) * parseInt(price);
-        console.log(grandTotal);
-        return grandTotal;
+        let quantity = +$("#inputQuantity").val();
+        let price = $("#price").val();
+        let totalAmount = quantity * parseInt(price);
+        $("#itemTotalAmount").val(totalAmount);
     }
 
-    handleIncreaseQuantity();
 
+   function handleInputQuantity(){
+       window.onload = ()=>{
+           let x = 5;
+           let input = document.querySelector('.input-group .form-control')
+           let buttons = document.querySelectorAll('.input-group .item-quantity')
 
+           buttons.forEach(b => {
+               b.addEventListener('click', function() {
+                   let value = +input.value;
+
+                   if (this.classList.contains('counter-up')) {
+                       value += x;
+                       handleIncreaseQuantity();
+                   } else if (value > 0) {
+                       value -= x
+                       handleIncreaseQuantity();
+                   }
+
+                   input.value = value
+               })
+           })
+       }
+   }
+
+    handleInputQuantity();
 </script>
 </body>
 

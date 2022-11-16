@@ -37,8 +37,7 @@ public interface IOrderService {
 
     List<OrderResult> findAllByOrderStatusCancel ();
 
-<<<<<<< HEAD
+
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
-=======
->>>>>>> thien_dev
+
 }

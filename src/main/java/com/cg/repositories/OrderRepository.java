@@ -18,7 +18,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
-<<<<<<< HEAD
+
 //    @Query(
 //            "SELECT NEW com.cg.dto.order.OrderListPurchase (" +
 //                    "o.id, " +
@@ -32,8 +32,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 //                    "WHERE o.user.fullName LIKE %?1%"
 //    )
 //    List<Order> searchOrderBySupplierOOrCreatedAt(String keyword);
-=======
 
->>>>>>> thien_dev
 
 }
