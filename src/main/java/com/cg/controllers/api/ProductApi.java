@@ -29,6 +29,15 @@ public class ProductApi {
         return new ResponseEntity<>(productResultList, HttpStatus.OK);
     }
 
+
+    @GetMapping("/search/{keySearch}")
+    public ResponseEntity<?> doSearch(@PathVariable String keySearch){
+
+        List<ProductResult> productResultList = productService.findProductByTitle(keySearch);
+
+        return new ResponseEntity<>(productResultList, HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> showProductId(@PathVariable Long id){
 

@@ -16,343 +16,9 @@
 <!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Sidebar  -->
-    <div class="iq-sidebar">
-        <div class="iq-navbar-logo d-flex justify-content-between">
-            <a href="/home" class="header-logo">
-                <!-- <img src="assets/images/logo.png" class="img-fluid rounded" alt=""> -->
-                <img src="/assets/images/nudo.jpg" alt="">
-                <span>Bún Việt</span>
-            </a>
-            <div class="iq-menu-bt align-self-center">
-                <div class="wrapper-menu">
-                    <div class="main-circle"><i class="ri-menu-line"></i></div>
-                    <div class="hover-circle"><i class="ri-close-fill"></i></div>
-                </div>
-            </div>
-        </div>
-        <div id="sidebar-scrollbar">
-            <nav class="iq-sidebar-menu">
-                <ul id="iq-sidebar-toggle" class="iq-menu">
-                    <li class="active">
-                        <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-home iq-arrow-left"></i><span>Dashboard</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
-                            <li class="active"><a href="/home"><i class="las la-laptop-code"></i>Tổng Quan</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#userinfo" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-user-tie iq-arrow-left"></i><span>Khách hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a th:href="@{/customer}"><i class="las la-th-list"></i>Khách hàng</a></li>
-                            <li><a th:href="@{/supplier}"><i class="ri-database-line"></i>Nhà cung cấp</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#tables" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-table-line iq-arrow-left"></i><span>Quản Lí</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="tables" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-
-                            <li>
-                                <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse"
-                                   aria-expanded="false"><i class="lab la-elementor iq-arrow"></i><span>Kho
-                                 Hàng</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#tables">
-                                    <li><a href="#"><i class="las la-palette ml-5"></i>Tồn Kho Gạo</a></li>
-                                    <li><a href="#"><i class="las la-magnet ml-5"></i>Tồn Kho Bún</a></li>
-                                    <!--                                    <li><a href="ui-tooltips.html"><i class="las la-magnet ml-5"></i>Sắp Hết Gạo</a></li>-->
-                                </ul>
-                            </li>
-                            <li><a href="#"><i class="ri-database-line"></i>Đơn Hàng</a></li>
-                            <li><a href="#"><i class="ri-database-line"></i>Nhập Hàng</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#forms" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
-                                class="lab la-wpforms iq-arrow-left"></i><span>Tiền Bạc</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="forms" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="form-layout.html"><i class="las la-book"></i>Thu</a></li>
-                            <li><a href="form-validation.html"><i class="las la-edit"></i>Chi</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#charts" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-pie-chart-box-line iq-arrow-left"></i><span>Đặt hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="charts" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Khách Hàng</a></li>
-                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Nhà Cung Cấp</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <div class="p-3"></div>
-        </div>
-    </div>
+    <th:block th:replace="/layout/sidebar/left_side_bar.html"/>
     <!-- TOP Nav Bar -->
-    <div class="iq-top-navbar">
-        <div class="iq-navbar-custom">
-            <nav class="navbar navbar-expand-lg navbar-light p-0">
-                <div class="iq-menu-bt d-flex align-items-center">
-                    <div class="wrapper-menu">
-                        <div class="main-circle"><i class="ri-menu-line"></i></div>
-                        <div class="hover-circle"><i class="ri-close-fill"></i></div>
-                    </div>
-                    <div class="iq-navbar-logo d-flex justify-content-between ml-3">
-                        <a href="index.html" class="header-logo">
-                            <img src="assets/images/logo.png" class="img-fluid rounded" alt="">
-                            <span>FinDash</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="iq-search-bar">
-                    <form action="#" class="searchbox">
-                        <input type="text" class="text search-input" placeholder="Type here to search...">
-                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                    </form>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
-                    <i class="ri-menu-3-line"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto navbar-list">
-
-                        <li class="nav-item nav-icon">
-                            <a href="#" class="iq-waves-effect bg-primary rounded"><span
-                                    class="ripple rippleEffect"></span><i class="ri-shopping-cart-2-line"></i></a>
-                        </li>
-                        <li class="nav-item nav-icon">
-                            <a href="#" class="search-toggle iq-waves-effect bg-primary rounded">
-                                <i class="ri-notification-line"></i>
-                                <span class="bg-danger dots"></span>
-                            </a>
-                            <div class="iq-sub-dropdown">
-                                <div class="iq-card shadow-none m-0">
-                                    <div class="iq-card-body p-0 ">
-                                        <div class="bg-primary p-3">
-                                            <h5 class="mb-0 text-white">All Notifications<small
-                                                    class="badge  badge-light float-right pt-1">4</small></h5>
-                                        </div>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/01.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Emma Watson Barry</h6>
-                                                    <small class="float-right font-size-12">Just Now</small>
-                                                    <p class="mb-0">95 MB</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/02.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">New customer is join</h6>
-                                                    <small class="float-right font-size-12">5 days ago</small>
-                                                    <p class="mb-0">Cyst Barry</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/03.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Two customer is left</h6>
-                                                    <small class="float-right font-size-12">2 days ago</small>
-                                                    <p class="mb-0">Cyst Barry</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/04.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">New Mail from Fenny</h6>
-                                                    <small class="float-right font-size-12">3 days ago</small>
-                                                    <p class="mb-0">Cyst Barry</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item nav-icon dropdown">
-                            <a href="#" class="search-toggle iq-waves-effect bg-primary rounded">
-                                <i class="ri-mail-line"></i>
-                                <span class="bg-danger count-mail"></span>
-                            </a>
-                            <div class="iq-sub-dropdown">
-                                <div class="iq-card shadow-none m-0">
-                                    <div class="iq-card-body p-0 ">
-                                        <div class="bg-primary p-3">
-                                            <h5 class="mb-0 text-white">All Messages<small
-                                                    class="badge  badge-light float-right pt-1">5</small></h5>
-                                        </div>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/01.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Barry Emma Watson</h6>
-                                                    <small class="float-left font-size-12">13 Jun</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/02.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
-                                                    <small class="float-left font-size-12">20 Apr</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/03.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Why do we use it?</h6>
-                                                    <small class="float-left font-size-12">30 Jun</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/04.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Variations Passages</h6>
-                                                    <small class="float-left font-size-12">12 Sep</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/05.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Lorem Ipsum generators</h6>
-                                                    <small class="float-left font-size-12">5 Dec</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <ul class="navbar-list">
-                    <li class="line-height">
-                        <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                            <img src="assets/images/user/1.jpg" class="img-fluid rounded mr-3" alt="user">
-                            <div class="caption">
-                                <h6 class="mb-0 line-height">Barry Tech</h6>
-                                <p class="mb-0">Manager</p>
-                            </div>
-                        </a>
-                        <div class="iq-sub-dropdown iq-user-dropdown">
-                            <div class="iq-card shadow-none m-0">
-                                <div class="iq-card-body p-0 ">
-                                    <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white line-height">Hello Barry Tech</h5>
-                                        <span class="text-white font-size-12">Available</span>
-                                    </div>
-                                    <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-file-user-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">My Profile</h6>
-                                                <p class="mb-0 font-size-12">View personal profile details.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="profile-edit.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-profile-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">Edit Profile</h6>
-                                                <p class="mb-0 font-size-12">Modify your personal details.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-account-box-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">Account settings</h6>
-                                                <p class="mb-0 font-size-12">Manage your account parameters.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-lock-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">Privacy Settings</h6>
-                                                <p class="mb-0 font-size-12">Control your privacy parameters.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Sign out<i
-                                                class="ri-login-box-line ml-2"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <th:block th:replace="/layout/topNav/topNav :: topNav"/>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -371,7 +37,7 @@
             <div class="filter_product_box">
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline">
-                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1 search" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
                         <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" id="btnSearch" type="submit">Tìm kiếm</button>
                     </form>
                 </nav>
@@ -488,11 +154,11 @@
         let str = `
               <tr class="list-product" id="tr_${obj.id}">
                         <th>${obj.id}</th>
-                        <th>${obj.createdAt}</th>
-                        <th>${obj.fullName}</th>
-                        <th>${user.fullName}</th>
-                        <th>${obj.orderStatus}</th>
-                        <th>${obj.grandTotal}</th>
+                        <th>${obj.createdat}</th>
+                        <th>${obj.code}</th>
+                        <th>${obj.fullname}</th>
+                        <th>${obj.orderstatus}</th>
+                        <th>${obj.grandtotal} đ</th>
                     </tr>
         `
 
@@ -562,9 +228,11 @@
         })
         .done((data) => {
             $.each(data , (i,item) => {
+
                 order = item;
 
-                user = order.user;
+                order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
 
                 let str =  renderOrder(item);
 

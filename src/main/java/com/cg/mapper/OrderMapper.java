@@ -48,12 +48,11 @@ public class OrderMapper {
                 .setUserId(orderPurchase.getUserId());
 
     }
-    public Order toModel (OrderParam orderParam){
+    public Order toModel (OrderParam orderParam) {
         return new Order()
                 .setId(orderParam.getId())
                 .setUserId(orderParam.getUserId())
                 .setPhone(orderParam.getPhone())
                 .setAddress(orderParam.getAddress());
-
     }
 }

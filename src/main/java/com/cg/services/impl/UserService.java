@@ -108,10 +108,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public List<UserResult> searchSupplier(String keyword) {
         return userRepository.searchSupplier(keyword)
                 .stream()
-                .map(userMapper::toDTO)
+                .map( userMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -158,6 +159,7 @@ public class UserService implements IUserService {
         return userRepository.totalOrderOfUser(id);
     }
 
+<<<<<<< HEAD
     @Override
     public List<UserResult> findAllByFullNameOrPhone(String keyword) {
         return userRepository.findAllByFullNameOrPhone(keyword)
@@ -165,4 +167,6 @@ public class UserService implements IUserService {
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
+=======
+>>>>>>> 3ae44c5fbbd3e2cf0e2c77532d1580ec7c64e679
 }

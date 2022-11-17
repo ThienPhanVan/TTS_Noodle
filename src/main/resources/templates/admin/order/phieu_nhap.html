@@ -14,344 +14,12 @@
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
-    <!-- Sidebar  -->
-    <div class="iq-sidebar">
-        <div class="iq-navbar-logo d-flex justify-content-between">
-            <a href="/home" class="header-logo">
-                <!-- <img src="assets/images/logo.png" class="img-fluid rounded" alt=""> -->
-                <img src="/assets/images/nudo.jpg" alt="">
-                <span>Bún Việt</span>
-            </a>
-            <div class="iq-menu-bt align-self-center">
-                <div class="wrapper-menu">
-                    <div class="main-circle"><i class="ri-menu-line"></i></div>
-                    <div class="hover-circle"><i class="ri-close-fill"></i></div>
-                </div>
-            </div>
-        </div>
-        <div id="sidebar-scrollbar">
-            <nav class="iq-sidebar-menu">
-                <ul id="iq-sidebar-toggle" class="iq-menu">
-                    <li class="active">
-                        <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-home iq-arrow-left"></i><span>Dashboard</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
-                            <li class="active"><a href="/home"><i class="las la-laptop-code"></i>Tổng Quan</a>
-                            </li>
 
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#userinfo" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-user-tie iq-arrow-left"></i><span>Khách hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a th:href="@{/customer}"><i class="las la-th-list"></i>Khách hàng</a></li>
-                            <li><a th:href="@{/supplier}"><i class="ri-database-line"></i>Nhà cung cấp</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#tables" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-table-line iq-arrow-left"></i><span>Quản Lí</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="tables" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-
-                            <li>
-                                <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse"
-                                   aria-expanded="false"><i class="lab la-elementor iq-arrow"></i><span>Kho
-                                 Hàng</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#tables">
-                                    <li><a href="#"><i class="las la-palette ml-5"></i>Tồn Kho Gạo</a></li>
-                                    <li><a href="#"><i class="las la-magnet ml-5"></i>Tồn Kho Bún</a></li>
-                                    <!--                                    <li><a href="ui-tooltips.html"><i class="las la-magnet ml-5"></i>Sắp Hết Gạo</a></li>-->
-                                </ul>
-                            </li>
-                            <li><a href="#"><i class="ri-database-line"></i>Đơn Hàng</a></li>
-                            <li><a href="#"><i class="ri-database-line"></i>Nhập Hàng</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#forms" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
-                                class="lab la-wpforms iq-arrow-left"></i><span>Tiền Bạc</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="forms" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="form-layout.html"><i class="las la-book"></i>Thu</a></li>
-                            <li><a href="form-validation.html"><i class="las la-edit"></i>Chi</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#charts" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-pie-chart-box-line iq-arrow-left"></i><span>Đặt hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="charts" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Khách Hàng</a></li>
-                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Nhà Cung Cấp</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <div class="p-3"></div>
-        </div>
-    </div>
+    <th:block th:replace="/layout/sidebar/left_side_bar.html"/>
     <!-- TOP Nav Bar -->
-    <div class="iq-top-navbar">
-        <div class="iq-navbar-custom">
-            <nav class="navbar navbar-expand-lg navbar-light p-0">
-                <div class="iq-menu-bt d-flex align-items-center">
-                    <div class="wrapper-menu">
-                        <div class="main-circle"><i class="ri-menu-line"></i></div>
-                        <div class="hover-circle"><i class="ri-close-fill"></i></div>
-                    </div>
-                    <div class="iq-navbar-logo d-flex justify-content-between ml-3">
-                        <a href="index.html" class="header-logo">
-                            <img src="assets/images/logo.png" class="img-fluid rounded" alt="">
-                            <span>FinDash</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="iq-search-bar">
-                    <form action="#" class="searchbox">
-                        <input type="text" class="text search-input" placeholder="Type here to search...">
-                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                    </form>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
-                    <i class="ri-menu-3-line"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto navbar-list">
-
-                        <li class="nav-item nav-icon">
-                            <a href="#" class="iq-waves-effect bg-primary rounded"><span
-                                    class="ripple rippleEffect"></span><i class="ri-shopping-cart-2-line"></i></a>
-                        </li>
-                        <li class="nav-item nav-icon">
-                            <a href="#" class="search-toggle iq-waves-effect bg-primary rounded">
-                                <i class="ri-notification-line"></i>
-                                <span class="bg-danger dots"></span>
-                            </a>
-                            <div class="iq-sub-dropdown">
-                                <div class="iq-card shadow-none m-0">
-                                    <div class="iq-card-body p-0 ">
-                                        <div class="bg-primary p-3">
-                                            <h5 class="mb-0 text-white">All Notifications<small
-                                                    class="badge  badge-light float-right pt-1">4</small></h5>
-                                        </div>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/01.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Emma Watson Barry</h6>
-                                                    <small class="float-right font-size-12">Just Now</small>
-                                                    <p class="mb-0">95 MB</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/02.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">New customer is join</h6>
-                                                    <small class="float-right font-size-12">5 days ago</small>
-                                                    <p class="mb-0">Cyst Barry</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/03.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Two customer is left</h6>
-                                                    <small class="float-right font-size-12">2 days ago</small>
-                                                    <p class="mb-0">Cyst Barry</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/04.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">New Mail from Fenny</h6>
-                                                    <small class="float-right font-size-12">3 days ago</small>
-                                                    <p class="mb-0">Cyst Barry</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item nav-icon dropdown">
-                            <a href="#" class="search-toggle iq-waves-effect bg-primary rounded">
-                                <i class="ri-mail-line"></i>
-                                <span class="bg-danger count-mail"></span>
-                            </a>
-                            <div class="iq-sub-dropdown">
-                                <div class="iq-card shadow-none m-0">
-                                    <div class="iq-card-body p-0 ">
-                                        <div class="bg-primary p-3">
-                                            <h5 class="mb-0 text-white">All Messages<small
-                                                    class="badge  badge-light float-right pt-1">5</small></h5>
-                                        </div>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/01.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Barry Emma Watson</h6>
-                                                    <small class="float-left font-size-12">13 Jun</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/02.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
-                                                    <small class="float-left font-size-12">20 Apr</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/03.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Why do we use it?</h6>
-                                                    <small class="float-left font-size-12">30 Jun</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/04.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Variations Passages</h6>
-                                                    <small class="float-left font-size-12">12 Sep</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="media align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded" src="assets/images/user/05.jpg"
-                                                         alt="">
-                                                </div>
-                                                <div class="media-body ml-3">
-                                                    <h6 class="mb-0 ">Lorem Ipsum generators</h6>
-                                                    <small class="float-left font-size-12">5 Dec</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <ul class="navbar-list">
-                    <li class="line-height">
-                        <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                            <img src="assets/images/user/1.jpg" class="img-fluid rounded mr-3" alt="user">
-                            <div class="caption">
-                                <h6 class="mb-0 line-height">Barry Tech</h6>
-                                <p class="mb-0">Manager</p>
-                            </div>
-                        </a>
-                        <div class="iq-sub-dropdown iq-user-dropdown">
-                            <div class="iq-card shadow-none m-0">
-                                <div class="iq-card-body p-0 ">
-                                    <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white line-height">Hello Barry Tech</h5>
-                                        <span class="text-white font-size-12">Available</span>
-                                    </div>
-                                    <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-file-user-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">My Profile</h6>
-                                                <p class="mb-0 font-size-12">View personal profile details.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="profile-edit.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-profile-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">Edit Profile</h6>
-                                                <p class="mb-0 font-size-12">Modify your personal details.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-account-box-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">Account settings</h6>
-                                                <p class="mb-0 font-size-12">Manage your account parameters.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="media align-items-center">
-                                            <div class="rounded iq-card-icon iq-bg-primary">
-                                                <i class="ri-lock-line"></i>
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">Privacy Settings</h6>
-                                                <p class="mb-0 font-size-12">Control your privacy parameters.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Sign out<i
-                                                class="ri-login-box-line ml-2"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <th:block th:replace="/layout/topNav/topNav :: topNav"/>
+    <!-- Sidebar  -->
+    <!-- TOP Nav Bar -->
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -373,10 +41,30 @@
                             <h5>Thông tin sản phẩm</h5>
                             <div class="filter_product_box">
                                 <nav class="navbar navbar-light bg-light">
-                                    <form class="form-inline">
-                                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
-                                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>
-                                    </form>
+                                    <div class="row">
+<!--                                        <div class="search-box">-->
+<!--                                            <form class="form-inline">-->
+<!--                                                <input  class="form-control form-control-sm mr-sm-2" type="search" id="doSearch" placeholder="Tìm kiếm sản phẩm" aria-label="Search">-->
+<!--                                                <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
+<!--                                        <div class="list-group">-->
+<!--                                            <div class="card-body">-->
+<!--                                                <h5 class="card-title">Card title</h5>-->
+<!--                                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <div class="dropdown">
+                                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                                <input class="form-control search" id="searchProduct" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" >Không tìm thấy sản phẩm</a>
+<!--                                                <a class="dropdown-item" href="#">Another action</a>-->
+<!--                                                <a class="dropdown-item" href="#">Something else here</a>-->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </nav>
                             </div>
                             <div class="list-product-purchase">
@@ -385,9 +73,9 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Giá nhập</th>
-                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Số lượng(kg)</th>
+                                        <th scope="col">Giá nhập(đ)</th>
+                                        <th scope="col">Thành tiền(đ)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -410,24 +98,30 @@
                         <h5>Thông tin phiếu nhập hàng</h5>
                         <div class="filter_product_box">
                             <nav class="navbar navbar-light bg-light">
-                                <form class="form-inline">
-                                    <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1" id="supplierOrder" type="search" placeholder="Nhập tên nhà cung cấp" aria-label="Search">
-                                    <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </form>
+                                <div class="dropdown-supplier">
+                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLinks" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                        <input class="form-control search-supplier" type="search" placeholder="Tìm kiếm nhà cung cấp" aria-label="Search" />
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLinks">
+                                        <button class="dropdown-item" >Không tìm thấy nhà cung cấp</button>
+                                        <!--                                                <a class="dropdown-item" href="#">Another action</a>-->
+                                        <!--                                                <a class="dropdown-item" href="#">Something else here</a>-->
+                                    </div>
+                                </div>
+                                <div class="btn btn-primary">
+                                    <a class="text-white create" id="createSupplier">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                </div>
                             </nav>
                         </div>
                         <input class="form-control mt-2" id="dateID" type="date" min= name="dateTime" value="Ngày tạo"/>
                     </div>
-                    <div class="bill_info" style="margin-top: 25px;">
+                    <div class="bill_info" style="margin-top: 15px;">
                         <h5>Thông tin thanh toán</h5>
-                        <p>
-                            <span>Tổng cộng</span>
-                            <span id="grandTotal"></span>
-                        </p>
+                        <span>Tổng cộng</span>
+                        <span class="grandTotal"></span>
                     </div>
-
                     <button id="btnImportOrder" class="btn btn-primary">
                         Nhập hàng
                     </button>
@@ -454,6 +148,9 @@
         </div>
     </div>
 </footer>
+
+<th:block th:replace="/user/supplier/modalCreateSupplier :: createSupplier"/>
+
 <script>
     var colors = ['#007bff', '#28a745', '#444444', '#c3e6cb', '#dc3545', '#6c757d'];
 
@@ -524,102 +221,220 @@
             if(day < 10)
                 day = '0' + day.toString();
 
-            let minDate= year + '-' + month + '-' + day;
+            let maxDate = year + '-' + month + '-' + day;
 
-            $('#dateID').attr('min', minDate);
+            $('#dateID').attr('max', maxDate );
         }
     )
+    document.getElementById('dateID').value = new Date().toISOString().substring(0, 10);
 
     function renderProduct(obj){
+
+        let totalAmount = +obj.price * +obj.quantity;
+
 
         let str = `
                  <tr id = "tr_${obj.id}">
                     <th scope="row">${obj.id}</th>
                     <td>${obj.title}</td>
                     <td >
-                        <input class="form-control-sm-2 quantityItemPurchase" type="text" value="0">
+                        <input autocomplete="off" class="form-control form-control-sm quantityItemPurchase" type="number" value="${obj.quantity}">
                     </td>
                     <td>
-                        <input class="form-control-sm-2 priceItemPurchase" type="text" value="${obj.price}">
+                        <input class="form-control form-control-sm priceItemPurchase" type="number" value="${obj.price}">
                         </td>
                     <td>
-                        <input disabled class="form-control-sm-2 itemTotalAmount" type="text" value="0">
+                        <input disabled class="form-control form-control-sm itemTotalAmount" type="number" value="${totalAmount}">
                     </td>
                 </tr>
         `
         return str;
     }
 
-    function amountTotalQuantity(){
-        $("#quantityItemPurchase").on("input", function () {
 
-            let quantity = +$(this).val();
+    function handleSelectSupplierSearch(){
+        $(".supplier-search").off();
+        $(".supplier-search").on("click", function (){
+            let id = $(this).data("id");
+            let filename = $(this).data("filename");
+            let phone = $(this).data("phone");
 
-            let price = $("#priceItemPurchase").val();
+            let obj = {
+                id,
+                filename,
+                phone
+            }
 
-            let totalAmount = quantity * price;
+            console.log(obj);
 
-            $("#itemTotalAmount").val(totalAmount);
+            $(".search-supplier").val(filename);
         })
     }
 
-    function amountTotalPrice(){
-        $("#priceItemPurchase").on("input", function () {
+    let arr = [];
 
-            let price = +$(this).val();
+    function handleSelectProductSearch() {
+        $(".product-search").off();
+        $(".product-search").on("click", function () {
+            let id = $(this).data("id");
+            let title = $(this).data("title");
+            let price = $(this).data("price").replaceAll(" ", "");
+            let quantity = 1;
 
-            let quantity = $("#quantityItemPurchase").val();
+            let obj = {
+                id,
+                quantity,
+                title,
+                price
+            }
 
-            let totalAmount = quantity * price;
+            let exist = false;
+            let index = -1;
 
-            $("#itemTotalAmount").val(totalAmount);
-        })
+            if (arr.length === 0) {
+                arr.push(obj)
+            }
+            else {
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].id === id) {
+                        exist = true;
+                        index = i;
+                    }
+                }
+
+                if (exist) {
+                    arr[index].quantity += 1;
+                }
+                else {
+                    arr.push(obj);
+                }
+            }
+
+            if(arr.length > 0){
+
+                $("#tbItemPurchase tbody").empty();
+                $.each(arr, (i, item) => {
+                    let str = renderProduct(item)
+
+                    $("#tbItemPurchase tbody").prepend(str);
+
+                    $("#searchProduct").html("");
+
+                    handleGrandTotal();
+
+                    groupEvent();
+                })
+            }
+        });
     }
 
+    function renderProductBox(obj){
+
+        let str = `
+                <button class="dropdown-item product-search" id="trs_${obj.id}" data-id="${obj.id}" data-title="${obj.title}" data-price="${obj.price}">Tên sản phẩm: ${obj.title}
+                        <p class="card-text">Giá:
+                             <b>${obj.price} đ</b>
+                          </p>
+                </button>
+                `
+        return str;
+    }
+
+    function renderSupplier(obj){
+
+        let str =`
+                <button class="dropdown-item supplier-search" id="trd_${obj.id}" data-id="${obj.id}" data-filename="${obj.fullName}" data-phone ="${obj.phone}" >
+                    ${obj.fullName} |  ${obj.phone}
+                  </button>
+        `
+        return str;
+    }
 
     function handleQuantityItemPurchase() {
+
         $(".quantityItemPurchase").on("input", function () {
+
             let quantity = +$(this).val();
 
-            let rowId = $(this).parents().parents().attr("id");
 
-            console.log(rowId)
+
+            let rowId = +$(this).parents().parents().attr("id").replaceAll("tr_", "");
 
             let price = $("#" + rowId + " .priceItemPurchase").val();
 
-            // let currentAmount = $(this).parents().find(".itemTotalAmount").val();
+            console.log("rowId: " + rowId)
+            // console.log(arr)
 
-            let newAmount = quantity * price;
+            $.each(arr, (i, item) => {
+                console.log("item.id: " + item.id)
+                if (item.id === rowId) {
+                    arr[i].quantity = quantity;
 
-            $("#" + rowId + " .itemTotalAmount").val(newAmount)
+                    console.log(arr)
+                }
+            })
+
+            $("#tbItemPurchase tbody").empty();
+
+            $.each(arr, (i, item) => {
+                let str = renderProduct(item)
+
+                $("#tbItemPurchase tbody").prepend(str);
+
+                handleGrandTotal();
+
+                groupEvent();
+            })
+
+            // let newAmount = quantity * price;
+
+            // $("#" + rowId + " .itemTotalAmount").val(newAmount)
+
+            // handleGrandTotal();
         })
     }
 
     function handlePriceItemPurchase() {
-        $(".priceItemPurchase").on("input", function () {
-            let price = +$(this).val();
 
-            console.log(price)
+            $(".priceItemPurchase").on("input", function () {
+
+            let price = +$(this).val();
 
             let rowId = $(this).parents().parents().attr("id");
 
             let quantity = $("#" + rowId + " .quantityItemPurchase").val();
 
-            console.log(quantity)
-
             let newAmount = quantity * price;
 
-            console.log(newAmount)
-
             $("#" + rowId + " .itemTotalAmount").val(newAmount)
+
+            handleGrandTotal();
         })
     }
 
-    // function handleItemTotalAmount() {
-    //     $(".itemTotalAmount").on("input", function () {
-    //
-    //     })
-    // }
+    function handleGrandTotal(){
+
+        let grandTotal = 0;
+
+        $("#tbItemPurchase tbody tr").each(function (){
+
+            let rowId = $(this).attr("id");
+
+            let item = $("#" + rowId + " .itemTotalAmount");
+
+            let subTotal = +$(item).val();
+
+            grandTotal += subTotal;
+
+        })
+
+
+        $(".grandTotal").text(App.formatNumberSpace(grandTotal + "đ"));
+    }
+
+    $(".itemTotalAmount").on('input',handleGrandTotal);
+
+
 
     function getAllProduct(){
         $.ajax({
@@ -632,6 +447,7 @@
         })
         .done((data)=>{
             $.each(data, (i,item)=>{
+
                 product = item;
 
                 let str = renderProduct(item)
@@ -642,8 +458,6 @@
 
             })
 
-
-
             handleImportOrder();
 
         })
@@ -653,17 +467,11 @@
     }
 
     function groupEvent(){
+
         handleQuantityItemPurchase();
 
         handlePriceItemPurchase();
 
-        // $("#tbItemPurchase tbody tr").on('click', function () {
-        //
-        //     productId =$(this).attr('id').replace('tr_', '');
-        //
-        //     amountTotalQuantity();
-        //     amountTotalPrice();
-        // })
     }
 
     function importPurchaseOrder(){
@@ -673,9 +481,18 @@
                 "content-type": "application/json"
             },
             type: "POST",
-            url: "http://localhost:8080/api/orders/create/import"
+            url: "http://localhost:8080/api/orders/create/import",
+            data: JSON.stringify(order)
         })
-        .done(() => {
+        .done((data) => {
+
+            order = data;
+
+            order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+            let str =  renderOrder(item);
+
+            $("#tbListOrder tbody").prepend(str);
 
             iziToast.success({
                 title: 'OK',
@@ -700,13 +517,163 @@
     }
 
     function handleImportOrder(){
-        $("btnImport").on("click", () => {
+        $("#btnImportOrder").on("click", () => {
             importPurchaseOrder();
         })
     }
 
+    function searchByNameProduct(keySearch){
+        return $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/products/search/" + keySearch,
+            // "data": JSON.stringify(product)
+        })
+        .done((data)=> {
+            $(".dropdown .dropdown-menu").html("");
+            console.log(keySearch);
+            $.each(data, (i,item)=>{
+                product = item;
+                product.price = App.formatNumberSpace(product.price);
+
+                let str = renderProductBox(item);
+
+                $(".dropdown .dropdown-menu").prepend(str);
+
+                handleSelectProductSearch();
+            })
+            if (data.length === 0){
+                let std = `<a class="dropdown-item" >Không tìm thấy sản phẩm</a>`
+                $(".dropdown .dropdown-menu").prepend(std);
+            }
+
+        })
+        .fail((jqXHR)=>{
+            $(".dropdown .dropdown-menu").html("");
+            console.log(jqXHR);
+            let std = `<a class="dropdown-item" >Không tìm thấy sản phẩm</a>`
+            $(".dropdown .dropdown-menu").prepend(std);
+        })
+    }
+
+    function searchByNameSupplier(keySearch){
+        return $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/users/searchSup/" + keySearch
+        })
+            .done((data) => {
+                $(".dropdown-supplier .dropdown-menu").html("");
+                console.log(keySearch);
+                $.each(data, (i,item)=> {
+                    user = item;
+
+                    let str = renderSupplier(item);
+
+                    $(".dropdown-supplier .dropdown-menu").prepend(str);
+
+                    handleSelectSupplierSearch();
+                })
+                if (data.length === 0){
+                    let std = `<a class="dropdown-item" >Không tìm thấy nhà cung cấp</a>`
+                    $(".dropdown-supplier .dropdown-menu").prepend(std);
+                }
+            })
+            .fail((jqXHR)=>{
+                $(".dropdown-supplier .dropdown-menu").html("");
+
+                let std = `<a class="dropdown-item" >Không tìm thấy nhà cung cấp</a>`
+                $(".dropdown-supplier .dropdown-menu").prepend(std);
+                console.log(jqXHR);
+            })
+    }
+
+    function enableTooltip() {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+
+    let btnCreate = $("#btnCreateSup");
+
+    btnCreate.on("click", function () {
+        let createUser = {
+            "roleId": 0,
+            "fullName": $('#nameSup').val(),
+            "phone": $('#phoneSup').val(),
+            "email": $('#emailSup').val(),
+            "address": $('#addressSup').val(),
+            "avatarUrl": "https://enshaafuture.com/public/img/default-avatar.jpg",
+        }
+        console.log(createUser)
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/users/createSupplier",
+            data: JSON.stringify(createUser)
+        }).done((data) => {
+            console.log(data)
+
+            let str = renderSupplier(data)
+            $(".dropdown-supplier .dropdown-menu").prepend(str);
+
+            handleSelectSupplierSearch();
+            App.iziToast.showSuccessAlert("Thêm mới thành công")
+            $("#modalCreateSupplier").modal('hide')
+            enableTooltip();
+        }).fail((jqHRX) => {
+            console.log(jqHRX)
+        });
+    })
+
+    $('.dropdown-toggle').dropdown();
+
+    $("#modalCreateSupplier").on("hidden.bs.modal", function () {
+
+        $("#frmCreateSup")[0].reset();
+        $('#modalCreateSupplier .modal-alert-danger').removeClass('show').addClass('hide');
+
+    });
+
+    function clearInput(){
+       let searchBox =  $(".search").val();
+        console.log(searchBox);
+        if (searchBox.length === 0){
+            $(".dropdown .dropdown-menu").html("");
+        }
+    }
+    function clearInputSearch(){
+        let searchBox =  $(".search-supplier").val();
+        console.log(searchBox);
+        if (searchBox.length === 0){
+            $(".dropdown-supplier .dropdown-menu").html("");
+        }
+    }
+
+    $('.search').on('input', function (){
+        let keyword = $('.search').val();
+        searchByNameProduct(keyword);
+    })
+    $(".search-supplier").on("input", function (){
+        let keySearch = $(".search-supplier").val();
+        searchByNameSupplier(keySearch);
+    })
+
+    $("#createSupplier").on("click", function (){
+        $("#modalCreateSupplier").modal("show");
+    })
+
     $(()=> {
-        getAllProduct();
+        // clearInput();
+        // clearInputSearch();
+        // // getAllProduct();
     })
 
 </script>

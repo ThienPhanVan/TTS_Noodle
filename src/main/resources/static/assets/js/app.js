@@ -1,4 +1,12 @@
 class App {
+
+    static formatNumberSpace(x) {
+        if (x == null) {
+            return x;
+        }
+        return x.toString().replace(/ /g, "").replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+
     static iziToast = class {
         static showSuccessAlert(t) {
 

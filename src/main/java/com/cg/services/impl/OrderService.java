@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -254,7 +253,7 @@ public class OrderService implements IOrderService {
 
         }
         newOrder.setOrderStatus(OrderStatus.PENDING);
-        newOrder.setCreatedBy(2L);
+        newOrder.setCreatedBy(1L);
         newOrder.setAddress(orderPurchase.getAddress());
         newOrder.setUserId(userId);
         newOrder.setOrderType(OrderType.PURCHASE);
@@ -318,4 +317,8 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllByUserId(userId);
     }
 
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchase() {
+        return orderRepository.findAllOrderPurchase();
+    }
 }
