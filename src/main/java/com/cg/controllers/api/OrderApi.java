@@ -59,6 +59,8 @@ public class OrderApi {
     @PostMapping("/create/import")
     public ResponseEntity<?> doCreateImportOrder(@Valid @RequestBody OrderPurchase orderPurchase){
 
+        String a = "2022-11-15T16:13";
+
         return new ResponseEntity<>(orderService.createOrderImport(orderPurchase), HttpStatus.CREATED);
 
     }

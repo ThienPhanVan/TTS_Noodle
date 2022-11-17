@@ -29,6 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -223,6 +225,10 @@ public class OrderService implements IOrderService {
 
         }
 
+        LocalDateTime localDateTime = LocalDateTime.parse(orderPurchase.getCreatedAt());
+
+        Instant instant = localDateTime.toInstant(ZoneOffset.UTC);
+
         Long userId = userOptional.get().getId();
 
         List<OrderItemPurchase> orderItemPurchaseList = orderPurchase.getOrderItemPurchases();
@@ -254,11 +260,12 @@ public class OrderService implements IOrderService {
         }
         newOrder.setOrderStatus(OrderStatus.PENDING);
         newOrder.setCreatedBy(1L);
-        newOrder.setAddress(orderPurchase.getAddress());
+        newOrder.setAddress(userOptional.get().getAddress());
         newOrder.setUserId(userId);
         newOrder.setOrderType(OrderType.PURCHASE);
-        newOrder.setCreatedAt(Instant.parse(Instant.now().toString()));
+        newOrder.setCreatedAt(instant);
 
+//        Instant.parse(Instant.now().toString())
         orderRepository.save(newOrder);
 
         // lấy tổng tiền order của 1 user
@@ -281,7 +288,7 @@ public class OrderService implements IOrderService {
             newItem.setAvailable(quantity);
             newItem.setSold(0);
             newItem.setDefective(0);
-            newItem.setCreatedAt(Instant.now());
+            newItem.setCreatedAt(instant);
             newItem.setCreatedBy(1L);
             newItem.setUserId(userId);
             newItem.setOrderId(newOrder.getId());

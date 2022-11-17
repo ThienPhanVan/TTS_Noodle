@@ -27,13 +27,7 @@ public class OrderListPurchase {
 
     private BigDecimal grandTotal;
 
-    private UserResult user;
-
     private long userId;
-
-    private OrderStatus orderStatus;
-
-    private long createdBy;
 
     private Instant createdAt;
 

@@ -42,26 +42,10 @@
                             <div class="filter_product_box">
                                 <nav class="navbar navbar-light bg-light">
                                     <div class="row">
-<!--                                        <div class="search-box">-->
-<!--                                            <form class="form-inline">-->
-<!--                                                <input  class="form-control form-control-sm mr-sm-2" type="search" id="doSearch" placeholder="Tìm kiếm sản phẩm" aria-label="Search">-->
-<!--                                                <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" type="submit">Tìm kiếm</button>-->
-<!--                                            </form>-->
-<!--                                        </div>-->
-<!--                                        <div class="list-group">-->
-<!--                                            <div class="card-body">-->
-<!--                                                <h5 class="card-title">Card title</h5>-->
-<!--                                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                         <div class="dropdown">
-                                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                                                <input class="form-control search" id="searchProduct" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
-                                            </a>
+                                                <input style="width: 217px;" class="form-control search" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" id="searchProduct" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" >Không tìm thấy sản phẩm</a>
-<!--                                                <a class="dropdown-item" href="#">Another action</a>-->
-<!--                                                <a class="dropdown-item" href="#">Something else here</a>-->
+                                                <div style="width: 216px" class="dropdown-item" >Không tìm thấy sản phẩm</div>
                                             </div>
                                         </div>
                                     </div>
@@ -79,13 +63,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-<!--                                    <tr>-->
-<!--                                        <th scope="row">1</th>-->
-<!--                                        <td>Mark</td>-->
-<!--                                        <td>100</td>-->
-<!--                                        <td>1000</td>-->
-<!--                                        <td>100000</td>-->
-<!--                                    </tr>-->
+
                                     </tbody>
                                 </table>
                             </div>
@@ -97,25 +75,21 @@
                     <div class="purchase-info">
                         <h5>Thông tin phiếu nhập hàng</h5>
                         <div class="filter_product_box">
-                            <nav class="navbar navbar-light bg-light">
+                            <nav class="navbar navbar-light bg-light" style="padding-left: 0;padding-right: 0">
                                 <div class="dropdown-supplier">
-                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLinks" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                                        <input class="form-control search-supplier" type="search" placeholder="Tìm kiếm nhà cung cấp" aria-label="Search" />
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLinks">
-                                        <button class="dropdown-item" >Không tìm thấy nhà cung cấp</button>
-                                        <!--                                                <a class="dropdown-item" href="#">Another action</a>-->
-                                        <!--                                                <a class="dropdown-item" href="#">Something else here</a>-->
+                                        <input style="width: 290px" class="form-control search-supplier" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" type="search" placeholder="Tìm kiếm nhà cung cấp" aria-label="Search" />
+                                    <div class="dropdown-menu" style="width: 292px;overflow-y: scroll;height: 100px;"  aria-labelledby="dropdownMenuLinks">
+                                        <div class="dropdown-item" >Không tìm thấy nhà cung cấp</div>
                                     </div>
                                 </div>
-                                <div class="btn btn-primary">
+                                <div class="btn btn-primary" style="width: 40px;height: 40px;line-height: 27px">
                                     <a class="text-white create" id="createSupplier">
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
                             </nav>
                         </div>
-                        <input class="form-control mt-2" id="dateID" type="date" min= name="dateTime" value="Ngày tạo"/>
+                        <input class="form-control mt-2" id="dateID" type="datetime-local" min="2022-01-01T13:00" name="dateTime" value="Ngày tạo"/>
                     </div>
                     <div class="bill_info" style="margin-top: 15px;">
                         <h5>Thông tin thanh toán</h5>
@@ -203,6 +177,8 @@
 
     let item = new Item();
 
+    let orderItem = new OrderItem();
+
     let product = new Product();
 
 
@@ -226,7 +202,8 @@
             $('#dateID').attr('max', maxDate );
         }
     )
-    document.getElementById('dateID').value = new Date().toISOString().substring(0, 10);
+
+    document.getElementById('dateID').value = new Date().toISOString().slice(0,16);
 
     function renderProduct(obj){
 
@@ -235,7 +212,7 @@
 
         let str = `
                  <tr id = "tr_${obj.id}">
-                    <th scope="row">${obj.id}</th>
+                    <th scope="row" id="${obj.id}" class="productId" >${obj.id}</th>
                     <td>${obj.title}</td>
                     <td >
                         <input autocomplete="off" class="form-control form-control-sm quantityItemPurchase" type="number" value="${obj.quantity}">
@@ -268,6 +245,7 @@
             console.log(obj);
 
             $(".search-supplier").val(filename);
+            $(".search-supplier").attr("id", id)
         })
     }
 
@@ -293,6 +271,12 @@
 
             if (arr.length === 0) {
                 arr.push(obj)
+                iziToast.success({
+                    title: 'OK',
+                    position: 'bottomLeft',
+                    timeout: 1500,
+                    message: 'Thêm sản phẩm thành công!!'
+                });
             }
             else {
                 for (let i = 0; i < arr.length; i++) {
@@ -304,9 +288,21 @@
 
                 if (exist) {
                     arr[index].quantity += 1;
+                    iziToast.success({
+                        title: 'OK',
+                        position: 'bottomLeft',
+                        timeout: 1500,
+                        message: 'Thêm sản phẩm thành công!!'
+                    });
                 }
                 else {
                     arr.push(obj);
+                    iziToast.success({
+                        title: 'OK',
+                        position: 'bottomLeft',
+                        timeout: 1500,
+                        message: 'Thêm sản phẩm thành công!!!'
+                    });
                 }
             }
 
@@ -428,8 +424,9 @@
 
         })
 
-
+        $(".grandTotal").attr("grandTotal", grandTotal);
         $(".grandTotal").text(App.formatNumberSpace(grandTotal + "đ"));
+
     }
 
     $(".itemTotalAmount").on('input',handleGrandTotal);
@@ -475,6 +472,18 @@
     }
 
     function importPurchaseOrder(){
+
+        order.userId = $(".search-supplier").attr("id");
+        order.createdAt = $("#dateID").val();
+        let orderItemPurchases = [{
+
+            quantity :$(".quantityItemPurchase").val(),
+            price : $(".priceItemPurchase").val(),
+            productId : $(".productId").attr("id")
+
+        }];
+        order.orderItemPurchases = orderItemPurchases;
+
         $.ajax({
             headers: {
                 "accept": "application/json",
@@ -488,11 +497,7 @@
 
             order = data;
 
-            order.grandtotal = App.formatNumberSpace(order.grandtotal);
-
-            let str =  renderOrder(item);
-
-            $("#tbListOrder tbody").prepend(str);
+            user = order.user;
 
             iziToast.success({
                 title: 'OK',
@@ -501,6 +506,7 @@
                 message: 'Nhập hàng thành công!!'
             });
 
+            window.location.href = ("/purchase");
         })
         .fail((jqXHR)=> {
 
@@ -544,9 +550,11 @@
                 $(".dropdown .dropdown-menu").prepend(str);
 
                 handleSelectProductSearch();
+
+
             })
             if (data.length === 0){
-                let std = `<a class="dropdown-item" >Không tìm thấy sản phẩm</a>`
+                let std = `<div class="dropdown-item" >Không tìm thấy sản phẩm</div>`
                 $(".dropdown .dropdown-menu").prepend(std);
             }
 
@@ -554,7 +562,7 @@
         .fail((jqXHR)=>{
             $(".dropdown .dropdown-menu").html("");
             console.log(jqXHR);
-            let std = `<a class="dropdown-item" >Không tìm thấy sản phẩm</a>`
+            let std = `<div class="dropdown-item" >Không tìm thấy sản phẩm</div>`
             $(".dropdown .dropdown-menu").prepend(std);
         })
     }
@@ -579,16 +587,17 @@
                     $(".dropdown-supplier .dropdown-menu").prepend(str);
 
                     handleSelectSupplierSearch();
+
                 })
                 if (data.length === 0){
-                    let std = `<a class="dropdown-item" >Không tìm thấy nhà cung cấp</a>`
+                    let std = `<div class="dropdown-item" >Không tìm thấy nhà cung cấp</div>`
                     $(".dropdown-supplier .dropdown-menu").prepend(std);
                 }
             })
             .fail((jqXHR)=>{
                 $(".dropdown-supplier .dropdown-menu").html("");
 
-                let std = `<a class="dropdown-item" >Không tìm thấy nhà cung cấp</a>`
+                let std = `<div class="dropdown-item" >Không tìm thấy nhà cung cấp</div>`
                 $(".dropdown-supplier .dropdown-menu").prepend(std);
                 console.log(jqXHR);
             })
@@ -633,7 +642,7 @@
         });
     })
 
-    $('.dropdown-toggle').dropdown();
+
 
     $("#modalCreateSupplier").on("hidden.bs.modal", function () {
 
@@ -666,6 +675,16 @@
         searchByNameSupplier(keySearch);
     })
 
+    $(".search-supplier").on("input", function () {
+        $('.search-supplier').dropdown();
+    })
+
+    $(".search").on("input", function () {
+        $('.search').dropdown();
+    })
+
+
+
     $("#createSupplier").on("click", function (){
         $("#modalCreateSupplier").modal("show");
     })
@@ -674,6 +693,7 @@
         // clearInput();
         // clearInputSearch();
         // // getAllProduct();
+        handleImportOrder();
     })
 
 </script>

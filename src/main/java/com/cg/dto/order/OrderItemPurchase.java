@@ -18,6 +18,6 @@ public class OrderItemPurchase {
 
     private BigDecimal price;
 
-    private long productId;
+    private Long productId;
 
 }
