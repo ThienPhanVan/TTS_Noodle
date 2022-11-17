@@ -32,8 +32,7 @@ public interface IUserService  {
 
     BigDecimal totalOrderOfUser (long id);
 
-<<<<<<< HEAD
+
     List<UserResult> findAllByFullNameOrPhone(String keyword);
-=======
->>>>>>> 3ae44c5fbbd3e2cf0e2c77532d1580ec7c64e679
+
 }
