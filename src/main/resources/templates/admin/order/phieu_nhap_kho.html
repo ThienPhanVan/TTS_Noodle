@@ -227,18 +227,18 @@
             "url": "http://localhost:8080/api/orders/imports"
         })
         .done((data) => {
+
             $.each(data , (i,item) => {
 
                 order = item;
 
-                order.grandtotal = App.formatNumberSpace(order.grandtotal);
+                order.createdat = moment(order.createdat).format("yyyy-MM-dd HH:mm:ss");
 
+                order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
                 let str =  renderOrder(item);
 
-
                 $("#tbListOrder tbody").prepend(str);
-
 
             })
         })

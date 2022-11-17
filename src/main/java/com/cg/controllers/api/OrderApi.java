@@ -24,8 +24,6 @@ public class OrderApi {
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
 
-//        List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypePurchaseList();
-
         List<OrderPurchaseDTO> orderListPurchaseList = orderService.findAllOrderPurchase();
 
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
@@ -58,8 +56,6 @@ public class OrderApi {
 
     @PostMapping("/create/import")
     public ResponseEntity<?> doCreateImportOrder(@Valid @RequestBody OrderPurchase orderPurchase){
-
-        String a = "2022-11-15T16:13";
 
         return new ResponseEntity<>(orderService.createOrderImport(orderPurchase), HttpStatus.CREATED);
 

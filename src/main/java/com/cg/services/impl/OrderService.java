@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -265,7 +266,6 @@ public class OrderService implements IOrderService {
         newOrder.setOrderType(OrderType.PURCHASE);
         newOrder.setCreatedAt(instant);
 
-//        Instant.parse(Instant.now().toString())
         orderRepository.save(newOrder);
 
         // lấy tổng tiền order của 1 user
