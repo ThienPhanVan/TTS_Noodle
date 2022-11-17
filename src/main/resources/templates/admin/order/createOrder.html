@@ -6,13 +6,6 @@
 </head>
 
 <body>
-<!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
-<!-- loader END -->
-<!-- Wrapper Start -->
 
 <div class="wrapper">
     <!-- Sidebar  -->
@@ -124,7 +117,9 @@
                         </li>
 
                         <li class="nav-item nav-icon">
-                            <button class="btn btn-outline-warning" data-target="modalCreateOrderCustomer" id="btnCreate">Xác nhận</button>
+                            <button class="btn btn-outline-warning" data-target="modalCreateOrderCustomer"
+                                    id="btnCreate">Xác nhận
+                            </button>
 
                         </li>
                     </ul>
@@ -140,7 +135,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <div style="max-width: 100% ; height: 500px ; background-color: rgb(240, 240, 240); border-radius: 3px;"
+                    <div style="width: 100% ; height: 100% ; background-color: rgb(240, 240, 240); border-radius: 3px;"
                          class="">
                         <div class="iq-card mt-4">
                             <div class="iq-card-body">
@@ -174,11 +169,13 @@
                                             <input disabled class="text-center" id="totalAmount"/>
                                         </div>
                                         <div>
-                                            <input class="text-center" id="inputPriceCustomer" type="number" value="0đ"/>
+                                            <input class="text-center" id="inputPriceCustomer" type="number"
+                                                   value="0đ"/>
                                         </div>
                                         <hr>
                                         <div>
-                                            <input disabled class="text-center" id="remainingAmount" type="number" value="0đ"/>
+                                            <input disabled class="text-center" id="remainingAmount" type="number"
+                                                   value="0đ"/>
                                         </div>
                                     </div>
 
@@ -190,7 +187,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <div style="max-width: 100%; border: #e8bdbd 1px solid; border-radius: 5px;">
+                    <div style="width: 100%; border: gray 1px solid; border-radius: 5px;">
                         <div class="text-center font-weight-bold ">
                             <div>
                                 <a style="height: 100%" class="font-size-24" lass="btn btn-primary"
@@ -198,7 +195,7 @@
                                    aria-expanded="false" aria-controls="collapseExample">Thông tin đơn
                                     hàng</a>
                             </div>
-                            <hr style=" background: rgb(227, 172, 172);height: 1px;">
+                            <hr style=" background: gray;height: 1px;">
                             <div style=" height: 355px ;" class=" collapse" id="infoOrder">
                                 <div>
                                     <div style="position:relative; height: 50px;  background-color: #f1f1f1;"
@@ -242,46 +239,51 @@
                         </div>
                     </div>
 
-                    <div class="mt-4" style="max-width: 100% ; border-top: #e8bdbd 1px solid; border-radius: 5px;">
-                        <div class=" font-weight-bold">
+                    <div class="mt-4" style="max-width: 100% ; border-top: gray 1px solid; border-radius: 5px;">
+                        <div class="font-weight-bold">
                             <div class="text-center">
-                                <a class="font-size-24" lass="btn btn-primary" data-toggle="collapse"
-                                   href="#customer" role="button" aria-expanded="false"
-                                   aria-controls="collapseExample">Khách Hàng</a>
-
-                                <a  data-toggle="collapse"
-                                    href="#cus" role="button" aria-expanded="false"
-                                    aria-controls="collapseExample" class="mr-3"
-                                   style="float: right; font-size: 23px;" z>
-                                    <i role="button" class="fas fa-plus"></i>
-                                </a>
+                                <div class="col-12">
+                                    <h3>Khách hàng</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input id="completeUser" class="btn-sm"
+                                               placeholder="Nhập tên hoặc số điện thoại khách hàng"/>
+                                        <div class="show--list hide"></div>
+                                    </div>
+                                    <div class="col-6 plus">
+                                        <a data-toggle="collapse"
+                                           href="#cus" role="button" aria-expanded="false"
+                                           aria-controls="collapseExample" class="mr-3">
+                                            <i role="button" class="fas fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
 
-                            <hr style="background: rgb(236, 185, 185); height: 1px;">
+                            <hr style="background: gray; height: 1px;">
 
-                            <div   id="cus" style=" height: 355px; float: left ; background-color: #f1f1f1;"
+                            <div id="cus" style=" height: 355px; float: left ; background-color: white;"
                                  class="collapse ml-4 ">
-                                <form  id="frmCreateCus">
+                                <form id="frmCreateCus">
                                     <div class="form-row text-center">
 
 
-                                            <div class="form-group col-sm-8 ">
-                                                <label for="nameCus">Tên Khách Hàng</label>
-                                                <input type="text" class="form-control" name="nameCus" id="nameCus"
-                                                       placeholder="Nguyễn Văn A">
-                                            </div>
-                                            <div class="form-group col-sm-8 ">
-                                                <label for="emailCus">Email</label>
-                                                <input type="text" class="form-control" name="emailCus" id="emailCus"
-                                                       placeholder="24 Nguyễn Tri Phương">
-                                            </div>
-                                            <div class="form-group col-sm-8 ">
-                                                <label for="phoneCus">Điện Thoại</label>
-                                                <input type="tel" class="form-control" name="phoneCus" id="phoneCus"
-                                                       placeholder="0123456789">
-                                            </div>
-
-
+                                        <div class="form-group col-sm-8 ">
+                                            <label for="nameCus">Tên Khách Hàng</label>
+                                            <input type="text" class="form-control" name="nameCus" id="nameCus"
+                                                   placeholder="Nguyễn Văn A">
+                                        </div>
+                                        <div class="form-group col-sm-8 ">
+                                            <label for="emailCus">Email</label>
+                                            <input type="text" class="form-control" name="emailCus" id="emailCus"
+                                                   placeholder="24 Nguyễn Tri Phương">
+                                        </div>
+                                        <div class="form-group col-sm-8 ">
+                                            <label for="phoneCus">Điện Thoại</label>
+                                            <input type="tel" class="form-control" name="phoneCus" id="phoneCus"
+                                                   placeholder="0123456789">
+                                        </div>
 
 
                                     </div>
@@ -367,7 +369,7 @@
         <div class="modal-dialog mw-100 w-50">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tạo Khách hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tạo Khách Hàng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -376,8 +378,8 @@
                     <form>
                         <div class="row">
                             <div class="form-group col-md-8">
-                                <label for="fullName">Tên Khách hàng</label>
-                                <input type="name" class="form-control" id="fullName" placeholder="Phan Văn Thiện">
+                                <label for="fullName">Tên khách hàng</label>
+                                <input type="name" class="form-control" id="fullName" placeholder="Nguyễn Văn A">
                             </div>
                             <div class="form-group col-md-8">
                                 <label for="phone">Số điện thoại</label>
@@ -395,16 +397,9 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <th:block th:replace="/layout/script/footer :: footer"/>
-=======
 
-=======
-    <script src="/static/assets/js/app.js"/>
->>>>>>> development
-    <th:block th:replace="/layout/script/footer :: footer"></th:block>
->>>>>>> development
+    <th:block th:replace="/layout/script/footer :: footer"/>
+
 </div>
 
 <script>
@@ -412,11 +407,12 @@
     let product = new Product();
     let user = new User();
     let order = new Order();
-    console.log("order",order)
     let orderItem = new OrderItem();
-    console.log("orderItem",orderItem)
+    let inputSearch = [];
+
 
     function renderCartItem(obj) {
+        console.log("obj", obj)
         let str = `
              <tr class="text-center" id="tr_${obj.id}">
 
@@ -424,20 +420,25 @@
                                             <div class="input-group text-center">
                                                 <span class="input-group-btn">
                                                             <button type="button"
+                                                                    onclick="handleReduceQuantity()"
                                                                     class="btn btn-info btn-number item-quantity"
-                                                                    title="Tăng số lượng món"
+                                                                    title="Giảm số lượng bún"
                                                                     data-type="plus" data-field="quant[2]">
                                                                  <span class="fa fa-minus"></span>
                                                             </button>
                                                 </span>
                                                 <input style="height: 35px; border-radius: 5px;" type="text"
-                                                       name="quant[2]" class="form-control" id ="inputQuantity" value="0" min="0"
+                                                       name="quant[2]" class="form-control"
+                                                       onclick="handleInputQuantity()"
+                                                       id ="inputQuantity" value="0" min="0"
                                                        max="500">
 
                                                 <span class="">
                                                             <button type="button"
+                                                            onclick="handleIncreaseQuantity()"
+                                                            id="tangsoluong"
                                                                     class="btn btn-primary btn-number item-quantity counter-up"
-                                                                    title="Giảm số lượng bún"
+                                                                    title="Tăng số lượng bún"
                                                                     data-type="minus" data-field="quant[2]">
                                                                <span class="fa fa-plus"></span>
                                                             </button>
@@ -457,164 +458,181 @@
         return str;
     }
 
+    // function renderShowListCustomer(user) {
+    //     let str = `<p>${user.fullName} - ${user.phone}</p>`;
+    //     return str;
+    // }
 
-        function getProductById() {
-            $.ajax({
-                headers: {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/products/1"
+    function getProductById() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/products/1"
+        })
+            .done((data) => {
+                product = data;
+                let str = renderCartItem(data)
+                //
+                $("#tbItemCustomer tbody").prepend(str);
             })
-                .done((data) => {
-                    product = data;
-                    let str = renderCartItem(data)
-                    //
-                    $("#tbItemCustomer tbody").prepend(str);
-                })
-                .fail((jqXHR) => {
-                    console.log(jqXHR)
-                })
-        }
-
-        getProductById();
-
-        // function handleCreateOrderCustomer(){
-        //     $.ajax({
-        //         headers: {
-        //             "accept": "application/json",
-        //             "content-type": "application/json"
-        //         },
-        //         type: "POST",
-        //         url: "http://localhost:8080/api/orders/create"
-        //     })
-        //         .done((data) => {
-        //             order = data;
-        //             console.log("order", order)
-        //             let str = renderCartItem(data)
-        //             //
-        //             $("#tbItemCustomer tbody").prepend(str);
-        //         })
-        //         .fail((jqXHR) => {
-        //             console.log(jqXHR)
-        //         })
-        // }
-
-        let btnCreate = $("#btnCreate");
-        btnCreate.on('click', () => {
-            $("#modalCreateOrderCustomer").modal("show");
-
-            doCreateOrderCustomer();
-        });
-
-        function doCreateOrderCustomer(){
-            let newOrder = {
-                "id": 0,
-                "userId":56,
-                "fullName":$("#fullName").val(),
-                "address":$("#address").val(),
-                "phone":$("#phone").val(),
-                "orderItems":[{
-                    "quantity":$("#inputPriceCustomer").val(),
-                    "productId":1
-                }]
-            }
-            $.ajax({
-                headers: {
-                    accept: "application/json",
-                    "content-type": "application/json"
-                },
-                type: "POST",
-                url: "http://localhost:8080/api/orders/create",
-                data: JSON.stringify(newOrder)
+            .fail((jqXHR) => {
+                console.log(jqXHR)
             })
-                .done((data) => {
-                    order = data;
-                    console.log("newOrder",data)
+    }
 
-                })
-                .fail((jqXHR) => {
-                    console.log(jqXHR);
-                })
-        }
+    getProductById();
+
+
+    let btnCreate = $("#btnCreate");
+    btnCreate.on('click', () => {
+
         doCreateOrderCustomer();
+    });
 
-        function handleIncreaseQuantity() {
+    function doCreateOrderCustomer() {
+        console.log("user", userId)
+        let newOrder = {
+            "id": 0,
+            "userId": userId,
+            "fullName": $("#fullName").val(),
+            "address": $("#address").val(),
+            "phone": $("#phone").val(),
+            "orderItems": [{
+                "quantity": $("#inputPriceCustomer").val(),
+                "productId": 1
+            }]
+        }
+        $.ajax({
+            headers: {
+                accept: "application/json",
+                "content-type": "application/json"
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/orders/create",
+            data: JSON.stringify(newOrder)
+        })
+            .done((data) => {
+                order = data;
+
+            })
+            .fail((jqXHR) => {
+                alert("id ko tim thay")
+                console.log(jqXHR);
+            })
+    }
+
+    function handleIncreaseQuantity() {
+
+        let quantity = +$("#inputQuantity").val();
+        quantity += 5;
+        $("#inputQuantity").val(quantity)
+
+        let price = +$("#price").val();
+
+        let totalAmount = quantity * price;
+        $("#itemTotalAmount").val(totalAmount)
+        $("#totalAmount").val(totalAmount)
+    }
+
+    function handleReduceQuantity() {
+
+        let quantity = +$("#inputQuantity").val();
+        quantity -= 5;
+        $("#inputQuantity").val(quantity)
+
+        let price = +$("#price").val();
+
+        let totalAmount = quantity * price;
+        $("#itemTotalAmount").val(totalAmount)
+        $("#totalAmount").val(totalAmount)
+    }
+
+    function getAllOrderItem() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/order-items"
+        })
+            .done((data) => {
+                orderItem = data;
+
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+    }
+
+    getAllOrderItem();
+
+    function handleInputQuantity() {
+        $("#inputQuantity").on('input', () =>{
             let quantity = +$("#inputQuantity").val();
+            $("#inputQuantity").val(quantity)
             let price = +$("#price").val();
             let totalAmount = quantity * price;
             $("#itemTotalAmount").val(totalAmount);
-            $("#totalAmount").val(totalAmount)
-        }
+            console.log(totalAmount)
+            $("#totalAmount").val(totalAmount);
+        })
+    }
 
-        function getAllOrderItem(){
-                $.ajax({
-                    headers: {
-                        "accept": "application/json",
-                        "content-type": "application/json"
-                    },
-                    type: "GET",
-                    url: "http://localhost:8080/api/order-items"
+    function handleInputPriceCustomer() {
+        $("#inputPriceCustomer").on("input", function () {
+            let quantity = +$("#inputQuantity").val();
+            let price = +$("#price").val();
+            let totalAmount = quantity * price;
+            let remainingAmount = totalAmount - (+$("#inputPriceCustomer").val());
+            $("#remainingAmount").val(remainingAmount);
+        })
+    }
+
+    handleInputPriceCustomer();
+
+
+    $('#completeUser').on('input', function () {
+        let keyword = $('#completeUser').val();
+        console.log("keyword", keyword)
+        search(keyword);
+    })
+    let userId = 0;
+
+    function onclickUser(id) {
+        userId = id;
+        // doCreateOrderCustomer(id);
+    }
+
+    function search(keyword) {
+        $.ajax({
+            header: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/users/search/" + keyword,
+        })
+            .done((data) => {
+                let str = "";
+                $.each(data, (i, item) => {
+                    user = item;
+                    str += `<p onclick="onclickUser(${item.id})">${user.fullName} - ${user.phone}</p>`;
                 })
-                    .done((data) => {
-                        orderItem = data;
-                        console.log("orderItem",orderItem)
-                    })
-                    .fail((jqXHR) => {
-                        console.log(jqXHR)
-                    })
-        }
-        getAllOrderItem();
-        function handleInputQuantity() {
-            $("#inputQuantity").on("input", function () {
-                let quantity = +$("#inputQuantity").val();
-                let price = +$("#price").val();
-                let totalAmount = quantity * price;
-                $("#itemTotalAmount").val(totalAmount);
-                $("#totalAmount").val(totalAmount);
+                $('.show--list').html(str);
+                // console.log(str);
+                $('.show--list').removeClass("hide").addClass("show");
+
             })
-        }
+            .fail((jqXHR) => {
+                console.log(jqXHR)
 
-        function handleInputPriceCustomer() {
-            $("#inputPriceCustomer").on("input", function () {
-                let quantity = +$("#inputQuantity").val();
-                let price = +$("#price").val();
-                let totalAmount = quantity * price;
-                let remainingAmount = totalAmount - (+$("#inputPriceCustomer").val());
-                $("#remainingAmount").val(remainingAmount);
             })
-        }
+    }
 
-        handleInputPriceCustomer();
-
-        function handleOnClickQuantity() {
-            window.onload = () => {
-                let x = 5;
-                let input = document.querySelector('.input-group .form-control')
-                let buttons = document.querySelectorAll('.input-group .item-quantity')
-
-                buttons.forEach(b => {
-                    b.addEventListener('click', function () {
-                        let value = +input.value;
-                        if (this.classList.contains('counter-up')) {
-                            value += x;
-                            console.log(value)
-                            handleIncreaseQuantity();
-                            handleInputQuantity();
-                        } else if (value > 0) {
-                            value -= x
-                            handleIncreaseQuantity();
-                            handleInputQuantity();
-                        }
-
-                        input.value = value
-                    })
-                })
-            }
-        }
-
-        handleOnClickQuantity();
 
 </script>
 </body>

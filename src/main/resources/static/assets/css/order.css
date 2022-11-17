@@ -1,0 +1,40 @@
+.show--list {
+    width: 150%;
+    height: 231px;
+    /*background: red;*/
+    position: absolute;
+    top: 70px;
+    left: 25px;
+    overflow-y: scroll;
+
+
+}
+.show--list p {
+    /*background: yellow;*/
+    margin: 0;
+    padding: 10px 40px;
+    border-bottom: 1px solid black;
+    color: black;
+}
+
+#completeUser {
+    position: relative;
+    width: 170%;
+    height: 50px;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
+.plus a {
+    float: right;
+    font-size: 23px;
+
+}
+.plus i {
+    float: right;
+    /*font-size: 23px;*/
+
+}

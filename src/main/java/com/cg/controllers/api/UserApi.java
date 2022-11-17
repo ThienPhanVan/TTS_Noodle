@@ -4,6 +4,7 @@ import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.dto.userDTO.UpdateUserParam;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.exceptions.DataInputException;
+import com.cg.repositories.UserRepository;
 import com.cg.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ public class UserApi {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping()
     public ResponseEntity<?> findAllUser() {
@@ -74,4 +78,15 @@ public class UserApi {
         return new ResponseEntity<>(userParamList, HttpStatus.OK);
     }
 
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<?> doSearch(@PathVariable String keyword){
+        String Strkeyword = "%"+keyword+"%";
+
+        List<UserResult> userResultList = userService.findAllByFullNameOrPhone(Strkeyword);
+        if (userResultList.isEmpty()) {
+            throw new DataInputException("Không Tìm Thấy Từ Khóa bạn vui lòng nhập lại!");
+        }
+
+        return new ResponseEntity<>(userResultList, HttpStatus.OK);
+    }
 }
