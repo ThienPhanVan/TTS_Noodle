@@ -56,7 +56,7 @@
 <!--                                        </div>-->
                                         <div class="dropdown">
                                             <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                                                <input class="form-control search" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
+                                                <input class="form-control search" id="searchProduct" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                 <a class="dropdown-item" >Không tìm thấy sản phẩm</a>
@@ -74,8 +74,8 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Tên sản phẩm</th>
                                         <th scope="col">Số lượng(kg)</th>
-                                        <th scope="col">Giá nhập</th>
-                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Giá nhập(đ)</th>
+                                        <th scope="col">Thành tiền(đ)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -232,16 +232,13 @@
 
         let totalAmount = +obj.price * +obj.quantity;
 
-        let grandTotal = 0;
-
-
 
         let str = `
                  <tr id = "tr_${obj.id}">
                     <th scope="row">${obj.id}</th>
                     <td>${obj.title}</td>
                     <td >
-                        <input class="form-control form-control-sm quantityItemPurchase" type="number" value="${obj.quantity}">
+                        <input autocomplete="off" class="form-control form-control-sm quantityItemPurchase" type="number" value="${obj.quantity}">
                     </td>
                     <td>
                         <input class="form-control form-control-sm priceItemPurchase" type="number" value="${obj.price}">
@@ -320,6 +317,8 @@
                     let str = renderProduct(item)
 
                     $("#tbItemPurchase tbody").prepend(str);
+
+                    $("#searchProduct").html("");
 
                     handleGrandTotal();
 
@@ -482,9 +481,18 @@
                 "content-type": "application/json"
             },
             type: "POST",
-            url: "http://localhost:8080/api/orders/create/import"
+            url: "http://localhost:8080/api/orders/create/import",
+            data: JSON.stringify(order)
         })
         .done((data) => {
+
+            order = data;
+
+            order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+            let str =  renderOrder(item);
+
+            $("#tbListOrder tbody").prepend(str);
 
             iziToast.success({
                 title: 'OK',
@@ -612,8 +620,11 @@
             data: JSON.stringify(createUser)
         }).done((data) => {
             console.log(data)
-            let str = renderUser(data)
-            $("#tbSupplier tbody").prepend(str);
+
+            let str = renderSupplier(data)
+            $(".dropdown-supplier .dropdown-menu").prepend(str);
+
+            handleSelectSupplierSearch();
             App.iziToast.showSuccessAlert("Thêm mới thành công")
             $("#modalCreateSupplier").modal('hide')
             enableTooltip();

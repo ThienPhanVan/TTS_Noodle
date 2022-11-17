@@ -228,6 +228,7 @@
         })
         .done((data) => {
             $.each(data , (i,item) => {
+
                 order = item;
 
                 order.grandtotal = App.formatNumberSpace(order.grandtotal);
