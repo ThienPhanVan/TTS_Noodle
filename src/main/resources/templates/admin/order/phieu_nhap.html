@@ -211,8 +211,8 @@
 
 
         let str = `
-                 <tr id = "tr_${obj.id}">
-                    <th scope="row" id="${obj.id}" class="productId" >${obj.id}</th>
+                 <tr id = "tr_${obj.productId}">
+                    <th scope="row" id="${obj.productId}" class="productId" >${obj.productId}</th>
                     <td>${obj.title}</td>
                     <td >
                         <input autocomplete="off" class="form-control form-control-sm quantityItemPurchase" type="number" value="${obj.quantity}">
@@ -260,10 +260,10 @@
             let quantity = 1;
 
             let obj = {
-                id,
-                quantity,
-                title,
-                price
+                "productId":  id,
+                "quantity" : quantity,
+                "title" : title,
+                "price" : price
             }
 
             let exist = false;
@@ -280,7 +280,7 @@
             }
             else {
                 for (let i = 0; i < arr.length; i++) {
-                    if (arr[i].id === id) {
+                    if (arr[i].productId === id) {
                         exist = true;
                         index = i;
                     }
@@ -470,19 +470,30 @@
         handlePriceItemPurchase();
 
     }
+    let orderItemPurchases = [];
 
     function importPurchaseOrder(){
 
         order.userId = $(".search-supplier").attr("id");
         order.createdAt = $("#dateID").val();
-        let orderItemPurchases = [{
 
-            quantity :$(".quantityItemPurchase").val(),
-            price : $(".priceItemPurchase").val(),
-            productId : $(".productId").attr("id")
+        // quantity :$(".quantityItemPurchase").val(),
+        //     price : $(".priceItemPurchase").val(),
+        //     productId : $(".productId").attr("id")
 
-        }];
-        order.orderItemPurchases = orderItemPurchases;
+        // if (orderItemPurchases.length ===0){
+        //     orderItemPurchases.push({
+        //         quantity :$(".quantityItemPurchase").val(),
+        //         price : $(".priceItemPurchase").val(),
+        //         productId : $(".productId").attr("id")
+        //     })
+        // }else {
+        //
+        // }
+
+        order.orderItemPurchases = arr;
+
+        console.log(order);
 
         $.ajax({
             headers: {

@@ -66,7 +66,7 @@ class Order {
         this.orderItem=orderItem;
     }
 }
-    class
+class
     OrderItem {
     constructor(id, price, quantity, itemId, orderId, productId) {
         this.id = id;
