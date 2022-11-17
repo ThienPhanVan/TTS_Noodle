@@ -106,7 +106,7 @@ public class OrderService implements IOrderService {
             order.setAddress(orderParam.getAddress());
             order.setCreatedAt(Instant.now());
             order.setOrderStatus(OrderStatus.PENDING);
-            order.setCreatedBy(2L);
+            order.setCreatedBy(1L);
             order.setOrderType(OrderType.CUSTOMER);
             order.setGrandTotal(new BigDecimal(0));
             order = orderRepository.save(order);

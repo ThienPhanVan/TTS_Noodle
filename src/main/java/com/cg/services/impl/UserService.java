@@ -157,4 +157,12 @@ public class UserService implements IUserService {
     public BigDecimal totalOrderOfUser(long id) {
         return userRepository.totalOrderOfUser(id);
     }
+
+    @Override
+    public List<UserResult> findAllByFullNameOrPhone(String keyword) {
+        return userRepository.findAllByFullNameOrPhone(keyword)
+                .stream()
+                .map(userMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }
