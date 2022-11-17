@@ -124,7 +124,7 @@
                         </li>
 
                         <li class="nav-item nav-icon">
-                            <button class="btn btn-outline-warning">Xác nhận</button>
+                            <button class="btn btn-outline-warning" data-target="modalCreateOrderCustomer" id="btnCreate">Xác nhận</button>
 
                         </li>
                     </ul>
@@ -136,57 +136,27 @@
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
-    <div id="${items.id}" class="content-page">
+    <div id="modalCreateOrderCustomer" class="content-page">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-sm-6">
                     <div style="max-width: 100% ; height: 500px ; background-color: rgb(240, 240, 240); border-radius: 3px;"
                          class="">
                         <div class="iq-card mt-4">
                             <div class="iq-card-body">
-                                <table class="table">
-                                    <thead>
+                                <table id="tbItemCustomer" class="table">
+                                    <thead class="bg-primary">
                                     <tr class="text-center">
                                         <th scope="col">Số lượng (Kg)</th>
-                                        <th scope="col">Giá</th>
-                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Giá (đ)</th>
+                                        <th scope="col">Thành tiền (đ)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="text-center">
-                                        <td style="width: 150px;margin: 40px auto;">
-                                            <div class="input-group text-center">
-                                                        <span class="">
-                                                            <button type="button" class="btn btn-info btn-number item-quantity"
-                                                                    title="Giảm số lượng bún"
-                                                                    onclick="handleDecreaseQuantity(${item.id})"
-                                                                    data-type="minus" data-field="quant[2]">
-                                                                <span class="fa fa-minus"></span>
-                                                            </button>
-                                                        </span>
-                                                <input style="height: 35px; border-radius: 5px;" type="text"
-                                                       name="quant[2]" class="form-control  " value="50" min="10"
-                                                       max="500">
-                                                <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-primary btn-number item-quantity"
-                                                                    title="Tăng số lượng món"
-                                                                    onclick="handleIncreaseQuantity(${item.id})">
-                                                                    data-type="plus" data-field="quant[2]">
-                                                                <span class="fa fa-plus"></span>
-                                                            </button>
-                                                        </span>
-                                            </div>
 
-                                        </td>
-                                        <td>
-                                            <input class="text-center price" id="price" name="price" value="7.000đ">
-                                        </td>
-                                        <td>22.000</td>
-                                    </tr>
                                     </tbody>
                                 </table>
-                                <div class="row">
+                                <div class="p-2 row">
                                     <div style="text-align: end" class="col-sm-6 ">
                                         <div class="">
                                             <label for="">Thanh toán</label>
@@ -201,15 +171,14 @@
                                     </div>
                                     <div style="text-align: center" class="col-sm-6">
                                         <div>
-                                            <p>12000</p>
+                                            <input disabled class="text-center" id="totalAmount"/>
                                         </div>
                                         <div>
-                                            <input class="text-center" type="number" value="0đ"/>
+                                            <input class="text-center" id="inputPriceCustomer" type="number" value="0đ"/>
                                         </div>
                                         <hr>
                                         <div>
-                                            <p>12000</p>
-
+                                            <input disabled class="text-center" id="remainingAmount" type="number" value="0đ"/>
                                         </div>
                                     </div>
 
@@ -234,9 +203,6 @@
                                 <div>
                                     <div style="position:relative; height: 50px;  background-color: #f1f1f1;"
                                          class="card card-body  ">
-                                        <h5 style="top:2px; position: absolute;" class="font-size-14">nhân
-                                            viên
-                                            đặt hàng </h5>
                                         <span class="font-size-18">sinh</span>
                                     </div>
                                 </div>
@@ -282,13 +248,45 @@
                                 <a class="font-size-24" lass="btn btn-primary" data-toggle="collapse"
                                    href="#customer" role="button" aria-expanded="false"
                                    aria-controls="collapseExample">Khách Hàng</a>
-                                <a data-toggle="modal" data-target="#createCustomer" class="mr-3"
-                                   style="float: right; font-size: 23px;" href="">
+
+                                <a  data-toggle="collapse"
+                                    href="#cus" role="button" aria-expanded="false"
+                                    aria-controls="collapseExample" class="mr-3"
+                                   style="float: right; font-size: 23px;" z>
                                     <i role="button" class="fas fa-plus"></i>
                                 </a>
                             </div>
 
                             <hr style="background: rgb(236, 185, 185); height: 1px;">
+
+                            <div   id="cus" style=" height: 355px; float: left ; background-color: #f1f1f1;"
+                                 class="collapse ml-4 ">
+                                <form  id="frmCreateCus">
+                                    <div class="form-row text-center">
+
+
+                                            <div class="form-group col-sm-8 ">
+                                                <label for="nameCus">Tên Khách Hàng</label>
+                                                <input type="text" class="form-control" name="nameCus" id="nameCus"
+                                                       placeholder="Nguyễn Văn A">
+                                            </div>
+                                            <div class="form-group col-sm-8 ">
+                                                <label for="emailCus">Email</label>
+                                                <input type="text" class="form-control" name="emailCus" id="emailCus"
+                                                       placeholder="24 Nguyễn Tri Phương">
+                                            </div>
+                                            <div class="form-group col-sm-8 ">
+                                                <label for="phoneCus">Điện Thoại</label>
+                                                <input type="tel" class="form-control" name="phoneCus" id="phoneCus"
+                                                       placeholder="0123456789">
+                                            </div>
+
+
+
+
+                                    </div>
+                                </form>
+                            </div>
                             <div style=" height: 355px; float: left ; background-color: #f1f1f1;"
                                  class="collapse ml-4">
                                 <div class="card" style="width: 9rem">
@@ -305,6 +303,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div style=" height: 355px;  float: left" class="collapse ml-4" id="customers">
                                 <div class="card" style="width: 9rem;">
                                     <img style="height:150px"
@@ -364,7 +364,7 @@
 
     <!-- Modal- đặt hàng -->
     <div class="modal fade" id="createCustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog mw-100 w-75  ">
+        <div class="modal-dialog mw-100 w-50">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tạo Khách hàng</h5>
@@ -374,66 +374,247 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Tên Khách hàng</label>
-                                <input type="email" class="form-control" id="inputEmail4">
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <label for="fullName">Tên Khách hàng</label>
+                                <input type="name" class="form-control" id="fullName" placeholder="Phan Văn Thiện">
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">Số điện thoại</label>
-                                <input type="password" class="form-control" id="inputPassword4">
+                            <div class="form-group col-md-8">
+                                <label for="phone">Số điện thoại</label>
+                                <input type="phone" class="form-control" id="phone">
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label for="inputAddress">Địa chỉ</label>
-                                <input type="text" class="form-control" id="inputAddress"/>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputAddress2">Ghi chú</label>
-                                <input type="text" class="form-control" id="inputAddress2">
+                            <div class="form-group col-md-8">
+                                <label for="address">Địa chỉ</label>
+                                <input type="text" class="form-control" id="address"/>
                             </div>
                         </div>
 
                     </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary">Lưu lại</button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <th:block th:replace="/layout/script/footer :: footer"/>
 =======
 
+=======
+    <script src="/static/assets/js/app.js"/>
+>>>>>>> development
     <th:block th:replace="/layout/script/footer :: footer"></th:block>
 >>>>>>> development
 </div>
 
 <script>
+    let item = new Item();
+    let product = new Product();
+    let user = new User();
+    let order = new Order();
+    console.log("order",order)
+    let orderItem = new OrderItem();
+    console.log("orderItem",orderItem)
 
-    function handleIncreaseQuantity(ItemId) {
-        for (const bookingItem of bookingItems) {
-            if (ItemId === bookingItem.itemId) {
-                let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text());
-                let price = parseInt($(`#${bookingItem.id} .item-price`).text());
-                quantity += 1;
-                $(`#${bookingItem.id} .item-quantity`).text(quantity)
-                $(`#${bookingItem.id} .cell-price`).text(new Intl.NumberFormat('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND'
-                }).format(quantity * price))
-                api.bookingItem.increaseQuantity(bookingItem.id, quantity, (data) => {
-                    updateQuantityBookingItem(bookingItem.id, quantity)
-                    handleGrandTotal(tableTopId);
-                }, (jqXHR) => {
-                });
-                return;
-            }
+    function renderCartItem(obj) {
+        let str = `
+             <tr class="text-center" id="tr_${obj.id}">
 
-        }
+                                        <td style="width: 150px;margin: 40px auto;">
+                                            <div class="input-group text-center">
+                                                <span class="input-group-btn">
+                                                            <button type="button"
+                                                                    class="btn btn-info btn-number item-quantity"
+                                                                    title="Tăng số lượng món"
+                                                                    data-type="plus" data-field="quant[2]">
+                                                                 <span class="fa fa-minus"></span>
+                                                            </button>
+                                                </span>
+                                                <input style="height: 35px; border-radius: 5px;" type="text"
+                                                       name="quant[2]" class="form-control" id ="inputQuantity" value="0" min="0"
+                                                       max="500">
+
+                                                <span class="">
+                                                            <button type="button"
+                                                                    class="btn btn-primary btn-number item-quantity counter-up"
+                                                                    title="Giảm số lượng bún"
+                                                                    data-type="minus" data-field="quant[2]">
+                                                               <span class="fa fa-plus"></span>
+                                                            </button>
+                                                        </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input class="text-center" id="price" name="price"
+                                            value="${product.price}"
+                                            />
+
+                                        </td>
+                                        <td>
+                                            <input disabled class="form-control-sm-2" id="itemTotalAmount" type="text" value="0">
+                                        </td>
+                                    </tr>`
+        return str;
     }
+
+
+        function getProductById() {
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/products/1"
+            })
+                .done((data) => {
+                    product = data;
+                    let str = renderCartItem(data)
+                    //
+                    $("#tbItemCustomer tbody").prepend(str);
+                })
+                .fail((jqXHR) => {
+                    console.log(jqXHR)
+                })
+        }
+
+        getProductById();
+
+        // function handleCreateOrderCustomer(){
+        //     $.ajax({
+        //         headers: {
+        //             "accept": "application/json",
+        //             "content-type": "application/json"
+        //         },
+        //         type: "POST",
+        //         url: "http://localhost:8080/api/orders/create"
+        //     })
+        //         .done((data) => {
+        //             order = data;
+        //             console.log("order", order)
+        //             let str = renderCartItem(data)
+        //             //
+        //             $("#tbItemCustomer tbody").prepend(str);
+        //         })
+        //         .fail((jqXHR) => {
+        //             console.log(jqXHR)
+        //         })
+        // }
+
+        let btnCreate = $("#btnCreate");
+        btnCreate.on('click', () => {
+            $("#modalCreateOrderCustomer").modal("show");
+
+            doCreateOrderCustomer();
+        });
+
+        function doCreateOrderCustomer(){
+            let newOrder = {
+                "id": 0,
+                "userId":56,
+                "fullName":$("#fullName").val(),
+                "address":$("#address").val(),
+                "phone":$("#phone").val(),
+                "orderItems":[{
+                    "quantity":$("#inputPriceCustomer").val(),
+                    "productId":1
+                }]
+            }
+            $.ajax({
+                headers: {
+                    accept: "application/json",
+                    "content-type": "application/json"
+                },
+                type: "POST",
+                url: "http://localhost:8080/api/orders/create",
+                data: JSON.stringify(newOrder)
+            })
+                .done((data) => {
+                    order = data;
+                    console.log("newOrder",data)
+
+                })
+                .fail((jqXHR) => {
+                    console.log(jqXHR);
+                })
+        }
+        doCreateOrderCustomer();
+
+        function handleIncreaseQuantity() {
+            let quantity = +$("#inputQuantity").val();
+            let price = +$("#price").val();
+            let totalAmount = quantity * price;
+            $("#itemTotalAmount").val(totalAmount);
+            $("#totalAmount").val(totalAmount)
+        }
+
+        function getAllOrderItem(){
+                $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: "http://localhost:8080/api/order-items"
+                })
+                    .done((data) => {
+                        orderItem = data;
+                        console.log("orderItem",orderItem)
+                    })
+                    .fail((jqXHR) => {
+                        console.log(jqXHR)
+                    })
+        }
+        getAllOrderItem();
+        function handleInputQuantity() {
+            $("#inputQuantity").on("input", function () {
+                let quantity = +$("#inputQuantity").val();
+                let price = +$("#price").val();
+                let totalAmount = quantity * price;
+                $("#itemTotalAmount").val(totalAmount);
+                $("#totalAmount").val(totalAmount);
+            })
+        }
+
+        function handleInputPriceCustomer() {
+            $("#inputPriceCustomer").on("input", function () {
+                let quantity = +$("#inputQuantity").val();
+                let price = +$("#price").val();
+                let totalAmount = quantity * price;
+                let remainingAmount = totalAmount - (+$("#inputPriceCustomer").val());
+                $("#remainingAmount").val(remainingAmount);
+            })
+        }
+
+        handleInputPriceCustomer();
+
+        function handleOnClickQuantity() {
+            window.onload = () => {
+                let x = 5;
+                let input = document.querySelector('.input-group .form-control')
+                let buttons = document.querySelectorAll('.input-group .item-quantity')
+
+                buttons.forEach(b => {
+                    b.addEventListener('click', function () {
+                        let value = +input.value;
+                        if (this.classList.contains('counter-up')) {
+                            value += x;
+                            console.log(value)
+                            handleIncreaseQuantity();
+                            handleInputQuantity();
+                        } else if (value > 0) {
+                            value -= x
+                            handleIncreaseQuantity();
+                            handleInputQuantity();
+                        }
+
+                        input.value = value
+                    })
+                })
+            }
+        }
+
+        handleOnClickQuantity();
 
 </script>
 </body>

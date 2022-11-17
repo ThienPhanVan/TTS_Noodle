@@ -22,9 +22,13 @@ import com.cg.repositories.UserRepository;
 
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
 
 
 import java.math.BigDecimal;
@@ -85,7 +89,6 @@ public class OrderService implements IOrderService {
                 if (!optional.isPresent())
                     throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
             }
-
 //            order.setFullName(orderParam.getFullName());
 //            order.setPhone(orderParam.getPhone());
 ////            order.setUserId(orderParam.getUserId());
@@ -100,7 +103,6 @@ public class OrderService implements IOrderService {
 //            BigDecimal grandTotal = BigDecimal.valueOf(0);
 
 //        } else {
-
             Order order = orderMapper.toModel(orderParam);
             order.setFullName(orderParam.getFullName());
             order.setPhone(orderParam.getPhone());

@@ -52,7 +52,11 @@ public class OrderMapper {
         return new Order()
                 .setId(orderParam.getId())
                 .setUserId(orderParam.getUserId())
-
+                .setPhone(orderParam.getPhone())
                 .setAddress(orderParam.getAddress());
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
     }
 }

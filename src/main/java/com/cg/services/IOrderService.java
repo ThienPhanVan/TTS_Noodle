@@ -28,6 +28,10 @@ public interface IOrderService {
 
     List<OrderListPurchase> findAllByOrderTypeCustomerList();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
     List<OrderResult> findAllByOrderTypePurchase ();
 
     List<OrderResult> findAllByOrderTypeCustomer ();
@@ -38,7 +42,13 @@ public interface IOrderService {
 
     List<OrderResult> findAllByOrderStatusCancel ();
 
+<<<<<<< HEAD
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
+=======
+
+    List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
+
+>>>>>>> development
 }
