@@ -10,18 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-<<<<<<< HEAD
-=======
-
->>>>>>> development
 
     List<Item> findAllByProductIdOrderByCreatedAt(long productId);
 
     List<Item> findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(long productId, int available);
-<<<<<<< HEAD
-=======
-
-
->>>>>>> development
-
 }

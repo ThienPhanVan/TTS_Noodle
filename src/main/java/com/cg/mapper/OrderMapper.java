@@ -54,9 +54,5 @@ public class OrderMapper {
                 .setUserId(orderParam.getUserId())
                 .setPhone(orderParam.getPhone())
                 .setAddress(orderParam.getAddress());
-<<<<<<< HEAD
-=======
-
->>>>>>> development
     }
 }

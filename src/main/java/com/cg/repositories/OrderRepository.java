@@ -21,28 +21,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
-<<<<<<< HEAD
-//    @Query(
-//            "SELECT NEW com.cg.dto.order.OrderListPurchase (" +
-//                    "o.id, " +
-//                    "o.grandTotal, " +
-//                    "o.user, " +
-//                    "o.userId," +
-//                    "o.orderStatus, " +
-//                    "o.createdBy, " +
-//                    "o.createdAt) " +
-//                    "FROM Order AS o " +
-//                    "WHERE o.user.fullName LIKE %?1%"
-//    )
-//    List<Order> searchOrderBySupplierOOrCreatedAt(String keyword);
-
-=======
-
-
-
->>>>>>> development
-
-
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
 }

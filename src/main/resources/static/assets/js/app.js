@@ -48,10 +48,6 @@ class User {
         this.totalOrder = totalOrder;
     }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> development
 
 class Order {
     constructor(id, grandTotal, product, userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone, orderItem) {
@@ -106,9 +102,6 @@ class Product {
         this.id = id;
         this.title = title;
         this.price = price;
-<<<<<<< HEAD
-=======
 
->>>>>>> development
     }
 }

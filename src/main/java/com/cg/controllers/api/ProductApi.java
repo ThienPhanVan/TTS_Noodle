@@ -29,7 +29,7 @@ public class ProductApi {
         return new ResponseEntity<>(productResultList, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
+
     @GetMapping("/search/{keySearch}")
     public ResponseEntity<?> doSearch(@PathVariable String keySearch){
 
@@ -39,15 +39,9 @@ public class ProductApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable Long id){
-
-        ProductResult productResult = productService.findProductById(id);
-=======
-    @GetMapping("/{id}")
     public ResponseEntity<?> showProductId(@PathVariable Long id){
 
        Optional<Product> productResult = productService.findById(id);
->>>>>>> development
 
         return new ResponseEntity<>(productResult, HttpStatus.OK);
     }
