@@ -1,3 +1,22 @@
-.swal-height {
-    height: 50vh;
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
 }
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.selectpicker{
+    height: 36px;
+    width: 150px;
+    border-radius: 25px
+}
+
+.name_chart{
+    font-size: 15px;
+    margin-left: 50px;
+}
+

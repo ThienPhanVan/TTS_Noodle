@@ -93,6 +93,8 @@ class Item {
         this.product = product
         this.userId = userId;
         this.user = user
+        this.orderId = orderId;
+        this.sold = sold ;
         this.price = price;
         this.quantity = quantity;
         this.available = available;

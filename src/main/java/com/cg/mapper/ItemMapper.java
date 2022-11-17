@@ -20,10 +20,17 @@ public class ItemMapper {
         return new ItemResult()
                 .setId(item.getId())
                 .setUserId(item.getUserId())
+                .setUser(userMapper.toDTO(item.getUser()))
                 .setOrderId(item.getOrderId())
                 .setProductId(item.getProductId())
+                .setProduct(productMapper.toDTO(item.getProduct()))
                 .setPrice(item.getPrice())
-                .setQuantity(item.getQuantity()) ;
+                .setQuantity(item.getQuantity())
+                .setAvailable(item.getAvailable())
+                .setSold(item.getSold())
+                .setDefective(item.getDefective())
+                .setCreatedBy(item.getCreatedBy())
+                .setCreatedAt(item.getCreatedAt());
     }
 
     public ItemPurchase toDTOItemPurchase (Item item){

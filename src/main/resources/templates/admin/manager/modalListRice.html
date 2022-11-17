@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="listRiceImport">
+
+    <div class="modal fade" id="modalListOrderRice" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thẻ Nhập Hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar table-responsive" >
+                        <input type="hidden" id="currentRow">
+                        <table id="tbRiceImport" class="table table-striped table-bordered mt-4 "
+                               aria-describedby="user-list-page-info">
+                            <thead class="btn-primary">
+                            <tr class="text-center">
+                                <th>STT</th>
+                                <th>Mã Đơn Hàng</th>
+                                <th>Người Nhập</th>
+                                <th>Ngày Nhập</th>
+                                <th>Tồn Kho</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <tr>
+                                <th>1</th>
+                                <td>X 12</td>
+                                <td>Linh</td>
+                                <td>20/12/2022</td>
+                                <td>4</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

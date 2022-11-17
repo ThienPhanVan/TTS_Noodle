@@ -51,7 +51,7 @@
                         <div class="iq-card-body">
                             <div class="table-responsive">
                                 <input type="hidden" id="currentRow">
-                                <table id="tbOrderCus" class="table table-striped table-bordered mt-4" role="grid"
+                                <table id="tbOrderCus" class="table table-striped table-bordered mt-4 " role="grid"
                                        aria-describedby="user-list-page-info">
 
                                     <thead class="btn-primary">
@@ -66,7 +66,7 @@
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody class="text-center">
+                                    <tbody data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="text-center">
 
                                     </tbody>
                                 </table>
@@ -129,10 +129,10 @@
         let str = `
                    <tr id="tr_${orderItem.id}">
                           <td>${orderItem.id}</td>
-                          <td>${orderItem.createdAt}</td>
+                          <td>${moment(orderItem.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
                           <td> ${orderItem.createdBy}</td>
                           <td>${orderItem.user.fullName}</td>
-                          <td>${orderItem.orderStatus}</td>
+                          <td style="margin-top: 20px;  padding: 4px" class="badge badge-success " >${orderItem.orderStatus}</td>
                           <td>${new Intl.NumberFormat('vi-VN').format(orderItem.grandTotal)}</td>
                           <td class="w-45">
                                     <a class="btn btn-outline-warning delete"
@@ -157,6 +157,7 @@
         }).done((data) => {
             let sumTotal = 0;
             data.forEach(orderItem => {
+                console.log(orderItem, "5")
                 let str = renderOrderCustomer(orderItem);
                      sumTotal += orderItem.grandTotal ;
                 $("#tbOrderCus tbody").prepend(str);

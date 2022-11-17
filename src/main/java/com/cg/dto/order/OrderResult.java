@@ -25,7 +25,7 @@ public class OrderResult {
 
     private long userId;
 
-//    private UserResult user;
+    private UserResult user;
 
     private OrderStatus orderStatus;
 

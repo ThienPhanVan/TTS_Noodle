@@ -10,4 +10,6 @@ public interface IItemService {
     List<ItemResult> findAll ();
 
     List<ItemPurchase> findAllItemPurChase ();
+
+    List<ItemResult> findItemByProductId(long id);
 }

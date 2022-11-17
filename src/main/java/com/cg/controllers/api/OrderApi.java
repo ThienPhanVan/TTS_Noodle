@@ -76,5 +76,16 @@ public class OrderApi {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
     }
 
+    @GetMapping("/chartOneDay/{date}")
+    public ResponseEntity<?> chartOneDay(@PathVariable String date) {
+        List<OrderResult> orderChart = orderService.findCreateAtByTypeCustomer(date);
+        return new ResponseEntity<>(orderChart, HttpStatus.OK);
+    }
+
+    @GetMapping("/chartSevenDay")
+    public ResponseEntity<?> chartSevenDay() {
+        List<OrderResult> chartSevenDay = orderService.findOrderSevenDay();
+        return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
+    }
  
 }

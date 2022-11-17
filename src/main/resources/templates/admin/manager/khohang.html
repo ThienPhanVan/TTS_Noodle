@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"></th:block>
+
 </head>
 
 <body>
@@ -56,6 +57,7 @@
                                                     <th>Tên</th>
                                                     <th>Số Lượng</th>
                                                     <th>Vốn Tồn Kho</th>
+                                                    <th>...</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody class="text-center">
@@ -77,6 +79,7 @@
                                                     <th>Mã Hàng</th>
                                                     <th>Tên</th>
                                                     <th>Số Lượng</th>
+                                                    <th>Đã Bán</th>
                                                     <th>Giá Trị Tồn</th>
                                                 </tr>
                                                 </thead>
@@ -112,24 +115,24 @@
             </div>
         </div>
     </footer>
-
     <!-- Footer END -->
-
 </div>
 <!--<script src="/static/assets/js/app.js"></script>-->
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 
+<th:block th:replace="/admin/manager/modalListRice.html"></th:block>
 
 </body>
 <script>
 
+    let itemss = new Item();
     let product = new Product();
 
     function renderProduct(obj) {
         let str = `
                 <tr id="tr_${obj.id}">
                     <td>${obj.id}</td>
-                     <td>${(obj.title)}</td>
+                     <td><a href=> ${(obj.title)}</a></td>
                     <td>${obj.quantity}</td>
                     <td>${obj.funds}</td>
                 </tr>
@@ -137,35 +140,6 @@
         return str;
     }
 
-    function loadRice() {
-        $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/products ",
-        }).done((data) => {
-            console.log(data)
-            data.forEach(item => {
-                product = item
-                if (product.id === 1){
-                    let strRice = `
-                <tr id="tr_${product.id}">
-                    <td>${product.id}</td>
-                    <td>${product.title}</td>
-                    <td>${product.quantity}</td>
-                    <td>${product.funds}</td>
-                </tr>`;
-                    $("#tbRice tbody").prepend(strRice);
-                }
-            });
-        }).fail((jqXHR) => {
-            console.log(jqXHR);
-        })
-    }
-
-    loadRice();
     function loadNoodle() {
         $.ajax({
             headers: {
@@ -176,28 +150,86 @@
             url: "http://localhost:8080/api/products ",
         }).done((data) => {
 
-            console.log(data)
+            data.forEach(item => {
+                product = item;
+                if (product.id === 1) {
+                    getItemByProductId(product.id).then((noodleOrder) => {
+                        noodleOrder.forEach(noodle =>{
+                            console.log(noodle , "noodel")
+                            let sum = 0;
+                            sum = noodle.available * noodle.price;
+                            console.log(noodle, "2")
+                            let strNoodle = `
+                        <tr id="tr_${noodle.product.id}">
+                            <td>${noodle.product.id}</td>
+                            <td>${noodle.product.title}</td>
+                            <td>${noodle.available}</td>
+                            <td>${noodle.sold}</td>
+                             <td>${sum}</td>
+                        </tr>`;
+                            $("#tbNoodle tbody").prepend(strNoodle);
+                        })
+
+                    })
+
+                }
+            })
+
+        }).fail((jqXHR) => {
+            console.log(jqXHR);
+        })
+    }
+
+    loadNoodle();
+
+    function loadRice() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/products ",
+        }).done((data) => {
             data.forEach(item => {
                 product = item
-                if (product.id === 2){
-                    let strNoodle = `
-                <tr id="tr_${product.id}">
-                    <td>${product.id}</td>
-                    <td>${product.title}</td>
-                    <td>${product.quantity}</td>
-                    <td>${product.funds}</td>
-                </tr>`;
-                    $("#tbNoodle tbody").prepend(strNoodle);
+                if (product.id === 2) {
+                    let sumPrice = 0;
+                    let sumQuantity = 0;
+                    console.log(product.id, "id")
+                    getItemByProductId(product.id).then((riceImport) => {
+                        console.log(riceImport, "rice")
+                        riceImport.forEach(rice => {
+                            console.log(rice.product.id, "aaaaaa")
+                            sumPrice += rice.price;
+                            sumQuantity += rice.quantity;
+                            let strRice = `
+                           <tr id="tr_${rice.product.id}">
+                              <td>${rice.product.id}</td>
+                              <td>${rice.product.title}</td>
+                              <td>${sumQuantity}</td>
+                              <td>${sumPrice}</td>
+                              <td><a class="btn btn-outline-warning" onclick="showOrderRice(${product.id})">
+                                Info
+                               </a></td>
+                            </tr>`;
+                            $("#tbRice tbody").prepend(strRice);
+                        })
+
+                    })
+
                 }
+
             });
         }).fail((jqXHR) => {
             console.log(jqXHR);
         })
     }
-    loadNoodle();
+
+    loadRice();
 
 
-    function getUserById(userId) {
+    function getItemByProductId(productId) {
         return (
             $.ajax({
                 headers: {
@@ -205,13 +237,33 @@
                     "Content-type": 'application'
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/users/" + userId,
+                url: "http://localhost:8080/api/items/product/" + productId,
             }).done((data) => {
-                // showModalUpdateCus(data);
+                console.log(data, "1")
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
         )
+    }
+
+    function showOrderRice(idProduct) {
+        getItemByProductId(idProduct).then((item) => {
+            $('#tbRiceImport tbody').empty();
+            item.forEach(itemCard => {
+                let str = `
+                 <tr id="tr_${itemCard.id}">
+                    <th>${itemCard.id}</th>
+                    <td>${itemCard.orderId}</td>
+                    <td>${itemCard.user.fullName}</td>
+                    <td>${moment(itemCard.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
+                    <td>${item.length}</td>
+                  </tr>
+                         `;
+                $('#tbRiceImport tbody').append(str)
+                console.log(itemCard, "ss")
+            })
+        })
+        $('#modalListOrderRice').modal('show');
 
     }
 

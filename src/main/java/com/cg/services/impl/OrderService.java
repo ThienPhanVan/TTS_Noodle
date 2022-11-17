@@ -320,5 +320,17 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllByUserId(userId);
     }
 
+    @Override
+    public List<OrderResult> findCreateAtByTypeCustomer(String date) {
+        return orderRepository.findCreateAtByTypeCustomer(date)
+                .stream().map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<OrderResult> findOrderSevenDay() {
+        return orderRepository.findOrderSevenDay()
+                .stream().map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
 }

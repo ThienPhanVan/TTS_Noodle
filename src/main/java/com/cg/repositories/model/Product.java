@@ -27,11 +27,6 @@ public class Product {
     @Column(name = "price", precision = 12)
     private BigDecimal price;
 
-    @Column(name = "quantity", nullable = false, length = 45)
-    private Integer quantity;
-
-    @Column(name = "funds", precision = 12)
-    private BigDecimal funds;
 
 
     public Product(long  id) {

@@ -23,7 +23,7 @@ public class OrderMapper {
                 .setOrderStatus(order.getOrderStatus())
                 .setOrderType(order.getOrderType())
                 .setUserId(order.getUserId())
-//                .setUser(userMapper.toDTO(order.getUser()))
+                .setUser(userMapper.toDTO(order.getUser()))
                 .setFullName(order.getFullName())
                 .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());

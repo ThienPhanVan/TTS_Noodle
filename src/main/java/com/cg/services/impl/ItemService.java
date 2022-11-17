@@ -36,4 +36,11 @@ public class ItemService implements IItemService {
                 .map(item -> itemMapper.toDTOItemPurchase(item))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ItemResult> findItemByProductId(long id) {
+        return itemRepository.findItemByProductId(id)
+                .stream().map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+    }
 }

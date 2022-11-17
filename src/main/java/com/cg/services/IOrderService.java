@@ -39,4 +39,7 @@ public interface IOrderService {
 
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
 
+    List<OrderResult> findCreateAtByTypeCustomer (String date);
+
+    List<OrderResult> findOrderSevenDay();
 }
