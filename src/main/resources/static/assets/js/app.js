@@ -1,4 +1,12 @@
 class App {
+
+    static formatNumberSpace(x) {
+        if (x == null) {
+            return x;
+        }
+        return x.toString().replace(/ /g, "").replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+
     static iziToast = class {
         static showSuccessAlert(t) {
 
@@ -57,23 +65,24 @@ class User {
 }
 
 
-
-
 class Order {
-    constructor(id, grandTotal, userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone) {
+    constructor(id, grandTotal, product, userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone, orderItem) {
         this.id = id;
         this.grandTotal = grandTotal;
-        this.userId = userId
-        this.user = user
-        this.orderStatus = orderStatus
-        this.orderType = orderType
-        this.address = address
-        this.createdAt = createdAt
-        this.createdBy = createdBy
+        this.userId = userId;
+        this.user = user;
+        this.orderStatus = orderStatus;
+        this.orderType = orderType;
+        this.address = address;
+        this.product = product;
+        this.createdBy = createdBy;
+        this.createdAt = createdAt;
         this.fullName = fullName;
         this.phone = phone;
+        this.orderItem = orderItem;
     }
 }
+
 
 class OrderItem {
     constructor(id, price, quantity, itemId, orderId, productId) {
@@ -94,7 +103,7 @@ class Item {
         this.userId = userId;
         this.user = user
         this.orderId = orderId;
-        this.sold = sold ;
+        this.sold = sold;
         this.price = price;
         this.quantity = quantity;
         this.available = available;
@@ -103,15 +112,15 @@ class Item {
         this.createdBy = createdBy;
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
+
     }
 }
 
 class Product {
-    constructor(id, title, price, quantity, funds) {
+    constructor(id, title, price) {
         this.id = id;
         this.title = title;
         this.price = price;
-        this.quantity = quantity;
-        this.funds = funds;
     }
+
 }

@@ -31,4 +31,8 @@ public interface IUserService  {
     boolean findUserByRoleId (Long roleId);
 
     BigDecimal totalOrderOfUser (long id);
+
+
+    List<UserResult> findAllByFullNameOrPhone(String keyword);
+
 }

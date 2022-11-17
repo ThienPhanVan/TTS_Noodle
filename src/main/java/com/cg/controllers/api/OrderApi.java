@@ -1,10 +1,7 @@
 package com.cg.controllers.api;
 
 
-import com.cg.dto.order.OrderListPurchase;
-import com.cg.dto.order.OrderParam;
-import com.cg.dto.order.OrderPurchase;
-import com.cg.dto.order.OrderResult;
+import com.cg.dto.order.*;
 import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
@@ -27,15 +24,23 @@ public class OrderApi {
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
 
-        List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypePurchaseList();
+        List<OrderPurchaseDTO> orderListPurchaseList = orderService.findAllOrderPurchase();
 
-        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
     }
 
     @GetMapping("/exports")
     public ResponseEntity<?> getAllOrderByExport(){
 
         List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypeCustomerList();
+
+        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+    }
+
+    @GetMapping("/exportsNoodle")
+    public ResponseEntity<?> getAllOrderByExportNoodle(){
+
+        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }

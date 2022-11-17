@@ -27,6 +27,7 @@ public interface IOrderService {
     List<OrderListPurchase> findAllByOrderTypePurchaseList ();
 
     List<OrderListPurchase> findAllByOrderTypeCustomerList();
+
     List<OrderResult> findAllByOrderTypePurchase ();
 
     List<OrderResult> findAllByOrderTypeCustomer ();
@@ -37,9 +38,14 @@ public interface IOrderService {
 
     List<OrderResult> findAllByOrderStatusCancel ();
 
+
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
 
     List<OrderResult> findCreateAtByTypeCustomer (String date);
 
     List<OrderResult> findOrderSevenDay();
+
+    List<OrderPurchaseDTO> findAllOrderPurchase();
+
+
 }

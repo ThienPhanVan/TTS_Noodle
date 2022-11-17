@@ -1,5 +1,6 @@
 package com.cg.dto.order;
 
+import com.cg.repositories.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,5 @@ public class OrderParam {
     private String phone;
 
     private String address;
+
 }

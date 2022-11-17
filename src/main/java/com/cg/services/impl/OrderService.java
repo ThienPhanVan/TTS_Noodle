@@ -22,14 +22,16 @@ import com.cg.repositories.UserRepository;
 
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.util.resources.cldr.ext.CurrencyNames_ceb;
 
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,13 +82,12 @@ public class OrderService implements IOrderService {
     public OrderResult createOrderExport(OrderParam orderParam) {
 //        Transient
         //order Item
-            Long userId = orderParam.getUserId();
-            if (userId != null) {
-                Optional<User> optional = userRepository.findById(userId);
-                if (!optional.isPresent())
-                    throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
-            }
-
+        Long userId = orderParam.getUserId();
+        if (userId != null) {
+            Optional<User> optional = userRepository.findById(userId);
+            if (!optional.isPresent())
+                throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
+        }
 //            order.setFullName(orderParam.getFullName());
 //            order.setPhone(orderParam.getPhone());
 ////            order.setUserId(orderParam.getUserId());
@@ -101,17 +102,16 @@ public class OrderService implements IOrderService {
 //            BigDecimal grandTotal = BigDecimal.valueOf(0);
 
 //        } else {
-
-            Order order = orderMapper.toModel(orderParam);
-            order.setFullName(orderParam.getFullName());
-            order.setPhone(orderParam.getPhone());
-            order.setAddress(orderParam.getAddress());
-            order.setCreatedAt(Instant.now());
-            order.setOrderStatus(OrderStatus.PENDING);
-            order.setCreatedBy(2L);
-            order.setOrderType(OrderType.CUSTOMER);
-            order.setGrandTotal(new BigDecimal(0));
-            order = orderRepository.save(order);
+        Order order = orderMapper.toModel(orderParam);
+        order.setFullName(orderParam.getFullName());
+        order.setPhone(orderParam.getPhone());
+        order.setAddress(orderParam.getAddress());
+        order.setCreatedAt(Instant.now());
+        order.setOrderStatus(OrderStatus.PENDING);
+        order.setCreatedBy(1L);
+        order.setOrderType(OrderType.CUSTOMER);
+        order.setGrandTotal(new BigDecimal(0));
+        order = orderRepository.save(order);
 
 //        }
         //xu ly list orderItems
@@ -226,6 +226,10 @@ public class OrderService implements IOrderService {
 
         }
 
+        LocalDateTime localDateTime = LocalDateTime.parse(orderPurchase.getCreatedAt());
+
+        Instant instant = localDateTime.toInstant(ZoneOffset.UTC);
+
         Long userId = userOptional.get().getId();
 
         List<OrderItemPurchase> orderItemPurchaseList = orderPurchase.getOrderItemPurchases();
@@ -256,11 +260,11 @@ public class OrderService implements IOrderService {
 
         }
         newOrder.setOrderStatus(OrderStatus.PENDING);
-        newOrder.setCreatedBy(2L);
-        newOrder.setAddress(orderPurchase.getAddress());
+        newOrder.setCreatedBy(1L);
+        newOrder.setAddress(userOptional.get().getAddress());
         newOrder.setUserId(userId);
         newOrder.setOrderType(OrderType.PURCHASE);
-        newOrder.setCreatedAt(Instant.parse(Instant.now().toString()));
+        newOrder.setCreatedAt(instant);
 
         orderRepository.save(newOrder);
 
@@ -284,7 +288,7 @@ public class OrderService implements IOrderService {
             newItem.setAvailable(quantity);
             newItem.setSold(0);
             newItem.setDefective(0);
-            newItem.setCreatedAt(Instant.now());
+            newItem.setCreatedAt(instant);
             newItem.setCreatedBy(1L);
             newItem.setUserId(userId);
             newItem.setOrderId(newOrder.getId());
@@ -321,6 +325,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+
     public List<OrderResult> findCreateAtByTypeCustomer(String date) {
         return orderRepository.findCreateAtByTypeCustomer(date)
                 .stream().map(order -> orderMapper.toDTO(order))
@@ -333,4 +338,11 @@ public class OrderService implements IOrderService {
                 .stream().map(order -> orderMapper.toDTO(order))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchase() {
+        return orderRepository.findAllOrderPurchase();
+    }
+
+
 }

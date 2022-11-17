@@ -9,11 +9,15 @@ import com.cg.repositories.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 
 @Component
 public class OrderMapper {
+
     @Autowired
     UserMapper userMapper;
+
 
     public OrderResult toDTO(Order order) {
         return new OrderResult()
@@ -34,16 +38,13 @@ public class OrderMapper {
         return new OrderListPurchase()
                 .setId(order.getId())
                 .setGrandTotal(order.getGrandTotal())
-                .setOrderStatus(order.getOrderStatus())
-                .setUser(userMapper.toDTO(order.getUser()))
                 .setUserId(order.getUserId())
-                .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
     }
 
     public Order toModelOrder(OrderPurchase orderPurchase) {
         return new Order()
-                .setAddress(orderPurchase.getAddress())
+                .setCreatedAt(Instant.parse(orderPurchase.getCreatedAt()))
                 .setUserId(orderPurchase.getUserId());
 
     }
@@ -52,7 +53,7 @@ public class OrderMapper {
         return new Order()
                 .setId(orderParam.getId())
                 .setUserId(orderParam.getUserId())
-
+                .setPhone(orderParam.getPhone())
                 .setAddress(orderParam.getAddress());
 
     }

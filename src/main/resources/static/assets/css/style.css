@@ -5056,3 +5056,16 @@ body.two-sidebar.sidebar-main .iq-sidebar {
   line-height: 38px;
   margin-right: 20px;
 }
+.card-body{
+  background-color: #abdde5;
+  margin-bottom: 10px;
+}
+.listProduct{
+  margin-bottom: 10px;
+}
+
+.grandTotal{
+  float: right;
+  font-weight: bold;
+  font-size: 17px;
+}

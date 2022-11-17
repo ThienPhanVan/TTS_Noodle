@@ -1,5 +1,6 @@
 package com.cg.repositories.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Instant;
+
 
 @Data
 @NoArgsConstructor
@@ -54,7 +55,9 @@ public class User {
     @Column(name = "role_id", nullable = false, insertable = false, updatable = false)
     private Long roleId;
 
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "role_id")
     private Role role;
 
