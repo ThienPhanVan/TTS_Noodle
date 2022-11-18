@@ -81,7 +81,7 @@ public class OrderApi {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
     }
 
-<<<<<<< HEAD
+
     @PatchMapping("updateStatus")
     public ResponseEntity<?> doUpdateStatus(String orderStatus){
 
@@ -89,7 +89,7 @@ public class OrderApi {
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-=======
+
     @GetMapping("/chartOneDay/{date}")
     public ResponseEntity<?> chartOneDay(@PathVariable String date) {
         List<OrderResult> orderChart = orderService.findCreateAtByTypeCustomer(date);
@@ -101,6 +101,5 @@ public class OrderApi {
         List<OrderResult> chartSevenDay = orderService.findOrderSevenDay();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
- 
->>>>>>> development
+
 }

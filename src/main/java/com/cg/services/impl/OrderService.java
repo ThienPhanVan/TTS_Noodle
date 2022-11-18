@@ -320,7 +320,6 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllOrderPurchase();
     }
 
-<<<<<<< HEAD
     @Override
     public void updateOrderStatus(OrderResult orderResult) {
         Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
@@ -329,7 +328,5 @@ public class OrderService implements IOrderService {
         }
 
     }
-=======
 
->>>>>>> development
 }

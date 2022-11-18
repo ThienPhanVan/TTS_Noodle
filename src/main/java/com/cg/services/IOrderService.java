@@ -41,15 +41,15 @@ public interface IOrderService {
 
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
 
-<<<<<<< HEAD
+
     void updateOrderStatus (OrderResult orderResult);
-=======
+
     List<OrderResult> findCreateAtByTypeCustomer (String date);
 
     List<OrderResult> findOrderSevenDay();
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
->>>>>>> development
+
 
 }
