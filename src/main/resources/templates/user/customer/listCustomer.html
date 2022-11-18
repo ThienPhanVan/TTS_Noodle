@@ -165,7 +165,6 @@
             type: "GET",
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 2,
         }).done((data) => {
-            console.log(data)
             data.forEach(item => {
                 let str = renderUser(item);
                 $("#tbCustomer tbody").prepend(str);

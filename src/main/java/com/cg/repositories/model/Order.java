@@ -43,7 +43,7 @@ public class Order {
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderType orderType;    
+    private OrderType orderType;
 
 
     @Column(name = "order_status", nullable = false)
@@ -66,10 +66,9 @@ public class Order {
     @Column(name = "phone", length = 15)
     private String phone;
 
-    public Order(Long id){
+    public Order(Long id) {
         this.id = id;
     }
-
 
 
     public Order setUserId(Long userId) {
