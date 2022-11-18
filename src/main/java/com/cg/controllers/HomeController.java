@@ -20,11 +20,17 @@ public class HomeController {
 
     @GetMapping("/donhang")
     public ModelAndView showOrder(){
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/admin/manager/donhang");
         return modelAndView;
     }
+    @GetMapping("/khohang")
+    public ModelAndView showKho(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/admin/manager/khohang");
+        return modelAndView;
+    }
+
 
 
     @GetMapping("purchase")

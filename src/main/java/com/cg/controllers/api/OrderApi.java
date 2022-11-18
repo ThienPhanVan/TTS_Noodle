@@ -24,8 +24,6 @@ public class OrderApi {
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
 
-//        List<OrderListPurchase> orderResultList = orderService.findAllByOrderTypePurchaseList();
-
         List<OrderPurchaseDTO> orderListPurchaseList = orderService.findAllOrderPurchase();
 
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
@@ -82,4 +80,17 @@ public class OrderApi {
     public ResponseEntity<?> create(@RequestBody OrderParam orderParam) {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
     }
+
+    @GetMapping("/chartOneDay/{date}")
+    public ResponseEntity<?> chartOneDay(@PathVariable String date) {
+        List<OrderResult> orderChart = orderService.findCreateAtByTypeCustomer(date);
+        return new ResponseEntity<>(orderChart, HttpStatus.OK);
+    }
+
+    @GetMapping("/chartSevenDay")
+    public ResponseEntity<?> chartSevenDay() {
+        List<OrderResult> chartSevenDay = orderService.findOrderSevenDay();
+        return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
+    }
+ 
 }

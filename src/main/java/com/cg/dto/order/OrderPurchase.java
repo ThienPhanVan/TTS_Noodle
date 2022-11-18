@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -15,11 +17,9 @@ public class OrderPurchase {
 
     private Long userId;
 
-    private String address;
-
     List<OrderItemPurchase> orderItemPurchases;
 
-    private String fullName;
+    private String createdAt;
 
 }
 

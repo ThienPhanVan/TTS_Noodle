@@ -9,13 +9,19 @@ import com.cg.repositories.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 
 @Component
 public class OrderMapper {
 
     @Autowired
-    private UserMapper userMapper;
+    UserMapper userMapper;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1f78c0b7f1ef9f08c24e8ec8e2b1eed378e72528
     public OrderResult toDTO(Order order) {
         return new OrderResult()
                 .setId(order.getId())
@@ -24,6 +30,10 @@ public class OrderMapper {
                 .setOrderStatus(order.getOrderStatus())
                 .setOrderType(order.getOrderType())
                 .setUserId(order.getUserId())
+<<<<<<< HEAD
+=======
+                .setUser(userMapper.toDTO(order.getUser()))
+>>>>>>> 1f78c0b7f1ef9f08c24e8ec8e2b1eed378e72528
                 .setFullName(order.getFullName())
                 .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
@@ -34,16 +44,13 @@ public class OrderMapper {
         return new OrderListPurchase()
                 .setId(order.getId())
                 .setGrandTotal(order.getGrandTotal())
-                .setOrderStatus(order.getOrderStatus())
-                .setUser(userMapper.toDTO(order.getUser()))
                 .setUserId(order.getUserId())
-                .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
     }
 
     public Order toModelOrder(OrderPurchase orderPurchase) {
         return new Order()
-                .setAddress(orderPurchase.getAddress())
+                .setCreatedAt(Instant.parse(orderPurchase.getCreatedAt()))
                 .setUserId(orderPurchase.getUserId());
 
     }
@@ -52,8 +59,12 @@ public class OrderMapper {
         return new Order()
                 .setId(orderParam.getId())
                 .setPhone(orderParam.getPhone())
+<<<<<<< HEAD
                 .setAddress(orderParam.getAddress())
                 .setFullName(orderParam.getFullName());
+=======
+                .setAddress(orderParam.getAddress());
+>>>>>>> 1f78c0b7f1ef9f08c24e8ec8e2b1eed378e72528
 
     }
 }
