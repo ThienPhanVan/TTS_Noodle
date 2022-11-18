@@ -16,9 +16,9 @@ import java.time.Instant;
 public class OrderMapper {
 
     @Autowired
-    private UserMapper userMapper;
+    UserMapper userMapper;
 
-    public OrderResult toDTO(Order order){
+    public OrderResult toDTO(Order order) {
         return new OrderResult()
                 .setId(order.getId())
                 .setGrandTotal(order.getGrandTotal())
@@ -26,14 +26,12 @@ public class OrderMapper {
                 .setOrderStatus(order.getOrderStatus())
                 .setOrderType(order.getOrderType())
                 .setUserId(order.getUserId())
-//                .setUser(userMapper.toDTO(order.getUser()))
                 .setFullName(order.getFullName())
                 .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
-
     }
 
-    public OrderListPurchase toDTOList (Order order){
+    public OrderListPurchase toDTOList(Order order) {
         return new OrderListPurchase()
                 .setId(order.getId())
                 .setGrandTotal(order.getGrandTotal())
@@ -47,11 +45,16 @@ public class OrderMapper {
                 .setUserId(orderPurchase.getUserId());
 
     }
-    public Order toModel (OrderParam orderParam) {
+
+    public Order toModel(OrderParam orderParam) {
         return new Order()
                 .setId(orderParam.getId())
-                .setUserId(orderParam.getUserId())
                 .setPhone(orderParam.getPhone())
-                .setAddress(orderParam.getAddress());
+                .setAddress(orderParam.getAddress())
+                .setFullName(orderParam.getFullName());
+
+
+
+
     }
 }

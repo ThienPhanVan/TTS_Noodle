@@ -73,9 +73,6 @@ public class UserService implements IUserService {
         user.setUsername(random);
         user.setPassword("123");
         user.setId(0L);
-        user.setTotalOrder(BigDecimal.valueOf(0L));
-        user.setCreatedBy(2L);
-        user.setCreatedAt("Chưa Mua Hàng");
         user.setStatus(UserStatus.AVAILABLE);
         user.setRole(new Role().setId(2L));
         return userMapper.toDTO(userRepository.save(user));
@@ -91,9 +88,6 @@ public class UserService implements IUserService {
         user.setPassword("123");
         user.setId(0L);
         user.setStatus(UserStatus.AVAILABLE);
-        user.setTotalOrder(BigDecimal.valueOf(0L));
-        user.setCreatedBy(2L);
-        user.setCreatedAt("Chưa Nhập Hàng");
         user.setRole(new Role().setId(3L));
         return userMapper.toDTO(userRepository.save(user));
     }

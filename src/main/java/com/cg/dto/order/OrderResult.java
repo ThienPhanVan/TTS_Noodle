@@ -23,9 +23,9 @@ public class OrderResult {
 
     private BigDecimal grandTotal;
 
-    private long userId;
+    private Long userId;
 
-//    private UserResult user;
+    private UserResult user;
 
     private OrderStatus orderStatus;
 

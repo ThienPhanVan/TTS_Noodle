@@ -114,7 +114,6 @@
 
  </div>
 
-<script src="/static/assets/js/app.js"></script>
 
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 
@@ -165,7 +164,6 @@
             type: "GET",
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 2,
         }).done((data) => {
-            console.log(data)
             data.forEach(item => {
                 let str = renderUser(item);
                 $("#tbCustomer tbody").prepend(str);

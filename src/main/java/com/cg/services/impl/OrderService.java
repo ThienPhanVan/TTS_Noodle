@@ -83,38 +83,19 @@ public class OrderService implements IOrderService {
     public OrderResult createOrderExport(OrderParam orderParam) {
 //        Transient
         //order Item
-            Long userId = orderParam.getUserId();
-            if (userId != null) {
-                Optional<User> optional = userRepository.findById(userId);
-                if (!optional.isPresent())
-                    throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
-            }
-//            order.setFullName(orderParam.getFullName());
-//            order.setPhone(orderParam.getPhone());
-////            order.setUserId(orderParam.getUserId());
-//            order.setAddress(orderParam.getAddress());
-//            order.setCreatedAt(Instant.now());
-//            order.setOrderStatus(OrderStatus.PENDING);
-//            order.setCreatedBy(2L);
-//            order.setOrderType(OrderType.CUSTOMER);
-//            order.setGrandTotal(new BigDecimal(0));
-//            order = orderRepository.save(order);
-//
-//            BigDecimal grandTotal = BigDecimal.valueOf(0);
-
-//        } else {
-            Order order = orderMapper.toModel(orderParam);
-            order.setFullName(orderParam.getFullName());
-            order.setPhone(orderParam.getPhone());
-            order.setAddress(orderParam.getAddress());
-            order.setCreatedAt(Instant.now());
-            order.setOrderStatus(OrderStatus.PENDING);
-            order.setCreatedBy(1L);
-            order.setOrderType(OrderType.CUSTOMER);
-            order.setGrandTotal(new BigDecimal(0));
-            order = orderRepository.save(order);
-
-//        }
+        Long userId = orderParam.getUserId();
+        Order order = orderMapper.toModel(orderParam);
+        if (userId != null) {
+            if (!userRepository.existsById(userId))
+                throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
+            order.setUserId(userId);
+        }
+        order.setCreatedAt(Instant.now());
+        order.setOrderStatus(OrderStatus.PENDING);
+        order.setCreatedBy(1L);
+        order.setOrderType(OrderType.CUSTOMER);
+        order.setGrandTotal(new BigDecimal(0));
+        order = orderRepository.save(order);
         //xu ly list orderItems
         BigDecimal grandTotal = BigDecimal.valueOf(0);
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
@@ -168,6 +149,7 @@ public class OrderService implements IOrderService {
                 orderItem.setPrice(item.getPrice());
                 orderItemRepository.save(orderItem);
             }
+
         }
         return orderMapper.toDTO(order);
     }
@@ -269,13 +251,6 @@ public class OrderService implements IOrderService {
 
         orderRepository.save(newOrder);
 
-        // lấy tổng tiền order của 1 user
-        BigDecimal total = userRepository.totalOrderOfUser(userId);
-        // set lại orderTotal, CurrencyNames_ceb, cra mới
-        userOptional.get().setTotalOrder(total);
-        userOptional.get().setCreatedAt(newOrder.getCreatedAt().toString());
-        userOptional.get().setCreatedBy(newOrder.getCreatedBy());
-
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
@@ -326,10 +301,26 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+
+    public List<OrderResult> findCreateAtByTypeCustomer(String date) {
+        return orderRepository.findCreateAtByTypeCustomer(date)
+                .stream().map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findOrderSevenDay() {
+        return orderRepository.findOrderSevenDay()
+                .stream().map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<OrderPurchaseDTO> findAllOrderPurchase() {
         return orderRepository.findAllOrderPurchase();
     }
 
+<<<<<<< HEAD
     @Override
     public void updateOrderStatus(OrderResult orderResult) {
         Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
@@ -338,4 +329,7 @@ public class OrderService implements IOrderService {
         }
 
     }
+=======
+
+>>>>>>> development
 }

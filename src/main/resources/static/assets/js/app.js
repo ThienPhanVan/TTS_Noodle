@@ -27,13 +27,27 @@ class App {
                 message: t
             });
         }
+    };
+
+    static sweetAlert = class {
+        static showDelete() {
+            return Swal.fire({
+                title: 'Lưu Ý !',
+                text: "Bạn Có Chắc Muốn Xóa Đơn Hàng Này ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+
+            })
+        }
     }
 }
 
 
 class User {
-    constructor(id, fullName, roleId, phone, email, address, status, avatarUrl, username,
-                createdBy, createdAt, totalOrder) {
+    constructor(id, fullName, roleId, phone, email, address, status, avatarUrl, username) {
         this.id = id;
         this.fullName = fullName;
         this.roleId = roleId;
@@ -43,11 +57,9 @@ class User {
         this.status = status;
         this.avatarUrl = avatarUrl;
         this.username = username;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
-        this.totalOrder = totalOrder;
     }
 }
+
 
 class Order {
     constructor(id, grandTotal, product, userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone, orderItem) {
@@ -58,16 +70,17 @@ class Order {
         this.orderStatus = orderStatus;
         this.orderType = orderType;
         this.address = address;
-        this.product= product;
+        this.product = product;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.fullName = fullName;
         this.phone = phone;
-        this.orderItem=orderItem;
+        this.orderItem = orderItem;
     }
 }
-class
-    OrderItem {
+
+
+class OrderItem {
     constructor(id, price, quantity, itemId, orderId, productId) {
         this.id = id;
         this.price = price;
@@ -85,6 +98,8 @@ class Item {
         this.product = product
         this.userId = userId;
         this.user = user
+        this.orderId = orderId;
+        this.sold = sold;
         this.price = price;
         this.quantity = quantity;
         this.available = available;
@@ -102,6 +117,6 @@ class Product {
         this.id = id;
         this.title = title;
         this.price = price;
-
     }
+
 }

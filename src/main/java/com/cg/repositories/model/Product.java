@@ -28,6 +28,7 @@ public class Product {
     private BigDecimal price;
 
 
+
     public Product(long  id) {
         this.id=id;
     }
