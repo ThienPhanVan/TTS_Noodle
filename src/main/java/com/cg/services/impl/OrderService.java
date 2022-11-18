@@ -83,49 +83,18 @@ public class OrderService implements IOrderService {
 //        Transient
         //order Item
         Long userId = orderParam.getUserId();
-<<<<<<< HEAD
         Order order = orderMapper.toModel(orderParam);
         if (userId != null) {
             if (!userRepository.existsById(userId))
                 throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
             order.setUserId(userId);
         }
-=======
-        if (userId != null) {
-            Optional<User> optional = userRepository.findById(userId);
-            if (!optional.isPresent())
-                throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
-        }
-//            order.setFullName(orderParam.getFullName());
-//            order.setPhone(orderParam.getPhone());
-////            order.setUserId(orderParam.getUserId());
-//            order.setAddress(orderParam.getAddress());
-//            order.setCreatedAt(Instant.now());
-//            order.setOrderStatus(OrderStatus.PENDING);
-//            order.setCreatedBy(2L);
-//            order.setOrderType(OrderType.CUSTOMER);
-//            order.setGrandTotal(new BigDecimal(0));
-//            order = orderRepository.save(order);
-//
-//            BigDecimal grandTotal = BigDecimal.valueOf(0);
-
-//        } else {
-        Order order = orderMapper.toModel(orderParam);
-        order.setFullName(orderParam.getFullName());
-        order.setPhone(orderParam.getPhone());
-        order.setAddress(orderParam.getAddress());
->>>>>>> 1f78c0b7f1ef9f08c24e8ec8e2b1eed378e72528
         order.setCreatedAt(Instant.now());
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(1L);
         order.setOrderType(OrderType.CUSTOMER);
         order.setGrandTotal(new BigDecimal(0));
         order = orderRepository.save(order);
-<<<<<<< HEAD
-=======
-
-//        }
->>>>>>> 1f78c0b7f1ef9f08c24e8ec8e2b1eed378e72528
         //xu ly list orderItems
         BigDecimal grandTotal = BigDecimal.valueOf(0);
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
