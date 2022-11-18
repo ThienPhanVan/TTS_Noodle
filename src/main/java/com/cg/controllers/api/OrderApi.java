@@ -80,4 +80,12 @@ public class OrderApi {
     public ResponseEntity<?> create(@RequestBody OrderParam orderParam) {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
     }
+
+    @PatchMapping("updateStatus")
+    public ResponseEntity<?> doUpdateStatus(String orderStatus){
+
+
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }

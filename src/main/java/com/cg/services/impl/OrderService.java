@@ -3,6 +3,7 @@ package com.cg.services.impl;
 
 import com.cg.dto.order.*;
 import com.cg.dto.userDTO.UserResult;
+import com.cg.exceptions.DataInputException;
 import com.cg.mapper.OrderMapper;
 import com.cg.exceptions.NotEnoughQuantityException;
 import com.cg.exceptions.NotFoundException;
@@ -327,5 +328,14 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderPurchaseDTO> findAllOrderPurchase() {
         return orderRepository.findAllOrderPurchase();
+    }
+
+    @Override
+    public void updateOrderStatus(OrderResult orderResult) {
+        Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
+        if (orderPurchase1.isPresent()){
+            throw new DataInputException("Không tìm thấy order");
+        }
+
     }
 }

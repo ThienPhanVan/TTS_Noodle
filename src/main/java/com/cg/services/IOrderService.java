@@ -42,4 +42,6 @@ public interface IOrderService {
 
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
 
+    void updateOrderStatus (OrderResult orderResult);
+
 }

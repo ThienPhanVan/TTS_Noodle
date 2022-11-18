@@ -5069,3 +5069,12 @@ body.two-sidebar.sidebar-main .iq-sidebar {
   font-weight: bold;
   font-size: 17px;
 }
+.quantityItemPurchase{
+  text-align: right;
+}
+.priceItemPurchase{
+  text-align: right;
+}
+.itemTotalAmount{
+  text-align: right;
+}
