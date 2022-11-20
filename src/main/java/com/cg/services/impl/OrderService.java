@@ -58,7 +58,7 @@ public class OrderService implements IOrderService {
     @Autowired
     private ProductRepository productRepository;
 
-
+    @Autowired
     private UserMapper userMapper;
 
 
@@ -295,5 +295,10 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderPurchaseDTO> findAllOrderPurchase() {
         return orderRepository.findAllOrderPurchase();
+    }
+
+    @Override
+    public List<OrderResultDTO> findAllOrderCustomer() {
+        return orderRepository.findAllOrderCustomer();
     }
 }

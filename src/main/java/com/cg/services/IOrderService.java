@@ -42,4 +42,5 @@ public interface IOrderService {
 
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
 
+    List<OrderResultDTO> findAllOrderCustomer();
 }

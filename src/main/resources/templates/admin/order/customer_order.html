@@ -96,7 +96,7 @@
     </footer>
 
     <!-- Footer END -->
-    <script src="/static/assets/js/app.js"/>
+<!--    <script src="/static/assets/js/app.js"/>-->
     <th:block th:replace="/layout/script/footer :: footer"/>
 </div>
 </body>
@@ -104,13 +104,13 @@
 <script>
     let order = new Order();
     let user = new User();
-
-    function renderOrderCustomer(order) {
+    function renderOrderCustomer(order,i) {
+        console.log("order ",order)
         let str = `
                 <tr id="tr_${order.id}">
                     <td>${order.id}</td>
                     <td>${order.createdAt}</td>
-                     <td>${(order.fullName === null) ? user.fullName : order.fullName}</td>
+                    <td>${user[i].fullName === undefined ? user[i].fullName === undefined : order.fullName}</td>
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}</td>
@@ -130,8 +130,8 @@
             url: "http://localhost:8080/api/orders/exportsNoodle",
         }).done((data) => {
             order = data;
-            data.forEach(item => {
-                let str = renderOrderCustomer(item);
+            data.forEach((item,i )=> {
+                let str = renderOrderCustomer(item,i);
                 $("#tbOrder tbody").prepend(str);
 
             });
@@ -140,18 +140,19 @@
         })
     }
 
-    function findAllUserBy() {
+    function findAllUserByRole() {
         $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/users",
+            url: "http://localhost:8080/api/users/getUserByRoleId/2",
         }).done((data) => {
+
             user = data;
-            data.forEach(item => {
-                let str = renderOrderCustomer(item);
+            data.forEach((item,i) => {
+                let str = renderOrderCustomer(item,i);
                 $("#tbOrder tbody").prepend(str);
 
             });
@@ -161,7 +162,7 @@
     }
 
     loadOrders();
-    findAllUserBy()
+    findAllUserByRole()
 </script>
 
 </html>

@@ -1,8 +1,8 @@
 package com.cg.repositories;
 
 import com.cg.dto.order.OrderPurchaseDTO;
-import com.cg.dto.order.OrderResult;
 
+import com.cg.dto.order.OrderResultDTO;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderStatus;
 import com.cg.repositories.model.OrderType;
@@ -23,4 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
+
+    @Query(value = "SELECT * FROM customer_order_view", nativeQuery = true)
+    List<OrderResultDTO> findAllOrderCustomer();
 }

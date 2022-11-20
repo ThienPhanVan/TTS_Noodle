@@ -5,6 +5,7 @@ import com.cg.dto.order.*;
 import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
+import com.cg.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ public class OrderApi {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
@@ -29,6 +32,12 @@ public class OrderApi {
         List<OrderPurchaseDTO> orderListPurchaseList = orderService.findAllOrderPurchase();
 
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllCustomerOrder")
+    public ResponseEntity<?> findAllCustomerOrder() {
+        List<OrderResultDTO> userResults = orderService.findAllOrderCustomer();
+        return new ResponseEntity<>(userResults, HttpStatus.OK);
     }
 
     @GetMapping("/exports")
