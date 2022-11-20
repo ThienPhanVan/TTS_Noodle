@@ -35,4 +35,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
+    @Query(value = "SELECT * FROM purchase_order_status_completed", nativeQuery = true)
+    List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete();
+
+    @Query(value = "SELECT * FROM purchase_order_status_cancelled", nativeQuery = true)
+    List<OrderPurchaseDTO> findAllOrderPurchaseStatusCancel();
+
+    @Query(value = "SELECT * FROM purchase_order_status_pending", nativeQuery = true)
+    List<OrderPurchaseDTO> findAllOrderPurchaseStatusPending();
+
 }

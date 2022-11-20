@@ -53,7 +53,14 @@
                         <td>Ngày Nhập</td>
                         <td>Người Nhập</td>
                         <td>Nhà cung cấp</td>
-                        <td>Trạng thái</td>
+                        <td>
+                            <select class="form-control selectStatus" style="height: fit-content" name="cars" id="cars">
+                                <option value="Trạng thái">Trạng thái</option>
+                                <option class="pending" value="PENDING">PENDING</option>
+                                <option id="complete" value="COMPLETE">COMPLETE</option>
+                                <option id="cancel" value="CANCEL">CANCEL</option>
+                            </select>
+                        </td>
                         <td>Tổng tiền</td>
                     </tr>
                     </thead>
@@ -168,7 +175,7 @@
 
     }
 
-    $('#btnSearch').on('click', function (){
+    $('#searchOrder').on('input', function (){
         let keyword = $('#searchOrder').val();
         searchByName(keyword);
     })
@@ -200,6 +207,42 @@
             console.log(jqXHR);
         })
     }
+    
+
+
+        $(".selectStatus").on("change", function () {
+            $(".pending").on("click", function (){
+                $.ajax({
+                    "headers": {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    "type": "GET",
+                    "url": "http://localhost:8080/api/orders/pending"
+                })
+                    .done((data)=>{
+
+                        console.log(data);
+                        $.each(data, (i,item)=>{
+
+                            order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+
+                            order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+                            let str =  renderOrder(item);
+
+                            $("#tbListOrder tbody").prepend(str);
+
+                        })
+
+                    })
+                    .fail((jqXHR)=>{
+                        console.log(jqXHR)
+                    })
+            })
+        })
+
+
 
 
     function getAllOrder(){
@@ -224,6 +267,8 @@
                 let str =  renderOrder(item);
 
                 $("#tbListOrder tbody").prepend(str);
+
+
 
             })
         })

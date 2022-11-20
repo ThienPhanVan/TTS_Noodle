@@ -329,4 +329,18 @@ public class OrderService implements IOrderService {
 
     }
 
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchaseStatusPending() {
+        return orderRepository.findAllOrderPurchaseStatusPending();
+    }
+
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchaseStatusCancel() {
+        return orderRepository.findAllOrderPurchaseStatusCancel();
+    }
+
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete() {
+        return orderRepository.findAllOrderPurchaseStatusComplete();
+    }
 }

@@ -62,7 +62,7 @@ public class OrderApi {
     }
 
     @PostMapping("/create/export")
-    public ResponseEntity<?> doCreateExportOrder(){
+    public ResponseEntity<?> doCreateExportOrder(){ 
 
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -101,5 +101,28 @@ public class OrderApi {
         List<OrderResult> chartSevenDay = orderService.findOrderSevenDay();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
+
+    @GetMapping("/pending")
+    public ResponseEntity<?> getOrderByStatusPending(){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusPending();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/complete")
+    public ResponseEntity<?> getOrderByStatusComplete(String status){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusComplete();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/cancel")
+    public ResponseEntity<?> getOrderByStatusCancel(String status){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusCancel();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+
 
 }
