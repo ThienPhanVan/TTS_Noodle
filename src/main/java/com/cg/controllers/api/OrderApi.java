@@ -2,9 +2,9 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
-import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
+import com.cg.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,8 @@ public class OrderApi {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
@@ -29,6 +31,7 @@ public class OrderApi {
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
     }
 
+
     @GetMapping("/exports")
     public ResponseEntity<?> getAllOrderByExport(){
 
@@ -36,6 +39,14 @@ public class OrderApi {
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
+
+//    @GetMapping("/exportsNoodle")
+//    public ResponseEntity<?> getAllOrderByExportNoodle(){
+//
+//        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
+//
+//        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+//    }
 
     @GetMapping("/exportsNoodle")
     public ResponseEntity<?> getAllOrderByExportNoodle(){
