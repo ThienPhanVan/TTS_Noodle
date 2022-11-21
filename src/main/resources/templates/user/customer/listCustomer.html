@@ -67,7 +67,7 @@
                                         <th>Email</th>
                                         <th>Điện Thoại</th>
                                         <th>Địa Chỉ</th>
-                                        <th>Tổng tiền</th>
+                                        <th>Tổng tiền (đ)</th>
                                         <th>Nợ</th>
                                         <th>Lần Cuối MH</th>
                                         <th>Action</th>
@@ -112,7 +112,7 @@
     <th:block th:replace="/user/customer/modalUpdateCustomer :: updateCustomer"></th:block>
     <!--    End modal create-->
 
- </div>
+</div>
 
 <script src="/static/assets/js/app.js"></script>
 
@@ -123,7 +123,9 @@
 <script>
 
     let user = new User();
-    console.log(user)
+    let order = new Order();
+
+    console.log(order, "order")
 
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
@@ -165,11 +167,41 @@
             type: "GET",
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 2,
         }).done((data) => {
+            user = data;
             console.log(data)
-            data.forEach(item => {
-                let str = renderUser(item);
-                $("#tbCustomer tbody").prepend(str);
-            });
+            console.log(data, "data")
+            let total = 0;
+            let days = "";
+            $.each(user, (i, userList) => {
+                getOrderById(userList.id).then((orderItem) => {
+                    $.each(orderItem, (i, orders) => {
+                        console.log(orders, "orders")
+                        total += orders.grandTotal;
+                        days = orders.createdAt.toString();
+                    })
+                    let str = `
+                <tr id="tr_${userList.id}">
+                    <td><img height="50" src=${userList.avatarUrl} alt="noavatar"></td>
+                    <td>${userList.fullName}</td>
+                     <td>${userList.email}</td>
+                    <td>${userList.phone}</td>
+                    <td>${userList.address}</td>
+                    <td id="to">  ${total === "" ? total : new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'})
+                        .format(total) }  </td>
+                    <td id="crb">${userList.createdBy}</td>
+                    <td id="cra">${moment(days).format('DD/MM/YYYY -- hh:mm')} </td>
+                       <td class="w-45">
+                               <a class="btn btn-outline-warning update" data-id="${userList.id}" data-toggle="tooltip"
+                                data-toggle="modal" data-target="#modalUpdateCus"
+                                data-original-title="Edit" >
+                                  <i class="ri-pencil-line"></i>
+                               </a>
+                       </td>
+                    </tr>
+                               `;
+                    $("#tbCustomer tbody").prepend(str);
+                })
+            })
             enableTootip();
             showModalUpdateCus();
         }).fail((jqXHR) => {
@@ -178,6 +210,25 @@
     }
 
     loadUsers();
+
+    function getOrderById(userId) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                type: "GET",
+                async: false,
+                url: "http://localhost:8080/api/orders/" + userId,
+            }).done((data) => {
+                order = data;
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+
+    }
 
     function getUserById(userId) {
         return (
@@ -194,7 +245,6 @@
                 console.log(jxHQR)
             })
         )
-
     }
 
     $(".create").on('click', function () {
@@ -202,7 +252,6 @@
     });
 
     let btnCreate = $("#btnCreateCus");
-
     btnCreate.on("click", function () {
         let createUser = {
             "roleId": 0,
@@ -213,20 +262,23 @@
             "avatarUrl": $('#avatar').val(),
 
         }
-
-        console.log(createUser)
+        // console.log(createUser)
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'content-type': 'application/json'
             },
             type: "POST",
+            async : false,
             url: "http://localhost:8080/api/users/createCustomer",
             data: JSON.stringify(createUser)
         }).done((data) => {
             console.log(data)
+
             let str = renderUser(data)
             $("#tbCustomer tbody").prepend(str);
+            $("#to").text("").val();
+            $("#cra").text("Chưa Mua Hàng");
             App.iziToast.showSuccessAlert("Thêm mới thành công")
             $("#modalCreateCustomer").modal('hide')
             enableTootip();
@@ -237,9 +289,7 @@
     })
 
     $("#modalCreateCustomer").on("hidden.bs.modal", function () {
-        // $("#modalUpdateProduct .modal-alert-danger").empty();
         $("#frmCreateCus")[0].reset();
-        // $("#frmCreateCus").validate().resetForm();
         $('#modalCreateCustomer .modal-alert-danger').removeClass('show').addClass('hide');
     });
 
@@ -248,9 +298,7 @@
         $(".update").on('click', function () {
             let userId = $(this).data("id");
             getUserById(userId).then((data) => {
-                // let to =
-                // let crb = data.createdBy;
-                // let cra = data.createdAt;
+
                 $('#idCusUp').val(userId)
                 $('#nameCusUp').val(data.fullName);
                 $('#emailCusUp').val(data.email);

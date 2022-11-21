@@ -2,6 +2,7 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
+import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
@@ -81,6 +82,14 @@ public class OrderApi {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id){
+
+        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
+
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
+    }
+
     @GetMapping("/chartOneDay/{date}")
     public ResponseEntity<?> chartOneDay(@PathVariable String date) {
         List<OrderResult> orderChart = orderService.findCreateAtByTypeCustomer(date);
@@ -92,5 +101,12 @@ public class OrderApi {
         List<OrderResult> chartSevenDay = orderService.findOrderSevenDay();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
- 
+
+    @GetMapping("/getAllOrderByRole")
+    public ResponseEntity<?> getAllOrderByRole(){
+
+        List<OrderResult> orders = orderService.getAllOrderByRole();
+
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
 }

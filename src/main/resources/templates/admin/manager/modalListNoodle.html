@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:fragment="listRiceImport">
+<th:block th:fragment="listRiceExport">
 
-    <div class="modal fade" id="modalListOrderRice" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="modalListOrderNoodle" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg ">
             <div class="modal-content">
@@ -15,14 +15,14 @@
                 <div class="modal-body">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar table-responsive" >
                         <input type="hidden" id="currentRow">
-                        <table id="tbRiceImport" class="table table-striped table-bordered mt-4 "
+                        <table id="tbNoodleExport" class="table table-striped table-bordered mt-4 "
                                aria-describedby="user-list-page-info">
                             <thead class="btn-primary">
                             <tr class="text-center">
                                 <th>STT</th>
                                 <th>Mã Đơn Hàng</th>
-                                <th>Ngày Nhập</th>
-                                <th>Nhập</th>
+                                <th>Ngày Xuất</th>
+                                <th>Xuất</th>
                                 <th>Tồn Kho</th>
                             </tr>
                             </thead>
@@ -34,7 +34,6 @@
                                 <td>20/12/2022</td>
                                 <td>4</td>
                             </tr>
-
                             </tbody>
                         </table>
 

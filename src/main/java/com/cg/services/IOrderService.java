@@ -18,7 +18,7 @@ public interface IOrderService {
 
     OrderResult createOrderImport(OrderPurchase orderPurchase);
 
-    List<Order> findAllByUserId(Long userId);
+    List<OrderResult> findAllByUserId(Long userId);
 
 //    List<OrderResult> getAllOrderByUserId(Long userId);
 
@@ -47,5 +47,6 @@ public interface IOrderService {
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
+    List<OrderResult> getAllOrderByRole();
 
 }

@@ -19,9 +19,7 @@ public class UserMapper {
                 .setStatus(user.getStatus())
                 .setUsername(user.getUsername())
                 .setAvatarUrl(user.getAvatarUrl())
-                .setCreatedAt(user.getCreatedAt())
-                .setCreatedBy(user.getCreatedBy())
-                .setTotalOrder(user.getTotalOrder());
+                ;
     }
 
     public User toModel(CreateUserParam createUserParam) {

@@ -269,11 +269,11 @@ public class OrderService implements IOrderService {
         orderRepository.save(newOrder);
 
         // lấy tổng tiền order của 1 user
-        BigDecimal total = userRepository.totalOrderOfUser(userId);
+//        BigDecimal total = userRepository.totalOrderOfUser(userId);
         // set lại orderTotal, CurrencyNames_ceb, cra mới
-        userOptional.get().setTotalOrder(total);
-        userOptional.get().setCreatedAt(newOrder.getCreatedAt().toString());
-        userOptional.get().setCreatedBy(newOrder.getCreatedBy());
+//        userOptional.get().setTotalOrder(total);
+//        userOptional.get().setCreatedAt(newOrder.getCreatedAt().toString());
+//        userOptional.get().setCreatedBy(newOrder.getCreatedBy());
 
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
@@ -320,8 +320,10 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> findAllByUserId(Long userId) {
-        return orderRepository.findAllByUserId(userId);
+    public List<OrderResult> findAllByUserId(Long userId) {
+        return orderRepository.findOrderByUserId(userId).stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -344,5 +346,8 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllOrderPurchase();
     }
 
-
+    @Override
+    public List<OrderResult> getAllOrderByRole() {
+        return orderRepository.getAllOrderByRole().stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+    }
 }

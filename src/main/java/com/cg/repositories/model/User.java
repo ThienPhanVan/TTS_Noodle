@@ -43,18 +43,8 @@ public class User {
     @Column(name = "phone", nullable = false, length = 15)
     private String phone;
 
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
-
-    @Column(name = "created_at", nullable = false)
-    private String createdAt;
-
-    @Column(name = "total_order", nullable = false, precision = 12)
-    private BigDecimal TotalOrder;
-
     @Column(name = "role_id", nullable = false, insertable = false, updatable = false)
     private Long roleId;
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

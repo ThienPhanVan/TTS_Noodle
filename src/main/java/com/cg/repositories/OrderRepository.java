@@ -2,6 +2,7 @@ package com.cg.repositories;
 
 import com.cg.dto.order.OrderPurchaseDTO;
 
+import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderStatus;
 import com.cg.repositories.model.OrderType;
@@ -15,14 +16,14 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findAllByUserId(Long userId);
+    List<Order> findOrderByUserId(Long userId);
 
     List<Order> findAllByOrderType(OrderType orderType);
 
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
 
-    @Query(value = "select *  from orders o where o.created_at like %?1% AND o.type = 'CUSTOMER'", nativeQuery = true)
+    @Query(value = "select *  from orders o where o.created_at like %?1% AND o.type = 'CUSTOMER' and o.user_id is null ", nativeQuery = true)
     List<Order> findCreateAtByTypeCustomer(String date);
 
 //    @Query(value = " SELECT  * FROM  orders o  " +
@@ -34,5 +35,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
+    @Query(value = "call noodle.getallorderbyrole()" , nativeQuery = true)
+    List<Order> getAllOrderByRole();
 
 }
