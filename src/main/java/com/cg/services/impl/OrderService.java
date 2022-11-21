@@ -79,13 +79,88 @@ public class OrderService implements IOrderService {
     public OrderResult createOrderExport(OrderParam orderParam) {
 //        Transient
         //order Item
+//        xet userid == null
         Long userId = orderParam.getUserId();
-        Order order = orderMapper.toModel(orderParam);
-        if (userId != null) {
-            if (!userRepository.existsById(userId))
-                throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
-            order.setUserId(userId);
+        if(userId == null){
+            Order order = orderMapper.toModel(orderParam);
+            order.setFullName(order.getFullName());
+            order.setAddress(order.getAddress());
+            order.setPhone(order.getPhone());
+            order.setCreatedAt(Instant.now());
+            order.setOrderStatus(OrderStatus.PENDING);
+            order.setCreatedBy(1L);
+            order.setOrderType(OrderType.CUSTOMER);
+            order.setGrandTotal(new BigDecimal(0));
+            order = orderRepository.save(order);
+            BigDecimal grandTotal = BigDecimal.valueOf(0);
+            for (OrderItemParam itemParam : orderParam.getOrderItems()) {
+                //kiem tra product ton tai
+                //lay toan item theo productId
+                if (!productRepository.existsById(itemParam.getProductId())) {
+                    throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
+                }
+                // lay toan item theo productId
+                List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(), 0);
+                long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
+                // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
+                if (totalAvailable < itemParam.getQuantity()) {
+                    throw new NotEnoughQuantityException("Không đủ số lượng, vui lòng kiểm tra số lượng!");
+                }
+                Long productId = itemParam.getProductId();
+
+                Optional<Product> productOptional = productRepository.findById(productId);
+                BigDecimal price = (productOptional.get().getPrice());
+                // lấy số lượng order
+                int quantityCustomer = itemParam.getQuantity();
+                //tổng giá sản phẩm = giá sản phẩm * số lượng sản phẩm khách hàng order
+                grandTotal = grandTotal.add(price.multiply(new BigDecimal(quantityCustomer)));
+                order.setGrandTotal(grandTotal);
+
+                for (Item item : items) {
+                    if (quantityCustomer == 0) {
+                        break;
+                    }
+                    int available = item.getAvailable();
+                    int orderItemSold;
+                    if (quantityCustomer >= available) {
+                        quantityCustomer = quantityCustomer - available;
+                        item.setAvailable(0);
+                        orderItemSold = available;
+                        int itemSold = item.getSold() + available;
+                        item.setSold(itemSold);
+                    } else {
+                        available = available - quantityCustomer;
+                        item.setAvailable(available);
+                        orderItemSold = quantityCustomer;
+                        int itemSold = item.getSold() + quantityCustomer;
+                        item.setSold(itemSold);
+                        quantityCustomer = 0;
+                    }
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setQuantity(orderItemSold);
+                    orderItem.setProductId(item.getProductId());
+                    orderItem.setItemId(item.getId());
+                    orderItem.setOrderId(order.getId());
+                    orderItem.setPrice(item.getPrice());
+                    orderItemRepository.save(orderItem);
+                }
+            }
+            return orderMapper.toDTO(order);
         }
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(!userOptional.isPresent()){
+            Order order = orderMapper.toModel(orderParam);
+//            throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
+            order = orderRepository.save(order);
+            return orderMapper.toDTO(order);
+        }
+        User user = userOptional.get();
+        Order order = orderMapper.toModel(orderParam);
+
+        order.setUserId(user.getId());
+        order.setFullName(user.getFullName());
+        order.setAddress(user.getAddress());
+        order.setPhone(user.getPhone());
         order.setCreatedAt(Instant.now());
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(1L);
@@ -145,8 +220,8 @@ public class OrderService implements IOrderService {
                 orderItem.setPrice(item.getPrice());
                 orderItemRepository.save(orderItem);
             }
-
         }
+
         return orderMapper.toDTO(order);
     }
 

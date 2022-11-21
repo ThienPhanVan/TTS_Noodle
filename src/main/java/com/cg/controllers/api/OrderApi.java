@@ -2,7 +2,6 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
-import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
 import com.cg.services.impl.UserService;
@@ -47,6 +46,14 @@ public class OrderApi {
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
+
+//    @GetMapping("/exportsNoodle")
+//    public ResponseEntity<?> getAllOrderByExportNoodle(){
+//
+//        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
+//
+//        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+//    }
 
     @GetMapping("/exportsNoodle")
     public ResponseEntity<?> getAllOrderByExportNoodle(){

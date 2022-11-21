@@ -1,9 +1,6 @@
 package com.cg.mapper;
 
-import com.cg.dto.order.OrderListPurchase;
-import com.cg.dto.order.OrderPurchase;
-import com.cg.dto.order.OrderResult;
-import com.cg.dto.order.OrderParam;
+import com.cg.dto.order.*;
 
 import com.cg.repositories.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,17 @@ public class OrderMapper {
                 .setUserId(order.getUserId())
                 .setFullName(order.getFullName())
                 .setCreatedBy(order.getCreatedBy())
+                .setCreatedAt(order.getCreatedAt());
+
+    }
+
+    public ListOrderResult toListDTO(Order order) {
+        return new ListOrderResult()
+                .setId(order.getId())
+                .setGrandTotal(order.getGrandTotal())
+                .setAddress(order.getAddress())
+                .setOrderStatus(order.getOrderStatus())
+                .setFullName(order.getFullName())
                 .setCreatedAt(order.getCreatedAt());
 
     }

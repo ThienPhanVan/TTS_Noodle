@@ -46,7 +46,6 @@ public class User {
     private Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "role_id")
     private Role role;
 
