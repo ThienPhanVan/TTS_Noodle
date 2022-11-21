@@ -54,7 +54,6 @@ import java.time.Instant;
     @JoinColumn(name = "order_id")
     private Order order;
 
-
     @Column(name = "price", nullable = false, precision = 12)
     private BigDecimal price;
 

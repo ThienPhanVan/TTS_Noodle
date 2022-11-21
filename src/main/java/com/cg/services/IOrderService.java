@@ -38,8 +38,9 @@ public interface IOrderService {
 
     List<OrderResult> findAllByOrderStatusCancel ();
 
-
     List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
+
+    void updateOrderStatus (OrderResult orderResult);
 
     List<OrderResult> findCreateAtByTypeCustomer (String date);
 
@@ -48,5 +49,6 @@ public interface IOrderService {
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
     List<OrderResult> getAllOrderByRole();
+
 
 }

@@ -177,22 +177,7 @@
 
     loadOrderCustomer();
 
-    $("#tbOrderCus").on("click", ".delete", function () {
-        order.id = $(this).data('id');
-        $("#currentRow").val($(this).closest("tr").attr("id"));
-        showModalDelete();
-    });
 
-    function showModalDelete() {
-        let orderId = order.id;
-        console.log(orderId, "1")
-        App.sweetAlert.showDelete()
-            .then((result) => {
-                if (result.isConfirmed) {
-                    doDelete(orderId);
-                }
-            })
-    }
 
 
 </script>

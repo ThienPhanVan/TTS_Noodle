@@ -27,7 +27,6 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     @Column(name = "address", nullable = false, length = 95)
     private String address;
 
@@ -47,7 +46,6 @@ public class User {
     private Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "role_id")
     private Role role;
 

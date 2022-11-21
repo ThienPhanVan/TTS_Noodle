@@ -246,6 +246,13 @@
 
             $(".search-supplier").val(filename);
             $(".search-supplier").attr("id", id)
+
+            iziToast.success({
+                title: 'OK',
+                position: 'bottomLeft',
+                timeout: 1500,
+                message: 'Thêm nhà cung cấp thành công!!'
+            });
         })
     }
 
@@ -332,6 +339,7 @@
                              <b>${obj.price} đ</b>
                           </p>
                 </button>
+                <hr>
                 `
         return str;
     }
@@ -341,7 +349,8 @@
         let str =`
                 <button class="dropdown-item supplier-search" id="trd_${obj.id}" data-id="${obj.id}" data-filename="${obj.fullName}" data-phone ="${obj.phone}" >
                     ${obj.fullName} |  ${obj.phone}
-                  </button>
+                </button>
+                  <hr>
         `
         return str;
     }
@@ -352,21 +361,14 @@
 
             let quantity = +$(this).val();
 
-
-
             let rowId = +$(this).parents().parents().attr("id").replaceAll("tr_", "");
 
             let price = $("#" + rowId + " .priceItemPurchase").val();
 
-            console.log("rowId: " + rowId)
-            // console.log(arr)
-
             $.each(arr, (i, item) => {
-                console.log("item.id: " + item.id)
-                if (item.id === rowId) {
+                console.log("item.productId: " + item.productId)
+                if (item.productId === rowId) {
                     arr[i].quantity = quantity;
-
-                    console.log(arr)
                 }
             })
 
@@ -381,12 +383,12 @@
 
                 groupEvent();
             })
-
-            // let newAmount = quantity * price;
-
-            // $("#" + rowId + " .itemTotalAmount").val(newAmount)
-
-            // handleGrandTotal();
+            iziToast.success({
+                title: 'OK',
+                position: 'bottomLeft',
+                timeout: 1500,
+                message: 'Thêm sản phẩm thành công!!'
+            });
         })
     }
 
@@ -475,25 +477,10 @@
     function importPurchaseOrder(){
 
         order.userId = $(".search-supplier").attr("id");
+
         order.createdAt = $("#dateID").val();
 
-        // quantity :$(".quantityItemPurchase").val(),
-        //     price : $(".priceItemPurchase").val(),
-        //     productId : $(".productId").attr("id")
-
-        // if (orderItemPurchases.length ===0){
-        //     orderItemPurchases.push({
-        //         quantity :$(".quantityItemPurchase").val(),
-        //         price : $(".priceItemPurchase").val(),
-        //         productId : $(".productId").attr("id")
-        //     })
-        // }else {
-        //
-        // }
-
         order.orderItemPurchases = arr;
-
-        console.log(order);
 
         $.ajax({
             headers: {
@@ -546,10 +533,10 @@
                 "content-type": "application/json"
             },
             "type": "GET",
-            "url": "http://localhost:8080/api/products/search/" + keySearch,
-            // "data": JSON.stringify(product)
+            "url": "http://localhost:8080/api/products/search/" + keySearch
         })
         .done((data)=> {
+
             $(".dropdown .dropdown-menu").html("");
             console.log(keySearch);
             $.each(data, (i,item)=>{
@@ -641,15 +628,34 @@
         }).done((data) => {
             console.log(data)
 
-            let str = renderSupplier(data)
-            $(".dropdown-supplier .dropdown-menu").prepend(str);
+            user = data;
+
+            $(".search-supplier").val(user.fullName);
+            $(".search-supplier").attr("id", user.id)
 
             handleSelectSupplierSearch();
-            App.iziToast.showSuccessAlert("Thêm mới thành công")
+
+            iziToast.success({
+                title: 'OK',
+                position: 'bottomLeft',
+                timeout: 1500,
+                message: 'Thêm nhà cung cấp thành công!!'
+            });
+
             $("#modalCreateSupplier").modal('hide')
+
             enableTooltip();
+
         }).fail((jqHRX) => {
+
             console.log(jqHRX)
+            iziToast.error({
+                title: 'ERROR',
+                position: 'bottomLeft',
+                timeout: 2000,
+                message: 'Thêm nhà cung cấp thất bại!!'
+            });
+
         });
     })
 

@@ -1,10 +1,10 @@
 package com.cg.controllers.api;
 
+
 import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.dto.userDTO.UpdateUserParam;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.exceptions.DataInputException;
-import com.cg.repositories.UserRepository;
 import com.cg.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +21,6 @@ public class UserApi {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @GetMapping()
     public ResponseEntity<?> findAllUser() {

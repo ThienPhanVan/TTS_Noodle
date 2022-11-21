@@ -56,17 +56,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-<!--                                    <tr>-->
-<!--                                        <td>123</td>-->
-<!--                                        <td>11/10/2022</td>-->
-<!--                                        <td>sinhcute</td>-->
-<!--                                        <td>28 Nguyễn tri phương</td>-->
-<!--                                        <td>-->
-<!--                                            <div class="badge badge-pill badge-success">Pending</div>-->
-<!--                                        </td>-->
-<!--                                        <td>50.000đ</td>-->
-<!--                                        <td><i class="fa fa-crown"></i></td>-->
-<!--                                    </tr>-->
                                     </tbody>
 
                                 </table>
@@ -96,7 +85,7 @@
     </footer>
 
     <!-- Footer END -->
-    <script src="/static/assets/js/app.js"/>
+
     <th:block th:replace="/layout/script/footer :: footer"/>
 </div>
 </body>
@@ -104,19 +93,16 @@
 <script>
     let order = new Order();
     let user = new User();
-    function renderOrderCustomer(order) {
-        console.log("order",order)
+    function renderOrderCustomer(order,i) {
+        console.log("order", order)
         let str = `
                 <tr id="tr_${order.id}">
                     <td>${order.id}</td>
                     <td>${order.createdAt}</td>
-                        <td>${(order.fullName === null) ? user.fullName : order.fullName}</td>
+                    <td>${order.fullName}</td>
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
-                    <td>${new Intl.NumberFormat('vi-VN', {
-                        style: 'currency',
-                        currency: 'VND'
-                     }).format(order.grandTotal)}</td>
+                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}</td>
 
                 </tr>
             `;
@@ -133,34 +119,28 @@
             url: "http://localhost:8080/api/orders/exportsNoodle",
         }).done((data) => {
             order = data;
-            console.log("order", order)
-            // user = order.user;
-            // console.log("user",user)
-            data.forEach(item => {
-                let str = renderOrderCustomer(item);
+            data.forEach((item,i )=> {
+                let str = renderOrderCustomer(item,i);
                 $("#tbOrder tbody").prepend(str);
 
             });
-            // enableTootip();
-            // showModalUpdateCus();
         }).fail((jqXHR) => {
             console.log(jqXHR);
         })
     }
 
-    function findUserById() {
+    function findAllUserByRole() {
         $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/users",
+            url: "http://localhost:8080/api/users/getUserByRoleId/2",
         }).done((data) => {
             user = data;
-            console.log("user",user)
-            data.forEach(item => {
-                let str = renderOrderCustomer(item);
+            data.forEach((item,i) => {
+                let str = renderOrderCustomer(item,i);
                 $("#tbOrder tbody").prepend(str);
 
             });
@@ -170,7 +150,7 @@
     }
 
     loadOrders();
-    findUserById()
+    findAllUserByRole()
 </script>
 
 </html>

@@ -47,8 +47,7 @@ class App {
 
 
 class User {
-    constructor(id, fullName, roleId, phone, email, address, status, avatarUrl, username,
-                createdBy, createdAt, totalOrder) {
+    constructor(id, fullName, roleId, phone, email, address, status, avatarUrl, username) {
         this.id = id;
         this.fullName = fullName;
         this.roleId = roleId;
@@ -58,9 +57,6 @@ class User {
         this.status = status;
         this.avatarUrl = avatarUrl;
         this.username = username;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
-        this.totalOrder = totalOrder;
     }
 }
 

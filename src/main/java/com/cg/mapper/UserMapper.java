@@ -18,8 +18,8 @@ public class UserMapper {
                 .setAddress(user.getAddress())
                 .setStatus(user.getStatus())
                 .setUsername(user.getUsername())
-                .setAvatarUrl(user.getAvatarUrl())
-                ;
+                .setAvatarUrl(user.getAvatarUrl());
+
     }
 
     public User toModel(CreateUserParam createUserParam) {

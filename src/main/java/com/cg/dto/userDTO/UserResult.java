@@ -33,9 +33,6 @@ public class UserResult {
 
     private String username;
 
-
-
-
     public UserResult(Long id, long roleId, String fullName, String phone, String email, String address, String avatarUrl) {
         this.id = id;
         this.roleId = roleId;

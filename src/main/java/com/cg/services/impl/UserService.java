@@ -1,7 +1,6 @@
 package com.cg.services.impl;
 
-import com.cg.dto.order.OrderParam;
-import com.cg.dto.order.OrderResult;
+
 import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.dto.userDTO.UpdateUserParam;
 import com.cg.dto.userDTO.UserResult;
@@ -9,8 +8,7 @@ import com.cg.exceptions.NotFoundException;
 import com.cg.mapper.OrderMapper;
 import com.cg.mapper.UserMapper;
 import com.cg.repositories.UserRepository;
-import com.cg.repositories.model.Order;
-import com.cg.repositories.model.Role;
+ import com.cg.repositories.model.Role;
 import com.cg.repositories.model.User;
 import com.cg.repositories.model.UserStatus;
 import com.cg.services.IUserService;
@@ -79,9 +77,6 @@ public class UserService implements IUserService {
         user.setUsername(random);
         user.setPassword("123");
         user.setId(0L);
- //        user.setTotalOrder(BigDecimal.valueOf(0L));
-//        user.setCreatedBy(2L);
-//        user.setCreatedAt("Chưa Mua Hàng");
         user.setStatus(UserStatus.AVAILABLE);
         user.setRoleId(2L);
         return userMapper.toDTO(userRepository.save(user));
@@ -97,9 +92,6 @@ public class UserService implements IUserService {
         user.setPassword("123");
         user.setId(0L);
         user.setStatus(UserStatus.AVAILABLE);
-//        user.setTotalOrder(BigDecimal.valueOf(0L));
-//        user.setCreatedBy(2L);
-//        user.setCreatedAt("Chưa Nhập Hàng");
         user.setRole(new Role().setId(3L));
         return userMapper.toDTO(userRepository.save(user));
     }

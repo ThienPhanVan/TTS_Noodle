@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class OrderParam {
-    private long id;
+    private Long id;
 
     private Long userId;
 

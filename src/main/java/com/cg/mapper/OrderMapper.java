@@ -15,7 +15,6 @@ public class OrderMapper {
     @Autowired
     UserMapper userMapper;
 
-
     public OrderResult toDTO(Order order) {
         return new OrderResult()
                 .setId(order.getId())
@@ -24,9 +23,18 @@ public class OrderMapper {
                 .setOrderStatus(order.getOrderStatus())
                 .setOrderType(order.getOrderType())
                 .setUserId(order.getUserId())
-                .setUser(userMapper.toDTO(order.getUser()))
                 .setFullName(order.getFullName())
                 .setCreatedBy(order.getCreatedBy())
+                .setCreatedAt(order.getCreatedAt());
+    }
+
+    public ListOrderResult toListDTO(Order order) {
+        return new ListOrderResult()
+                .setId(order.getId())
+                .setGrandTotal(order.getGrandTotal())
+                .setAddress(order.getAddress())
+                .setOrderStatus(order.getOrderStatus())
+                .setFullName(order.getFullName())
                 .setCreatedAt(order.getCreatedAt());
 
     }
@@ -62,9 +70,12 @@ public class OrderMapper {
     public Order toModel(OrderParam orderParam) {
         return new Order()
                 .setId(orderParam.getId())
-                .setUserId(orderParam.getUserId())
                 .setPhone(orderParam.getPhone())
-                .setAddress(orderParam.getAddress());
+                .setAddress(orderParam.getAddress())
+                .setFullName(orderParam.getFullName());
+
+
+
 
     }
 }

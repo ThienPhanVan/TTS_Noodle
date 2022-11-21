@@ -1,6 +1,6 @@
 package com.cg.repositories;
 
-
+import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
@@ -50,5 +49,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT SUM(o.grandTotal) FROM  Order o where o.userId = :id")
     BigDecimal totalOrderOfUser(@Param("id") Long id);
+
 
 }

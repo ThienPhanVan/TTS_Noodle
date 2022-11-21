@@ -58,22 +58,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="list-product">
-                        <th>1</th>
-                        <th>02-01-1990</th>
-                        <th>Thiện</th>
-                        <th>TTS_Noodes</th>
-                        <th>Đang xử lý</th>
-                        <th>5000000</th>
-                    </tr>
-<!--                    <tr class="list-product">-->
-<!--                        <th>2</th>-->
-<!--                        <th>02-01-1990</th>-->
-<!--                        <th>Thiện</th>-->
-<!--                        <th>TTS_Noodes</th>-->
-<!--                        <th>Đang xử lý</th>-->
-<!--                        <th>5000000</th>-->
-<!--                    </tr>-->
+
                     </tbody>
                 </table>
             </div>
@@ -232,7 +217,7 @@
 
                 order = item;
 
-                order.createdat = moment(order.createdat).format("yyyy-MM-dd HH:mm:ss");
+                order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
 
                 order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
