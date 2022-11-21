@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-@Table(name = "customer_order_view")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

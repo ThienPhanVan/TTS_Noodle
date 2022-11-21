@@ -81,7 +81,7 @@ public class OrderService implements IOrderService {
         //order Item
 //        xet userid == null
         Long userId = orderParam.getUserId();
-        if(userId == null){
+        if (userId == null) {
             Order order = orderMapper.toModel(orderParam);
             order.setFullName(order.getFullName());
             order.setAddress(order.getAddress());
@@ -148,14 +148,15 @@ public class OrderService implements IOrderService {
             return orderMapper.toDTO(order);
         }
         Optional<User> userOptional = userRepository.findById(userId);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             Order order = orderMapper.toModel(orderParam);
 //            throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
             order = orderRepository.save(order);
             return orderMapper.toDTO(order);
         }
-        User user = userOptional.get();
         Order order = orderMapper.toModel(orderParam);
+        User user = userOptional.get();
+
 
         order.setUserId(user.getId());
         order.setFullName(user.getFullName());
@@ -176,7 +177,9 @@ public class OrderService implements IOrderService {
                 throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
             }
             // lay toan item theo productId
-            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(), 0);
+//            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(), 0);
+//            long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
+            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(),0);
             long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
             // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
             if (totalAvailable < itemParam.getQuantity()) {
@@ -221,7 +224,6 @@ public class OrderService implements IOrderService {
                 orderItemRepository.save(orderItem);
             }
         }
-
         return orderMapper.toDTO(order);
     }
 
