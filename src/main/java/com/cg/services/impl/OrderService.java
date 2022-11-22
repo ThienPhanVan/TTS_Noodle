@@ -183,7 +183,7 @@ public class OrderService implements IOrderService {
             // lay toan item theo productId
 //            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(), 0);
 //            long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
-            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(),0);
+            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(itemParam.getProductId(), 0);
             long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
             // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
             if (totalAvailable < itemParam.getQuantity()) {
@@ -257,6 +257,12 @@ public class OrderService implements IOrderService {
     public List<OrderResult> findAllByOrderTypeCustomer() {
         return orderRepository.findAllByOrderType(OrderType.CUSTOMER).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
+
+//    @Override
+//    public List<OrderResult> findAllByCreatedAtAndOrderType(Instant data, OrderType orderType) {
+//        return orderRepository.findAllByCreatedAtAndOrderType(data, OrderType.CUSTOMER)
+//                .stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+//    }
 
     @Override
     public List<OrderResult> findAllByOrderStatusPending() {
@@ -379,18 +385,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-
-    public List<OrderResult> findCreateAtByTypeCustomer(String date) {
-        return orderRepository.findCreateAtByTypeCustomer(date)
-                .stream().map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OrderResult> findOrderSevenDay() {
-        return orderRepository.findOrderSevenDay()
-                .stream().map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
+    public List<OrderResultChart> findOrderSevenDay() {
+        return orderRepository.findOrderSevenDay();
     }
 
     @Override
@@ -405,10 +401,18 @@ public class OrderService implements IOrderService {
 
     public void updateOrderStatus(OrderResult orderResult) {
         Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
-        if (orderPurchase1.isPresent()){
+        if (orderPurchase1.isPresent()) {
             throw new DataInputException("Không tìm thấy order");
         }
-
     }
 
+    @Override
+    public BigDecimal chartOneDay() {
+       return   orderRepository.chartOneDay();
+    }
+
+    @Override
+    public List<OrderResultChart> findOrderOneMonth() {
+        return orderRepository.findOrderOneMonth();
+    }
 }

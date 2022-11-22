@@ -41,14 +41,7 @@ public class OrderMapper {
 
     public OrderResultChart toChart(Order order) {
         return new OrderResultChart()
-                .setId(order.getId())
                 .setGrandTotal(order.getGrandTotal())
-                .setAddress(order.getAddress())
-                .setOrderStatus(order.getOrderStatus())
-                .setOrderType(order.getOrderType())
-                .setUserId(order.getUserId())
-                .setFullName(order.getFullName())
-                .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
     }
 

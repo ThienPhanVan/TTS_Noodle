@@ -6,6 +6,11 @@
 </head>
 
 <body>
+<!-- loader Start -->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <div class="wrapper">
     <!-- Sidebar  -->
     <th:block th:replace="/layout/sidebar/left_side_bar :: left_side_bar"/>
@@ -76,11 +81,19 @@
 
             <!-- bar chart -->
             <div class="container min-vh-100 d-flex flex-column justify-content-center">
-                <div>
-
+                <div style="background-color: #ffffff">
                     <div class="row my-3">
-                        <div class="col">
+                        <div class="col name_chart">
                             <h4>Thống Kê Xuất Bún Nhập Gạp</h4>
+                        </div>
+                        <div class="mr-5">
+                            <label>
+                                <select id="statisticals" class="selectpicker text-center">
+                                    <option selected value="toDay">Hôm Nay</option>
+                                    <option value="sevenDay">7 Ngày Gần Nhất</option>
+                                    <option value="oneMonth">30 Ngày Gần Nhất</option>
+                                </select>
+                            </label>
                         </div>
                     </div>
                     <div class="row my-2">
@@ -95,16 +108,15 @@
 
                 </div>
                 <hr>
-                <div>
-
+                <div style="background-color: #ffffff">
                     <div class="row my-3">
                         <div class="col name_chart">
-                            <h4>Doanh Thu Thu Chi</h4>
-                         </div>
+                            <h4>Doanh Thu Bán Bún</h4>
+                        </div>
                         <div class="mr-5">
                             <label>
                                 <select id="statistical" class="selectpicker text-center">
-                                    <option selected value="toDay" onclick="chartToDay()">Hôm Qua</option>
+                                    <option selected value="toDay">Hôm Nay</option>
                                     <option value="sevenDay">7 Ngày Gần Nhất</option>
                                     <option value="oneMonth">30 Ngày Gần Nhất</option>
                                 </select>
@@ -114,11 +126,11 @@
                     <div class="row my-2">
                         <div class="col-md-12">
                             <div class="card">
-                                <div style="background-color: #ffffff" class="card-body">
-                                    <canvas style="display: block" id="barSell" height="100"></canvas>
-                                    <canvas style="display: none" id="chart7day" height="100" ></canvas>
-                                    <canvas style="display: none" id="chart1month" height="100" ></canvas>
-                                 </div>
+                                <div style="background-color: #ffffff" id="charts" class="card-body">
+                                    <canvas style="display: block" id="chartOneDay" height="100"></canvas>
+                                    <canvas style="display: none" id="chart7day" height="100"></canvas>
+                                    <canvas style="display: none" id="chart1month" height="100"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -144,10 +156,16 @@
 
 </body>
 <script>
-
-    let action = document.getElementById("barSell");
+    let order = new Order();
+    // let total = 0;
+    // let date = new Date().getDate();
+    // let month = new Date().getMonth() + 1;
+    // let year = new Date().getFullYear();
+    // let today = year + "-" + (month < 10 ? ("0" + month) : month) + "-" + (date < 10 ? ("0" + date) : date);// console.log(today, "today")
+    let myChart;
+    let action = document.getElementById("chartOneDay");
     let todayNow = new Date().getDay();
-    let day_name = "" ;
+    let day_name = "";
     switch (todayNow) {
         case 0:
             day_name = "Chủ nhật";
@@ -171,33 +189,36 @@
             day_name = "Thứ bảy";
     }
 
-    $("#statistical").on('change',()=>{
+    $("#statistical").on('change', () => {
         let getValue = $('#statistical').val();
-        switch (getValue){
+        let chartOD = $("#chartOneDay");
+        let chartOW = $("#chart7day");
+        let chartOM = $("#chart1month");
+        switch (getValue) {
             case "toDay":
-
+                chartOD.css('display', 'block');
+                chartOW.css('display', 'none');
+                chartOM.css('display', 'none');
                 chartToDay();
                 break;
             case "sevenDay" :
-
+                chartOD.css('display', 'none');
+                chartOM.css('display', 'none');
+                chartOW.css('display', 'block');
                 chartSevenDay();
                 break;
             case "oneMonth" :
-                console.log("1 thang")
+                chartOW.css('display', 'none');
+                chartOD.css('display', 'none');
+                chartOM.css('display', 'block');
+                chartOneMonth();
                 break;
-            default : alert("hazz")
+            default :
+                alert("hazz")
         }
     })
 
-    let myChart = null ;
     function chartToDay() {
-        let total = 0;
-        let date = new Date().getDate();
-        let month = new Date().getMonth() + 1;
-        let year = new Date().getFullYear();
-
-        let today = year + "-" + (month <10 ? ("0" + month) : month) + "-" + (date <10 ? ("0" + date) : date);
-
         $.ajax({
             headers:
                 {
@@ -205,17 +226,18 @@
                     "content-type": "application/json"
                 },
             type: "GET",
-            url: "http://localhost:8080/api/orders/chartOneDay/" + today,
+            url: "http://localhost:8080/api/orders/exNoodle",
         }).done((data) => {
-            $.each(data , (i, noodle) =>{
-                total += noodle.grandTotal;
-            })
+            let total = data;
+            console.log(data, "data")
             let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-
-            let barSell = document.getElementById("barSell");
-
+            let chartOneDay = document.getElementById("chartOneDay").getContext('2d');
+            let chartStatus = Chart.getChart("chartOneDay");
+            if (chartStatus !== undefined) {
+                chartStatus.destroy();
+            }
             let chartDataSell = {
-                labels: [day_name+ " / 12"],
+                labels: [day_name],
                 datasets: [
                     {
                         label: 'Bún',
@@ -225,9 +247,8 @@
                     }
                 ]
             };
-            if (barSell) {
-                new Chart(barSell, {
-
+            if (chartOneDay) {
+                new Chart(chartOneDay, {
                     type: 'bar',
                     data: chartDataSell,
                     options: {
@@ -248,145 +269,154 @@
                     }
                 });
             }
-
-            const ctx = document.getElementById("barSell").getContext("2d");
-            if (myChart != null){
-                myChart.destroy();
-            }
-            myChart = new Chart(ctx, barSell)
         }).fail((jqXHR) => {
             console.log(jqXHR)
         })
     }
-    chartToDay()
+
+    chartToDay();
+
+    function chartSevenDay() {
+
+        $.ajax({
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
+            },
+            type: 'GET',
+            url: "http://localhost:8080/api/orders/chartSevenDay"
+        }).done((data) => {
+            let days = [];
+            let total = [];
+            console.log(data, "data")
+            $.each(data, (i, orderSD) => {
+                // console.log(orderSD, "order7day")
+                total.push(orderSD.grandTotal)
+                days.push(moment(orderSD.createdAt).date());
+            })
+            console.log(total, "day")
+            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+            let chart7day = document.getElementById("chart7day").getContext('2d');
+            let chartStatus = Chart.getChart("chart7day");
+            if (chartStatus !== undefined) {
+                chartStatus.destroy();
+            }
+            myChart = new Chart(chart7day, {
+                type: 'bar',
+                data: {
+                    labels: [...days],
+                    datasets: [
+                        {
+                            label: 'Bún',
+                            data: [...total],
+                            backgroundColor: colors[4],
+                            barThickness: 100,
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            barPercentage: 0.4,
+                            categoryPercentage: 0.5,
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            })
+
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
+
+    // chartSevenDay();
+
+    function chartOneMonth() {
+        $.ajax({
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
+            },
+            type: 'GET',
+            url: "http://localhost:8080/api/orders/chartOneMonth"
+        }).done((data) => {
+            let days = [];
+            let total = [];
+            console.log(data, "data")
+            $.each(data, (i, orderSD) => {
+                // console.log(orderSD, "order7day")
+                total.push(orderSD.grandTotal)
+                days.push(moment(orderSD.createdAt).date());
+            })
+            console.log(total, "day")
+            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+            let chart7day = document.getElementById("chart1month").getContext('2d');
+            let chartStatus = Chart.getChart("chart1month");
+            if (chartStatus !== undefined) {
+                chartStatus.destroy();
+            }
+            myChart = new Chart(chart7day, {
+                type: 'bar',
+                data: {
+                    labels: [...days],
+                    datasets: [
+                        {
+                            label: 'Bún',
+                            data: [...total],
+                            backgroundColor: colors[4],
+                            barThickness: 100,
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            barPercentage: 0.4,
+                            categoryPercentage: 0.5,
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            })
+
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
+    // chartOneMonth();
 
     let colors = ['#007bff', '#28a745', '#444444', '#c3e6cb', '#dc3545', '#6c757d'];
     let chBar = document.getElementById("barProduct");
-    // let barSell = document.getElementById("barSell");
     let chartDataPro = {
         labels: ["Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"],
         datasets: [
             {
-                label: 'Khách Hàng',
+                label: 'BÚN',
                 data: [489, 135, 483, 290, 189, 603, 600],
                 backgroundColor: colors[0]
             },
 
             {
-                label: 'Nhà Cung Cấp',
+                label: 'GẠO',
                 data: [639, 465, 493, 478, 589, 632, 674],
                 backgroundColor: colors[1]
             }]
     };
-
-    function chartSevenDay(){
-
-        $.ajax({
-            headers : {
-                'accept' : "application/json",
-                'content-type' : "application/json"
-            },
-            type : 'GET',
-            url : "http://localhost:8080/api/orders/chartSevenDay"
-        }).done((data)=>{
-            console.log(data , "sinh")
-            // let ctx = $("#chart7day").getContext("2d");
-            let days = [];
-            let total = [];
-            $.each(data ,(i, orderSD)=>{
-                console.log(orderSD, "order7day")
-                days.push(moment(orderSD.createdAt).date())
-            })
-            console.log(days,"dayss")
-            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-            let chart7day = document.getElementById("chart7day");
-            // let myChart = new Chart(ctx, {
-            //     type: 'bar',
-            //     data: {chartDataSell : [{
-            //             labels: [...days],
-            //             datasets: [
-            //                 {
-            //                     label: 'Bún',
-            //                     data: [total],
-            //                     backgroundColor: colors[4],
-            //                     barThickness: 100,
-            //                 }
-            //             ]
-            //         }]},
-            //     options: {
-            //         scales: {
-            //             xAxes: [{
-            //                 barPercentage: 0.4,
-            //                 categoryPercentage: 0.5,
-            //             }],
-            //             yAxes: [{
-            //                 ticks: {
-            //                     beginAtZero: false
-            //                 }
-            //             }]
-            //         },
-            //         legend: {
-            //             display: false
-            //         }
-            //     }
-            // })
-            let chartDataSell = {
-                labels: [...days],
-                datasets: [
-                    {
-                        label: 'Bún',
-                        data: [total],
-                        backgroundColor: colors[4],
-                        barThickness: 100,
-                    }
-                ]
-            };
-            if (chart7day) {
-                new Chart(chart7day, {
-                    type: 'bar',
-                    data: chartDataSell,
-                    options: {
-                        scales: {
-                            xAxes: [{
-                                barPercentage: 0.4,
-                                categoryPercentage: 0.5,
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: false
-                                }
-                            }]
-                        },
-                        legend: {
-                            display: false
-                        }
-                    }
-                });
-            }
-
-
-
-        }).fail((jqXHR)=>{
-            console.log(jqXHR)
-        })
-    }
-    // let chartDataSell = {
-    //
-    //     labels: ["Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"],
-    //     datasets: [
-    //         {
-    //             label: 'Gạo',
-    //             data: [489, 135, 483, 290, 189, 603, 600],
-    //             backgroundColor: colors[1]
-    //         },
-    //
-    //         {
-    //             label: 'Bún',
-    //             data: [639, 465, 493, 478, 589, 632, 674],
-    //             backgroundColor: colors[3]
-    //         }
-    //     ]
-    // };
 
     if (chBar) {
         new Chart(chBar, {
@@ -410,29 +440,8 @@
             }
         });
 
-        // if (barSell) {
-        //     new Chart(barSell, {
-        //         type: 'bar',
-        //         data: chartDataSell,
-        //         options: {
-        //             scales: {
-        //                 xAxes: [{
-        //                     barPercentage: 0.4,
-        //                     categoryPercentage: 0.5
-        //                 }],
-        //                 yAxes: [{
-        //                     ticks: {
-        //                         beginAtZero: false
-        //                     }
-        //                 }]
-        //             },
-        //             legend: {
-        //                 display: false
-        //             }
-        //         }
-        //     });
-        // }
     }
+
 
 </script>
 

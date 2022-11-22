@@ -3,6 +3,8 @@ package com.cg.services;
 
 import com.cg.dto.order.*;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 import com.cg.dto.order.OrderResult;
@@ -42,13 +44,12 @@ public interface IOrderService {
 
     void updateOrderStatus (OrderResult orderResult);
 
-    List<OrderResult> findCreateAtByTypeCustomer (String date);
-
-    List<OrderResult> findOrderSevenDay();
+    List<OrderResultChart> findOrderSevenDay();
+    List<OrderResultChart> findOrderOneMonth();
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
     List<OrderResult> getAllOrderByRole();
 
-
+    BigDecimal chartOneDay();
 }

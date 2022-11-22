@@ -1,7 +1,6 @@
 package com.cg.dto.order;
 
- import com.cg.repositories.model.OrderStatus;
-import com.cg.repositories.model.OrderType;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,21 +15,9 @@ import java.time.Instant;
 @Accessors(chain = true)
 public class OrderResultChart {
 
-    private Long id;
-
     private BigDecimal grandTotal;
-
-    private long userId;
-
-    private OrderStatus orderStatus;
-
-    private OrderType orderType;
-
-    private String address;
-
-    private long createdBy;
 
     private Instant createdAt;
 
-    private String fullName;
+
 }
