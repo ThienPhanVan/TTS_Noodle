@@ -54,6 +54,8 @@ public interface IOrderService {
 
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete();
 
+    List<OrderPurchaseDTO> findOrderByFullNameContainsAndOrderType(String keySearch);
+
 
 
 }

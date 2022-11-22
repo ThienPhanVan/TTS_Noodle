@@ -175,8 +175,8 @@
 
     }
 
-    $('#searchOrder').on('input', function (){
-        let keyword = $('#searchOrder').val();
+    $('.search').on('input', function (){
+        let keyword = $('.search').val();
         searchByName(keyword);
     })
 
@@ -186,20 +186,23 @@
                 "accept": "application/json",
                 "content-type": "application/json"
             },
-            "type": "POST",
+            "type": "GET",
             "url": "http://localhost:8080/api/orders/search/" + keySearch
         })
         .done((data) => {
+            $("#tbListOrder tbody").html("");
+
             $.each(data , (i,item) => {
+
                 order = item;
 
-                user = order.user;
+                order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+
+                order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
                 let str =  renderOrder(item);
 
-
                 $("#tbListOrder tbody").prepend(str);
-
 
             })
         })
@@ -210,37 +213,114 @@
     
 
 
-        $(".selectStatus").on("change", function () {
-            $(".pending").on("click", function (){
-                $.ajax({
-                    "headers": {
-                        "accept": "application/json",
-                        "content-type": "application/json"
-                    },
-                    "type": "GET",
-                    "url": "http://localhost:8080/api/orders/pending"
-                })
-                    .done((data)=>{
+    $(".selectStatus").on("change", function ()  {
 
-                        console.log(data);
-                        $.each(data, (i,item)=>{
+        let type = $(this).val();
 
-                            order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+        if (type === "PENDING"){
+            handleShowOrderPending();
+        }
+        if (type === "COMPLETE"){
+            handleShowOrderComplete();
+        }
+        if(type === "CANCEL"){
+            handleShowOrderCancel();
+        }
+    })
 
-                            order.grandtotal = App.formatNumberSpace(order.grandtotal);
-
-                            let str =  renderOrder(item);
-
-                            $("#tbListOrder tbody").prepend(str);
-
-                        })
-
-                    })
-                    .fail((jqXHR)=>{
-                        console.log(jqXHR)
-                    })
-            })
+    function handleShowOrderPending(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/orders/pending"
         })
+            .done((data)=>{
+                $("#tbListOrder tbody").html("");
+
+                console.log(data);
+                $.each(data, (i,item)=>{
+
+                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+
+                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+                    let str =  renderOrder(item);
+
+                    $("#tbListOrder tbody").prepend(str);
+
+                })
+
+            })
+            .fail((jqXHR)=>{
+                console.log(jqXHR)
+            })
+    }
+
+    function handleShowOrderComplete(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/orders/complete"
+        })
+            .done((data)=>{
+                $("#tbListOrder tbody").html("");
+
+                console.log(data);
+                $.each(data, (i,item)=>{
+
+                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+
+                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+                    let str =  renderOrder(item);
+
+                    $("#tbListOrder tbody").prepend(str);
+
+                })
+
+            })
+            .fail((jqXHR)=>{
+                console.log(jqXHR)
+            })
+    }
+
+    function handleShowOrderCancel(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/orders/cancel"
+        })
+            .done((data)=>{
+                $("#tbListOrder tbody").html("");
+
+                console.log(data);
+                $.each(data, (i,item)=>{
+
+                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+
+                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+                    let str =  renderOrder(item);
+
+                    $("#tbListOrder tbody").prepend(str);
+
+                })
+
+            })
+            .fail((jqXHR)=>{
+                console.log(jqXHR)
+            })
+    }
+
 
 
 
@@ -267,8 +347,6 @@
                 let str =  renderOrder(item);
 
                 $("#tbListOrder tbody").prepend(str);
-
-
 
             })
         })

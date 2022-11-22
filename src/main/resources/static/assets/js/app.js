@@ -118,5 +118,4 @@ class Product {
         this.title = title;
         this.price = price;
     }
-
 }

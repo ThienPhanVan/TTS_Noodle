@@ -394,6 +394,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderPurchaseDTO> findAllOrderPurchase() {
+
         return orderRepository.findAllOrderPurchase();
     }
 
@@ -420,4 +421,19 @@ public class OrderService implements IOrderService {
     public List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete() {
         return orderRepository.findAllOrderPurchaseStatusComplete();
     }
+
+    @Override
+    public List<OrderPurchaseDTO> findOrderByFullNameContainsAndOrderType(String keySearch) {
+        List<OrderPurchaseView> list = orderRepository.findOrderByFullNameContainsAndOrderType(keySearch);
+
+        List<OrderPurchaseDTO> orderPurchaseDTOList = list.stream().map(orderPurchaseView -> {
+                    OrderPurchaseDTOImpl orderPurchaseDTOImpl = new OrderPurchaseDTOImpl();
+                    orderPurchaseDTOImpl.setFromOrderPurchaseView(orderPurchaseView);
+                    return orderPurchaseDTOImpl;
+                })
+                .collect(Collectors.toList());
+//        return orderRepository.findOrderByFullNameContainsAndOrderType(keySearch);
+        return orderPurchaseDTOList;
+    }
+
 }

@@ -2,6 +2,7 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
+import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
 import com.cg.services.impl.UserService;
@@ -79,11 +80,12 @@ public class OrderApi {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/search/{keyword}")
+    @GetMapping("/search/{keyword}")
     public ResponseEntity<?> doSearch(@PathVariable String keyword) {
 
-        List<OrderListPurchase> orderListPurchaseList = orderService.searchOrderBySupplierOOrCreatedAt(keyword);
+        List<OrderPurchaseDTO> orderListPurchaseList = orderService.findOrderByFullNameContainsAndOrderType(keyword);
 
+        //List<OrderPurchaseDTO>
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
 
     }
@@ -121,14 +123,14 @@ public class OrderApi {
         return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
     }
     @GetMapping("/complete")
-    public ResponseEntity<?> getOrderByStatusComplete(String status){
+    public ResponseEntity<?> getOrderByStatusComplete(){
 
         List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusComplete();
 
         return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
     }
     @GetMapping("/cancel")
-    public ResponseEntity<?> getOrderByStatusCancel(String status){
+    public ResponseEntity<?> getOrderByStatusCancel(){
 
         List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusCancel();
 
