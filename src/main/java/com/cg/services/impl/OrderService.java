@@ -152,9 +152,12 @@ public class OrderService implements IOrderService {
             return orderMapper.toDTO(order);
         }
         Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional == null){
+           throw new NotFoundException("Vui lòng nhập id khách hàng!");
+        }
         if (!userOptional.isPresent()) {
+
             Order order = orderMapper.toModel(orderParam);
-//            throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
             order = orderRepository.save(order);
             return orderMapper.toDTO(order);
         }

@@ -246,101 +246,65 @@
                                     <h3>Khách hàng</h3>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <input id="completeUser" class="btn-sm"
-                                               placeholder="Nhập tên hoặc số điện thoại khách hàng"/>
-                                        <div class="show--list hide"></div>
+                                    <input type="hidden" id="idCustomerCre" value = "0"/>
+                                    <div class="wrapper1">
+                                        <div class="select-btn bg-primary">
+                                            <span>Select Customer</span>
+
+                                            <i class="uil uil-angle-down"></i>
+                                        </div>
+                                        <div class="content">
+                                            <div class="search">
+                                                <i class="uil uil-search"></i>
+                                                <input id="completeUser" spellcheck="false" type="text" placeholder="Search">
+                                            </div>
+                                            <ul class="options1">
+
+                                            </ul>
+                                        </div>
+                                        <div class="plus">
+                                            <a data-toggle="collapse"
+                                               href="#modalCreateCustomer" role="button" aria-expanded="false"
+                                               aria-controls="collapseExample" class="mr-3">
+                                                <i role="button" class="fas fa-plus"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="col-6 plus">
-                                        <a data-toggle="collapse"
-                                           href="#cus" role="button" aria-expanded="false"
-                                           aria-controls="collapseExample" class="mr-3">
-                                            <i role="button" class="fas fa-plus"></i>
-                                        </a>
-                                    </div>
+
                                 </div>
                             </div>
 
                             <hr style="background: gray; height: 1px;">
 
-                            <div id="cus" style=" height: 355px; float: left ; background-color: white;"
-                                 class="collapse ml-4 ">
+                            <div id="modalCreateCustomer" style=" height: 355px; float: left ; background-color: white;" class="collapse ml-4 ">
+                                <div class="modal-alert-danger hidden"></div>
                                 <form id="frmCreateCus">
                                     <div class="form-row text-center">
-                                        <div class="form-group col-sm-8 ">
+                                        <div class="form-group col-sm-8">
                                             <label for="nameCus">Tên Khách Hàng</label>
-                                            <input type="text" class="form-control" name="nameCus" id="nameCus"
+                                            <input type="text" class="form-control is-valid" name="nameCus" id="nameCus"
                                                    placeholder="Nguyễn Văn A">
                                         </div>
                                         <div class="form-group col-sm-8 ">
                                             <label for="addressCus">Địa Chỉ</label>
-                                            <input type="text" class="form-control" name="addressCus" id="addressCus"
+                                            <input type="text" class="form-control is-valid" name="addressCus" id="addressCus"
                                                    placeholder="24 Nguyễn Tri Phương">
                                         </div>
                                         <div class="form-group col-sm-8 ">
                                             <label for="phoneCus">Điện Thoại</label>
-                                            <input type="tel" class="form-control" name="phoneCus" id="phoneCus"
+                                            <input type="tel" class="form-control is-valid" name="phoneCus" id="phoneCus"
                                                    placeholder="0123456789">
                                         </div>
 
-
                                     </div>
                                 </form>
-                            </div>
-                            <div style=" height: 355px; float: left ; background-color: #f1f1f1;"
-                                 class="collapse ml-4">
-                                <div class="card" style="width: 9rem">
-                                    <img style="height:150px"
-                                         src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
-                                         class="card-img-top" alt="...">
-                                    <div style="  padding-top:3px; position: relative;" class=" ">
-                                        <h5 class="card-title">Nguyễn Thị Lisa</h5>
-                                        <p style="position: absolute; top :27px ; left: 44px;" class="card-text">28
-                                            Thái Lan</p>
-                                        <p style="position: absolute; top :55px ; left: 44px;" class="card-text">
-                                            0987654321</p>
-                                        <a href="#" class="btn btn-primary mt-5 mb-1">Thêm</a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div style=" height: 355px;  float: left" class="collapse ml-4" id="customers">
-                                <div class="card" style="width: 9rem;">
-                                    <img style="height:150px"
-                                         src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
-                                         class="card-img-top" alt="...">
-                                    <div style="  padding-top:3px; position: relative;" class=" ">
-                                        <h5 class="card-title">Nguyễn Thị Lisa</h5>
-                                        <p style="position: absolute; top :27px ; left: 44px;" class="card-text">28
-                                            Thái Lan</p>
-                                        <p style="position: absolute; top :55px ; left: 44px;" class="card-text">
-                                            0987654321</p>
-                                        <a href="#" class="btn btn-primary mt-5 mb-1">Thêm</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style=" height: 355px;  float: left" class="collapse ml-4 " id="customer">
-                                <div class="card" style="width: 9rem;">
-                                    <img style="height:150px"
-                                         src="https://i.pinimg.com/736x/6e/6e/5b/6e6e5b918b0b14073bad156534fc54da.jpg"
-                                         class="card-img-top" alt="...">
-                                    <div style="  padding-top:3px; position: relative;" class=" ">
-                                        <h5 class="card-title">Nguyễn Thị Lisa</h5>
-                                        <p style="position: absolute; top :27px ; left: 44px;" class="card-text">28
-                                            Thái Lan</p>
-                                        <p style="position: absolute; top :55px ; left: 44px;" class="card-text">
-                                            0987654321</p>
-                                        <a href="#" class="btn btn-primary mt-5 mb-1">Thêm</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-
+            <div id="search_fail" style="margin-top: 20px; color: red;"></div>
         </div>
     </div>
     <!-- Wrapper END -->
@@ -361,41 +325,6 @@
         </div>
     </footer>
     <!-- Footer END -->
-
-    <!-- Modal- đặt hàng -->
-    <div class="modal fade" id="createCustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog mw-100 w-50">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tạo Khách Hàng</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="form-group col-md-8">
-                                <label for="fullName">Tên khách hàng</label>
-                                <input type="name" class="form-control" id="fullName" placeholder="Nguyễn Văn A">
-                            </div>
-                            <div class="form-group col-md-8">
-                                <label for="phone">Số điện thoại</label>
-                                <input type="phone" class="form-control" id="phone">
-                            </div>
-
-                            <div class="form-group col-md-8">
-                                <label for="address">Địa chỉ</label>
-                                <input type="text" class="form-control" id="address"/>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <th:block th:replace="/layout/script/footer :: footer"/>
 
 </div>
@@ -466,7 +395,6 @@
         })
             .done((data) => {
                 product = data;
-                console.log("product ",product)
                 let str = renderCartItem(data)
 
                 $("#tbItemCustomer tbody").prepend(str);
@@ -475,23 +403,29 @@
                 console.log(jqXHR)
             })
     }
+
     getProductById();
 
     let btnCreate = $("#btnCreate");
     btnCreate.on('click', () => {
-        doCreateOrderCustomer();
+        $("#frmCreateCus").submit();
     });
 
     function doCreateOrderCustomer() {
+        let user_id = $("#idCustomerCre").val();
+        if (user_id == 0) {
+            user_id = null;
+        }
         let newOrder = {
-            "userId": null,
+            "userId": user_id,
             "fullName": $("#nameCus").val(),
             "address": $("#addressCus").val(),
             "phone": $("#phoneCus").val(),
             "orderItems": [{
-                "quantity": $("#inputQuantity").val(),
+                "quantity": +$("#inputQuantity").val(),
                 "productId": 1
             }]
+
         }
         $.ajax({
             headers: {
@@ -504,12 +438,19 @@
         })
             .done((data) => {
                 order = data;
-
-
-            })
-            .fail((jqXHR) => {
-                alert("id ko tim thay")
+                iziToast.success({
+                    title: 'OK',
+                    position: 'topRight',
+                    timeout: 1500,
+                    message: 'Order sản phẩm thành công!!'
+                })
+                $("#frmCreateCus")[0].reset();
+                // $("#createCustomer").modal("hide");
+                // $("#inputPriceCustomer")[0].reset();
+            }).fail((jqXHR) => {
+                alert("Không tìm thấy id sản phẩm!");
                 console.log(jqXHR);
+
             })
     }
 
@@ -561,7 +502,7 @@
 
 
     function handleInputQuantity() {
-        $("#inputQuantity").on('input', () =>{
+        $("#inputQuantity").on('input', () => {
             let quantity = +$("#inputQuantity").val();
             $("#inputQuantity").val(quantity)
             let price = +$("#price").val();
@@ -602,43 +543,59 @@
 
     handleInputPriceCustomer();
 
-    $('#completeUser').on('input', function () {
-        let keyword = $('#completeUser').val();
-        console.log("keyword", keyword)
-        search(keyword);
-    })
-    let userId = 0;
 
-    function onclickUser(id) {
-        userId = id;
-    }
-
-    function search(keyword) {
-        $.ajax({
-            header: {
-                "accept": "application/json",
-                "content-type": "application/json"
+    $("#frmCreateCus").validate({
+        rules: {
+            nameCus: {
+                required: true,
+                minlength: 5,
+                maxlength: 35
             },
-            type: "GET",
-            url: "http://localhost:8080/api/users/search/" + keyword,
-        })
-            .done((data) => {
-                let str = "";
-                $.each(data, (i, item) => {
-                    user = item;
-                    str += `<p onclick="onclickUser(${item.id})">${user.fullName} - ${user.phone}</p>`;
-                })
-                $('.show--list').html(str);
-                // console.log(str);
-                $('.show--list').removeClass("hide").addClass("show");
-
-            })
-            .fail((jqXHR) => {
-                console.log(jqXHR)
-
-            })
-    }
-
+            addressCus: {
+                required: true,
+                minlength: 6,
+                maxlength: 35,
+            },
+            phoneCus: {
+                required: true,
+                minlength: 10,
+                maxlength: 15,
+            }
+        },
+        messages: {
+            nameCus: {
+                required: "Vui lòng nhập tên đầy đủ",
+                minlength: "Độ dài tối thiểu là 5 ký tự",
+                maxlength: "Độ dài tối đa là 35 ký tự"
+            },
+            addressCus: {
+                required: "Vui lòng nhập địa chỉ!",
+                minlength: "Độ dài tối thiểu là 6 ký tự",
+                maxlength: "Độ dài tối đa là 15 ký tự",
+            },
+            phoneCus: {
+                required: "Vui lòng nhập số điện thoại!",
+                minlength: "Số điện thoại tối thiểu 10 số!",
+                maxlength: "Số điện thoại tối đa 15 số!",
+            }
+        },
+        errorLabelContainer: "#modalCreateCustomer .modal-alert-danger",
+        errorPlacement: function (error, element) {
+            error.appendTo("#modalCreateCustomer .modal-alert-danger");
+        },
+        showErrors: function (errorMap, errorList) {
+            if (this.numberOfInvalids() > 0) {
+                $("#modalCreateCustomer .modal-alert-danger").removeClass("hide").addClass("show");
+            } else {
+                $("#modalCreateCustomer .modal-alert-danger").removeClass("show").addClass("hide").empty();
+                $("#frmCreateCus input.error").removeClass("error");
+            }
+            this.defaultShowErrors();
+        },
+        submitHandler: function () {
+          doCreateOrderCustomer();
+        }
+    })
 
 </script>
 </body>
