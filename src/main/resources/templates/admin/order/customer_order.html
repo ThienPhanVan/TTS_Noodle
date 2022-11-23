@@ -36,9 +36,9 @@
                                 <!-- <span class="text-danger ng-star-inserted">Test</span> -->
                                 <a class="m-1 font-weight-bolder" href="">Tất cả</a>
                                 <i class="fas fa-grip-lines-vertical text-warning"></i>
-                                <a class="m-1 font-weight-bolder" href="">Đang xử lí</a>
+                                <button class="m-1 font-weight-bolder btn btn-group" id="statusPending">Đang xử lí</button>
                                 <i class="fas fa-grip-lines-vertical text-warning"></i>
-                                <a class="m-1 font-weight-bolder" href="">Hoàn thành</a>
+                                <button class="m-1 font-weight-bolder btn btn-group" id="statusCompleted">Hoàn thành</button>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -97,12 +97,38 @@
         let str = `
                 <tr id="tr_${order.id}">
                     <td>${order.id}</td>
-                    <td>${order.createdAt}</td>
+                    <td>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</td>
                     <td>${order.fullName}</td>
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br><span id="inDebt">(Nợ:)</span></td>
+                    <td>
+                         <button class="btn btn-outline-primary editable" data-id="${order.id}"
+                         data-toggle="tooltip" placement="top" title="Edit">
+                         <i class="fas fa-edit"></i>
+                         </button>
+                    </td>
+                </tr>
+            `;
+        return str;
+    }
 
+    function renderOrderStatusCompleted(order) {
+        let str = `
+                <tr id="tr_${order.id}">
+                    <td>${order.id}</td>
+                    <td>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</td>
+                    <td>${order.fullname}</td>
+                    <td>${order.address}</td>
+                    <td>${order.orderstatus}</td>
+                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandtotal)}<br><span id="inDebt">(Nợ:)</span></td>
+
+                     <td>
+                         <button class="btn btn-outline-primary editable" data-id="${order.id}"
+                         data-toggle="tooltip" placement="top" title="Edit">
+                         <i class="fas fa-edit"></i>
+                         </button>
+                    </td>
                 </tr>
             `;
         return str;
@@ -146,6 +172,56 @@
             console.log(jqXHR);
         })
     }
+
+    function findAllStatusPending() {
+        $("#statusPending").on("click", function () {
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/orders/statusPending",
+            }).done((data) => {
+                $("#tbOrder tbody").html("");
+                order = data;
+                console.log(order)
+                data.forEach((item, i) => {
+                    let str = renderOrderStatusCompleted(item, i);
+                    $("#tbOrder tbody").prepend(str);
+                })
+
+            }).fail((jqXHR) => {
+                console.log(jqXHR);
+            })
+        })
+    }
+    findAllStatusPending();
+
+    function findAllStatusCompleted() {
+        $("#statusCompleted").on("click", function () {
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/orders/statusCompleted",
+            }).done((data) => {
+                $("#tbOrder tbody").html("");
+                order = data;
+                console.log(order)
+                data.forEach((item, i) => {
+                    let str = renderOrderStatusCompleted(item, i);
+                    $("#tbOrder tbody").prepend(str);
+                })
+
+            }).fail((jqXHR) => {
+                console.log(jqXHR);
+            })
+        })
+    }
+    findAllStatusCompleted();
 
     loadOrders();
     findAllUserByRole()

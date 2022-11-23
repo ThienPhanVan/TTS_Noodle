@@ -81,7 +81,6 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public OrderResult createOrderExport(OrderParam orderParam) {
-
 //        Transient
         //order Item
         Long userId = orderParam.getUserId();
@@ -409,7 +408,15 @@ public class OrderService implements IOrderService {
         if (orderPurchase1.isPresent()){
             throw new DataInputException("Không tìm thấy order");
         }
-
     }
 
+    @Override
+    public List<OrderResultDTO> findAllOrderStatusCompleted() {
+        return orderRepository.findAllOrderStatusCompleted();
+    }
+
+    @Override
+    public List<OrderResultDTO> findAllOrderStatusPending() {
+        return orderRepository.findAllOrderStatusPending();
+    }
 }

@@ -48,6 +48,8 @@ public interface IOrderService {
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
+    List<OrderResultDTO> findAllOrderStatusCompleted();
 
+    List<OrderResultDTO> findAllOrderStatusPending();
 
 }

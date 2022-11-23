@@ -113,4 +113,16 @@ public class OrderApi {
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
 
+    @GetMapping("/statusCompleted")
+    public ResponseEntity<?> getStatusCompleted() {
+        List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusCompleted();
+        return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/statusPending")
+    public ResponseEntity<?> getStatusPendingCustomer() {
+        List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusPending();
+        return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
+    }
+
 }
