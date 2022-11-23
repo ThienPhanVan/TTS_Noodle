@@ -2,10 +2,8 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
-<<<<<<< HEAD
-=======
 import com.cg.repositories.model.Order;
->>>>>>> development
+
 import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
@@ -110,9 +108,11 @@ public class OrderApi {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
 
-        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
+//        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
 
-        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
+        OrderResult orderResult = orderService.findById(id);
+
+        return new ResponseEntity<>(orderResult, HttpStatus.OK);
     }
 
     @PatchMapping("updateStatus")
@@ -166,6 +166,14 @@ public class OrderApi {
         List<OrderResult> orders = orderService.getAllOrderByRole();
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
+
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<?> changeStatusOrder(@RequestBody OrderChangeStatus orderChangeStatus){
+
+        return new ResponseEntity<>(orderService.changeStatus(orderChangeStatus),HttpStatus.ACCEPTED);
+
     }
 
 }

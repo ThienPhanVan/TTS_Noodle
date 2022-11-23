@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <th:block th:replace="/layout/script/head :: head" />
-
+    <th:block th:replace="/layout/script/head :: head"/>
 </head>
 
 <body>
@@ -37,7 +36,7 @@
             <div class="filter_product_box">
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline">
-                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1 search" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                        <input style="margin-left: -16px" class="form-control search" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
 <!--                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" id="btnSearch" type="submit">Tìm kiếm</button>-->
                     </form>
                 </nav>
@@ -53,11 +52,11 @@
                         <td>Nhà cung cấp</td>
                         <td>Người Nhập</td>
                         <td>
-                            <select class="form-control selectStatus" style="height: fit-content" name="cars" id="cars">
-                                <option value="Trạng thái">Trạng thái</option>
-                                <option class="pending" value="PENDING">PENDING</option>
-                                <option id="complete" value="COMPLETE">COMPLETE</option>
-                                <option id="cancel" value="CANCEL">CANCEL</option>
+                            <select class="form-control selectStatus" style="height: fit-content;  text-align: center" name="cars" id="cars">
+                                <option disabled selected value="Trạng thái">Trạng thái</option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="COMPLETED">COMPLETED</option>
+                                <option value="CANCELLED">CANCELLED</option>
                             </select>
                         </td>
                         <td>Tổng tiền</td>
@@ -142,37 +141,36 @@
 
     function renderOrder(obj){
 
+        let s1 = "";
+        switch (obj.orderstatus) {
+            case "PENDING":
+                s1 = "<option value='PENDING'>PENDING</option>" +
+                    "<option value='COMPLETED'>COMPLETED</option>" +
+                    "<option value='CANCELLED'>CANCELLED</option>"
+                break;
+            case "COMPLETED":
+                s1 = "<option value='COMPLETED'>COMPLETED</option>";
+                break;
+            case "CANCELLED":
+                s1 = "<option value='CANCELLED'>CANCELLED</option>";
+                break;
+        }
 
         let str = `
               <tr class="list-product" id="tr_${obj.id}">
                         <th>${obj.id}</th>
                         <th>${obj.fullname}</th>
                         <th>${obj.code}</th>
-                        <th>${obj.orderstatus}</th>
+                        <th>
+                            <select class="form-control statusOrder" style="height: fit-content;color: black;font-weight: bold; text-align: center" name="cars" id="cars">
+                              ${s1}
+                            </select>
+                        </th>
                         <th style="text-align: right">${obj.grandtotal} đ</th>
                         <th>${obj.createdat}</th>
               </tr>
         `
-
         return str;
-    }
-
-    function getUserById(userId) {
-        return (
-            $.ajax({
-                headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/users/" + userId,
-            }).done((data) => {
-
-            }).fail((jxHQR) => {
-                console.log(jxHQR)
-            })
-        )
-
     }
 
     $('.search').on('input', function (){
@@ -196,7 +194,7 @@
 
                 order = item;
 
-                order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                order.createdat = $.FormatDateTime(order.createdat);
 
                 order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -220,8 +218,43 @@
             $("#tbListOrder tbody").prepend(str);
         })
     }
-    
 
+    $("#tbListOrder tbody .list-product").on("click", function (){
+
+        let id = $(this).val("id");
+        console.log(id);
+
+    })
+
+    function changeStatus(){
+
+        order.id = $(this).val("id");
+        order.status = $(".statusOrder").val();
+
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "PATCH",
+            "url": "http://localhost:8080/api/orders/" + order.id,
+            "data": JSON.stringify(order)
+        })
+        .done((data) =>{
+
+            order = data;
+
+            let str = renderOrder(data);
+
+            let currentRow = $('#tr_' + data.id);
+
+            currentRow.replaceWith(str);
+
+        })
+        .fail((jqXHR)=>{
+            console.log(jqXHR)
+        })
+    }
 
     $(".selectStatus").on("change", function ()  {
 
@@ -230,10 +263,10 @@
         if (type === "PENDING"){
             handleShowOrderPending();
         }
-        if (type === "COMPLETE"){
+        if (type === "COMPLETED"){
             handleShowOrderComplete();
         }
-        if(type === "CANCEL"){
+        if(type === "CANCELLED"){
             handleShowOrderCancel();
         }
     })
@@ -252,8 +285,9 @@
 
                 console.log(data);
                 $.each(data, (i,item)=>{
+                    order = item;
 
-                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                    order.createdat = $.FormatDateTime(order.createdat);
 
                     order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -283,8 +317,9 @@
 
                 console.log(data);
                 $.each(data, (i,item)=>{
+                    order = item;
 
-                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                    order.createdat = $.FormatDateTime(order.createdat);
 
                     order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -315,7 +350,9 @@
                 console.log(data);
                 $.each(data, (i,item)=>{
 
-                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                    order = item;
+
+                    order.createdat = $.FormatDateTime(order.createdat);
 
                     order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -330,10 +367,6 @@
                 console.log(jqXHR)
             })
     }
-
-
-
-
 
     function getAllOrder(){
         $.ajax({
@@ -350,7 +383,7 @@
 
                 order = item;
 
-                order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                order.createdat = $.FormatDateTime(order.createdat);
 
                 order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -360,6 +393,20 @@
 
             })
         })
+    }
+    $.FormatDateTime = function (dateToFormat) {
+
+        let dateObj = new Date(dateToFormat);
+
+        let month = (dateObj.getUTCMonth() + 1).toString().padStart(2, "0");
+        let day = dateObj.getUTCDate().toString().padStart(2, "0");
+        let year = dateObj.getUTCFullYear().toString().padStart(4, "0");
+        let hours = dateObj.getUTCHours().toString().padStart(2, "0");
+        let minutes = dateObj.getUTCMinutes().toString().padStart(2, "0");
+
+        let dateStr =  hours + ":" + minutes + "/" + day + "/" + month + "/" + year ;
+
+        return dateStr;
     }
 
     getAllOrder();

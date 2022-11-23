@@ -60,4 +60,6 @@ public interface IOrderService {
     List<OrderResult> getAllOrderByRole();
 
     BigDecimal chartOneDay();
+
+    OrderResult changeStatus(OrderChangeStatus orderChangeStatus);
 }

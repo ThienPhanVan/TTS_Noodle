@@ -289,7 +289,6 @@ public class OrderService implements IOrderService {
 
         if (!userOptional.isPresent()) {
             throw new NotFoundException("Không tìm thấy nhà cung cấp!");
-
         }
 
         LocalDateTime localDateTime = LocalDateTime.parse(orderPurchase.getCreatedAt());
@@ -444,5 +443,19 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
+    }
+
+    @Override
+    @Transactional
+    public OrderResult changeStatus(OrderChangeStatus orderChangeStatus) {
+
+        Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
+
+        Order newOrder = orderOptional.get();
+
+        newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
+
+        return orderMapper.toDTO(orderRepository.save(newOrder));
+
     }
 }
