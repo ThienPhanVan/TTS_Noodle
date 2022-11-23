@@ -2,10 +2,15 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
+<<<<<<< HEAD
+=======
+import com.cg.repositories.model.Order;
+>>>>>>> development
 import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
 import com.cg.services.impl.UserService;
+import org.hibernate.sql.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -57,6 +64,11 @@ public class OrderApi {
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
+//    @GetMapping("/exNoodle/{data}")
+//    public ResponseEntity<?> getAllOrderByExport(@PathVariable Instant data){
+//        List<OrderResult> orderResultList = orderService.findAllByCreatedAtAndOrderType(data, OrderType.CUSTOMER);
+//        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+//    }
 
     @GetMapping("")
     public ResponseEntity<?> getAllOrder(){
@@ -95,26 +107,32 @@ public class OrderApi {
     }
 
 
-    @PatchMapping("updateStatus")
-    public ResponseEntity<?> doUpdateStatus(String orderStatus){
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
 
+        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
 
-
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
     }
 
-    @GetMapping("/chartOneDay/{date}")
-    public ResponseEntity<?> chartOneDay(@PathVariable String date) {
-        List<OrderResult> orderChart = orderService.findCreateAtByTypeCustomer(date);
-        return new ResponseEntity<>(orderChart, HttpStatus.OK);
+    @PatchMapping("updateStatus")
+    public ResponseEntity<?> doUpdateStatus(String orderStatus){
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+    }
+
+    @GetMapping("/chartOneDay")
+    public ResponseEntity<?> chartOneDay(){
+        return new ResponseEntity<>( orderService.chartOneDay(), HttpStatus.OK);
     }
 
     @GetMapping("/chartSevenDay")
     public ResponseEntity<?> chartSevenDay() {
-        List<OrderResult> chartSevenDay = orderService.findOrderSevenDay();
+        List<OrderResultChart> chartSevenDay = orderService.findOrderSevenDay();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
     @GetMapping("/pending")
     public ResponseEntity<?> getOrderByStatusPending(){
 
@@ -137,5 +155,20 @@ public class OrderApi {
         return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
     }
 
+=======
+    @GetMapping("/chartOneMonth")
+    public ResponseEntity<?> chartOneMonth() {
+        List<OrderResultChart> chartSevenDay = orderService.findOrderOneMonth();
+        return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllOrderByRole")
+    public ResponseEntity<?> getAllOrderByRole(){
+
+        List<OrderResult> orders = orderService.getAllOrderByRole();
+
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+>>>>>>> development
 
 }

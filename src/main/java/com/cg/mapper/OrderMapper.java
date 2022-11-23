@@ -48,6 +48,12 @@ public class OrderMapper {
 
     }
 
+    public OrderResultChart toChart(Order order) {
+        return new OrderResultChart()
+                .setGrandTotal(order.getGrandTotal())
+                .setCreatedAt(order.getCreatedAt());
+    }
+
     public OrderListPurchase toDTOList(Order order) {
         return new OrderListPurchase()
                 .setId(order.getId())

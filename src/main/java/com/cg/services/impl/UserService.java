@@ -1,13 +1,14 @@
 package com.cg.services.impl;
 
-import com.cg.dto.order.OrderResult;
+
 import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.dto.userDTO.UpdateUserParam;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.exceptions.NotFoundException;
+import com.cg.mapper.OrderMapper;
 import com.cg.mapper.UserMapper;
 import com.cg.repositories.UserRepository;
-import com.cg.repositories.model.Role;
+ import com.cg.repositories.model.Role;
 import com.cg.repositories.model.User;
 import com.cg.repositories.model.UserStatus;
 import com.cg.services.IUserService;
@@ -17,8 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.List;
+ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,6 +31,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -67,15 +70,15 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public UserResult createCustomer(CreateUserParam createUserParam) {
+    public UserResult createCustomer(CreateUserParam createUserParam ) {
         User user = userMapper.toModel(createUserParam);
-        int desiredLength = 5;
+         int desiredLength = 5;
         String random = UUID.randomUUID().toString().substring(0, desiredLength);
         user.setUsername(random);
         user.setPassword("123");
         user.setId(0L);
         user.setStatus(UserStatus.AVAILABLE);
-        user.setRole(new Role().setId(2L));
+        user.setRoleId(2L);
         return userMapper.toDTO(userRepository.save(user));
     }
 

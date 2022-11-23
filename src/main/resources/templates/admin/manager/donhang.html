@@ -153,8 +153,9 @@
                 'content-type': "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/orders/exports"
+            url: "http://localhost:8080/api/orders"
         }).done((data) => {
+
             let sumTotal = 0;
             data.forEach(orderItem => {
                 console.log(orderItem, "5")

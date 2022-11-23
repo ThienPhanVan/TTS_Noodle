@@ -141,11 +141,42 @@
             type: "GET",
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 3,
         }).done((data) => {
+            user = data;
             console.log(data)
-            data.forEach(item => {
-                let str = renderUser(item);
-                $("#tbSupplier tbody").prepend(str);
-            });
+            console.log(data, "data")
+            let total = 0;
+            let days = "";
+            $.each(user, (i, userList) => {
+                getOrderById(userList.id).then((orderItem) => {
+                    $.each(orderItem, (i, orders) => {
+                        console.log(orders, "orders")
+                        total += orders.grandTotal;
+                        days = orders.createdAt.toString();
+                    })
+                    let str = `
+                <tr id="tr_${userList.id}">
+                    <td><img height="50" src=${userList.avatarUrl} alt="noavatar"></td>
+                    <td>${userList.fullName}</td>
+                     <td>${userList.email}</td>
+                    <td>${userList.phone}</td>
+                    <td>${userList.address}</td>
+                    <td id="to">  ${total === "" ? total : new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'})
+                        .format(total) }  </td>
+                    <td id="crb">${userList.createdBy}</td>
+                    <td id="cra">${moment(days).format('DD/MM/YYYY -- hh:mm')} </td>
+                       <td class="w-45">
+                               <a class="btn btn-outline-warning update" data-id="${userList.id}" data-toggle="tooltip"
+                                data-toggle="modal" data-target="#modalUpdateCus"
+                                data-original-title="Edit" >
+                                  <i class="ri-pencil-line"></i>
+                               </a>
+                       </td>
+                    </tr>
+                               `;
+                    $("#tbSupplier tbody").prepend(str);
+                })
+            })
+
             enableTootip();
             showModalUpdateSup();
         }).fail((jqXHR) => {
@@ -154,6 +185,25 @@
     }
 
     loadUsers();
+
+    function getOrderById(userId) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                type: "GET",
+                async: false,
+                url: "http://localhost:8080/api/orders/" + userId,
+            }).done((data) => {
+                order = data;
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+
+    }
 
     function getUserById(userId) {
         return (
