@@ -3,14 +3,15 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
+    <title>Customer</title>
 </head>
 
 <body>
 <!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -28,7 +29,6 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-
                                 <a class="font-size-20 font-weight-bold" href="/customer">Khách Hàng</a>
                             </div>
                             <div class="btn btn-primary">
@@ -124,15 +124,12 @@
     let user = new User();
     let order = new Order();
 
-
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
     }
 
     enableTootip();
 
-    // ${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'})
-    // .format(obj.totalOrder)}
     function renderUser(obj) {
         let totalOrders = obj.totalOrder;
         let dayCre = obj.createdAt;
@@ -142,7 +139,7 @@
         if (totalOrders === undefined) {
             totalOrders = 0;
         }
-        let str = `
+        return `
                 <tr id="tr_${obj.id}">
                     <td><img height="50" src=${obj.avatarUrl} alt="noavatar"></td>
                     <td>${obj.fullName}</td>
@@ -150,7 +147,7 @@
                     <td>${obj.phone}</td>
                     <td>${obj.address}</td>
                     <td >${totalOrders} </td>
-                    <td >${obj.createdBy}</td>
+                    <td >${0}</td>
                     <td >${dayCre} </td>
                        <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${obj.id}" data-toggle="tooltip"
@@ -160,8 +157,7 @@
                                </a>
                        </td>
                 </tr>
-            `;
-        return str;
+    `;
     }
 
     function loadUsers() {
@@ -174,8 +170,7 @@
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 2,
         }).done((data) => {
             user = data;
-            console.log(data, "data")
-            $.each(user, (i, userList) => {
+             $.each(user, (i, userList) => {
                 getOrderById(userList.id).then((orderItem) => {
                     let total = 0;
                     let days;
@@ -190,8 +185,8 @@
                      <td>${userList.email}</td>
                     <td>${userList.phone}</td>
                     <td>${userList.address}</td>
-                    <td id="to" value="a"> ${new Intl.NumberFormat('vi-VN').format(total)}  </td>
-                    <td id="crb">${userList.createdBy}</td>
+                    <td id="to"> ${new Intl.NumberFormat('vi-VN').format(total)} </td>
+                    <td id="crb">${0}</td>
                     <td id="cra">${days === undefined ? "Chưa Mua Hàng" : moment(days).format('DD/MM/YYYY -- hh:mm')} </td>
                        <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${userList.id}" data-toggle="tooltip"
@@ -200,13 +195,10 @@
                                   <i class="ri-pencil-line"></i>
                                </a>
                        </td>
-                    </tr>
-                               `;
+                    </tr> `;
                     $("#tbCustomer tbody").prepend(str);
                 })
             })
-            let action = document.getElementById("to");
-            console.log(action, "to");
             enableTootip();
             showModalUpdateCus();
         }).fail((jqXHR) => {
@@ -228,7 +220,7 @@
                 url: "http://localhost:8080/api/orders/" + userId,
             }).done((data) => {
                 order = data;
-            }).fail((jxHQR) => {
+             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
         )
@@ -322,6 +314,14 @@
             "address": $('#addressCusUp').val(),
             "avatarUrl": $('#avatarUp').val(),
         }
+        let total = 0 ;
+        let days = "Chưa Mua Hàng"
+        getOrderById(userId).then((orderId)=>{
+           $.each(orderId, (i, itemOrder)=>{
+               total  += itemOrder.grandTotal;
+               days = itemOrder.createdAt
+           })
+        })
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -332,28 +332,23 @@
             data: JSON.stringify(updateUser)
         }).done((data) => {
              user = data;
-            let total = $("#to").text();
-            let cra = $('#cra').text();
-            let crb = $('#crb').text();
-
-            console.log(total + cra + crb)
-            let str = `
+             let str = `
                 <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
                     <td>${user.fullName}</td>
-                     <td>${user.email}</td>
+                    <td>${user.email}</td>
                     <td>${user.phone}</td>
                     <td>${user.address}</td>
                     <td >${total} </td>
-                    <td>${crb} </td>
-                     <td >${cra}</td>
-                       <td class="w-45">
+                    <td>${0} </td>
+                    <td >${moment(days).format("DD/MM/YYYY - hh:mm")}</td>
+                    <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${user.id}" data-toggle="tooltip"
                                 data-toggle="modal" data-target="#modalUpdateCus"
                                 data-original-title="Edit" >
                                   <i class="ri-pencil-line"></i>
                                </a>
-                       </td>
+                    </td>
                 </tr>
             `;
             $("#tr_" + userId).replaceWith(str);
@@ -378,16 +373,38 @@
                 type: "GET",
                 url: "http://localhost:8080/api/users/searchCus/" + keyword
             }).done((data) => {
-                console.log(data)
-
-                $.each(data, (i, item) => {
-                    let str = renderUser(item);
-                    console.log(str);
-                    $('#tbCustomer tbody').prepend(str);
+                $.each(data, (i, user) => {
+                    let total = 0;
+                    let days = "Chưa Mua Hàng";
+                    getOrderById(user.id).then((userId) => {
+                        $.each(userId, (i, itemUser) => {
+                            console.log(itemUser, "usserid")
+                            total += itemUser.grandTotal;
+                            days = itemUser.createdAt;
+                        })
+                    })
+                    console.log(total + "+" + days , "daytotal")
+                    let str =
+                        ` <tr id="tr_${user.id}">
+                    <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.address}</td>
+                    <td >${total} </td>
+                    <td id="crb">${0}</td>
+                    <td >${moment(days).format("DD/MM/YYYY - hh:mm")}</td
+                    <td class="w-45">
+                               <a class="btn btn-outline-warning update" data-id="${user.id}" data-toggle="tooltip"
+                                data-toggle="modal" data-target="#modalUpdateCus"
+                                data-original-title="Edit" >
+                                  <i class="ri-pencil-line" ></i>
+                               </a>
+                    </td>
+                </tr>   `;
+                    $('#tbCustomer tbody').prepend(str)
                     showModalUpdateCus()
                 })
-
-
             }).fail((jqXHR) => {
                 console.log(jqXHR)
             })

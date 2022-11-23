@@ -1,5 +1,6 @@
 package com.cg.services.impl;
 
+import com.cg.dto.role.RoleResult;
 import com.cg.repositories.RoleRepository;
 import com.cg.repositories.model.Role;
 import com.cg.services.IRoleService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,5 +21,10 @@ public class RoleService implements IRoleService {
     @Override
     public Optional<Role> findRoleCodeUserById(Long id) {
         return roleRepository.findRoleCodeUserById(id);
+    }
+
+    @Override
+    public List<Role> findAllRole() {
+        return roleRepository.findAll();
     }
 }

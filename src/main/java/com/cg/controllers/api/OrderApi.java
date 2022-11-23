@@ -2,10 +2,13 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
+import com.cg.dto.role.RoleResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
+import com.cg.repositories.model.Role;
 import com.cg.services.impl.OrderService;
 
+import com.cg.services.impl.RoleService;
 import com.cg.services.impl.UserService;
 import org.hibernate.sql.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,8 @@ public class OrderApi {
     private OrderService orderService;
     @Autowired
     UserService userService;
+    @Autowired
+    RoleService roleService;
 
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
@@ -69,9 +74,7 @@ public class OrderApi {
 
     @GetMapping("")
     public ResponseEntity<?> getAllOrder(){
-
         List<OrderResult> orderResultList = orderService.findAll();
-
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
@@ -99,7 +102,7 @@ public class OrderApi {
     }
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody OrderParam orderParam) {
-        return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
+        return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.CREATED);
     }
 
 
@@ -136,10 +139,14 @@ public class OrderApi {
 
     @GetMapping("/getAllOrderByRole")
     public ResponseEntity<?> getAllOrderByRole(){
-
         List<OrderResult> orders = orderService.getAllOrderByRole();
-
         return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllRole")
+    public ResponseEntity<?> getCreatedBy(){
+        List<Role> roleResults = roleService.findAllRole();
+        return new ResponseEntity<>(roleResults,HttpStatus.OK);
     }
 
 }

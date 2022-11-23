@@ -415,4 +415,6 @@ public class OrderService implements IOrderService {
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
     }
+
+
 }

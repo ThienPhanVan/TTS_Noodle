@@ -52,4 +52,7 @@ public interface IOrderService {
     List<OrderResult> getAllOrderByRole();
 
     BigDecimal chartOneDay();
+
+
+
 }

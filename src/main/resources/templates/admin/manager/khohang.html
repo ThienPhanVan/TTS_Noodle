@@ -8,10 +8,10 @@
 
 <body>
 <!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -30,7 +30,7 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <a class="font-size-20 font-weight-bold" href="/rice">Kho Hàng Hóa</a>
+                                <a class="font-size-20 font-weight-bold" href="/khohang">Kho Hàng Hóa</a>
                             </div>
                         </div>
                         <div>
@@ -56,7 +56,7 @@
                                                     <th>Mã Hàng</th>
                                                     <th>Tên</th>
                                                     <th>Số Lượng</th>
-                                                    <th>Vốn Tồn Kho</th>
+                                                    <th>Vốn Tồn Kho (đ)</th>
                                                     <th>...</th>
                                                 </tr>
                                                 </thead>
@@ -80,7 +80,7 @@
                                                     <th>Tên</th>
                                                     <th>Số Lượng</th>
                                                     <th>Đã Bán</th>
-                                                    <th>Giá Trị Tồn</th>
+                                                    <th>Giá Trị Tồn (đ)</th>
                                                     <th>...</th>
                                                 </tr>
                                                 </thead>
@@ -170,7 +170,7 @@
                             <td>${item.title}</td>
                             <td>${available}</td>
                             <td>${sold}</td>
-                             <td>${sum}</td>
+                             <td>${new Intl.NumberFormat('vi-VN').format(sum)}</td>
                              <td class="btn btn-outline-warning" onclick="showOrderNoodle(${item.id})">Info</td>
                         </tr>`;
                         $("#tbNoodle tbody").prepend(strNoodle);
@@ -202,15 +202,15 @@
                         console.log(riceImport, "rice")
                         riceImport.forEach(rice => {
                             console.log(rice, "aaaaaa")
-                            sumPrice += rice.price;
                             sumQuantity += rice.quantity;
-                         })
+                            sumPrice = rice.price * sumQuantity;
+                        })
                         let strRice = `
                            <tr id="tr_${item.id}">
                               <td>${item.id}</td>
                               <td>${item.title}</td>
                               <td>${sumQuantity}</td>
-                              <td>${sumPrice}</td>
+                              <td>${new Intl.NumberFormat('vi-VN').format(sumPrice)}</td>
                               <td><a class="btn btn-outline-warning" onclick="showOrderRice(${item.id})">
                                 Info
                                </a></td>

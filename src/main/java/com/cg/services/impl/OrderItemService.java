@@ -1,14 +1,17 @@
 package com.cg.services.impl;
 
+import com.cg.dto.order_item.OrderItemChart;
 import com.cg.dto.order_item.OrderItemResult;
 import com.cg.mapper.OrderItemMapper;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.model.OrderItem;
+ import com.cg.repositories.model.OrderType;
 import com.cg.services.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,5 +50,18 @@ public class OrderItemService implements IOrderItemService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Integer chartQuantityNoodleOneDay(String type) {
+        return orderItemRepository.chartQuantityNoodleOneDay(type);
+    }
 
+    @Override
+    public List<OrderItemChart> chartQuantityNoodleOneWeek(String type) {
+        return orderItemRepository.chartQuantityNoodleOneWeek(type);
+    }
+
+    @Override
+    public List<OrderItemChart> chartQuantityNoodleOneMonth(String type) {
+        return orderItemRepository.chartQuantityNoodleOneMonth(type);
+    }
 }
