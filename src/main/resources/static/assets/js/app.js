@@ -126,4 +126,5 @@ class Role {
         this.code = code;
         this.name = name;
     }
+
 }

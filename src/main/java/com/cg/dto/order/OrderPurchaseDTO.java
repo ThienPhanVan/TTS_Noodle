@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public interface OrderPurchaseDTO {
-    Long getID();
+
+    Long getId();
     Date getCREATEDAT();
     BigDecimal getGRANDTOTAL();
     String getORDERSTATUS();
     String getCODE();
     String getFULLNAME();
+
 }

@@ -391,6 +391,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderPurchaseDTO> findAllOrderPurchase() {
+
         return orderRepository.findAllOrderPurchase();
     }
 
@@ -398,6 +399,36 @@ public class OrderService implements IOrderService {
     public List<OrderResult> getAllOrderByRole() {
         return orderRepository.getAllOrderByRole().stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchaseStatusPending() {
+        return orderRepository.findAllOrderPurchaseStatusPending();
+    }
+
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchaseStatusCancel() {
+        return orderRepository.findAllOrderPurchaseStatusCancel();
+    }
+
+    @Override
+    public List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete() {
+        return orderRepository.findAllOrderPurchaseStatusComplete();
+    }
+
+    @Override
+    public List<OrderPurchaseDTO> findOrderByFullNameContainsAndOrderType(String keySearch) {
+        List<OrderPurchaseView> list = orderRepository.findOrderByFullNameContainsAndOrderType(keySearch);
+
+        List<OrderPurchaseDTO> orderPurchaseDTOList = list.stream().map(orderPurchaseView -> {
+                    OrderPurchaseDTOImpl orderPurchaseDTOImpl = new OrderPurchaseDTOImpl();
+                    orderPurchaseDTOImpl.setFromOrderPurchaseView(orderPurchaseView);
+                    return orderPurchaseDTOImpl;
+                })
+                .collect(Collectors.toList());
+//        return orderRepository.findOrderByFullNameContainsAndOrderType(keySearch);
+        return orderPurchaseDTOList;
+    }
+
 
     public void updateOrderStatus(OrderResult orderResult) {
         Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
@@ -415,6 +446,5 @@ public class OrderService implements IOrderService {
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
     }
-
 
 }

@@ -86,17 +86,18 @@ public class OrderApi {
     }
 
     @PostMapping("/create/export")
-    public ResponseEntity<?> doCreateExportOrder(){
+    public ResponseEntity<?> doCreateExportOrder(){ 
 
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/search/{keyword}")
+    @GetMapping("/search/{keyword}")
     public ResponseEntity<?> doSearch(@PathVariable String keyword) {
 
-        List<OrderListPurchase> orderListPurchaseList = orderService.searchOrderBySupplierOOrCreatedAt(keyword);
+        List<OrderPurchaseDTO> orderListPurchaseList = orderService.findOrderByFullNameContainsAndOrderType(keyword);
 
+        //List<OrderPurchaseDTO>
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
 
     }
@@ -130,6 +131,29 @@ public class OrderApi {
         List<OrderResultChart> chartSevenDay = orderService.findOrderSevenDay();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
+
+    @GetMapping("/pending")
+    public ResponseEntity<?> getOrderByStatusPending(){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusPending();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/complete")
+    public ResponseEntity<?> getOrderByStatusComplete(){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusComplete();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/cancel")
+    public ResponseEntity<?> getOrderByStatusCancel(){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusCancel();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+
 
     @GetMapping("/chartOneMonth")
     public ResponseEntity<?> chartOneMonth() {
