@@ -23,11 +23,9 @@ public class OrderItemApi {
         return new ResponseEntity<>(orderItemResultList,HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> doCreate(@Valid @RequestBody OrderItemPurchase orderItemPurchase){
+    @DeleteMapping("/remove")
+    public ResponseEntity<?> doRemoveCartItem(){
 
-
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

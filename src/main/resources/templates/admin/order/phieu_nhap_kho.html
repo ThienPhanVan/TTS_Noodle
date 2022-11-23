@@ -38,7 +38,7 @@
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline">
                         <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1 search" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" id="btnSearch" type="submit">Tìm kiếm</button>
+<!--                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" id="btnSearch" type="submit">Tìm kiếm</button>-->
                     </form>
                 </nav>
             </div>
@@ -50,9 +50,8 @@
                     <thead>
                     <tr class="list_product">
                         <td>ID</td>
-                        <td>Ngày Nhập</td>
-                        <td>Người Nhập</td>
                         <td>Nhà cung cấp</td>
+                        <td>Người Nhập</td>
                         <td>
                             <select class="form-control selectStatus" style="height: fit-content" name="cars" id="cars">
                                 <option value="Trạng thái">Trạng thái</option>
@@ -62,9 +61,10 @@
                             </select>
                         </td>
                         <td>Tổng tiền</td>
+                        <td>Ngày Nhập</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="text-align: center">
 
                     </tbody>
                 </table>
@@ -146,12 +146,12 @@
         let str = `
               <tr class="list-product" id="tr_${obj.id}">
                         <th>${obj.id}</th>
-                        <th>${obj.createdat}</th>
-                        <th>${obj.code}</th>
                         <th>${obj.fullname}</th>
+                        <th>${obj.code}</th>
                         <th>${obj.orderstatus}</th>
-                        <th>${obj.grandtotal} đ</th>
-                    </tr>
+                        <th style="text-align: right">${obj.grandtotal} đ</th>
+                        <th>${obj.createdat}</th>
+              </tr>
         `
 
         return str;
@@ -205,9 +205,19 @@
                 $("#tbListOrder tbody").prepend(str);
 
             })
+            if (data.length === 0){
+                let std = `<tr style="text-align: center">
+                                <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                            </tr>`
+
+                $("#tbListOrder tbody").prepend(std);
+            }
         })
         .fail((jqXHR) => {
             console.log(jqXHR);
+            let str = `<tr>Không tìm thấy đơn hàng</tr>`
+
+            $("#tbListOrder tbody").prepend(str);
         })
     }
     

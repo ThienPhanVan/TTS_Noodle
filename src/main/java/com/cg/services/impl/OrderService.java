@@ -400,7 +400,6 @@ public class OrderService implements IOrderService {
         return orderRepository.getAllOrderByRole().stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
-<<<<<<< HEAD
     @Override
     public List<OrderPurchaseDTO> findAllOrderPurchaseStatusPending() {
         return orderRepository.findAllOrderPurchaseStatusPending();
@@ -430,7 +429,6 @@ public class OrderService implements IOrderService {
         return orderPurchaseDTOList;
     }
 
-=======
     public void updateOrderStatus(OrderResult orderResult) {
         Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
         if (orderPurchase1.isPresent()) {
@@ -447,5 +445,4 @@ public class OrderService implements IOrderService {
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
     }
->>>>>>> development
 }
