@@ -11,36 +11,9 @@ $.ajax({
     url: 'http://localhost:8080/api/users/getUserByRoleId/2',
     method: "GET",
     success: function (posts) {
-        // customers = posts.map((value)=>{
-        //     value.id;
-        //     return  (value.id) + value.fullName + (" - ") + value.phone;
-        // })
         customers = posts;
     }
 })
-
-
-// function search(keyword) {
-//     $.ajax({
-//         header: {
-//             "accept": "application/json",
-//             "content-type": "application/json"
-//         },
-//         type: "GET",
-//         url: "http://localhost:8080/api/users/search/" + keyword,
-//     })
-//         .done((data) => {
-//             let str = "";
-//             $.each(data, (i, item) => {
-//                 user = item;
-//                 str += `<li id="user_${item.id}" onclick="updateName(${item.id})">${user.fullName} - ${user.phone}</li>`;
-//             })
-//         })
-//         .fail((jqXHR) => {
-//             console.log(jqXHR)
-//
-//         })
-// }
 
 
 

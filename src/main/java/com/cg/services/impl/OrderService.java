@@ -81,11 +81,16 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public OrderResult createOrderExport(OrderParam orderParam) {
+
 //        Transient
         //order Item
-//        xet userid == null
         Long userId = orderParam.getUserId();
+//        Optional<User> userOptional = userRepository.findById(userId);
+//        if(userId == null && !userOptional.isPresent() ){
+//            throw new NotFoundException("Vui lòng chọn khách hàng để tạo order!");
+//        }
         if (userId == null) {
+//            throw new NotFoundException("Không Tìm Thấy UserId, vui lòng nhập id khách hàng!");
             Order order = orderMapper.toModel(orderParam);
             order.setFullName(order.getFullName());
             order.setAddress(order.getAddress());
@@ -152,9 +157,7 @@ public class OrderService implements IOrderService {
             return orderMapper.toDTO(order);
         }
         Optional<User> userOptional = userRepository.findById(userId);
-        if(userOptional == null){
-           throw new NotFoundException("Vui lòng nhập id khách hàng!");
-        }
+
         if (!userOptional.isPresent()) {
 
             Order order = orderMapper.toModel(orderParam);
