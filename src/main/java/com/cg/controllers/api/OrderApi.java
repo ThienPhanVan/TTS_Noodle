@@ -2,10 +2,7 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
-<<<<<<< HEAD
-=======
 import com.cg.repositories.model.Order;
->>>>>>> development
 import com.cg.repositories.model.OrderType;
 import com.cg.services.impl.OrderService;
 
@@ -132,7 +129,6 @@ public class OrderApi {
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
     @GetMapping("/pending")
     public ResponseEntity<?> getOrderByStatusPending(){
 
@@ -155,7 +151,7 @@ public class OrderApi {
         return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
     }
 
-=======
+
     @GetMapping("/chartOneMonth")
     public ResponseEntity<?> chartOneMonth() {
         List<OrderResultChart> chartSevenDay = orderService.findOrderOneMonth();
@@ -169,6 +165,5 @@ public class OrderApi {
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
->>>>>>> development
 
 }
