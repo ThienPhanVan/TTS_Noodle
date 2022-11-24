@@ -447,15 +447,23 @@ public class OrderService implements IOrderService {
 
     @Override
     @Transactional
-    public OrderResult changeStatus(OrderChangeStatus orderChangeStatus) {
+    public OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus) {
 
         Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
 
+
+
         Order newOrder = orderOptional.get();
+
+        System.out.println(newOrder);
 
         newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
 
-        return orderMapper.toDTO(orderRepository.save(newOrder));
+        orderRepository.save(newOrder);
+
+
+
+        return orderMapper.toDTOOrderStatus(newOrder);
 
     }
 }

@@ -157,7 +157,7 @@
         }
 
         let str = `
-              <tr class="list-product" id="tr_${obj.id}">
+              <tr class="list-product change" id="tr_${obj.id}">
                         <th>${obj.id}</th>
                         <th>${obj.fullname}</th>
                         <th>${obj.code}</th>
@@ -219,7 +219,7 @@
         })
     }
 
-    $("#tbListOrder tbody .list-product").on("click", function (){
+    $("#tbListOrder tbody .change").on("click", function (){
 
         let id = $(this).val("id");
         console.log(id);
@@ -237,7 +237,7 @@
                 "content-type": "application/json"
             },
             "type": "PATCH",
-            "url": "http://localhost:8080/api/orders/" + order.id,
+            "url": "http://localhost:8080/api/orders/update",
             "data": JSON.stringify(order)
         })
         .done((data) =>{
@@ -312,27 +312,27 @@
             "type": "GET",
             "url": "http://localhost:8080/api/orders/complete"
         })
-            .done((data)=>{
-                $("#tbListOrder tbody").html("");
+        .done((data)=>{
+            $("#tbListOrder tbody").html("");
 
-                console.log(data);
-                $.each(data, (i,item)=>{
-                    order = item;
+            console.log(data);
+            $.each(data, (i,item)=>{
+                order = item;
 
-                    order.createdat = $.FormatDateTime(order.createdat);
+                order.createdat = $.FormatDateTime(order.createdat);
 
-                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+                order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
-                    let str =  renderOrder(item);
+                let str =  renderOrder(item);
 
-                    $("#tbListOrder tbody").prepend(str);
-
-                })
+                $("#tbListOrder tbody").prepend(str);
 
             })
-            .fail((jqXHR)=>{
-                console.log(jqXHR)
-            })
+
+        })
+        .fail((jqXHR)=>{
+            console.log(jqXHR)
+        })
     }
 
     function handleShowOrderCancel(){
@@ -391,9 +391,18 @@
 
                 $("#tbListOrder tbody").prepend(str);
 
+                handleClick();
+
             })
         })
     }
+
+    function handleClick(){
+        $("#tbListOrder tbody tr").on("click", function () {
+            orderIds = $(this).attr('id').replace('tr_', '');
+        })
+    }
+
     $.FormatDateTime = function (dateToFormat) {
 
         let dateObj = new Date(dateToFormat);

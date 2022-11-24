@@ -27,6 +27,12 @@ public class OrderMapper {
                 .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
     }
+
+    public OrderChangeStatus toDTOOrderStatus(Order order){
+        return new OrderChangeStatus()
+                .setId(order.getId())
+                .setOrderStatus(order.getOrderStatus());
+    }
     public OrderPurchaseView toDTOView(Order order) {
         return new OrderPurchaseView()
                 .setId(order.getId())
