@@ -28,7 +28,7 @@ function addCustomer(selectedCountry) {
 addCustomer();
 
 function updateName(selectedLi) {
-    searchInp.value = "";
+    searchInp.value = "selected";
     addCustomer(selectedLi.innerText);
     wrapper.classList.remove("active");
     selectBtn.firstElementChild.innerText = selectedLi.innerText;
@@ -49,7 +49,7 @@ searchInp.addEventListener("keyup", () => {
     }).join("");
 
     // `<li id="user_${item.id}" onclick="onclickUser(${item.id})">${user.fullName} - ${user.phone}</li>`;
-    options1.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Customer not found</p>`;
+    options1.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Không tìm thấy khách hàng!</p>`;
 });
 
 selectBtn.addEventListener("click", () => wrapper.classList.toggle("active"));

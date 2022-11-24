@@ -226,3 +226,7 @@ input.error {
     color: white;
     background: dodgerblue;
 }
+
+#inDebt{
+    color: red;
+}
