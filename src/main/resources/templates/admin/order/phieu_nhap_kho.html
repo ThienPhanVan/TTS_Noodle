@@ -132,6 +132,7 @@
 </script>
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
+<th:block th:replace="/admin/order/modalChangeStatus :: modalChangeStatus" />
 <script>
 
     let order = new Order();
@@ -226,9 +227,12 @@
 
     })
 
-    function changeStatus(){
+    let orderId = null;
 
-        order.id = $(this).val("id");
+    function changeStatus(){
+        console.log(orderId);
+
+        order.id = orderId;
         order.status = $(".statusOrder").val();
 
         $.ajax({
@@ -250,9 +254,23 @@
 
             currentRow.replaceWith(str);
 
+            iziToast.success({
+                title: 'OK',
+                position: 'bottomLeft',
+                timeout: 1500,
+                message: 'Thay đổi trạng thái đơn hàng thành công!!'
+            });
+
         })
         .fail((jqXHR)=>{
             console.log(jqXHR)
+
+            iziToast.error({
+                title: 'ERROR',
+                position: 'bottomLeft',
+                timeout: 2000,
+                message: 'Thay đổi trạng thái đơn hàng thất bại!!'
+            });
         })
     }
 
@@ -399,8 +417,39 @@
 
     function handleClick(){
         $("#tbListOrder tbody tr").on("click", function () {
-            orderIds = $(this).attr('id').replace('tr_', '');
+            orderId = $(this).attr('id').replace('tr_', '');
+            changeStatus();
+            console.log(orderId);
         })
+    }
+
+    function handleChangeStatus(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/orders/imports"
+        })
+            .done((data) => {
+
+                $.each(data , (i,item) => {
+
+                    order = item;
+
+                    order.createdat = $.FormatDateTime(order.createdat);
+
+                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+                    let str =  renderOrder(item);
+
+                    $("#tbListOrder tbody").prepend(str);
+
+                    // handleClick();
+
+                })
+            })
     }
 
     $.FormatDateTime = function (dateToFormat) {
