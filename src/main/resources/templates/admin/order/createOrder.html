@@ -12,9 +12,43 @@
     <th:block th:replace="/layout/sidebar/left_side_bar :: left_side_bar"/>
 
     <!-- TOP Nav Bar -->
-    <th:block th:replace="/layout/topNav/topNav :: topNav"/>
+<!--    <th:block th:replace="/layout/topNav/topNav :: topNav"/>-->
     <!-- TOP Nav Bar END -->
 
+    <div class="iq-top-navbar">
+        <div class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0 mt-3">
+
+                <div class="iq-search-bar d-flex">
+                    <a href="/customer_order/">
+                        <i class="fas fa-arrow-left font-size-20 mt-2 mr-2 "></i>
+                    </a>
+                    <h4 class="ml-1 font-size-24">Đặt hàng bún</h4>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-label="Toggle navigation">
+                    <i class="ri-menu-3-line"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                        <li class="nav-item nav-icon mr-2">
+                            <button class="btn btn-outline-primary">Lưu & Tiếp tục</button>
+                        </li>
+
+                        <li class="nav-item nav-icon">
+                            <button class="btn btn-outline-warning" data-target="modalCreateOrderCustomer"
+                                    id="btnCreate">Xác nhận
+                            </button>
+
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+    </div>
     <!-- Page Content  -->
     <div id="modalCreateOrderCustomer" class="content-page">
         <div class="container-fluid">

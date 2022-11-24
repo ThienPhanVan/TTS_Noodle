@@ -63,12 +63,10 @@ public interface IOrderService {
 
     BigDecimal chartOneDay();
 
-<<<<<<< HEAD
     List<OrderResultDTO> findAllOrderStatusPending();
 
     OrderResultDTO setStatusOrderPending(Long id);
-=======
+
     OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
 
->>>>>>> development
 }

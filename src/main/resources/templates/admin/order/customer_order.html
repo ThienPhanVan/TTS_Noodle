@@ -132,7 +132,7 @@
                     <td>${order.fullName}</td>
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
-                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandtotal)}<br><span id="inDebt">(Nợ:)</span></td>
+                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br><span id="inDebt">(Nợ:)</span></td>
                 </tr>
             `;
         return str;
@@ -155,7 +155,6 @@
                 let str = renderOrderCustomer(item);
 
                 $("#tbOrder tbody").prepend(str);
-
 
             });
             let sum =`
@@ -215,7 +214,6 @@
             }).done((data) => {
                 $("#tbOrder tbody").html("");
                 order = data;
-                console.log(order)
                 data.forEach((item, i) => {
                     let str = renderOrderStatusCompleted(item, i);
                     $("#tbOrder tbody").prepend(str);

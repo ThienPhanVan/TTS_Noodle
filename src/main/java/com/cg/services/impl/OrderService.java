@@ -2,7 +2,6 @@ package com.cg.services.impl;
 
 
 import com.cg.dto.order.*;
-import com.cg.dto.userDTO.UserResult;
 import com.cg.exceptions.DataInputException;
 import com.cg.mapper.OrderMapper;
 import com.cg.exceptions.NotEnoughQuantityException;
@@ -20,23 +19,18 @@ import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
 import com.cg.repositories.UserRepository;
-
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import java.util.stream.Collectors;
 
 @Service
@@ -444,7 +438,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public BigDecimal chartOneDay() {
-       return   orderRepository.chartOneDay();
+        return orderRepository.chartOneDay();
     }
 
     @Override
@@ -453,7 +447,6 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-<<<<<<< HEAD
     public List<OrderResultDTO> findAllOrderStatusCompleted() {
         return orderRepository.findAllOrderStatusCompleted();
     }
@@ -465,32 +458,32 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderResultDTO setStatusOrderPending(Long id) {
-        return (OrderResultDTO) orderRepository.findAllById(Collections.singleton(id)).stream()
-                .map(order -> orderMapper.toDTO(order))
-                .collect(Collectors.toList());
-//        Optional<OrderResultDTO> orderResultDTO = orderRepository.findById(id);
-//        orderResultDTO.get();
-//        OrderResultDTO orderResultDTO1 = orderResultDTO.get();
-=======
-    @Transactional
-    public OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus) {
+//        Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
+//
+//        Order newOrder = orderOptional.get();
+//
+//        System.out.println(newOrder);
+//
+//        newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
+//
+//        orderRepository.save(newOrder);
 
-        Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
+        return null;
+    }
+        @Transactional
+        public OrderChangeStatus changeStatus (OrderChangeStatus orderChangeStatus){
 
+            Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
 
+            Order newOrder = orderOptional.get();
 
-        Order newOrder = orderOptional.get();
+            System.out.println(newOrder);
 
-        System.out.println(newOrder);
+            newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
 
-        newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
+            orderRepository.save(newOrder);
 
-        orderRepository.save(newOrder);
+            return orderMapper.toDTOOrderStatus(newOrder);
 
-
-
-        return orderMapper.toDTOOrderStatus(newOrder);
-
->>>>>>> development
     }
 }
