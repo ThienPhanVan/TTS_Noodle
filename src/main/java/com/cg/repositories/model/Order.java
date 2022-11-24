@@ -1,5 +1,6 @@
 package com.cg.repositories.model;
 
+import com.cg.dto.order.ListCreatedBy;
 import com.cg.dto.order.OrderResultChart;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,6 +43,22 @@ import java.time.Instant;
                 columns = {
                         @ColumnResult(name = "grandTotal", type = BigDecimal.class),
                         @ColumnResult(name = "createdAt", type = Instant.class)
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "sp_getCreatedBy",
+        query =
+                "call noodle.getCreatedBy(:idCreate);",
+        resultSetMapping = "result_getCreatedBy"
+)
+@SqlResultSetMapping(
+        name = "result_getCreatedBy",
+        classes = @ConstructorResult(
+                targetClass = ListCreatedBy.class,
+                columns = {
+                        @ColumnResult(name = "createdBy", type = Long.class),
+                        @ColumnResult(name = "name", type = String.class)
                 }
         )
 )

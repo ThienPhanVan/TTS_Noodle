@@ -1,7 +1,9 @@
 package com.cg.controllers.api;
 
 import com.cg.dto.order.OrderItemPurchase;
+import com.cg.dto.order_item.OrderItemChart;
 import com.cg.dto.order_item.OrderItemResult;
+import com.cg.repositories.model.OrderType;
 import com.cg.services.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -23,9 +26,33 @@ public class OrderItemApi {
         return new ResponseEntity<>(orderItemResultList,HttpStatus.OK);
     }
 
+<<<<<<< HEAD
     @DeleteMapping("/remove")
     public ResponseEntity<?> doRemoveCartItem(){
 
         return new ResponseEntity<>(HttpStatus.OK);
+=======
+    @PostMapping("/create")
+    public ResponseEntity<?> doCreate(@Valid @RequestBody OrderItemPurchase orderItemPurchase){
+        return new ResponseEntity<>(HttpStatus.CREATED);
+>>>>>>> development
+    }
+
+    @GetMapping("/chartQuantityNoodleOD/{type}")
+    public ResponseEntity<?> chartQuantityNoodleOD(@PathVariable String type){
+        Integer orderItemCharts= orderItemService.chartQuantityNoodleOneDay(type);
+        return new ResponseEntity<>(orderItemCharts,HttpStatus.OK);
+    }
+
+    @GetMapping("/chartQuantityNoodleOW/{type}")
+    public ResponseEntity<?> chartQuantityNoodleOW(@PathVariable String type){
+        List<OrderItemChart> orderItemCharts= orderItemService.chartQuantityNoodleOneWeek(type);
+        return new ResponseEntity<>(orderItemCharts,HttpStatus.OK);
+    }
+
+    @GetMapping("/chartQuantityNoodleOM/{type}")
+    public ResponseEntity<?> chartQuantityNoodleOM(@PathVariable String type){
+        List<OrderItemChart> orderItemCharts= orderItemService.chartQuantityNoodleOneMonth(type);
+        return new ResponseEntity<>(orderItemCharts,HttpStatus.OK);
     }
 }

@@ -61,5 +61,10 @@ public interface IOrderService {
 
     BigDecimal chartOneDay();
 
+<<<<<<< HEAD
     OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
+=======
+
+
+>>>>>>> development
 }

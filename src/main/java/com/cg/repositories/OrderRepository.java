@@ -1,11 +1,16 @@
 package com.cg.repositories;
 
+import com.cg.dto.order.ListCreatedBy;
 import com.cg.dto.order.OrderPurchaseDTO;
+<<<<<<< HEAD
 
 import com.cg.dto.order.OrderPurchaseView;
 import com.cg.dto.order.OrderResult;
 import com.cg.dto.order.OrderResultDTO;
 
+=======
+import com.cg.dto.order.OrderPurchaseView;
+>>>>>>> development
 import com.cg.dto.order.OrderResultChart;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderStatus;
@@ -64,9 +69,17 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'" )
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
     @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
     List<Order> getAllOrderByRole();
 
     @Query(value = "call noodle.totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
 }
