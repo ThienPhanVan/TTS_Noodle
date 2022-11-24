@@ -81,7 +81,7 @@
                                                     <th>Số Lượng</th>
                                                     <th>Đã Bán</th>
                                                     <th>Giá Trị Tồn (đ)</th>
-                                                    <th>...</th>
+<!--                                                    <th>...</th>-->
                                                 </tr>
                                                 </thead>
                                                 <tbody class="text-center">
@@ -171,7 +171,7 @@
                             <td>${available}</td>
                             <td>${sold}</td>
                              <td>${new Intl.NumberFormat('vi-VN').format(sum)}</td>
-                             <td class="btn btn-outline-warning" onclick="showOrderNoodle(${item.id})">Info</td>
+<!--                             <td class="btn btn-outline-warning" onclick="showOrderNoodle(${item.id})">Info</td>-->
                         </tr>`;
                         $("#tbNoodle tbody").prepend(strNoodle);
                     })
@@ -249,7 +249,7 @@
             let totalQuantity =0;
             $('#tbRiceImport tbody').empty();
             item.forEach(itemCard => {
-                totalQuantity =+ itemCard.quantity;
+                totalQuantity += itemCard.quantity;
                 console.log(itemCard, "item 2")
                 let str = `
                  <tr id="tr_${itemCard.id}">

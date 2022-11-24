@@ -77,6 +77,9 @@
 
                                     </tbody>
                                 </table>
+                                <div id="totalCus">
+
+                                </div>
                             </div>
 
                         </div>
@@ -170,6 +173,7 @@
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 2,
         }).done((data) => {
             user = data;
+            let totalOrder = 0;
              $.each(user, (i, userList) => {
                 getOrderById(userList.id).then((orderItem) => {
                     let total = 0;
@@ -177,6 +181,7 @@
                     $.each(orderItem, (i, orders) => {
                         total += orders.grandTotal;
                         days = orders.createdAt;
+                        totalOrder += orders.grandTotal
                     })
                     let str = `
                 <tr id="tr_${userList.id}">
@@ -198,7 +203,18 @@
                     </tr> `;
                     $("#tbCustomer tbody").prepend(str);
                 })
+
             })
+
+            let sum = `
+                <span>Khách Hàng: ${data.length} / </span>
+                <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN', {
+                style: "currency",
+                currency: 'VND'
+            })       .format(totalOrder)}</span>
+<!--                <span class="i text-warning">Tổng nợ: 68,000 </span>--> `;
+            $("#totalCus").prepend(sum);
+
             enableTootip();
             showModalUpdateCus();
         }).fail((jqXHR) => {
@@ -220,7 +236,7 @@
                 url: "http://localhost:8080/api/orders/" + userId,
             }).done((data) => {
                 order = data;
-             }).fail((jxHQR) => {
+            }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
         )
@@ -314,13 +330,13 @@
             "address": $('#addressCusUp').val(),
             "avatarUrl": $('#avatarUp').val(),
         }
-        let total = 0 ;
+        let total = 0;
         let days = "Chưa Mua Hàng"
-        getOrderById(userId).then((orderId)=>{
-           $.each(orderId, (i, itemOrder)=>{
-               total  += itemOrder.grandTotal;
-               days = itemOrder.createdAt
-           })
+        getOrderById(userId).then((orderId) => {
+            $.each(orderId, (i, itemOrder) => {
+                total += itemOrder.grandTotal;
+                days = itemOrder.createdAt
+            })
         })
         $.ajax({
             headers: {
@@ -331,8 +347,8 @@
             url: "http://localhost:8080/api/users/update/" + userId,
             data: JSON.stringify(updateUser)
         }).done((data) => {
-             user = data;
-             let str = `
+            user = data;
+            let str = `
                 <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
                     <td>${user.fullName}</td>
@@ -355,6 +371,8 @@
             App.iziToast.showSuccessAlert("Cập nhật thành công")
             $("#modalUpdateCus").modal('hide')
             enableTootip();
+            $(".update").off('click')
+            showModalUpdateCus();
         }).fail((jqHRX) => {
             console.log(jqHRX)
         });
@@ -383,7 +401,7 @@
                             days = itemUser.createdAt;
                         })
                     })
-                    console.log(total + "+" + days , "daytotal")
+                    console.log(total + "+" + days, "daytotal")
                     let str =
                         ` <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
@@ -412,6 +430,7 @@
     }
 
     doSearchUser();
+
 
 </script>
 

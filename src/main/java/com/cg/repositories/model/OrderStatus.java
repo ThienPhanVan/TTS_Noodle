@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OrderStatus {
-    PENDING("PENDING"), COMPLETED("COMPLETED"), CANCELLED("CANCELLED");
+    PENDING("Đang xử lý"), COMPLETED("Hoàn thành"), CANCELLED("Hủy");
 
 
     private final String value;
