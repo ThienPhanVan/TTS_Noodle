@@ -410,6 +410,7 @@
                 $("#tbListOrder tbody").prepend(str);
 
                 handleClick();
+                handleEvent();
 
             })
         })
@@ -418,10 +419,22 @@
     function handleClick(){
         $("#tbListOrder tbody tr").on("click", function () {
             orderId = $(this).attr('id').replace('tr_', '');
-            changeStatus();
+            // changeStatus();
             console.log(orderId);
         })
     }
+    function handleEvent(){
+        $("#tbListOrder tbody tr .statusOrder").on("click", function (){
+            orderStatus = $(this).attr('value');
+            console.log(orderStatus);
+        })
+    }
+
+
+    $(".statusOrder").on("change", function (){
+        let status =  $(this).val();
+        console.log(status);
+    })
 
     function handleChangeStatus(){
         $.ajax({
