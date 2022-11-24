@@ -8,10 +8,10 @@
 
 <body>
 <!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -30,7 +30,7 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <a class="font-size-20 font-weight-bold" href="/rice">Kho Hàng Hóa</a>
+                                <a class="font-size-20 font-weight-bold" href="/khohang">Kho Hàng Hóa</a>
                             </div>
                         </div>
                         <div>
@@ -56,7 +56,7 @@
                                                     <th>Mã Hàng</th>
                                                     <th>Tên</th>
                                                     <th>Số Lượng</th>
-                                                    <th>Vốn Tồn Kho</th>
+                                                    <th>Vốn Tồn Kho (đ)</th>
                                                     <th>...</th>
                                                 </tr>
                                                 </thead>
@@ -80,7 +80,8 @@
                                                     <th>Tên</th>
                                                     <th>Số Lượng</th>
                                                     <th>Đã Bán</th>
-                                                    <th>Giá Trị Tồn</th>
+                                                    <th>Giá Trị Tồn (đ)</th>
+                                                    <th>...</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody class="text-center">
@@ -121,11 +122,12 @@
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 
 <th:block th:replace="/admin/manager/modalListRice.html"></th:block>
+<th:block th:replace="/admin/manager/modalListNoodle.html"></th:block>
 
 </body>
 <script>
 
-    let itemss = new Item();
+
     let product = new Product();
 
     function renderProduct(obj) {
@@ -149,32 +151,33 @@
             type: "GET",
             url: "http://localhost:8080/api/products ",
         }).done((data) => {
-
             data.forEach(item => {
-                product = item;
-                if (product.id === 1) {
-                    getItemByProductId(product.id).then((noodleOrder) => {
-                        noodleOrder.forEach(noodle =>{
-                            console.log(noodle , "noodel")
-                            let sum = 0;
+                if (item.id === 1) {
+                    let sum = 0;
+                    let available = 0;
+                    let sold = 0;
+                    getItemByProductId(item.id).then((noodleOrder) => {
+                        noodleOrder.forEach(noodle => {
+                            console.log(noodle, "noodel")
+                            available += noodle.available;
+                            sold += noodle.sold ;
                             sum = noodle.available * noodle.price;
                             console.log(noodle, "2")
-                            let strNoodle = `
-                        <tr id="tr_${noodle.product.id}">
-                            <td>${noodle.product.id}</td>
-                            <td>${noodle.product.title}</td>
-                            <td>${noodle.available}</td>
-                            <td>${noodle.sold}</td>
-                             <td>${sum}</td>
-                        </tr>`;
-                            $("#tbNoodle tbody").prepend(strNoodle);
                         })
-
+                        let strNoodle = `
+                        <tr id="tr_${item.id}">
+                            <td>${item.id}</td>
+                            <td>${item.title}</td>
+                            <td>${available}</td>
+                            <td>${sold}</td>
+                             <td>${new Intl.NumberFormat('vi-VN').format(sum)}</td>
+                             <td class="btn btn-outline-warning" onclick="showOrderNoodle(${item.id})">Info</td>
+                        </tr>`;
+                        $("#tbNoodle tbody").prepend(strNoodle);
                     })
 
                 }
             })
-
         }).fail((jqXHR) => {
             console.log(jqXHR);
         })
@@ -192,34 +195,29 @@
             url: "http://localhost:8080/api/products ",
         }).done((data) => {
             data.forEach(item => {
-                product = item
-                if (product.id === 2) {
+                if (item.id === 2) {
                     let sumPrice = 0;
                     let sumQuantity = 0;
-                    console.log(product.id, "id")
-                    getItemByProductId(product.id).then((riceImport) => {
+                     getItemByProductId(item.id).then((riceImport) => {
                         console.log(riceImport, "rice")
                         riceImport.forEach(rice => {
-                            console.log(rice.product.id, "aaaaaa")
-                            sumPrice += rice.price;
+                            console.log(rice, "aaaaaa")
                             sumQuantity += rice.quantity;
-                            let strRice = `
-                           <tr id="tr_${rice.product.id}">
-                              <td>${rice.product.id}</td>
-                              <td>${rice.product.title}</td>
+                            sumPrice = rice.price * sumQuantity;
+                        })
+                        let strRice = `
+                           <tr id="tr_${item.id}">
+                              <td>${item.id}</td>
+                              <td>${item.title}</td>
                               <td>${sumQuantity}</td>
-                              <td>${sumPrice}</td>
-                              <td><a class="btn btn-outline-warning" onclick="showOrderRice(${product.id})">
+                              <td>${new Intl.NumberFormat('vi-VN').format(sumPrice)}</td>
+                              <td><a class="btn btn-outline-warning" onclick="showOrderRice(${item.id})">
                                 Info
                                </a></td>
                             </tr>`;
-                            $("#tbRice tbody").prepend(strRice);
-                        })
-
+                        $("#tbRice tbody").prepend(strRice);
                     })
-
                 }
-
             });
         }).fail((jqXHR) => {
             console.log(jqXHR);
@@ -227,7 +225,6 @@
     }
 
     loadRice();
-
 
     function getItemByProductId(productId) {
         return (
@@ -248,22 +245,47 @@
 
     function showOrderRice(idProduct) {
         getItemByProductId(idProduct).then((item) => {
+            console.log(item,  "item")
+            let totalQuantity =0;
             $('#tbRiceImport tbody').empty();
             item.forEach(itemCard => {
+                totalQuantity =+ itemCard.quantity;
+                console.log(itemCard, "item 2")
                 let str = `
                  <tr id="tr_${itemCard.id}">
                     <th>${itemCard.id}</th>
                     <td>${itemCard.orderId}</td>
-                    <td>${itemCard.user.fullName}</td>
                     <td>${moment(itemCard.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
-                    <td>${item.length}</td>
+                     <td>${itemCard.quantity}</td>
+                    <td>${totalQuantity}</td>
                   </tr>
                          `;
                 $('#tbRiceImport tbody').append(str)
-                console.log(itemCard, "ss")
             })
         })
         $('#modalListOrderRice').modal('show');
+    }
+
+    function showOrderNoodle(idProduct) {
+        getItemByProductId(idProduct).then((item) => {
+            console.log(item,  "item")
+            let totalQuantity =0;
+            $('#tbNoodleExport tbody').empty();
+            item.forEach(itemCard => {
+                totalQuantity += itemCard.quantity;
+                console.log(itemCard, "item 2")
+                let str = `
+                 <tr id="tr_${itemCard.id}">
+                    <th>${itemCard.id}</th>
+                    <td>${itemCard.orderId}</td>
+                    <td>${moment(itemCard.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
+                     <td>${itemCard.sold}</td>
+                    <td>${itemCard.available}</td>
+                  </tr>    `;
+                $('#tbNoodleExport tbody').append(str)
+            })
+        })
+        $('#modalListOrderNoodle').modal('show');
 
     }
 

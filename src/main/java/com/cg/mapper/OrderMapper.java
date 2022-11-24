@@ -27,6 +27,15 @@ public class OrderMapper {
                 .setCreatedBy(order.getCreatedBy())
                 .setCreatedAt(order.getCreatedAt());
     }
+    public OrderPurchaseView toDTOView(Order order) {
+        return new OrderPurchaseView()
+                .setId(order.getId())
+                .setGrandTotal(order.getGrandTotal())
+                .setOrderType(order.getOrderType())
+                .setUserId(order.getUserId())
+                .setCreatedBy(order.getCreatedBy())
+                .setCreatedAt(order.getCreatedAt());
+    }
 
     public ListOrderResult toListDTO(Order order) {
         return new ListOrderResult()
@@ -37,6 +46,12 @@ public class OrderMapper {
                 .setFullName(order.getFullName())
                 .setCreatedAt(order.getCreatedAt());
 
+    }
+
+    public OrderResultChart toChart(Order order) {
+        return new OrderResultChart()
+                .setGrandTotal(order.getGrandTotal())
+                .setCreatedAt(order.getCreatedAt());
     }
 
     public OrderListPurchase toDTOList(Order order) {

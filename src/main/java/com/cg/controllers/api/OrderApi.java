@@ -2,9 +2,15 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
+import com.cg.dto.role.RoleResult;
+import com.cg.repositories.model.Order;
+import com.cg.repositories.model.OrderType;
+import com.cg.repositories.model.Role;
 import com.cg.services.impl.OrderService;
 
+import com.cg.services.impl.RoleService;
 import com.cg.services.impl.UserService;
+import org.hibernate.sql.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -22,6 +30,8 @@ public class OrderApi {
     private OrderService orderService;
     @Autowired
     UserService userService;
+    @Autowired
+    RoleService roleService;
 
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
@@ -56,12 +66,15 @@ public class OrderApi {
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
+//    @GetMapping("/exNoodle/{data}")
+//    public ResponseEntity<?> getAllOrderByExport(@PathVariable Instant data){
+//        List<OrderResult> orderResultList = orderService.findAllByCreatedAtAndOrderType(data, OrderType.CUSTOMER);
+//        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+//    }
 
     @GetMapping("")
     public ResponseEntity<?> getAllOrder(){
-
         List<OrderResult> orderResultList = orderService.findAll();
-
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
@@ -73,46 +86,53 @@ public class OrderApi {
     }
 
     @PostMapping("/create/export")
-    public ResponseEntity<?> doCreateExportOrder(){
+    public ResponseEntity<?> doCreateExportOrder(){ 
 
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/search/{keyword}")
+    @GetMapping("/search/{keyword}")
     public ResponseEntity<?> doSearch(@PathVariable String keyword) {
 
-        List<OrderListPurchase> orderListPurchaseList = orderService.searchOrderBySupplierOOrCreatedAt(keyword);
+        List<OrderPurchaseDTO> orderListPurchaseList = orderService.findOrderByFullNameContainsAndOrderType(keyword);
 
+        //List<OrderPurchaseDTO>
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
 
     }
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody OrderParam orderParam) {
-        return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.OK);
+        return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.CREATED);
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+
+        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
+
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
+    }
 
     @PatchMapping("updateStatus")
     public ResponseEntity<?> doUpdateStatus(String orderStatus){
-
-
-
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
     }
 
-    @GetMapping("/chartOneDay/{date}")
-    public ResponseEntity<?> chartOneDay(@PathVariable String date) {
-        List<OrderResult> orderChart = orderService.findCreateAtByTypeCustomer(date);
-        return new ResponseEntity<>(orderChart, HttpStatus.OK);
+    @GetMapping("/chartOneDay")
+    public ResponseEntity<?> chartOneDay(){
+        return new ResponseEntity<>( orderService.chartOneDay(), HttpStatus.OK);
     }
 
     @GetMapping("/chartSevenDay")
     public ResponseEntity<?> chartSevenDay() {
-        List<OrderResult> chartSevenDay = orderService.findOrderSevenDay();
+        List<OrderResultChart> chartSevenDay = orderService.findOrderSevenDay();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
     @GetMapping("/statusCompleted")
     public ResponseEntity<?> getStatusCompleted() {
         List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusCompleted();
@@ -123,6 +143,47 @@ public class OrderApi {
     public ResponseEntity<?> getStatusPendingCustomer() {
         List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusPending();
         return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
+=======
+    @GetMapping("/pending")
+    public ResponseEntity<?> getOrderByStatusPending(){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusPending();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/complete")
+    public ResponseEntity<?> getOrderByStatusComplete(){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusComplete();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/cancel")
+    public ResponseEntity<?> getOrderByStatusCancel(){
+
+        List<OrderPurchaseDTO> orderPurchaseList = orderService.findAllOrderPurchaseStatusCancel();
+
+        return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
+    }
+
+
+    @GetMapping("/chartOneMonth")
+    public ResponseEntity<?> chartOneMonth() {
+        List<OrderResultChart> chartSevenDay = orderService.findOrderOneMonth();
+        return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllOrderByRole")
+    public ResponseEntity<?> getAllOrderByRole(){
+        List<OrderResult> orders = orderService.getAllOrderByRole();
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllRole")
+    public ResponseEntity<?> getCreatedBy(){
+        List<Role> roleResults = roleService.findAllRole();
+        return new ResponseEntity<>(roleResults,HttpStatus.OK);
+>>>>>>> development
     }
 
 }

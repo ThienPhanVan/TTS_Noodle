@@ -7,10 +7,10 @@
 
 <body>
 <!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -32,22 +32,22 @@
                                 <a class="font-size-20 font-weight-bold" href="/customer">Đơn Hàng</a>
                             </div>
                         </div>
-                        <div class="list_form_show">
-                            <div class="filter_product_box">
-                                <nav class="navbar navbar-light bg-light">
-                                    <form class="form-inline">
-                                        <input id="inputSearch" style="margin-left: -16px"
-                                               class="form-control form-control-sm mr-sm-1"
-                                               type="search" placeholder="Tìm kiếm" aria-label="Search">
-                                        <div id="btnSearch" class="input-group-append">
-                                            <button class="btn btn-outline-warning" type="button">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </nav>
-                            </div>
-                        </div>
+<!--                        <div class="list_form_show">-->
+<!--                            <div class="filter_product_box">-->
+<!--                                <nav class="navbar navbar-light bg-light">-->
+<!--                                    <form class="form-inline">-->
+<!--                                        <input id="inputSearch" style="margin-left: -16px"-->
+<!--                                               class="form-control form-control-sm mr-sm-1"-->
+<!--                                               type="search" placeholder="Tìm kiếm" aria-label="Search">-->
+<!--                                        <div id="btnSearch" class="input-group-append">-->
+<!--                                            <button class="btn btn-outline-warning" type="button">-->
+<!--                                                <i class="fa fa-search"></i>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                    </form>-->
+<!--                                </nav>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="iq-card-body">
                             <div class="table-responsive">
                                 <input type="hidden" id="currentRow">
@@ -66,7 +66,8 @@
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="text-center">
+                                    <tbody data-spy="scroll" data-target="#navbar-example2" data-offset="0"
+                                           class="text-center">
 
                                     </tbody>
                                 </table>
@@ -116,22 +117,44 @@
 <script>
     let order = new Order();
     let user = new User()
+    let role = new Role();
 
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
     }
-
     enableTootip();
 
     console.log(user)
 
-    function renderOrderCustomer(orderItem) {
-        let str = `
+    function loadOrderCustomer() {
+        $.ajax({
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/orders/exportsNoodle"
+        }).done((data) => {
+            let createBy = "";
+            $.each(role, (i, item) => {
+                if (item.id === 1) {
+                    createBy = item.code
+                }
+
+            })
+            console.log(createBy, "created")
+            let sumTotal = 0;
+            data.forEach(orderItem => {
+                sumTotal += orderItem.grandTotal;
+
+
+                console.log(createBy, "code")
+                let str = `
                    <tr id="tr_${orderItem.id}">
                           <td>${orderItem.id}</td>
                           <td>${moment(orderItem.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
-                          <td> ${orderItem.createdBy}</td>
-                          <td>${orderItem.user.fullName}</td>
+                          <td> ${createBy}</td>
+                          <td>${orderItem.fullName}</td>
                           <td style="margin-top: 20px;  padding: 4px" class="badge badge-success " >${orderItem.orderStatus}</td>
                           <td>${new Intl.NumberFormat('vi-VN').format(orderItem.grandTotal)}</td>
                           <td class="w-45">
@@ -142,31 +165,17 @@
                                      <i class=" ri-printer-line"></i>
                                     </a>
                           </td>
-                          </tr> `
-        return str;
-    }
-
-    function loadOrderCustomer() {
-        $.ajax({
-            headers: {
-                'accept': "application/json",
-                'content-type': "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/orders/exports"
-        }).done((data) => {
-            let sumTotal = 0;
-            data.forEach(orderItem => {
-                console.log(orderItem, "5")
-                let str = renderOrderCustomer(orderItem);
-                     sumTotal += orderItem.grandTotal ;
+                          </tr> `;
                 $("#tbOrderCus tbody").prepend(str);
             })
-            console.log(data, "1")
+
             let sum = `
                 <span>Tổng số đơn: ${data.length} / </span>
-                <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN' , {style : "currency", currency :'VND'}).format(sumTotal)}</span> /
-                <span class="i text-warning">Tổng nợ: 68,000 </span> `;
+                <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN', {
+                style: "currency",
+                currency: 'VND'
+            }).format(sumTotal)}</span>
+<!--                <span class="i text-warning">Tổng nợ: 68,000 </span>--> `;
 
             $("#totalO ").prepend(sum);
         }).fail((jqXHR) => {
@@ -177,7 +186,24 @@
     loadOrderCustomer();
 
 
+    function getRole() {
+        return $.ajax({
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/orders/getAllRole"
+        }).done((data) => {
+            role = data;
+            console.log(role, "role")
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
 
+    getRole();
 
 </script>
 

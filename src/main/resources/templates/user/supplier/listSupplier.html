@@ -3,14 +3,15 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
+    <title>Supplier</title>
 </head>
 
 <body>
-<!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
+ loader Start
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -28,7 +29,7 @@
                     <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
-                                <h4 class="card-title">Nhà cung cấp</h4>
+                                <a class="font-size-20 font-weight-bold" href="/supplier">Nhà Cung Cấp</a>
                             </div>
                             <div class="btn btn-primary">
                                 <i class="fa fa-plus"></i>
@@ -51,12 +52,12 @@
                                         <th>Điện Thoại</th>
                                         <th>Địa Chỉ</th>
                                         <th>Lần Cuối NH</th>
-                                        <th>Tổng tiền</th>
+                                        <th>Tổng tiền (đ)</th>
                                         <th>Nợ</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="text-center">
 
                                     </tbody>
                                 </table>
@@ -91,7 +92,7 @@
 
     <th:block th:replace="/user/supplier/modalCreateSupplier.html"></th:block>
     <th:block th:replace="/user/supplier/modalUpdateSuplier.html"></th:block>
-  </div>
+</div>
 
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 </body>
@@ -102,34 +103,41 @@
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
     }
+
     enableTootip();
 
 
     function renderUser(obj) {
-        console.log()
-        let str = ` <tr id="tr_${obj.id}">
+        let totalOrders = obj.grandTotal;
+        let dayCre = obj.createdAt;
+        let debt = obj.createdBy;
+        if (dayCre === undefined) {
+            dayCre = ""
+        }
+        if (debt === undefined) {
+            debt = ""
+        }
+        if (totalOrders === undefined) {
+            totalOrders = 0;
+        }
+        return ` <tr id="tr_${obj.id}">
                     <td><img height="50" src=${obj.avatarUrl} alt="noavatar"></td>
-<!--                    <td>${obj.id}</td>-->
                     <td>${obj.fullName}</td>
                     <td>${obj.email}</td>
                     <td>${obj.phone}</td>
                     <td>${obj.address}</td>
-                    <td id="cra">${moment(obj.createdAt).format("DD/MM/YYYY -- h:mm")}</td>
-                    <td id="to">${new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(obj.totalOrder)}</td>
-                     <td id="crb">${obj.createdBy}</td>
-                       <td class="w-45">
+                    <td id="cra">${dayCre}</td>
+                    <td id="to">${totalOrders}</td>
+                    <td id="crb">${0}</td>
+                    <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${obj.id}" data-toggle="tooltip"
                                 data-toggle="modal" data-target="#modalUpdateSup"
                                 data-original-title="Edit" >
                                   <i class="ri-pencil-line"></i>
                                </a>
-                       </td>
+                    </td>
                 </tr>
             `;
-        return str;
     }
 
     function loadUsers() {
@@ -141,11 +149,38 @@
             type: "GET",
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 3,
         }).done((data) => {
-            console.log(data)
-            data.forEach(item => {
-                let str = renderUser(item);
-                $("#tbSupplier tbody").prepend(str);
-            });
+            user = data;
+              $.each(user, (i, userList) => {
+                getOrderById(userList.id).then((orderItem) => {
+                    let total = 0;
+                    let days;
+                    let no;
+                    $.each(orderItem, (i, orders) => {
+                        total += orders.grandTotal;
+                        days = orders.createdAt.toString();
+                    })
+                    let str = `
+                <tr id="tr_${userList.id}">
+                    <td><img height="50" src=${userList.avatarUrl} alt="noavatar"></td>
+                    <td>${userList.fullName}</td>
+                     <td>${userList.email}</td>
+                    <td>${userList.phone}</td>
+                    <td>${userList.address}</td>
+                    <td id="cra">${days === undefined ? "" : moment(days).format('DD/MM/YYYY -- hh:mm')}</td>
+                    <td id="to">${new Intl.NumberFormat('vi-VN').format(total)}</td>
+                         <td id="crb">${0}</td>
+                       <td class="w-45">
+                               <a class="btn btn-outline-warning update" data-id="${userList.id}" data-toggle="tooltip"
+                                data-toggle="modal" data-target="#modalUpdateCus"
+                                data-original-title="Edit" >
+                                  <i class="ri-pencil-line"></i>
+                               </a>
+                       </td>
+                    </tr>
+                               `;
+                    $("#tbSupplier tbody").prepend(str);
+                })
+            })
             enableTootip();
             showModalUpdateSup();
         }).fail((jqXHR) => {
@@ -154,6 +189,25 @@
     }
 
     loadUsers();
+
+    function getOrderById(userId) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                type: "GET",
+                async: false,
+                url: "http://localhost:8080/api/orders/" + userId,
+            }).done((data) => {
+                order = data;
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+
+    }
 
     function getUserById(userId) {
         return (
@@ -204,7 +258,7 @@
             App.iziToast.showSuccessAlert("Thêm mới thành công")
             $("#modalCreateSupplier").modal('hide')
             enableTootip();
-            showModalUpdateCus()
+            showModalUpdateSup()
         }).fail((jqHRX) => {
             console.log(jqHRX)
         });
@@ -227,10 +281,7 @@
                 $('#emailSupUp').val(data.email);
                 $('#phoneSupUp').val(data.phone);
                 $('#addressSupUp').val(data.address);
-                $('#to').val(data.totalOrder);
-                $('#cra').val(data.createdAt);
-                $('#crb').val(data.createdBy);
-                //$('#avatarUp').val(data.avatarUrl)
+                $('#avatarUp').val(data.avatarUrl)
                 $('#modalUpdateSup').modal('show');
             })
         })
@@ -244,11 +295,16 @@
             "phone": $('#phoneSupUp').val(),
             "email": $('#emailSupUp').val(),
             "address": $('#addressSupUp').val(),
-            // "avatarUrl": $('#avatar').val(),
-            "totalOrder": $('#to').val(),
-            "createdAt": $('#cra').val(),
-            "createdBy": $('#crb').val(),
+            "avatarUrl": $('#avatar').val(),
         }
+        let total = 0;
+        let days = "Chưa Mua Hàng"
+        getOrderById(userId).then((orderId) => {
+            $.each(orderId, (i, itemOrder) => {
+                total += itemOrder.grandTotal;
+                days = itemOrder.createdAt
+            })
+        })
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -258,8 +314,24 @@
             url: "http://localhost:8080/api/users/update/" + userId,
             data: JSON.stringify(createUser)
         }).done((data) => {
-            console.log(data)
-            let str = renderUser(data)
+            user = data;
+             let str = ` <tr id="tr_${user.id}">
+                    <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.address}</td>
+                    <td id="cra">${days}</td>
+                    <td id="to">${total}</td>
+                    <td id="crb">${0}</td>
+                    <td class="w-45">
+                               <a class="btn btn-outline-warning update" data-id="${user.id}" data-toggle="tooltip"
+                                data-toggle="modal" data-target="#modalUpdateSup"
+                                data-original-title="Edit" >
+                                  <i class="ri-pencil-line"></i>
+                               </a>
+                    </td>
+                </tr>   `;
             $("#tr_" + userId).replaceWith(str);
             App.iziToast.showSuccessAlert("Cập nhật thành công")
             $("#modalUpdateSup").modal('hide')
@@ -271,10 +343,10 @@
     })
 
     function doSearchUser() {
-        $('#btnSearch').on('click', function () {
-            let keyword = $('#inputSearch').val();
+        $('#btnSearchSupp').on('click', function () {
+            let keyword = $('#inputSearchSupp').val();
             console.log(keyword)
-            $('#tbUser tbody').html("")
+            $('#tbSupplier tbody').html("")
             $.ajax({
                 headers: {
                     "Accept": "application/json",
@@ -283,12 +355,37 @@
                 type: "GET",
                 url: "http://localhost:8080/api/users/searchSup/" + keyword
             }).done((data) => {
-                console.log(data)
-                $.each(data, (i, item) => {
-                    let str = renderUser(item);
-                    console.log(str);
-                    $('#tbUser tbody').prepend(str);
-                    showModalUpdateCus()
+                $.each(data, (i, user) => {
+                    let total = 0;
+                    let days = "Chưa Mua Hàng";
+                    getOrderById(user.id).then((userId) => {
+                        $.each(userId, (i, itemUser) => {
+                            console.log(itemUser, "usserid")
+                            total += itemUser.grandTotal;
+                            days = itemUser.createdAt;
+                        })
+
+                     })
+                    console.log(total + "+" + days , "daytotal")
+                    let str = ` <tr id="tr_${user.id}">
+                    <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.address}</td>
+                    <td id="cra">${days}</td>
+                    <td id="to">${total}</td>
+                    <td id="crb">${0}</td>
+                    <td class="w-45">
+                               <a class="btn btn-outline-warning update" data-id="${user.id}" data-toggle="tooltip"
+                                data-toggle="modal" data-target="#modalUpdateSup"
+                                data-original-title="Edit" >
+                                  <i class="ri-pencil-line"></i>
+                               </a>
+                    </td>
+                </tr>   `;
+                    $('#tbSupplier tbody').prepend(str)
+                    showModalUpdateSup()
                 })
             }).fail((jqXHR) => {
                 console.log(jqXHR)

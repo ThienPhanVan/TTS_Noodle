@@ -1,21 +1,67 @@
 package com.cg.repositories.model;
 
+import com.cg.dto.order.ListCreatedBy;
+import com.cg.dto.order.OrderResultChart;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-
-import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
-
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
+
+
+@NamedNativeQuery(
+        name = "noodle.chartSevenDay",
+        query =
+                "call noodle.chartSevenDay();",
+        resultSetMapping = "result_chartSevenDay"
+)
+@SqlResultSetMapping(
+        name = "result_chartSevenDay",
+        classes = @ConstructorResult(
+                targetClass = OrderResultChart.class,
+                columns = {
+                        @ColumnResult(name = "grandTotal", type = BigDecimal.class),
+                        @ColumnResult(name = "createdAt", type = Instant.class)
+                }
+        )
+)
+
+@NamedNativeQuery(
+        name = "noodle.chartOneMonth",
+        query =
+                "call noodle.chartOneMonth();",
+        resultSetMapping = "result_chartOneMonth"
+)
+@SqlResultSetMapping(
+        name = "result_chartOneMonth",
+        classes = @ConstructorResult(
+                targetClass = OrderResultChart.class,
+                columns = {
+                        @ColumnResult(name = "grandTotal", type = BigDecimal.class),
+                        @ColumnResult(name = "createdAt", type = Instant.class)
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "sp_getCreatedBy",
+        query =
+                "call noodle.getCreatedBy(:idCreate);",
+        resultSetMapping = "result_getCreatedBy"
+)
+@SqlResultSetMapping(
+        name = "result_getCreatedBy",
+        classes = @ConstructorResult(
+                targetClass = ListCreatedBy.class,
+                columns = {
+                        @ColumnResult(name = "createdBy", type = Long.class),
+                        @ColumnResult(name = "name", type = String.class)
+                }
+        )
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

@@ -19,6 +19,7 @@ public class UserMapper {
                 .setStatus(user.getStatus())
                 .setUsername(user.getUsername())
                 .setAvatarUrl(user.getAvatarUrl());
+
     }
 
     public User toModel(CreateUserParam createUserParam) {

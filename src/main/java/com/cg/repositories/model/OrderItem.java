@@ -1,5 +1,6 @@
 package com.cg.repositories.model;
 
+ import com.cg.dto.order_item.OrderItemChart;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,41 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.Instant;
 
+@NamedNativeQuery(
+        name = "sp_getQuantityNR1Week",
+        query =
+                "call noodle.getQuantityNR1Week(:type);",
+        resultSetMapping = "result_QuantityNR1Week"
+)
+@SqlResultSetMapping(
+        name = "result_QuantityNR1Week",
+        classes = @ConstructorResult(
+                targetClass = OrderItemChart.class,
+                columns = {
+                        @ColumnResult(name = "quantity", type = Integer.class),
+                        @ColumnResult(name = "createdAt", type = Instant.class)
+                }
+        )
+)
+
+@NamedNativeQuery(
+        name = "sp_getQuantityNR1Month",
+        query =
+                "call noodle.getQuntityNR1Month(:type);",
+        resultSetMapping = "result_QuantityNR1Month"
+)
+@SqlResultSetMapping(
+        name = "result_QuantityNR1Month",
+        classes = @ConstructorResult(
+                targetClass = OrderItemChart.class,
+                columns = {
+                        @ColumnResult(name = "quantity", type = Integer.class),
+                        @ColumnResult(name = "createdAt", type = Instant.class)
+                }
+        )
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

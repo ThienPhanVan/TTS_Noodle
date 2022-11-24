@@ -58,6 +58,7 @@ public class UserApi {
         updateParam.setId(id);
         return new ResponseEntity<>(userService.updateUser(updateParam), HttpStatus.ACCEPTED);
     }
+
     @GetMapping("/searchCus/{keyword}")
     public ResponseEntity<?> doSearchCus(@PathVariable String keyword) {
         List<UserResult> userParamList = userService.searchCustomer(keyword);
@@ -77,8 +78,8 @@ public class UserApi {
     }
 
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<?> doSearch(@PathVariable String keyword){
-        String Strkeyword = "%"+keyword+"%";
+    public ResponseEntity<?> doSearch(@PathVariable String keyword) {
+        String Strkeyword = "%" + keyword + "%";
 
         List<UserResult> userResultList = userService.findAllByFullNameOrPhone(Strkeyword);
         if (userResultList.isEmpty()) {
@@ -87,4 +88,6 @@ public class UserApi {
 
         return new ResponseEntity<>(userResultList, HttpStatus.OK);
     }
+
+
 }
