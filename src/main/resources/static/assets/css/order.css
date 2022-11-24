@@ -210,6 +210,19 @@ input.error {
 #itemTotalAmount{
     text-align: center;
     position: absolute;
-    right: 100px;
+    right: 90px;
 
+}
+
+#totalOrderCustomers span{
+    color: black;
+    font-size: 20px;
+}
+#price{
+    width: 130px;
+}
+
+#dropdrowStatus a:hover{
+    color: white;
+    background: dodgerblue;
 }

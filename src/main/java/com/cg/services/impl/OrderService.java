@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -440,8 +441,6 @@ public class OrderService implements IOrderService {
         if (orderPurchase1.isPresent()) {
             throw new DataInputException("Không tìm thấy order");
         }
-<<<<<<< HEAD
-=======
     }
 
     @Override
@@ -452,7 +451,6 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
->>>>>>> development
     }
 
     @Override
@@ -463,5 +461,15 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderResultDTO> findAllOrderStatusPending() {
         return orderRepository.findAllOrderStatusPending();
+    }
+
+    @Override
+    public OrderResultDTO setStatusOrderPending(Long id) {
+        return (OrderResultDTO) orderRepository.findAllById(Collections.singleton(id)).stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+//        Optional<OrderResultDTO> orderResultDTO = orderRepository.findById(id);
+//        orderResultDTO.get();
+//        OrderResultDTO orderResultDTO1 = orderResultDTO.get();
     }
 }

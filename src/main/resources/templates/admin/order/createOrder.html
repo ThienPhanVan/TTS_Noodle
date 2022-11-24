@@ -9,125 +9,10 @@
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <div class="iq-sidebar">
-        <div class="iq-navbar-logo d-flex justify-content-between">
-            <a href="/home" class="header-logo">
-                <!-- <img src="assets/images/logo.png" class="img-fluid rounded" alt=""> -->
-                <img src="/assets/images/nudo.jpg" alt="">
-                <span>Bún Việt</span>
-            </a>
-            <div class="iq-menu-bt align-self-center">
-                <div class="wrapper-menu">
-                    <div class="main-circle"><i class="ri-menu-line"></i></div>
-                    <div class="hover-circle"><i class="ri-close-fill"></i></div>
-                </div>
-            </div>
-        </div>
-        <div id="sidebar-scrollbar">
-            <nav class="iq-sidebar-menu">
-                <ul id="iq-sidebar-toggle" class="iq-menu">
-                    <li class="active">
-                        <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-home iq-arrow-left"></i><span>Quản lý</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
+    <th:block th:replace="/layout/sidebar/left_side_bar :: left_side_bar"/>
 
-                            <li class="active"><a href="/home"><i class="las la-laptop-code"></i>Tổng Quan</a>
-
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#userinfo" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
-                                class="ripple rippleEffect"></span><i
-                                class="las la-user-tie iq-arrow-left"></i><span>Khách hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-
-                        <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="/customer"><i class="las la-th-list"></i>Khách hàng</a>
-                            </li>
-                            <li><a href="/supplier"><i class="ri-database-line"></i>Nhà cung cấp</a></li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#tables" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-table-line iq-arrow-left"></i><span>Quản Lí</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="tables" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-
-                            <li><a href="tables-basic.html"><i class="ri-table-line"></i>Kho Hàng</a></li>
-                            <li><a href="data-table.html"><i class="ri-database-line"></i>Hàng Hóa</a></li>
-                            <li><a href="data-table.html"><i class="ri-database-line"></i>Xuất Hàng</a></li>
-
-                            <li><a href="/purchase"><i class="ri-database-line"></i>Nhập Hàng</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#forms" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
-                                class="lab la-wpforms iq-arrow-left"></i><span>Tiền Bạc</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="forms" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="form-layout.html"><i class="las la-book"></i>Thu</a></li>
-                            <li><a href="form-validation.html"><i class="las la-edit"></i>Chi</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#charts" class="iq-waves-effect collapsed" data-toggle="collapse"
-                           aria-expanded="false"><i
-                                class="ri-pie-chart-box-line iq-arrow-left"></i><span>Đặt hàng</span><i
-                                class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="charts" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                            <li><a href="/customer_order"><i class="ri-folder-chart-2-line"></i>Khách Hàng</a></li>
-                            <li><a href="chart-apex.html"><i class="ri-folder-chart-2-line"></i>Nhà Cung Cấp</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </nav>
-            <div class="p-3"></div>
-        </div>
-    </div>
     <!-- TOP Nav Bar -->
-    <div class="iq-top-navbar">
-        <div class="iq-navbar-custom">
-            <nav class="navbar navbar-expand-lg navbar-light p-0 mt-3">
-
-                <div class="iq-search-bar d-flex">
-                    <a href="/customer_order/">
-                        <i class="fas fa-arrow-left font-size-20 mt-2 mr-2 "></i>
-                    </a>
-                    <h4 class="ml-1 font-size-24">Đặt hàng bún</h4>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-label="Toggle navigation">
-                    <i class="ri-menu-3-line"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto navbar-list">
-
-                        <li class="nav-item nav-icon mr-2">
-                            <button class="btn btn-outline-primary">Lưu & Tiếp tục</button>
-                        </li>
-
-                        <li class="nav-item nav-icon">
-                            <button class="btn btn-outline-warning" data-target="modalCreateOrderCustomer"
-                                    id="btnCreate">Xác nhận
-                            </button>
-
-                        </li>
-                    </ul>
-                </div>
-
-            </nav>
-        </div>
-    </div>
+    <th:block th:replace="/layout/topNav/topNav :: topNav"/>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -198,7 +83,7 @@
                                         <div class="card card-body">
                                             <h5 style="top:2px; position: absolute;" class="font-size-14">Nhân viên đặt
                                                 hàng</h5>
-                                            <span class="font-size-18">sinh</span>
+<!--                                            <span class="font-size-18">sinh</span>-->
                                         </div>
                                     </div>
                                     <div class=" mt-2">
@@ -209,15 +94,15 @@
                                             <!--                                            <span class="font-size-18">23/02/2022</span>-->
                                         </div>
                                     </div>
-                                    <div class="  mt-2">
-                                        <div style="position:relative; height: 50px; background-color: #f1f1f1;"
-                                             class="card card-body">
-                                            <h5 style="top:2px; position: absolute;" class="font-size-14">Dự kiến giao
-                                            </h5>
-                                            <input id="estimatedTime" type="datetime-local">
-                                            <!--                                            <span class="font-size-18">23/02/2022</span>-->
-                                        </div>
-                                    </div>
+<!--                                    <div class="  mt-2">-->
+<!--                                        <div style="position:relative; height: 50px; background-color: #f1f1f1;"-->
+<!--                                             class="card card-body">-->
+<!--                                            <h5 style="top:2px; position: absolute;" class="font-size-14">Dự kiến giao-->
+<!--                                            </h5>-->
+<!--                                            <input id="estimatedTime" type="datetime-local">-->
+<!--                                            &lt;!&ndash;                                            <span class="font-size-18">23/02/2022</span>&ndash;&gt;-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div class=" collapse  mt-2" id="collapseExample">
                                         <div style="position:relative; height: 90px;  background-color: #f1f1f1;"
                                              class="card card-body  ">
@@ -249,7 +134,7 @@
                                     <input type="hidden" id="idCustomerCre" value="0"/>
                                     <div class="wrapper1">
                                         <div class="select-btn bg-primary">
-                                            <span>Select Customer</span>
+                                            <span id="selectCustomer">Chọn khách hàng</span>
 
                                             <i class="uil uil-angle-down"></i>
                                         </div>
@@ -373,13 +258,13 @@
                         </div>
                     </td>
                     <td>
-                        <input class="text-center" id="price" name="price"
-                        value="${product.price}"
+                        <input class="text-center" type="number" id="price" name="price"
+                        value="${new Intl.NumberFormat('vi-VN').format(product.price)}"
                         />
 
                     </td>
                     <td>
-                        <input disabled class="form-control-sm-2" id="itemTotalAmount" type="text" value="0">
+                        <input disabled class="form-control-sm-2" id="itemTotalAmount" type="number" value="${new Intl.NumberFormat('vi-VN').format(0)}">
                     </td>
                 </tr>`
         return str;
@@ -467,17 +352,18 @@
                     timeout: 1500,
                     message: 'Order sản phẩm thành công!!'
                 })
-                setTimeout(() => {
-                    window.location.href = "/customer_order/create"
-
-                },1500)
-            }).fail((jqXHR) => {
-            iziToast.warning({
-                title: 'FAIL',
-                position: 'topRight',
-                timeout: 1500,
-                message: 'Không tìm thấy id khách hàng!!!'
-            });
+                // setTimeout(() => {
+                //     window.location.href = "/customer_order/create"
+                // },1500)
+                $("#inputQuantity").val("0");
+                $("#selectCustomer").text("Chọn khách hàng");
+                }).fail((jqXHR) => {
+                iziToast.warning({
+                    title: 'FAIL',
+                    position: 'topRight',
+                    timeout: 1500,
+                    message: 'Không tìm thấy id khách hàng!!!'
+                });
             console.log(jqXHR);
 
         })

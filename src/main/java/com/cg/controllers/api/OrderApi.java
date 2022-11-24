@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -132,18 +133,26 @@ public class OrderApi {
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
+
     @GetMapping("/statusCompleted")
     public ResponseEntity<?> getStatusCompleted() {
         List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusCompleted();
         return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
     }
 
+//    @PostMapping("/changeStatus/{id}")
+//    public ResponseEntity<?> changeStatusOrderPending(@PathVariable Long id) {
+//        Optional<OrderResultDTO> orderResultDTOS = .f();
+//        orderResultDTOS.
+//        List<OrderResultDTO> orderResultDTOS = orderService.f();
+//        return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
+//    }
+
     @GetMapping("/statusPending")
     public ResponseEntity<?> getStatusPendingCustomer() {
         List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusPending();
         return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
-=======
+    }
     @GetMapping("/pending")
     public ResponseEntity<?> getOrderByStatusPending(){
 
@@ -183,7 +192,8 @@ public class OrderApi {
     public ResponseEntity<?> getCreatedBy(){
         List<Role> roleResults = roleService.findAllRole();
         return new ResponseEntity<>(roleResults,HttpStatus.OK);
->>>>>>> development
+
     }
+
 
 }

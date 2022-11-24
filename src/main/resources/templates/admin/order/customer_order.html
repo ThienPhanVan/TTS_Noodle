@@ -33,12 +33,13 @@
                                 <h4 class="card-title">Đặt Hàng</h4>
                             </div>
                             <div class="  d-flex align-items-center">
-                                <!-- <span class="text-danger ng-star-inserted">Test</span> -->
-                                <a class="m-1 font-weight-bolder" href="">Tất cả</a>
+                                <button class="m-1 font-weight-bolder btn btn-group" id="allStatusCustomer">Tất cả</button>
                                 <i class="fas fa-grip-lines-vertical text-warning"></i>
                                 <button class="m-1 font-weight-bolder btn btn-group" id="statusPending">Đang xử lí</button>
                                 <i class="fas fa-grip-lines-vertical text-warning"></i>
                                 <button class="m-1 font-weight-bolder btn btn-group" id="statusCompleted">Hoàn thành</button>
+<!--                                <i class="fas fa-grip-lines-vertical text-warning"></i>-->
+<!--                                <button class="m-1 font-weight-bolder btn btn-group" id="statusCenceled">Hủy</button>-->
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -52,17 +53,15 @@
                                         <th scope="col">Địa chỉ giao hàng</th>
                                         <th scope="col">Trạng thái</th>
                                         <th scope="col">Tổng tiền (đ)</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Hành động</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
 
                                 </table>
-                                <div>
-                                    <span>Tổng số đơn: 4, </span>
-                                    <span class="bold text-primary">Tổng tiền: 83,000</span>,
-                                    <span class="i text-warning">Tổng nợ: 68,000 </span>
+                                <div id="totalOrderCustomers">
+
                                 </div>
                             </div>
                         </div>
@@ -85,7 +84,7 @@
     </footer>
 
     <!-- Footer END -->
-
+    <th:block th:replace="/admin/order/show_view_detail :: show_view_detail"/>
     <th:block th:replace="/layout/script/footer :: footer"/>
 </div>
 </body>
@@ -103,14 +102,26 @@
                     <td>${order.orderStatus}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br><span id="inDebt">(Nợ:)</span></td>
                     <td>
-                         <button class="btn btn-outline-primary editable" data-id="${order.id}"
-                         data-toggle="tooltip" placement="top" title="Edit">
-                         <i class="fas fa-edit"></i>
-                         </button>
+                          <div class="iq-card-header-toolbar d-flex align-items-center">
+                           <div class="dropdown">
+                              <span class="dropdown-toggle text-primary" id="dropdownMenuButton5"
+                                 data-toggle="dropdown" data-id="${order.id}">
+                                   <i class="fas fa-edit"></i>
+                              </span>
+                              <div class="dropdown-menu dropdown-menu-right" id="dropdrowStatus" aria-labelledby="dropdownMenuButton5">
+                                 <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>Chi tiết đơn hàng</a>
+                                 <a onclick="editStatusOrder(${order.id})" class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Hoàn thành</a>
+                              </div>
+                           </div>
+                        </div>
                     </td>
                 </tr>
             `;
         return str;
+    }
+
+    function handleShowEditModalStatus() {
+            $("#modalEditOrder").modal("show");
     }
 
     function renderOrderStatusCompleted(order) {
@@ -118,17 +129,10 @@
                 <tr id="tr_${order.id}">
                     <td>${order.id}</td>
                     <td>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</td>
-                    <td>${order.fullname}</td>
+                    <td>${order.fullName}</td>
                     <td>${order.address}</td>
-                    <td>${order.orderstatus}</td>
+                    <td>${order.orderStatus}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandtotal)}<br><span id="inDebt">(Nợ:)</span></td>
-
-                     <td>
-                         <button class="btn btn-outline-primary editable" data-id="${order.id}"
-                         data-toggle="tooltip" placement="top" title="Edit">
-                         <i class="fas fa-edit"></i>
-                         </button>
-                    </td>
                 </tr>
             `;
         return str;
@@ -143,11 +147,24 @@
             type: "GET",
             url: "http://localhost:8080/api/orders/exportsNoodle",
         }).done((data) => {
-            data.forEach((item,i )=> {
-                let str = renderOrderCustomer(item,i);
+            let totalOrder = 0;
+            data.forEach(item => {
+                console.log("item total ",item)
+                console.log("item total ",item.grandTotal)
+                totalOrder += item.grandTotal;
+                let str = renderOrderCustomer(item);
+
                 $("#tbOrder tbody").prepend(str);
 
+
             });
+            let sum =`
+                       <span>Tổng số đơn: ${data.length} || </span>
+                       <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN',{style: "currency", currency:'VND'}).format(totalOrder)}</span>,
+                       <span class="i text-warning">|| Tổng nợ: 68,000 </span>
+                      `
+            $("#totalOrderCustomers").prepend(sum);
+
         }).fail((jqXHR) => {
             console.log(jqXHR);
         })
@@ -172,6 +189,19 @@
             console.log(jqXHR);
         })
     }
+
+    // function editStatusOrder(orderId){
+    //     $("#statusPending").on("click", function () {
+    //         $.ajax({
+    //             headers: {
+    //                 "accept": "application/json",
+    //                 "content-type": "application/json"
+    //             },
+    //             type: "GET",
+    //             url: "http://localhost:8080/api/orders/statusPending",
+    //         }).done((data) => {
+    // }
+    //     }
 
     function findAllStatusPending() {
         $("#statusPending").on("click", function () {
