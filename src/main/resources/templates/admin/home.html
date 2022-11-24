@@ -83,7 +83,7 @@
                 <div style="background-color: #ffffff">
                     <div class="row my-3">
                         <div class="col name_chart">
-                            <h4>Xuất Nhập Bún Gạo</h4>
+                            <h4>Thống Kê Số Lượng Bán Bún NHập Gạo (KG)</h4>
                         </div>
                         <div class="mr-5">
                             <label>
@@ -113,7 +113,7 @@
                 <div style="background-color: #ffffff">
                     <div class="row my-3">
                         <div class="col name_chart">
-                            <h4>Doanh Thu Bán Bún</h4>
+                            <h4>Doanh Thu Bán Bún (VNĐ)</h4>
                         </div>
                         <div class="mr-5">
                             <label>
@@ -159,7 +159,7 @@
 </body>
 <script>
     let order = new Order();
-
+    let dayyy = new Date().getDate();
     let todayNow = new Date().getDay();
     let day_name = "";
     switch (todayNow) {
@@ -244,6 +244,8 @@
     })
 
     function chartToDay() {
+
+        console.log(dayyy, "dayyy")
         $.ajax({
             headers:
                 {
@@ -261,7 +263,7 @@
                 chartStatus.destroy();
             }
             let chartDataSell = {
-                labels: [day_name],
+                labels: [day_name + " / " + dayyy],
                 datasets: [
                     {
                         label: 'Bún',
@@ -443,7 +445,7 @@
             chartStatus.destroy();
         }
         let chartDataSell = {
-            labels: [day_name],
+            labels: [day_name + " / " + dayyy],
             datasets: [
                 {
                     label: 'Bún',
@@ -454,7 +456,7 @@
                 {
                     label: 'Gạo',
                     data: [rices],
-                    backgroundColor: colors[1],
+                    backgroundColor: colors[3],
                     maxBarThickness: 70,
                 }
             ]

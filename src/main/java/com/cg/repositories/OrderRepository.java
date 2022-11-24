@@ -2,7 +2,15 @@ package com.cg.repositories;
 
 
 import com.cg.dto.order.OrderPurchaseDTO;
+<<<<<<< HEAD
 import com.cg.dto.order.OrderResultDTO;
+=======
+
+import com.cg.dto.order.OrderPurchaseView;
+import com.cg.dto.order.OrderResult;
+import com.cg.dto.order.OrderResultDTO;
+
+>>>>>>> development
 import com.cg.dto.order.OrderPurchaseView;
 import com.cg.dto.order.OrderResultChart;
 import com.cg.repositories.model.Order;

@@ -295,7 +295,6 @@ public class OrderService implements IOrderService {
 
         if (!userOptional.isPresent()) {
             throw new NotFoundException("Không tìm thấy nhà cung cấp!");
-
         }
 
         LocalDateTime localDateTime = LocalDateTime.parse(orderPurchase.getCreatedAt());
@@ -454,6 +453,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+<<<<<<< HEAD
     public List<OrderResultDTO> findAllOrderStatusCompleted() {
         return orderRepository.findAllOrderStatusCompleted();
     }
@@ -471,5 +471,26 @@ public class OrderService implements IOrderService {
 //        Optional<OrderResultDTO> orderResultDTO = orderRepository.findById(id);
 //        orderResultDTO.get();
 //        OrderResultDTO orderResultDTO1 = orderResultDTO.get();
+=======
+    @Transactional
+    public OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus) {
+
+        Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
+
+
+
+        Order newOrder = orderOptional.get();
+
+        System.out.println(newOrder);
+
+        newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
+
+        orderRepository.save(newOrder);
+
+
+
+        return orderMapper.toDTOOrderStatus(newOrder);
+
+>>>>>>> development
     }
 }

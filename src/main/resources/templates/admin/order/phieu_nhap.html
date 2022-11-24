@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
@@ -35,72 +35,77 @@
                 <h3>Phiếu nhập hàng</h3>
             </div>
             <div class="row" style="margin-top: 25px;">
-                <div class="list-group col-md-8">
-                    <div class="list-group">
-                        <div class="supplier-info">
-                            <h5>Thông tin sản phẩm</h5>
-                            <div class="filter_product_box">
-                                <nav class="navbar navbar-light bg-light">
-                                    <div class="row">
-                                        <div class="dropdown">
+                    <div class="list-group col-md-8">
+                        <div class="list-group">
+                            <div class="supplier-info">
+                                <h5>Thông tin sản phẩm</h5>
+                                <div class="filter_product_box">
+                                    <nav class="navbar navbar-light bg-light">
+                                        <div class="row">
+                                            <div class="dropdown">
                                                 <input style="width: 217px;" class="form-control search" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" id="searchProduct" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <div style="width: 216px" class="dropdown-item" >Không tìm thấy sản phẩm</div>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <div style="width: 216px" class="dropdown-item" >Vui lòng nhập tên sản phẩm</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </nav>
-                            </div>
-                            <div class="list-product-purchase">
-                                <table class="table" id="tbItemPurchase">
-                                    <thead class="bg-primary">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Số lượng(kg)</th>
-                                        <th scope="col">Giá nhập(đ)</th>
-                                        <th scope="col">Thành tiền(đ)</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                                    </nav>
+                                </div>
+                                <div class="list-product-purchase">
+                                    <form id="orderPurchase">
+                                        <table class="table" id="tbItemPurchase">
+                                            <thead class="bg-primary">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Tên sản phẩm</th>
+                                                <th scope="col">Số lượng(kg)</th>
+                                                <th scope="col">Giá nhập(đ)</th>
+                                                <th scope="col">Thành tiền(đ)</th>
+                                                <th>
+                                                    <i class="fas fa-triangle"></i>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
-                                    </tbody>
-                                </table>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
-                <div class="list-group col-md-4">
-                    <div class="purchase-info">
-                        <h5>Thông tin phiếu nhập hàng</h5>
-                        <div class="filter_product_box">
-                            <nav class="navbar navbar-light bg-light" style="padding-left: 0;padding-right: 0">
-                                <div class="dropdown-supplier">
-                                        <input style="width: 290px" class="form-control search-supplier" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" type="search" placeholder="Tìm kiếm nhà cung cấp" aria-label="Search" />
-                                    <div class="dropdown-menu" style="width: 292px;overflow-y: scroll;height: 100px;"  aria-labelledby="dropdownMenuLinks">
-                                        <div class="dropdown-item" >Không tìm thấy nhà cung cấp</div>
-                                    </div>
+                    <div class="list-group col-md-4">
+<!--                        <form id="purchaseForm">-->
+                            <div class="purchase-info">
+                                <h5>Thông tin phiếu nhập hàng</h5>
+                                <div class="filter_product_box">
+                                    <nav class="navbar navbar-light bg-light" style="padding-left: 0;padding-right: 0">
+                                        <div class="dropdown-supplier">
+                                            <input style="width: 290px" class="form-control search-supplier" id="supplier" name="supplier" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" type="search" placeholder="Tìm kiếm nhà cung cấp" aria-label="Search" />
+                                            <div class="dropdown-menu" style="width: 292px;overflow-y: scroll;height: 100px;"  aria-labelledby="dropdownMenuLinks">
+                                                <div class="dropdown-item" >Vui lòng nhập tên nhà cung cấp</div>
+                                            </div>
+                                        </div>
+                                        <div class="btn btn-primary" style="width: 40px;height: 40px;line-height: 27px">
+                                            <a class="text-white create" id="createSupplier">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </nav>
                                 </div>
-                                <div class="btn btn-primary" style="width: 40px;height: 40px;line-height: 27px">
-                                    <a class="text-white create" id="createSupplier">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                </div>
-                            </nav>
-                        </div>
-                        <input class="form-control mt-2" id="dateID" type="datetime-local" min="2022-01-01T13:00" name="dateTime" value="Ngày tạo"/>
+                                <input class="form-control mt-2" id="dateID" type="datetime-local" min="2022-01-01T13:00" name="dateTime" value="Ngày tạo"/>
+                            </div>
+                            <div class="bill_info" style="margin-top: 15px;">
+                                <h5>Thông tin thanh toán</h5>
+                                <span>Tổng cộng</span>
+                                <span class="grandTotal"></span>
+                            </div>
+                            <button type="button" id="btnImportOrder" class="btn btn-primary">
+                                Nhập hàng
+                            </button>
+<!--                        </form>-->
                     </div>
-                    <div class="bill_info" style="margin-top: 15px;">
-                        <h5>Thông tin thanh toán</h5>
-                        <span>Tổng cộng</span>
-                        <span class="grandTotal"></span>
-                    </div>
-                    <button id="btnImportOrder" class="btn btn-primary">
-                        Nhập hàng
-                    </button>
-
-                </div>
             </div>
         </div>
     </div>
@@ -182,28 +187,57 @@
     let product = new Product();
 
 
+    $(document).ready(function() {
+        let date = new Date();
 
-    $(
-        function(){
-            //Display Only Date till today //
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let hours = date.getHours();
+        let minutes = date.getMinutes()
 
-            let dtToday = new Date();
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
 
-            let month = dtToday.getMonth() + 1;
-            let day = dtToday.getDate();
-            let year = dtToday.getFullYear();
-            if(month < 10)
-                month = '0' + month.toString();
-            if(day < 10)
-                day = '0' + day.toString();
+        let today = year + "-" + month + "-" + day +"T00:00";
+        $("#dateID").attr("value", today);
+    });
 
-            let maxDate = year + '-' + month + '-' + day;
+    // $(
+    //     function(){
+    //         //Display Only Date till today //
+    //
+    //         let dtToday = new Date();
+    //
+    //         let month = dtToday.getMonth() + 1;
+    //         let day = dtToday.getDate();
+    //         let year = dtToday.getFullYear();
+    //         if(month < 10)
+    //             month = '0' + month.toString();
+    //         if(day < 10)
+    //             day = '0' + day.toString();
+    //
+    //         let maxDate = year + '-' + month + '-' + day;
+    //
+    //         $('#dateID').attr('max', maxDate );
+    //     }
+    // )
+    //
+    // document.getElementById('dateID').value = new Date().toISOString().slice(0,16);
 
-            $('#dateID').attr('max', maxDate );
+
+
+    $("#purchaseForm").validate({
+        rules: {
+            supplier: "required",
+            dateTime: "date"
+        },
+        messages: {
+            supplier: "Vui lòng nhập tên nhà cung cấp!",
+            dateTime: "Vui lòng nhập đúng định dạng ngày tháng!"
         }
-    )
+    })
 
-    document.getElementById('dateID').value = new Date().toISOString().slice(0,16);
 
     function renderProduct(obj){
 
@@ -215,10 +249,10 @@
                     <th scope="row" id="${obj.productId}" class="productId" >${obj.productId}</th>
                     <td>${obj.title}</td>
                     <td >
-                        <input autocomplete="off" class="form-control form-control-sm quantityItemPurchase" type="number" value="${obj.quantity}">
+                        <input autocomplete="off" id="productQuantity" name="productQuantity" class="form-control form-control-sm quantityItemPurchase" type="number" value="${obj.quantity}">
                     </td>
                     <td>
-                        <input class="form-control form-control-sm priceItemPurchase" type="number" value="${obj.price}">
+                        <input id="productPrice" name="productPrice" class="form-control form-control-sm priceItemPurchase" type="number" value="${obj.price}">
                         </td>
                     <td>
                         <input disabled class="form-control form-control-sm itemTotalAmount" type="number" value="${totalAmount}">
@@ -339,7 +373,6 @@
                              <b>${obj.price} đ</b>
                           </p>
                 </button>
-                <hr>
                 `
         return str;
     }

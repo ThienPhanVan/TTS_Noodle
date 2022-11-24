@@ -61,6 +61,9 @@
 
                                     </tbody>
                                 </table>
+                                <div id="totalSup">
+
+                                </div>
                             </div>
 
                         </div>
@@ -76,12 +79,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <ul class="list-inline mb-0">
-                        <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                        <li class="list-inline-item"><a href="#">Văn Thiện</a></li>
+                        <li class="list-inline-item"><a href="#">Thiện Tài</a></li>
+                        <li class="list-inline-item"><a href="#">Bảo Sinh</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-6 text-right">
-                    Copyright 2020 <a href="#">FinDash</a> All Rights Reserved.
+                <div class="col-lg-6 ">
+                    CODEGYM HUẾ 2022<a  href="#">&nbsp &nbsp TTS-Noodle</a>&nbsp &nbsp WE ARE LÒVÉ YOU &nbsp <i class="ri-heart-fill"></i>.
                 </div>
             </div>
         </div>
@@ -150,6 +154,7 @@
             url: "http://localhost:8080/api/users/getUserByRoleId/" + 3,
         }).done((data) => {
             user = data;
+            let totalOrder = 0;
               $.each(user, (i, userList) => {
                 getOrderById(userList.id).then((orderItem) => {
                     let total = 0;
@@ -158,6 +163,7 @@
                     $.each(orderItem, (i, orders) => {
                         total += orders.grandTotal;
                         days = orders.createdAt.toString();
+                        totalOrder += orders.grandTotal;
                     })
                     let str = `
                 <tr id="tr_${userList.id}">
@@ -181,6 +187,15 @@
                     $("#tbSupplier tbody").prepend(str);
                 })
             })
+
+            let sum = `
+                <span>Khách Hàng: ${data.length} / </span>
+                <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN', {
+                style: "currency",
+                currency: 'VND'
+            })       .format(totalOrder)}</span>
+<!--                <span class="i text-warning">Tổng nợ: 68,000 </span>--> `;
+            $("#totalSup").prepend(sum);
             enableTootip();
             showModalUpdateSup();
         }).fail((jqXHR) => {
@@ -336,6 +351,7 @@
             App.iziToast.showSuccessAlert("Cập nhật thành công")
             $("#modalUpdateSup").modal('hide')
             enableTootip();
+            removeHandleShowModal();
             showModalUpdateSup();
         }).fail((jqHRX) => {
             console.log(jqHRX)
@@ -394,6 +410,9 @@
     }
 
     doSearchUser();
+    function removeHandleShowModal(){
+        $(".update").off('click')
+    }
 
 </script>
 
