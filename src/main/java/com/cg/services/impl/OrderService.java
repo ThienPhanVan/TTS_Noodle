@@ -428,10 +428,7 @@ public class OrderService implements IOrderService {
         return orderPurchaseDTOList;
     }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> development
     public void updateOrderStatus(OrderResult orderResult) {
         Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
         if (orderPurchase1.isPresent()) {
@@ -449,7 +446,6 @@ public class OrderService implements IOrderService {
         return orderRepository.findOrderOneMonth();
     }
 
-<<<<<<< HEAD
     @Override
     @Transactional
     public OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus) {
@@ -471,6 +467,4 @@ public class OrderService implements IOrderService {
         return orderMapper.toDTOOrderStatus(newOrder);
 
     }
-=======
->>>>>>> development
 }

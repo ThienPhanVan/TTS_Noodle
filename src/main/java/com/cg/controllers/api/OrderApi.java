@@ -2,13 +2,12 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
-<<<<<<< HEAD
+
 import com.cg.repositories.model.Order;
 
-=======
+
 import com.cg.dto.role.RoleResult;
 import com.cg.repositories.model.Order;
->>>>>>> development
 import com.cg.repositories.model.OrderType;
 import com.cg.repositories.model.Role;
 import com.cg.services.impl.OrderService;
@@ -161,10 +160,6 @@ public class OrderApi {
         return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> development
     @GetMapping("/chartOneMonth")
     public ResponseEntity<?> chartOneMonth() {
         List<OrderResultChart> chartSevenDay = orderService.findOrderOneMonth();
@@ -184,14 +179,11 @@ public class OrderApi {
         return new ResponseEntity<>(orderService.changeStatus(orderChangeStatus),HttpStatus.ACCEPTED);
 
     }
-<<<<<<< HEAD
-=======
 
     @GetMapping("/getAllRole")
     public ResponseEntity<?> getCreatedBy(){
         List<Role> roleResults = roleService.findAllRole();
         return new ResponseEntity<>(roleResults,HttpStatus.OK);
     }
->>>>>>> development
 
 }

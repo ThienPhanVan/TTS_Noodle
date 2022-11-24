@@ -26,16 +26,16 @@ public class OrderItemApi {
         return new ResponseEntity<>(orderItemResultList,HttpStatus.OK);
     }
 
-<<<<<<< HEAD
+
     @DeleteMapping("/remove")
-    public ResponseEntity<?> doRemoveCartItem(){
+    public ResponseEntity<?> doRemoveCartItem() {
 
         return new ResponseEntity<>(HttpStatus.OK);
-=======
+    }
     @PostMapping("/create")
     public ResponseEntity<?> doCreate(@Valid @RequestBody OrderItemPurchase orderItemPurchase){
         return new ResponseEntity<>(HttpStatus.CREATED);
->>>>>>> development
+
     }
 
     @GetMapping("/chartQuantityNoodleOD/{type}")
