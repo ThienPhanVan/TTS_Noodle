@@ -101,6 +101,12 @@
                                 <span>Tổng cộng</span>
                                 <span class="grandTotal"></span>
                             </div>
+                            <div class="payment_purchase">
+                                <span>Tiền trả:</span>
+                                <input class="form-control" type="number" id="cusPayment"/>
+                                <span>Còn nợ</span>
+                                <span class="paid"></span>
+                            </div>
                             <button type="button" id="btnImportOrder" class="btn btn-primary">
                                 Nhập hàng
                             </button>
@@ -185,6 +191,8 @@
     let orderItem = new OrderItem();
 
     let product = new Product();
+
+    let paymentPurchase = new PaymentPurchase();
 
 
     $(document).ready(function() {
@@ -459,12 +467,21 @@
 
         })
 
+        $("#cusPayment").on("input", function (){;
+            let payment = +$("#cusPayment").val();
+            let newPayment = grandTotal - payment;
+
+            $(".paid").attr("value", newPayment);
+            $(".paid").text(App.formatNumberSpace(newPayment + "đ"));
+        })
+
         $(".grandTotal").attr("grandTotal", grandTotal);
         $(".grandTotal").text(App.formatNumberSpace(grandTotal + "đ"));
 
     }
 
     $(".itemTotalAmount").on('input',handleGrandTotal);
+
 
 
 
@@ -512,6 +529,8 @@
         order.userId = $(".search-supplier").attr("id");
 
         order.createdAt = $("#dateID").val();
+
+        order.paid = $(".paid").val();
 
         order.orderItemPurchases = arr;
 

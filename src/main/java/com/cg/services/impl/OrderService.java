@@ -58,6 +58,9 @@ public class OrderService implements IOrderService {
     private ProductRepository productRepository;
 
     @Autowired
+    private PaymentPurchaseRepository paymentPurchaseRepository;
+
+    @Autowired
     private UserMapper userMapper;
 
 
@@ -286,7 +289,6 @@ public class OrderService implements IOrderService {
 
         Optional<User> userOptional = userRepository.findById(orderPurchase.getUserId());
 
-
         if (!userOptional.isPresent()) {
             throw new NotFoundException("Không tìm thấy nhà cung cấp!");
         }
@@ -301,9 +303,7 @@ public class OrderService implements IOrderService {
 
         BigDecimal totalAmount = BigDecimal.valueOf(0);
 
-
         Order newOrder = new Order();
-
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
 
@@ -332,6 +332,15 @@ public class OrderService implements IOrderService {
         newOrder.setCreatedAt(instant);
 
         orderRepository.save(newOrder);
+
+        PaymentPurchase newPaymentPurchase = new PaymentPurchase();
+
+        newPaymentPurchase.setOrderId(newOrder.getId());
+        newPaymentPurchase.setPaid(orderPurchase.getPaid());
+        newPaymentPurchase.setUserId(userId);
+        paymentPurchaseRepository.save(newPaymentPurchase);
+
+
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
