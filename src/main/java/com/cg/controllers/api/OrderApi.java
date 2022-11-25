@@ -2,10 +2,6 @@ package com.cg.controllers.api;
 
 
 import com.cg.dto.order.*;
-
-import com.cg.repositories.model.Order;
-
-
 import com.cg.dto.role.RoleResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
@@ -25,7 +21,6 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -33,10 +28,8 @@ public class OrderApi {
 
     @Autowired
     private OrderService orderService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     RoleService roleService;
 
@@ -117,11 +110,9 @@ public class OrderApi {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
 
-//        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
+        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
 
-        OrderResult orderResult = orderService.findById(id);
-
-        return new ResponseEntity<>(orderResult, HttpStatus.OK);
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
     }
 
     @PatchMapping("updateStatus")
@@ -141,26 +132,6 @@ public class OrderApi {
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
 
-
-    @GetMapping("/statusCompleted")
-    public ResponseEntity<?> getStatusCompleted() {
-        List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusCompleted();
-        return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
-    }
-
-//    @PostMapping("/changeStatus/{id}")
-//    public ResponseEntity<?> changeStatusOrderPending(@PathVariable Long id) {
-//        Optional<OrderResultDTO> orderResultDTOS = .f();
-//        orderResultDTOS.
-//        List<OrderResultDTO> orderResultDTOS = orderService.f();
-//        return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
-//    }
-
-    @GetMapping("/statusPending")
-    public ResponseEntity<?> getStatusPendingCustomer() {
-        List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusPending();
-        return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
-    }
     @GetMapping("/pending")
     public ResponseEntity<?> getOrderByStatusPending(){
 
@@ -183,6 +154,7 @@ public class OrderApi {
         return new ResponseEntity<>(orderPurchaseList, HttpStatus.ACCEPTED);
     }
 
+
     @GetMapping("/chartOneMonth")
     public ResponseEntity<?> chartOneMonth() {
         List<OrderResultChart> chartSevenDay = orderService.findOrderOneMonth();
@@ -193,22 +165,12 @@ public class OrderApi {
     public ResponseEntity<?> getAllOrderByRole(){
         List<OrderResult> orders = orderService.getAllOrderByRole();
         return new ResponseEntity<>(orders, HttpStatus.OK);
-
-    }
-
-    @PatchMapping("/update")
-    public ResponseEntity<?> changeStatusOrder(@RequestBody OrderChangeStatus orderChangeStatus){
-
-        return new ResponseEntity<>(orderService.changeStatus(orderChangeStatus),HttpStatus.ACCEPTED);
-
     }
 
     @GetMapping("/getAllRole")
     public ResponseEntity<?> getCreatedBy(){
         List<Role> roleResults = roleService.findAllRole();
         return new ResponseEntity<>(roleResults,HttpStatus.OK);
-
     }
-
 
 }

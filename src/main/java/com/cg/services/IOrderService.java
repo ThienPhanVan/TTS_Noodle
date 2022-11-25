@@ -49,8 +49,6 @@ public interface IOrderService {
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
-    List<OrderResultDTO> findAllOrderStatusCompleted();
-
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusPending();
 
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusCancel();
@@ -63,10 +61,6 @@ public interface IOrderService {
 
     BigDecimal chartOneDay();
 
-    List<OrderResultDTO> findAllOrderStatusPending();
 
-    OrderResultDTO setStatusOrderPending(Long id);
-
-    OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
 
 }

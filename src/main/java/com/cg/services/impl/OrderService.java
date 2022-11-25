@@ -2,6 +2,7 @@ package com.cg.services.impl;
 
 
 import com.cg.dto.order.*;
+import com.cg.dto.userDTO.UserResult;
 import com.cg.exceptions.DataInputException;
 import com.cg.mapper.OrderMapper;
 import com.cg.exceptions.NotEnoughQuantityException;
@@ -19,18 +20,22 @@ import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
 import com.cg.repositories.UserRepository;
+
 import com.cg.services.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -58,9 +63,6 @@ public class OrderService implements IOrderService {
     private ProductRepository productRepository;
 
     @Autowired
-    private PaymentPurchaseRepository paymentPurchaseRepository;
-
-    @Autowired
     private UserMapper userMapper;
 
 
@@ -81,13 +83,9 @@ public class OrderService implements IOrderService {
     public OrderResult createOrderExport(OrderParam orderParam) {
 //        Transient
         //order Item
+//        xet userid == null
         Long userId = orderParam.getUserId();
-//        Optional<User> userOptional = userRepository.findById(userId);
-//        if(userId == null && !userOptional.isPresent() ){
-//            throw new NotFoundException("Vui lòng chọn khách hàng để tạo order!");
-//        }
         if (userId == null) {
-//            throw new NotFoundException("Không Tìm Thấy UserId, vui lòng nhập id khách hàng!");
             Order order = orderMapper.toModel(orderParam);
             order.setFullName(order.getFullName());
             order.setAddress(order.getAddress());
@@ -154,10 +152,9 @@ public class OrderService implements IOrderService {
             return orderMapper.toDTO(order);
         }
         Optional<User> userOptional = userRepository.findById(userId);
-
         if (!userOptional.isPresent()) {
-
             Order order = orderMapper.toModel(orderParam);
+//            throw new NotFoundException("Không Tìm Thấy Id Khách Hàng!");
             order = orderRepository.save(order);
             return orderMapper.toDTO(order);
         }
@@ -289,8 +286,10 @@ public class OrderService implements IOrderService {
 
         Optional<User> userOptional = userRepository.findById(orderPurchase.getUserId());
 
+
         if (!userOptional.isPresent()) {
             throw new NotFoundException("Không tìm thấy nhà cung cấp!");
+
         }
 
         LocalDateTime localDateTime = LocalDateTime.parse(orderPurchase.getCreatedAt());
@@ -303,7 +302,9 @@ public class OrderService implements IOrderService {
 
         BigDecimal totalAmount = BigDecimal.valueOf(0);
 
+
         Order newOrder = new Order();
+
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
 
@@ -332,15 +333,6 @@ public class OrderService implements IOrderService {
         newOrder.setCreatedAt(instant);
 
         orderRepository.save(newOrder);
-
-        PaymentPurchase newPaymentPurchase = new PaymentPurchase();
-
-        newPaymentPurchase.setOrderId(newOrder.getId());
-        newPaymentPurchase.setPaid(orderPurchase.getPaid());
-        newPaymentPurchase.setUserId(userId);
-        paymentPurchaseRepository.save(newPaymentPurchase);
-
-
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
@@ -447,7 +439,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public BigDecimal chartOneDay() {
-        return orderRepository.chartOneDay();
+       return   orderRepository.chartOneDay();
     }
 
     @Override
@@ -455,44 +447,4 @@ public class OrderService implements IOrderService {
         return orderRepository.findOrderOneMonth();
     }
 
-    @Override
-    public List<OrderResultDTO> findAllOrderStatusCompleted() {
-        return orderRepository.findAllOrderStatusCompleted();
-    }
-
-    @Override
-    public List<OrderResultDTO> findAllOrderStatusPending() {
-        return orderRepository.findAllOrderStatusPending();
-    }
-
-    @Override
-    public OrderResultDTO setStatusOrderPending(Long id) {
-//        Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
-//
-//        Order newOrder = orderOptional.get();
-//
-//        System.out.println(newOrder);
-//
-//        newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
-//
-//        orderRepository.save(newOrder);
-
-        return null;
-    }
-        @Transactional
-        public OrderChangeStatus changeStatus (OrderChangeStatus orderChangeStatus){
-
-            Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
-
-            Order newOrder = orderOptional.get();
-
-            System.out.println(newOrder);
-
-            newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
-
-            orderRepository.save(newOrder);
-
-            return orderMapper.toDTOOrderStatus(newOrder);
-
-    }
 }

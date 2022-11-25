@@ -1,232 +1,40 @@
-/* Import Google Font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+.show--list {
+    width: 150%;
+    height: 231px;
+    /*background: red;*/
+    position: absolute;
+    top: 70px;
+    left: 25px;
+    overflow-y: scroll;
 
-body{
+
 }
-::selection{
-    color: #fff;
-    background: #4285f4;
+.show--list p {
+    /*background: yellow;*/
+    margin: 0;
+    padding: 10px 40px;
+    border-bottom: 1px solid black;
+    color: black;
 }
-.wrapper1{
-    width: 370px;
-    margin: 85px auto 0;
+
+#completeUser {
+    position: relative;
+    width: 170%;
+    height: 50px;
 }
-.select-btn, li{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-.select-btn{
-    height: 55px;
-    padding: 0 75px;
-    font-size: 22px;
-    background: #fff;
-    border-radius: 7px;
-    justify-content: space-between;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    position: absolute;
-    top: 355px;
-    left: 20px;
-}
-.select-btn i{
-    font-size: 31px;
-    transition: transform 0.3s linear;
-}
-.wrapper1.active .select-btn i{
-    transform: rotate(-180deg);
-}
-.content{
-    display: none;
-    padding: 23px;
-    margin-top: -10px;
-    background: #fff;
-    border-radius: 7px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    position: absolute;
-    left: 18px;
-}
-.wrapper1.active .content{
+.show {
     display: block;
 }
-
-.plus{
-    position: absolute;
-    right: 50px;
-    top: 348px;
-    font-size: 45px;
-}
-.content .search{
-    position: relative;
-}
-.search i{
-    top: 50%;
-    left: 15px;
-    color: #999;
-    font-size: 20px;
-    pointer-events: none;
-    transform: translateY(-50%);
-    position: absolute;
-}
-.search input{
-    height: 50px;
-    width: 100%;
-    outline: none;
-    font-size: 17px;
-    border-radius: 5px;
-    padding: 0 20px 0 43px;
-    border: 1px solid #B3B3B3;
-}
-.search input:focus{
-    padding-left: 42px;
-    border: 2px solid #4285f4;
-}
-.search input::placeholder{
-    color: #bfbfbf;
-}
-.content .options1{
-    margin-top: 10px;
-    max-height: 250px;
-    overflow-y: auto;
-    padding-right: 7px;
-}
-.options1::-webkit-scrollbar{
-    width: 7px;
-}
-.options1::-webkit-scrollbar-track{
-    background: #f1f1f1;
-    border-radius: 25px;
-}
-.options1::-webkit-scrollbar-thumb{
-    background: #ccc;
-    border-radius: 25px;
-}
-.options1::-webkit-scrollbar-thumb:hover{
-    background: #b3b3b3;
-}
-.options1 li{
-    height: 50px;
-    padding: 0 13px;
-    font-size: 21px;
-}
-.options1 li:hover, li.selected{
-    border-radius: 5px;
-    background: #f2f2f2;
-}
-
-
-.modal-alert-danger {
-    padding: 10px 35px;
-    margin-bottom: 15px;
-    /*color: #842029;*/
-    /*background-color: #f8d7da;*/
-    /*border-color: #f5c2c7;*/
-}
-
-.modal-alert-danger label {
-    display: list-item;
-}
-
-.hide{
+.hide {
     display: none;
 }
-
-.show {
-    display: block !important;
-}
-
-#message-alert {
-    width: 100vw;
-    position: fixed;
-    bottom: 0;
-}
-
-.alert-success {
-    padding: 1rem 135px;
-}
-
-.alert-danger {
-    padding: 1rem 135px;
-}
-
-
-.alert-danger h5 {
-    margin-left: -18px;
-}
-
-.alert-danger ul {
-    margin-left: -2rem;
-}
-
-label.error {
-    display: list-item;
-}
-
-input.error {
-    border: solid 1px red;
-}
-.error{
-    color: red;
-}
-
-.thumbnail {
-    width: 90px;
-    height: 70px;
-    overflow: hidden;
+.plus a {
+    float: right;
+    font-size: 23px;
 
 }
+.plus i {
+    float: right;
+    /*font-size: 23px;*/
 
-.thumbnail img {
-    width: 100%;
-    height: 100%;
-    transition-duration: 0.3s;
-}
-
-.thumbnail img:hover {
-    transform: scale(1.2);
-}
-
-#form-create-customer{
-    font-size: 18px;
-}
-
-#information{
-    height: 272px;
-    background: #F5F5F5;
-}
-
-#information a{
-    color: black;
-}
-
-#infoOrder{
-    color: black;
-    font-size: 14px;
-}
-
-.font-weight-bold{
-    background: #F5F5F5;
-}
-
-#itemTotalAmount{
-    text-align: center;
-    position: absolute;
-    right: 90px;
-
-}
-
-#totalOrderCustomers span{
-    color: black;
-    font-size: 20px;
-}
-#price{
-    width: 130px;
-}
-
-#dropdrowStatus a:hover{
-    color: white;
-    background: dodgerblue;
-}
-
-#inDebt{
-    color: red;
 }

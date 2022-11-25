@@ -1,11 +1,7 @@
 package com.cg.repositories;
 
-
+import com.cg.dto.order.ListCreatedBy;
 import com.cg.dto.order.OrderPurchaseDTO;
-import com.cg.dto.order.OrderResultDTO;
-import com.cg.dto.order.OrderPurchaseView;
-import com.cg.dto.order.OrderResult;
-import com.cg.dto.order.OrderResultDTO;
 import com.cg.dto.order.OrderPurchaseView;
 import com.cg.dto.order.OrderResultChart;
 import com.cg.repositories.model.Order;
@@ -13,10 +9,12 @@ import com.cg.repositories.model.OrderStatus;
 import com.cg.repositories.model.OrderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 @Repository
@@ -37,33 +35,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
-
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal) " +
-            "FROM Order AS o " +
-            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'COMPLETED'" )
-    List<OrderResultDTO> findAllOrderStatusCompleted();
-
-
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal) " +
-            "FROM Order AS o " +
-            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'PENDING'" )
-    List<OrderResultDTO> findAllOrderStatusPending();
-//    List<OrderResultDTO> findAllOrderPurchaseStatusPending();
-
 
     @Query(value = "SELECT * FROM purchase_order_status_completed", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete();
