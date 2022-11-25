@@ -18,7 +18,35 @@
     <!-- Sidebar  -->
     <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
-    <th:block th:replace="/layout/topNav/topNav :: topNav"></th:block>
+<!--    <th:block th:replace="/layout/topNav/topNav :: topNav"></th:block>-->
+    <div class="iq-top-navbar">
+        <div style="margin-top: 13px;" class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+
+                <div class="iq-search-bar">
+                    <form  class="searchbox">
+                        <label>
+                            <input id="inputSearch" type="text" class="text search-input" placeholder="Search...">
+                        </label>
+                        <a  id="btnSearch" class="search-link" ><i class="ri-search-line"></i></a>
+                    </form>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li class="line-height">
+                        <div class="btn btn-primary">
+                            <i class="fa fa-plus"></i>
+                            <a class="text-white create">Thêm khách hàng</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -30,27 +58,6 @@
                         <div class="iq-card-header d-flex justify-content-between">
                             <div class="iq-header-title">
                                 <a class="font-size-20 font-weight-bold" href="/customer">Khách Hàng</a>
-                            </div>
-                            <div class="btn btn-primary">
-                                <i class="fa fa-plus"></i>
-                                <a class="text-white create">Thêm khách hàng</a>
-                                <!--                                   data-toggle="modal" data-target="#modalCreateCustomer"-->
-                            </div>
-                        </div>
-                        <div class="list_form_show">
-                            <div class="filter_product_box">
-                                <nav class="navbar navbar-light bg-light">
-                                    <form class="form-inline">
-                                        <input id="inputSearch" style="margin-left: -16px"
-                                               class="form-control form-control-sm mr-sm-1"
-                                               type="search" placeholder="Tìm kiếm" aria-label="Search">
-                                        <div id="btnSearch" class="input-group-append">
-                                            <button class="btn btn-outline-warning" type="button">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </nav>
                             </div>
                         </div>
                         <div class="iq-card-body">
@@ -176,6 +183,7 @@
             let totalOrder = 0;
              $.each(user, (i, userList) => {
                 getOrderById(userList.id).then((orderItem) => {
+                    console.log(orderItem, "orderItem")
                     let total = 0;
                     let days;
                     $.each(orderItem, (i, orders) => {
@@ -233,7 +241,7 @@
                 },
                 type: "GET",
                 async: false,
-                url: "http://localhost:8080/api/orders/" + userId,
+                url: "http://localhost:8080/api/orders/byIdUser/" + userId,
             }).done((data) => {
                 order = data;
             }).fail((jxHQR) => {
@@ -331,7 +339,7 @@
             "avatarUrl": $('#avatarUp').val(),
         }
         let total = 0;
-        let days = "Chưa Mua Hàng"
+        let days = "Chưa Mua Hàng";
         getOrderById(userId).then((orderId) => {
             $.each(orderId, (i, itemOrder) => {
                 total += itemOrder.grandTotal;

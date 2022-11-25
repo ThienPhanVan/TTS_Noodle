@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en" >
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="left_side_bar">
     <div class="iq-sidebar">
         <div class="iq-navbar-logo d-flex justify-content-between">
@@ -18,7 +18,7 @@
             <nav class="iq-sidebar-menu">
                 <ul id="iq-sidebar-toggle" class="iq-menu">
                     <li class="active">
-                        <a href="/home" class="iq-waves-effect"   aria-expanded="true"><span
+                        <a href="/home" class="iq-waves-effect" aria-expanded="true"><span
                                 class="ripple rippleEffect"></span><i
                                 class="las la-home iq-arrow-left"></i><span>Tổng Quan</span> </a>
                     </li>
@@ -39,15 +39,15 @@
                                 class="ri-table-line iq-arrow-left"></i><span>Quản Lý</span><i
                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                         <ul id="tables" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-<!--                            <li>-->
-<!--                                <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse"-->
-<!--                                   aria-expanded="false"><i class="lab la-elementor iq-arrow"></i><span>Kho-->
-<!--                                 Hàng</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>-->
-<!--                                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#tables">-->
-<!--                                   -->
-<!--                                    <li><a href="/noodle"><i class="las la-magnet ml-5"></i>Tồn Kho Bún</a></li>-->
-<!--                                 </ul>-->
-<!--                            </li>-->
+                            <!--                            <li>-->
+                            <!--                                <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse"-->
+                            <!--                                   aria-expanded="false"><i class="lab la-elementor iq-arrow"></i><span>Kho-->
+                            <!--                                 Hàng</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>-->
+                            <!--                                <ul id="ui-elements" class="iq-submenu collapse" data-parent="#tables">-->
+                            <!--                                   -->
+                            <!--                                    <li><a href="/noodle"><i class="las la-magnet ml-5"></i>Tồn Kho Bún</a></li>-->
+                            <!--                                 </ul>-->
+                            <!--                            </li>-->
                             <li><a href="/khohang"><i class="ri-database-line "></i>Kho Hàng</a></li>
                             <li><a href="/donhang"><i class="ri-database-line"></i>Đơn Hàng</a></li>
                             <li><a href="/purchase"><i class="ri-database-line"></i>Nhập Hàng</a></li>
@@ -76,6 +76,25 @@
                             <li><a href="/customer_order"><i class="ri-folder-chart-2-line"></i>Khách Hàng</a></li>
                             <li><a href="#"><i class="ri-folder-chart-2-line"></i>Nhà Cung Cấp</a></li>
                         </ul>
+                    </li>
+                    <hr>
+                    <li>
+                        <div href="#menu-level" class="search-toggle d-flex collapsed" data-toggle="collapse"
+                             aria-expanded="false">
+                            <div>
+                                <img style="height: 100px"
+                                     src="https://www.nicepng.com/png/detail/263-2635962_png-file-svg-admin-icon-png.png"
+                                     class="img-fluid rounded mr-3" alt="user">
+                            </div>
+                            <div class="">
+                                <p class="text-center">Admin</p>
+                                <hr>
+                                <a style="width: 127px; height: 30px; justify-content: space-evenly" class="btn btn-outline-warning iq-sign-btn" href="#"
+                                   role="button">Sign Out<i
+                                        class="ri-login-box-line ml-2"></i></a>
+                            </div>
+                        </div>
+
                     </li>
                 </ul>
             </nav>

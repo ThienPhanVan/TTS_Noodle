@@ -3,15 +3,14 @@ package com.cg.controllers.api;
 
 import com.cg.dto.order.*;
 
-import com.cg.repositories.model.Order;
+import com.cg.repositories.model.*;
 
 
 import com.cg.dto.role.RoleResult;
 import com.cg.repositories.model.Order;
-import com.cg.repositories.model.OrderType;
-import com.cg.repositories.model.Role;
 import com.cg.services.impl.OrderService;
 
+import com.cg.services.impl.PaymentPurchaseService;
 import com.cg.services.impl.RoleService;
 import com.cg.services.impl.UserService;
 import org.hibernate.sql.Insert;
@@ -39,6 +38,9 @@ public class OrderApi {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    private PaymentPurchaseService paymentPurchaseService;
 
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
@@ -208,6 +210,22 @@ public class OrderApi {
         List<Role> roleResults = roleService.findAllRole();
         return new ResponseEntity<>(roleResults,HttpStatus.OK);
 
+    }
+
+    @GetMapping("/byIdUser/{idUser}")
+    public ResponseEntity<?> getOrderByIdUser(@PathVariable Long idUser) {
+
+        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(idUser);
+
+        return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/paymentPurchase")
+    public ResponseEntity<?> getAllPaymentPurchase() {
+
+        List<PaymentPurchase> listPaymentPurchase = paymentPurchaseService.findAll();
+
+        return new ResponseEntity<>(listPaymentPurchase, HttpStatus.OK);
     }
 
 
