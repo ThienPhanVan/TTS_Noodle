@@ -103,7 +103,7 @@
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>
-                    <span id="inDebt">(Nợ: ${paymentCustomer[i].paid})</span></td>
+                    <span id="inDebt">(Nợ: ${order.paid})</span></td>
                     <td>
                           <div class="iq-card-header-toolbar d-flex align-items-center">
                            <div class="dropdown">
@@ -151,11 +151,9 @@
             url: "http://localhost:8080/api/orders/exportsNoodle",
         }).done((data) => {
             let totalOrder = 0;
-
             data.forEach(item => {
                 totalOrder += item.grandTotal;
                 let str = renderOrderCustomer(item);
-
                 $("#tbOrder tbody").prepend(str);
 
             });
@@ -206,21 +204,7 @@
             console.log(jqXHR);
         })
     }
-
     findAllPaymentCustomer();
-
-    // function editStatusOrder(orderId){
-    //     $("#statusPending").on("click", function () {
-    //         $.ajax({
-    //             headers: {
-    //                 "accept": "application/json",
-    //                 "content-type": "application/json"
-    //             },
-    //             type: "GET",
-    //             url: "http://localhost:8080/api/orders/statusPending",
-    //         }).done((data) => {
-    // }
-    //     }
 
     function findAllStatusPending() {
         $("#statusPending").on("click", function () {

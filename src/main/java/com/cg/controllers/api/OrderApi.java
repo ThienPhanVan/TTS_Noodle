@@ -67,7 +67,7 @@ public class OrderApi {
     @GetMapping("/exportsNoodle")
     public ResponseEntity<?> getAllOrderByExportNoodle(){
 
-        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
+        List<OrderResultDTO> orderResultList = orderService.findAllByOrderView();
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }

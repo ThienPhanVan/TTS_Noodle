@@ -69,4 +69,6 @@ public interface IOrderService {
 
     OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
 
+    List<OrderResultDTO> findAllByOrderView();
+
 }
