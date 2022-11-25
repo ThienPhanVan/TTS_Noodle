@@ -29,11 +29,12 @@ public class OrderMapper {
                 .setCreatedAt(order.getCreatedAt());
     }
 
-    public OrderChangeStatus toDTOOrderStatus(Order order){
+    public OrderChangeStatus toDTOOrderStatus(Order order) {
         return new OrderChangeStatus()
                 .setId(order.getId())
                 .setOrderStatus(order.getOrderStatus());
     }
+
     public OrderPurchaseView toDTOView(Order order) {
         return new OrderPurchaseView()
                 .setId(order.getId())
@@ -78,7 +79,7 @@ public class OrderMapper {
 
     public Order toModel(OrderParam orderParam) {
         return new Order()
-                .setId(orderParam.getId())
+                //    .setId(orderParam.getId())
                 .setPhone(orderParam.getPhone())
                 .setAddress(orderParam.getAddress())
                 .setFullName(orderParam.getFullName());

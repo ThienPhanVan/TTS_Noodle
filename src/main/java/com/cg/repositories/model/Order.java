@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 
-
 @NamedNativeQuery(
         name = "noodle.chartSevenDay",
         query =
@@ -96,7 +95,7 @@ public class Order {
     private OrderStatus orderStatus;
 
 
-    @Column(name = "address", nullable = false, length = 95)
+    @Column(name = "address", length = 95)
     private String address;
 
     @Column(name = "created_by", nullable = false)
