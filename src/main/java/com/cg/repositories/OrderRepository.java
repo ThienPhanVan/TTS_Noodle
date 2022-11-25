@@ -26,6 +26,21 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderType(OrderType orderType);
 
+
+    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+            "o.id, " +
+            "o.createdAt, " +
+            "o.fullName, " +
+            "o.address, " +
+            "o.orderType, " +
+            "o.orderStatus, " +
+            "o.grandTotal, " +
+            "p.paid) " +
+            "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
+            "WHERE o.orderType = 'CUSTOMER' " )
+    List<OrderResultDTO> findAllByOrderView();
+
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
     @Query(name = "noodle.chartSevenDay", nativeQuery = true)
@@ -38,30 +53,30 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal) " +
-            "FROM Order AS o " +
-            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'COMPLETED'" )
-    List<OrderResultDTO> findAllOrderStatusCompleted();
+//    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+//            "o.id, " +
+//            "o.createdAt, " +
+//            "o.fullName, " +
+//            "o.address, " +
+//            "o.orderType, " +
+//            "o.orderStatus, " +
+//            "o.grandTotal) " +
+//            "FROM Order AS o " +
+//            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'COMPLETED'" )
+//    List<OrderResultDTO> findAllOrderStatusCompleted();
 
 
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal) " +
-            "FROM Order AS o " +
-            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'PENDING'" )
-    List<OrderResultDTO> findAllOrderStatusPending();
+//    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+//            "o.id, " +
+//            "o.createdAt, " +
+//            "o.fullName, " +
+//            "o.address, " +
+//            "o.orderType, " +
+//            "o.orderStatus, " +
+//            "o.grandTotal) " +
+//            "FROM Order AS o " +
+//            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'PENDING'" )
+//    List<OrderResultDTO> findAllOrderStatusPending();
 //    List<OrderResultDTO> findAllOrderPurchaseStatusPending();
 
 
