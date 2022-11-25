@@ -78,7 +78,6 @@ public class Order {
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
 
-
     @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 

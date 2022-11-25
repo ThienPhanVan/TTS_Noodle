@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <th:block th:replace="/layout/script/head :: head" />
-
+    <th:block th:replace="/layout/script/head :: head"/>
 </head>
 
 <body>
@@ -37,8 +36,8 @@
             <div class="filter_product_box">
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline">
-                        <input style="margin-left: -16px" class="form-control form-control-sm mr-sm-1 search" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" id="btnSearch" type="submit">Tìm kiếm</button>
+                        <input style="margin-left: -16px" class="form-control search" id="searchOrder" type="search" placeholder="Tìm kiếm" aria-label="Search">
+<!--                        <button class="btn btn-outline-primary my-2 my-sm-1 btn-sm" id="btnSearch" type="submit">Tìm kiếm</button>-->
                     </form>
                 </nav>
             </div>
@@ -50,21 +49,21 @@
                     <thead>
                     <tr class="list_product">
                         <td>ID</td>
-                        <td>Ngày Nhập</td>
-                        <td>Người Nhập</td>
                         <td>Nhà cung cấp</td>
+                        <td>Người Nhập</td>
                         <td>
-                            <select class="form-control selectStatus" style="height: fit-content" name="cars" id="cars">
-                                <option value="Trạng thái">Trạng thái</option>
-                                <option class="pending" value="PENDING">PENDING</option>
-                                <option id="complete" value="COMPLETE">COMPLETE</option>
-                                <option id="cancel" value="CANCEL">CANCEL</option>
+                            <select class="form-control selectStatus" style="height: fit-content;  text-align: center" name="cars" id="cars">
+                                <option disabled selected value="Trạng thái">Trạng thái</option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="COMPLETED">COMPLETED</option>
+                                <option value="CANCELLED">CANCELLED</option>
                             </select>
                         </td>
                         <td>Tổng tiền</td>
+                        <td>Ngày Nhập</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="text-align: center">
 
                     </tbody>
                 </table>
@@ -133,6 +132,7 @@
 </script>
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
+<th:block th:replace="/admin/order/modalChangeStatus :: modalChangeStatus" />
 <script>
 
     let order = new Order();
@@ -142,37 +142,36 @@
 
     function renderOrder(obj){
 
+        let s1 = "";
+        switch (obj.orderstatus) {
+            case "PENDING":
+                s1 = "<option value='PENDING'>PENDING</option>" +
+                    "<option value='COMPLETED'>COMPLETED</option>" +
+                    "<option value='CANCELLED'>CANCELLED</option>"
+                break;
+            case "COMPLETED":
+                s1 = "<option value='COMPLETED'>COMPLETED</option>";
+                break;
+            case "CANCELLED":
+                s1 = "<option value='CANCELLED'>CANCELLED</option>";
+                break;
+        }
+        // <select class="form-control statusOrder" style="height: fit-content;color: black;font-weight: bold; text-align: center" name="cars" id="cars">
+        //   ${s1}
+        // </select>
 
         let str = `
-              <tr class="list-product" id="tr_${obj.id}">
+              <tr class="list-product change" id="tr_${obj.id}">
                         <th>${obj.id}</th>
-                        <th>${obj.createdat}</th>
-                        <th>${obj.code}</th>
                         <th>${obj.fullname}</th>
-                        <th>${obj.orderstatus}</th>
-                        <th>${obj.grandtotal} đ</th>
-                    </tr>
+                        <th>${obj.code}</th>
+                        <th>${obj.orderstatus}
+                        </th>
+                        <th style="text-align: right">${obj.grandtotal} đ</th>
+                        <th>${obj.createdat}</th>
+              </tr>
         `
-
         return str;
-    }
-
-    function getUserById(userId) {
-        return (
-            $.ajax({
-                headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/users/" + userId,
-            }).done((data) => {
-
-            }).fail((jxHQR) => {
-                console.log(jxHQR)
-            })
-        )
-
     }
 
     $('.search').on('input', function (){
@@ -196,7 +195,7 @@
 
                 order = item;
 
-                order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                order.createdat = $.FormatDateTime(order.createdat);
 
                 order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -205,13 +204,75 @@
                 $("#tbListOrder tbody").prepend(str);
 
             })
+            if (data.length === 0){
+                let std = `<tr style="text-align: center">
+                                <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                            </tr>`
+
+                $("#tbListOrder tbody").prepend(std);
+            }
         })
         .fail((jqXHR) => {
             console.log(jqXHR);
+            let str = `<tr>Không tìm thấy đơn hàng</tr>`
+
+            $("#tbListOrder tbody").prepend(str);
         })
     }
-    
 
+    $("#tbListOrder tbody .change").on("click", function (){
+
+        let id = $(this).val("id");
+        console.log(id);
+
+    })
+
+    let orderId = null;
+
+    function changeStatus(){
+        console.log(orderId);
+
+        order.id = orderId;
+        order.status = $(".statusOrder").val();
+
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "PATCH",
+            "url": "http://localhost:8080/api/orders/update",
+            "data": JSON.stringify(order)
+        })
+        .done((data) =>{
+
+            order = data;
+
+            let str = renderOrder(data);
+
+            let currentRow = $('#tr_' + data.id);
+
+            currentRow.replaceWith(str);
+
+            iziToast.success({
+                title: 'OK',
+                position: 'bottomLeft',
+                timeout: 1500,
+                message: 'Thay đổi trạng thái đơn hàng thành công!!'
+            });
+
+        })
+        .fail((jqXHR)=>{
+            console.log(jqXHR)
+
+            iziToast.error({
+                title: 'ERROR',
+                position: 'bottomLeft',
+                timeout: 2000,
+                message: 'Thay đổi trạng thái đơn hàng thất bại!!'
+            });
+        })
+    }
 
     $(".selectStatus").on("change", function ()  {
 
@@ -220,10 +281,10 @@
         if (type === "PENDING"){
             handleShowOrderPending();
         }
-        if (type === "COMPLETE"){
+        if (type === "COMPLETED"){
             handleShowOrderComplete();
         }
-        if(type === "CANCEL"){
+        if(type === "CANCELLED"){
             handleShowOrderCancel();
         }
     })
@@ -242,8 +303,9 @@
 
                 console.log(data);
                 $.each(data, (i,item)=>{
+                    order = item;
 
-                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                    order.createdat = $.FormatDateTime(order.createdat);
 
                     order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -268,26 +330,27 @@
             "type": "GET",
             "url": "http://localhost:8080/api/orders/complete"
         })
-            .done((data)=>{
-                $("#tbListOrder tbody").html("");
+        .done((data)=>{
+            $("#tbListOrder tbody").html("");
 
-                console.log(data);
-                $.each(data, (i,item)=>{
+            console.log(data);
+            $.each(data, (i,item)=>{
+                order = item;
 
-                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                order.createdat = $.FormatDateTime(order.createdat);
 
-                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+                order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
-                    let str =  renderOrder(item);
+                let str =  renderOrder(item);
 
-                    $("#tbListOrder tbody").prepend(str);
-
-                })
+                $("#tbListOrder tbody").prepend(str);
 
             })
-            .fail((jqXHR)=>{
-                console.log(jqXHR)
-            })
+
+        })
+        .fail((jqXHR)=>{
+            console.log(jqXHR)
+        })
     }
 
     function handleShowOrderCancel(){
@@ -305,7 +368,9 @@
                 console.log(data);
                 $.each(data, (i,item)=>{
 
-                    order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                    order = item;
+
+                    order.createdat = $.FormatDateTime(order.createdat);
 
                     order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -320,10 +385,6 @@
                 console.log(jqXHR)
             })
     }
-
-
-
-
 
     function getAllOrder(){
         $.ajax({
@@ -340,7 +401,7 @@
 
                 order = item;
 
-                order.createdat = moment(order.createdat).format("yyyy-mm-dd HH:mm:ss");
+                order.createdat = $.FormatDateTime(order.createdat);
 
                 order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
@@ -348,8 +409,75 @@
 
                 $("#tbListOrder tbody").prepend(str);
 
+                handleClick();
+                handleEvent();
+
             })
         })
+    }
+
+    function handleClick(){
+        $("#tbListOrder tbody tr").on("click", function () {
+            orderId = $(this).attr('id').replace('tr_', '');
+            // changeStatus();
+            console.log(orderId);
+        })
+    }
+    function handleEvent(){
+        $("#tbListOrder tbody tr .statusOrder").on("click", function (){
+            orderStatus = $(this).attr('value');
+            console.log(orderStatus);
+        })
+    }
+
+
+    $(".statusOrder").on("change", function (){
+        let status =  $(this).val();
+        console.log(status);
+    })
+
+    function handleChangeStatus(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/orders/imports"
+        })
+            .done((data) => {
+
+                $.each(data , (i,item) => {
+
+                    order = item;
+
+                    order.createdat = $.FormatDateTime(order.createdat);
+
+                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+
+                    let str =  renderOrder(item);
+
+                    $("#tbListOrder tbody").prepend(str);
+
+                    // handleClick();
+
+                })
+            })
+    }
+
+    $.FormatDateTime = function (dateToFormat) {
+
+        let dateObj = new Date(dateToFormat);
+
+        let month = (dateObj.getUTCMonth() + 1).toString().padStart(2, "0");
+        let day = dateObj.getUTCDate().toString().padStart(2, "0");
+        let year = dateObj.getUTCFullYear().toString().padStart(4, "0");
+        let hours = dateObj.getUTCHours().toString().padStart(2, "0");
+        let minutes = dateObj.getUTCMinutes().toString().padStart(2, "0");
+
+        let dateStr =  hours + ":" + minutes + "/" + day + "/" + month + "/" + year ;
+
+        return dateStr;
     }
 
     getAllOrder();

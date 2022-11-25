@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<th:block th:fragment="modalChangeStatus">
+    <div class="modal fade" id="modalChangeStatusOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tạo Khách Hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="" id="frmChangeStatus">
+                        <div class="form-row">
+                                <div class="form-group ">
+                                    <label for="nameSup">Nhà cung cấp</label>
+                                    <input disabled type="text" class="form-control" name="nameSup" id="nameSup">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="Admin">Người nhập</label>
+                                    <input disabled type="text" class="form-control" name="Admin" id="Admin">
+                                </div>
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select class="form-control selectStatus" style="height: fit-content;  text-align: center" name="cars" id="cars">
+                                        <option disabled selected value="Trạng thái">Trạng thái</option>
+                                        <option value="PENDING">PENDING</option>
+                                        <option value="COMPLETED">COMPLETED</option>
+                                        <option value="CANCELLED">CANCELLED</option>
+                                    </select>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="grandTotal">Tổng tiền</label>
+                                    <input disabled type="text" class="form-control" name="grandTotal" id="grandTotal">
+                                </div>
+                                <div class="form-group">
+                                    <label for="datetime">Ngày nhập</label>
+                                    <input disabled type="text" class="form-control" name="datetime" id="datetime">
+                                </div>
+                            </div>
+                    </form>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="btnChangeStatus" class="btn btn-primary">Save</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
