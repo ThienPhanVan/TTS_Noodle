@@ -68,4 +68,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "call noodle.totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
 
+
 }
