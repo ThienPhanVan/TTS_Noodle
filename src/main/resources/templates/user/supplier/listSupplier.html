@@ -18,16 +18,17 @@
     <!-- Sidebar  -->
     <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
-<!--    <th:block th:replace="/layout/topNav/topNav :: topNav"/>-->
+    <!--    <th:block th:replace="/layout/topNav/topNav :: topNav"/>-->
 
     <div class="iq-top-navbar">
         <div style="margin-top: 13px;" class="iq-navbar-custom">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
 
                 <div class="iq-search-bar">
-                    <form  class="searchbox">
+                    <form class="searchbox">
                         <label>
-                            <input id="inputSearchSupp" type="text" class="text search-input" placeholder="Search Supplier...">
+                            <input id="inputSearchSupp" type="text" class="text search-input"
+                                   placeholder="Search Supplier...">
                         </label>
                         <a id="btnSearchSupp" class="search-link" href="#"><i class="ri-search-line"></i></a>
                     </form>
@@ -80,7 +81,7 @@
                                         <th>Địa Chỉ</th>
                                         <th>Lần Cuối NH</th>
                                         <th>Tổng tiền (đ)</th>
-                                        <th>Nợ</th>
+                                        <th>Nợ (đ)</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -112,7 +113,8 @@
                     </ul>
                 </div>
                 <div class="col-lg-6 ">
-                    CODEGYM HUẾ 2022<a  href="#">&nbsp &nbsp TTS-Noodle</a>&nbsp &nbsp WE ARE LÒVÉ YOU &nbsp <i class="ri-heart-fill"></i>.
+                    CODEGYM HUẾ 2022<a href="#">&nbsp &nbsp TTS-Noodle</a>&nbsp &nbsp WE ARE LÒVÉ YOU &nbsp <i
+                        class="ri-heart-fill"></i>.
                 </div>
             </div>
         </div>
@@ -129,7 +131,8 @@
 </body>
 <script>
     let user = new User();
-    console.log(user)
+    let paymentPurchase = new PaymentPurchase();
+    let payment;
 
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
@@ -182,17 +185,27 @@
         }).done((data) => {
             user = data;
             let totalOrder = 0;
-              $.each(user, (i, userList) => {
-                getOrderById(userList.id).then((orderItem) => {
-                    let total = 0;
-                    let days;
-                    let no;
-                    $.each(orderItem, (i, orders) => {
-                        total += orders.grandTotal;
-                        days = orders.createdAt.toString();
-                        totalOrder += orders.grandTotal;
+            $.each(user, (i, userList) => {
+                let paymentPurchase = 0;
+                getPaymentByUserid(userList.id).then((payment) => {
+                    $.each(payment, (i, paymentList) => {
+                        console.log(paymentList, "item")
+                        paymentPurchase += paymentList.paid;
                     })
-                    let str = `
+                    console.log(paymentPurchase, "paid")
+
+                    getOrderById(userList.id).then((orderItem) => {
+                        let total = 0;
+                        let days;
+                        let no;
+
+                        $.each(orderItem, (i, orders) => {
+                            total += orders.grandTotal;
+                            days = orders.createdAt.toString();
+                            totalOrder += orders.grandTotal;
+
+                        })
+                        let str = `
                 <tr id="tr_${userList.id}">
                     <td><img height="50" src=${userList.avatarUrl} alt="noavatar"></td>
                     <td>${userList.fullName}</td>
@@ -201,17 +214,18 @@
                     <td>${userList.address}</td>
                     <td id="cra">${days === undefined ? "" : moment(days).format('DD/MM/YYYY -- hh:mm')}</td>
                     <td id="to">${new Intl.NumberFormat('vi-VN').format(total)}</td>
-                         <td id="crb">${0}</td>
-                       <td class="w-45">
-                               <a class="btn btn-outline-warning update" data-id="${userList.id}" data-toggle="tooltip"
+                    <td id="debt">${new Intl.NumberFormat('vi-VN').format(paymentPurchase)}</td>
+                    <td class="w-45">
+                         <a class="btn btn-outline-warning update" data-id="${userList.id}" data-toggle="tooltip"
                                 data-toggle="modal" data-target="#modalUpdateCus"
                                 data-original-title="Edit" >
                                   <i class="ri-pencil-line"></i>
-                               </a>
-                       </td>
+                         </a>
+                    </td>
                     </tr>
                                `;
-                    $("#tbSupplier tbody").prepend(str);
+                        $("#tbSupplier tbody").prepend(str);
+                    })
                 })
             })
 
@@ -220,7 +234,7 @@
                 <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN', {
                 style: "currency",
                 currency: 'VND'
-            })       .format(totalOrder)}</span>
+            }).format(totalOrder)}</span>
 <!--                <span class="i text-warning">Tổng nợ: 68,000 </span>--> `;
             $("#totalSup").prepend(sum);
             enableTootip();
@@ -268,6 +282,26 @@
         )
 
     }
+
+    function getPaymentByUserid(userId) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                async : false ,
+                type: "GET",
+                url: "http://localhost:8080/api/orders/paymentPurchase/" + userId,
+            }).done((data) => {
+                console.log(data, "paymentaaa")
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+
+    }
+
 
     $(".create").on('click', function () {
         $("#modalCreateSupplier").modal('show')
@@ -357,7 +391,7 @@
             data: JSON.stringify(createUser)
         }).done((data) => {
             user = data;
-             let str = ` <tr id="tr_${user.id}">
+            let str = ` <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
                     <td>${user.fullName}</td>
                     <td>${user.email}</td>
@@ -408,8 +442,8 @@
                             days = itemUser.createdAt;
                         })
 
-                     })
-                    console.log(total + "+" + days , "daytotal")
+                    })
+                    console.log(total + "+" + days, "daytotal")
                     let str = ` <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
                     <td>${user.fullName}</td>
@@ -437,7 +471,8 @@
     }
 
     doSearchUser();
-    function removeHandleShowModal(){
+
+    function removeHandleShowModal() {
         $(".update").off('click')
     }
 

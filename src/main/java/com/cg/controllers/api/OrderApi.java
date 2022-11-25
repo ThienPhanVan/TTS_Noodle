@@ -3,6 +3,7 @@ package com.cg.controllers.api;
 
 import com.cg.dto.order.*;
 
+import com.cg.dto.payment.PaymentResult;
 import com.cg.repositories.model.*;
 
 
@@ -220,10 +221,10 @@ public class OrderApi {
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
     }
 
-    @GetMapping("/paymentPurchase")
-    public ResponseEntity<?> getAllPaymentPurchase() {
+    @GetMapping("/paymentPurchase/{id}")
+    public ResponseEntity<?> getAllPaymentPurchase(@PathVariable Long id) {
 
-        List<PaymentPurchase> listPaymentPurchase = paymentPurchaseService.findAll();
+        List<PaymentResult> listPaymentPurchase = paymentPurchaseService.findAllByUserId(id);
 
         return new ResponseEntity<>(listPaymentPurchase, HttpStatus.OK);
     }
