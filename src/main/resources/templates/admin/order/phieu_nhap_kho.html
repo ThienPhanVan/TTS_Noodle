@@ -156,16 +156,16 @@
                 s1 = "<option value='CANCELLED'>CANCELLED</option>";
                 break;
         }
+        // <select class="form-control statusOrder" style="height: fit-content;color: black;font-weight: bold; text-align: center" name="cars" id="cars">
+        //   ${s1}
+        // </select>
 
         let str = `
               <tr class="list-product change" id="tr_${obj.id}">
                         <th>${obj.id}</th>
                         <th>${obj.fullname}</th>
                         <th>${obj.code}</th>
-                        <th>
-                            <select class="form-control statusOrder" style="height: fit-content;color: black;font-weight: bold; text-align: center" name="cars" id="cars">
-                              ${s1}
-                            </select>
+                        <th>${obj.orderstatus}
                         </th>
                         <th style="text-align: right">${obj.grandtotal} đ</th>
                         <th>${obj.createdat}</th>
