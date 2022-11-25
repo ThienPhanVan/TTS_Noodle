@@ -18,6 +18,7 @@ import org.hibernate.sql.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -112,7 +113,7 @@ public class OrderApi {
 
     }
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody OrderParam orderParam) {
+    public ResponseEntity<?> create(@Valid @RequestBody OrderParam orderParam) {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.CREATED);
     }
 

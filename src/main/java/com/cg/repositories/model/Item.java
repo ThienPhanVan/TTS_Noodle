@@ -76,12 +76,6 @@ import java.time.Instant;
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
 
-//    @Column(name = "updated_at", nullable = false)
-//    private Instant updatedAt;
-//
-//
-//    @Column(name = "updated_by", nullable = false)
-//    private Long updatedBy;
 
     public Item setOrderId(Long orderId) {
         this.order = new Order(this.orderId = orderId);

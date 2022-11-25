@@ -7,6 +7,7 @@ import com.cg.dto.userDTO.UserResult;
 import com.cg.exceptions.NotFoundException;
 import com.cg.mapper.OrderMapper;
 import com.cg.mapper.UserMapper;
+import com.cg.repositories.PaymentCustomerRepository;
 import com.cg.repositories.UserRepository;
  import com.cg.repositories.model.Role;
 import com.cg.repositories.model.User;
@@ -34,6 +35,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private PaymentCustomerRepository paymentCustomerRepository;
 
     @Override
     @Transactional(readOnly = true)
