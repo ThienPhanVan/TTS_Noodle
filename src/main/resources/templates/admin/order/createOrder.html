@@ -293,12 +293,13 @@
                     </td>
                     <td>
                         <input class="text-center" type="number" id="price" name="price"
-                        value="${new Intl.NumberFormat('vi-VN').format(product.price)}"
+                        value="${product.price}"
                         />
 
                     </td>
                     <td>
-                        <input disabled class="form-control-sm-2" id="itemTotalAmount" type="number" value="${new Intl.NumberFormat('vi-VN').format(0)}">
+                        <input class="form-control-sm-2" id="itemTotalAmount" type="text" value="0">
+
                     </td>
                 </tr>`
         return str;
@@ -365,8 +366,8 @@
             "orderItems": [{
                 "quantity": +$("#inputQuantity").val(),
                 "productId": 1
-            }]
-
+            }],
+            "paid": +$("#remainingAmount").val()
         }
         $.ajax({
             headers: {
@@ -389,7 +390,7 @@
                 // setTimeout(() => {
                 //     window.location.href = "/customer_order/create"
                 // },1500)
-                $("#inputQuantity").val("0");
+                $("#inputQuantity").val(0);
                 $("#selectCustomer").text("Chọn khách hàng");
                 }).fail((jqXHR) => {
                 iziToast.warning({

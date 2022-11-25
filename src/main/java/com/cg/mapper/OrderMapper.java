@@ -25,6 +25,7 @@ public class OrderMapper {
                 .setUserId(order.getUserId())
                 .setFullName(order.getFullName())
                 .setCreatedBy(order.getCreatedBy())
+//                .setPaid()
                 .setCreatedAt(order.getCreatedAt());
     }
 

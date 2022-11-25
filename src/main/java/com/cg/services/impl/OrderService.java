@@ -43,9 +43,6 @@ public class OrderService implements IOrderService {
     private OrderMapper orderMapper;
 
     @Autowired
-    private OrderItemMapper orderItemMapper;
-
-    @Autowired
     private OrderItemRepository orderItemRepository;
 
     @Autowired
@@ -57,9 +54,9 @@ public class OrderService implements IOrderService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private UserMapper userMapper;
 
+    @Autowired
+    private PaymentCustomerRepository paymentCustomerRepository;
 
     @Override
     public List<OrderResult> findAll() {
@@ -79,6 +76,7 @@ public class OrderService implements IOrderService {
 //        Transient
         //order Item
         Long userId = orderParam.getUserId();
+
 //        Optional<User> userOptional = userRepository.findById(userId);
 //        if(userId == null && !userOptional.isPresent() ){
 //            throw new NotFoundException("Vui lòng chọn khách hàng để tạo order!");
@@ -146,6 +144,12 @@ public class OrderService implements IOrderService {
                     orderItem.setOrderId(order.getId());
                     orderItem.setPrice(item.getPrice());
                     orderItemRepository.save(orderItem);
+
+                    PaymentCustomer paymentCustomer = new PaymentCustomer();
+                    paymentCustomer.setId(orderParam.getUserId());
+                    paymentCustomer.setOrderId(order.getId());
+                    paymentCustomer.setPaid(orderParam.getPaid());
+                    paymentCustomerRepository.save(paymentCustomer);
                 }
             }
             return orderMapper.toDTO(order);
@@ -226,6 +230,14 @@ public class OrderService implements IOrderService {
                 orderItem.setOrderId(order.getId());
                 orderItem.setPrice(item.getPrice());
                 orderItemRepository.save(orderItem);
+
+                PaymentCustomer paymentCustomer = new PaymentCustomer();
+                paymentCustomer.setId(orderParam.getUserId());
+                paymentCustomer.setUserId(user.getId());
+                paymentCustomer.setOrderId(order.getId());
+                paymentCustomer.setPaid(orderParam.getPaid());
+                paymentCustomerRepository.save(paymentCustomer);
+
             }
         }
         return orderMapper.toDTO(order);

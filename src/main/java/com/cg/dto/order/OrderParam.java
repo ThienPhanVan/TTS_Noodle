@@ -1,11 +1,11 @@
 package com.cg.dto.order;
 
-import com.cg.repositories.model.Product;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
+import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,5 +24,7 @@ public class OrderParam {
     private String phone;
 
     private String address;
+
+    private BigDecimal paid;
 
 }
