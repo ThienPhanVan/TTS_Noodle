@@ -143,6 +143,10 @@
 
     let user = new User();
 
+    let orderItem = new OrderItem();
+
+    let orderId = null;
+
 
 
     function renderOrder(obj){
@@ -181,7 +185,7 @@
                         </th>
                           <th>${obj.createdat}</th>
                         <th>
-                             <i class="fas fa-edit" id="btnEdit"></i>
+                             <i class="fas fa-edit btnEdit"></i>
                         </th>
               </tr>
         `
@@ -241,7 +245,7 @@
 
     })
 
-    let orderId = null;
+
 
     function changeStatus(){
         console.log(orderId);
@@ -405,8 +409,42 @@
     }
 
     function handleUpdatePayment(){
-        $("#btnEdit").on("click", function (){
-            alert("hello");
+        $(".btnEdit").on("click", function (){
+
+            let id = $(this).val();
+            console.log(orderId);
+
+            $.ajax({
+                "headers": {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                "type": "GET",
+                "url": "http://localhost:8080/api/order-items/" + orderId
+            })
+            .done((data)=>{
+                $("#tbItemPurchase tbody").html("");
+                $.each(data, (i,item)=>{
+
+                    orderItem = item;
+                    let grandTotal = +item.quantity * +item.price;
+
+                    let str = `
+                                let grandTotal = +${item.quantity} * +${item.price}
+
+                                <tr id="tr_${item.id}">
+                                    <th scope="row">${item.id}</th>
+                                    <td>Mark</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${item.price}</td>
+                                    <td>${grandTotal}</td>
+                                </tr>
+                    `
+
+                    $("#tbItemPurchase tbody").append(str);
+                })
+            })
+            $("#modalChangeStatusOrder").modal("show");
         })
     }
 
@@ -434,6 +472,8 @@
 
                 let str =  renderOrder(item);
 
+                $(".btnEdit").attr("id", order.id);
+
                 $("#tbListOrder tbody").prepend(str);
 
                 handleClick();
@@ -449,7 +489,7 @@
             orderId = $(this).attr('id').replace('tr_', '');
             // changeStatus();
             console.log(orderId);
-            // handleUpdatePayment();
+            handleUpdatePayment();
         })
     }
     function handleEvent(){
@@ -474,24 +514,24 @@
             "type": "GET",
             "url": "http://localhost:8080/api/orders/imports"
         })
-            .done((data) => {
+        .done((data) => {
 
-                $.each(data , (i,item) => {
+            $.each(data , (i,item) => {
 
-                    order = item;
+                order = item;
 
-                    order.createdat = $.FormatDateTime(order.createdat);
+                order.createdat = $.FormatDateTime(order.createdat);
 
-                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
+                order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
-                    let str =  renderOrder(item);
+                let str =  renderOrder(item);
 
-                    $("#tbListOrder tbody").prepend(str);
+                $("#tbListOrder tbody").prepend(str);
 
-                    // handleClick();
+                // handleClick();
 
-                })
             })
+        })
     }
 
     $.FormatDateTime = function (dateToFormat) {

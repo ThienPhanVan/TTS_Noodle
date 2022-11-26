@@ -64,4 +64,11 @@ public class OrderItemService implements IOrderItemService {
     public List<OrderItemChart> chartQuantityNoodleOneMonth(String type) {
         return orderItemRepository.chartQuantityNoodleOneMonth(type);
     }
+
+    @Override
+    public List<OrderItemResult> findAllByOrderId(Long orderId) {
+        return orderItemRepository.findAllByOrderId(orderId)
+                .stream().map(orderItem -> orderItemMapper.toDTO(orderItem))
+                .collect(Collectors.toList());
+    }
 }

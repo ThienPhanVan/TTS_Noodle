@@ -26,6 +26,14 @@ public class OrderItemApi {
         return new ResponseEntity<>(orderItemResultList,HttpStatus.OK);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> getCartItemByOrderId(@PathVariable Long id){
+
+        List<OrderItemResult> orderItemResult = orderItemService.findAllByOrderId(id);
+
+        return new ResponseEntity<>(orderItemResult, HttpStatus.ACCEPTED);
+    }
+
 
     @DeleteMapping("/remove")
     public ResponseEntity<?> doRemoveCartItem() {

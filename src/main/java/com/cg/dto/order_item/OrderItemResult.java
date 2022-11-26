@@ -25,4 +25,5 @@ public class OrderItemResult {
     private Long orderId;
 
     private Long itemId;
+
 }

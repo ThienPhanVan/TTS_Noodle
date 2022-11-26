@@ -27,4 +27,6 @@ public interface IOrderItemService {
 
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
 
+    List<OrderItemResult> findAllByOrderId(Long orderId);
+
 }

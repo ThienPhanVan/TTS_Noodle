@@ -1,6 +1,7 @@
 package com.cg.repositories;
 
  import com.cg.dto.order_item.OrderItemChart;
+ import com.cg.dto.order_item.OrderItemResult;
  import com.cg.repositories.model.OrderItem;
   import com.cg.repositories.model.OrderType;
  import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +29,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     @Query(name = "sp_getQuantityNR1Month" , nativeQuery = true)
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
+
+    List<OrderItem> findAllByOrderId(Long orderId);
 }
