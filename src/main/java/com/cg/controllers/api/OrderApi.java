@@ -105,7 +105,6 @@ public class OrderApi {
 
         List<OrderPurchaseDTO> orderListPurchaseList = orderService.findOrderByFullNameContainsAndOrderType(keyword);
 
-        //List<OrderPurchaseDTO>
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
 
     }
@@ -118,15 +117,15 @@ public class OrderApi {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
 
-//        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
-
         OrderResult orderResult = orderService.findById(id);
 
         return new ResponseEntity<>(orderResult, HttpStatus.OK);
+
     }
 
     @PatchMapping("updateStatus")
     public ResponseEntity<?> doUpdateStatus(String orderStatus){
+
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
     }

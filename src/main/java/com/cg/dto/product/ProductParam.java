@@ -7,12 +7,11 @@ import java.math.BigDecimal;
 
 @Data
 @Accessors(chain = true)
-public class ProductResult {
+public class ProductParam {
 
     private Long id;
 
     private String title;
 
     private BigDecimal price;
-
 }

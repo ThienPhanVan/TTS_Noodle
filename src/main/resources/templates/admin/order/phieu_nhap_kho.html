@@ -54,13 +54,17 @@
                         <td>
                             <select class="form-control selectStatus" style="height: fit-content;  text-align: center" name="cars" id="cars">
                                 <option disabled selected value="Trạng thái">Trạng thái</option>
-                                <option value="PENDING">PENDING</option>
-                                <option value="COMPLETED">COMPLETED</option>
-                                <option value="CANCELLED">CANCELLED</option>
+                                <option value="ALL">Tất cả</option>
+                                <option value="PENDING">Đang xử lý</option>
+                                <option value="COMPLETED">Hoàn thành</option>
+                                <option value="CANCELLED">Hủy</option>
                             </select>
                         </td>
                         <td>Tổng tiền</td>
                         <td>Ngày Nhập</td>
+                        <td>
+                            Hành động
+                        </td>
                     </tr>
                     </thead>
                     <tbody style="text-align: center">
@@ -140,6 +144,7 @@
     let user = new User();
 
 
+
     function renderOrder(obj){
 
         let s1 = "";
@@ -156,6 +161,10 @@
                 s1 = "<option value='CANCELLED'>CANCELLED</option>";
                 break;
         }
+        let s2 = ""
+        if (obj.paid !== 0){
+            s2 =  `<i style="color: red;font-size: smaller;">Nợ (${obj.paid} đ)</i>`
+        }
         // <select class="form-control statusOrder" style="height: fit-content;color: black;font-weight: bold; text-align: center" name="cars" id="cars">
         //   ${s1}
         // </select>
@@ -167,8 +176,13 @@
                         <th>${obj.code}</th>
                         <th>${obj.orderstatus}
                         </th>
-                        <th style="text-align: right">${obj.grandtotal} đ</th>
-                        <th>${obj.createdat}</th>
+                        <th style="text-align: right">${obj.grandtotal} đ </br>
+                                 ${s2}
+                        </th>
+                          <th>${obj.createdat}</th>
+                        <th>
+                             <i class="fas fa-edit" id="btnEdit"></i>
+                        </th>
               </tr>
         `
         return str;
@@ -278,6 +292,10 @@
 
         let type = $(this).val();
 
+        if(type === "ALL"){
+            getAllOrder();
+        }
+
         if (type === "PENDING"){
             handleShowOrderPending();
         }
@@ -386,6 +404,12 @@
             })
     }
 
+    function handleUpdatePayment(){
+        $("#btnEdit").on("click", function (){
+            alert("hello");
+        })
+    }
+
     function getAllOrder(){
         $.ajax({
             "headers": {
@@ -396,8 +420,11 @@
             "url": "http://localhost:8080/api/orders/imports"
         })
         .done((data) => {
-
+            $("#tbListOrder tbody").html("")
             $.each(data , (i,item) => {
+
+
+                console.log(item);
 
                 order = item;
 
@@ -411,6 +438,7 @@
 
                 handleClick();
                 handleEvent();
+                handleUpdatePayment();
 
             })
         })
@@ -421,6 +449,7 @@
             orderId = $(this).attr('id').replace('tr_', '');
             // changeStatus();
             console.log(orderId);
+            // handleUpdatePayment();
         })
     }
     function handleEvent(){
