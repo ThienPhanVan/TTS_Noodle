@@ -150,8 +150,6 @@ class Role {
         this.code = code;
         this.name = name;
     }
-<<<<<<< HEAD
-=======
 
 }
 
@@ -163,5 +161,4 @@ class PaymentCustomer {
         this.orderId = orderId;
         this.paid = paid;
     }
->>>>>>> thien_dev
 }
