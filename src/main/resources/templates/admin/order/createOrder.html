@@ -338,6 +338,10 @@
                 //     window.location.href = "/customer_order/create"
                 // },1500)
                 $("#inputQuantity").val(0);
+                $("#itemTotalAmount").val(0);
+                $("#inputPriceCustomer").val(0);
+                $("#totalAmount").val(0);
+                $("#remainingAmount").val(0);
                 $("#selectCustomer").text("Chọn khách hàng");
                 }).fail((jqXHR) => {
                 iziToast.warning({

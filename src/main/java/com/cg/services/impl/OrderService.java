@@ -93,7 +93,6 @@ public class OrderService implements IOrderService {
         for (OrderItemParam itemParam : orderParam.getOrderItems()) {
             //kiem tra product ton tai
             //lay toan item theo productId
-
             long productId = itemParam.getProductId();
             Optional<Product> productOptional = productRepository.findById(productId);
             if (!productOptional.isPresent()) {
@@ -106,7 +105,6 @@ public class OrderService implements IOrderService {
             //tổng giá sản phẩm = giá sản phẩm * số lượng sản phẩm khách hàng order
             grandTotal = price.multiply(new BigDecimal(quantityCustomer));
             order.setGrandTotal(grandTotal);
-
 
             // lay toan item theo productId
             List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(productId, 0);
@@ -350,6 +348,10 @@ public class OrderService implements IOrderService {
         return orderPurchaseDTOList;
     }
 
+    @Override
+    public List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(String keySearch) {
+       return orderRepository.findOrderByFullNameAndAddressContainsAndOrderType(keySearch);
+    }
 
     public void updateOrderStatus(OrderResult orderResult) {
         Optional<Order> orderPurchase1 = orderRepository.findById(orderResult.getId());
@@ -370,14 +372,12 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderResultDTO> findAllOrderStatusCompleted() {
-        return null;
-//        return orderRepository.findAllOrderStatusCompleted();
+    return orderRepository.findAllOrderStatusCompleted();
     }
 
     @Override
     public List<OrderResultDTO> findAllOrderStatusPending() {
-        return null ;
-//        orderRepository.findAllOrderStatusPending();
+        return orderRepository.findAllOrderStatusPending();
     }
 
     @Override

@@ -53,32 +53,34 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
-//    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-//            "o.id, " +
-//            "o.createdAt, " +
-//            "o.fullName, " +
-//            "o.address, " +
-//            "o.orderType, " +
-//            "o.orderStatus, " +
-//            "o.grandTotal) " +
-//            "FROM Order AS o " +
-//            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'COMPLETED'" )
-//    List<OrderResultDTO> findAllOrderStatusCompleted();
+    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+            "o.id, " +
+            "o.createdAt, " +
+            "o.fullName, " +
+            "o.address, " +
+            "o.orderType, " +
+            "o.orderStatus, " +
+            "o.grandTotal, " +
+            "p.paid) " +
+            "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
+            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'COMPLETED'" )
+    List<OrderResultDTO> findAllOrderStatusCompleted();
 
 
-//    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-//            "o.id, " +
-//            "o.createdAt, " +
-//            "o.fullName, " +
-//            "o.address, " +
-//            "o.orderType, " +
-//            "o.orderStatus, " +
-//            "o.grandTotal) " +
-//            "FROM Order AS o " +
-//            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'PENDING'" )
-//    List<OrderResultDTO> findAllOrderStatusPending();
-//    List<OrderResultDTO> findAllOrderPurchaseStatusPending();
-
+    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+            "o.id, " +
+            "o.createdAt, " +
+            "o.fullName, " +
+            "o.address, " +
+            "o.orderType, " +
+            "o.orderStatus, " +
+            "o.grandTotal, " +
+            "p.paid) " +
+            "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
+            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'PENDING'" )
+    List<OrderResultDTO> findAllOrderStatusPending();
 
     @Query(value = "SELECT * FROM purchase_order_status_completed", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete();
@@ -105,6 +107,21 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'" )
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 
+
+    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+            "o.id, " +
+            "o.createdAt, " +
+            "o.fullName, " +
+            "o.address, " +
+            "o.orderType, " +
+            "o.orderStatus, " +
+            "o.grandTotal, " +
+            "p.paid) " +
+            "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
+            "JOIN User AS u ON u.id = o.userId " +
+            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') OR u.address LIKE CONCAT('%',:keySearch,'%')  AND o.orderType = 'CUSTOMER' " )
+    List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(@Param("keySearch") String keySearch);
 
     @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
     List<Order> getAllOrderByRole();
