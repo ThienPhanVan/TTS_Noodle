@@ -106,8 +106,17 @@ public class OrderApi {
         List<OrderPurchaseDTO> orderListPurchaseList = orderService.findOrderByFullNameContainsAndOrderType(keyword);
 
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
-
     }
+
+    @GetMapping("/searchCustomer/{keyword}")
+    public ResponseEntity<?> doSearchCustomer(@PathVariable String keyword) {
+
+        List<OrderResultDTO> orderResultDTOS = orderService.findOrderByFullNameAndAddressContainsAndOrderType(keyword);
+
+
+        return new ResponseEntity<>(orderResultDTOS, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody OrderParam orderParam) {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.CREATED);
