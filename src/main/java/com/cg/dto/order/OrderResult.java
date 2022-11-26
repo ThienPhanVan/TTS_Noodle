@@ -37,6 +37,8 @@ public class OrderResult {
 
     private Instant createdAt;
 
+    private BigDecimal paid;
+
     private String fullName;
 
 

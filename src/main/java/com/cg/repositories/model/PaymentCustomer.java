@@ -37,7 +37,7 @@ public class PaymentCustomer {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
-    @Column(name = "users_id", nullable = false,insertable = false, updatable = false)
+    @Column(name = "users_id",insertable = false, updatable = false)
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

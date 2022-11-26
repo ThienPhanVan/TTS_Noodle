@@ -28,7 +28,18 @@ function addCustomer(selectedCountry) {
 addCustomer();
 
 function updateName(selectedLi) {
-    searchInp.value = "selected";
+  let id = $(selectedLi).attr('id')
+    console.log(id, "id1")
+    getUserById(id).then((userId)=>{
+        console.log(userId, "usser")
+         $("#nameCus").val(userId.fullName);
+        $("#nameCus").attr("disabled", "disabled");
+        $("#addressCus").val(userId.address);
+        $("#addressCus").attr("disabled", "disabled");
+        $("#phoneCus").val(userId.phone);
+        $("#phoneCus").attr("disabled", "disabled");
+    })
+     searchInp.value = "";
     addCustomer(selectedLi.innerText);
     wrapper.classList.remove("active");
     selectBtn.firstElementChild.innerText = selectedLi.innerText;
@@ -36,19 +47,30 @@ function updateName(selectedLi) {
     $("#idCustomerCre").val(selectedLi.id);
 }
 
+function getUserById(userId) {
+    return (
+        $.ajax({
+            headers: {
+                "Accept": 'application/json',
+                "Content-type": 'application'
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/users/" + userId,
+        }).done((data) => {
+            // showModalUpdateCus(data);
+        }).fail((jxHQR) => {
+            console.log(jxHQR)
+        })
+    )
+}
 
 
-searchInp.addEventListener("keyup", () => {
+selectBtn.addEventListener("click", () => {
     let arr = [];
-    let searchWord = searchInp.value.toLowerCase();
-    arr = customers.filter(data => {
-        return data.fullName.toLowerCase().startsWith(searchWord);
-    }).map(data => {
+    arr = customers.map(data => {
         let isSelected = data == selectBtn.firstElementChild.innerText ? "selected" : "";
         return `<li id="${data.id}" onclick="updateName(this)" class="${isSelected}">${data.fullName}</li>`;
     }).join("");
-
-    // `<li id="user_${item.id}" onclick="onclickUser(${item.id})">${user.fullName} - ${user.phone}</li>`;
     options1.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Không tìm thấy khách hàng!</p>`;
 });
 

@@ -73,14 +73,14 @@
                                 <div class="p-2 row">
                                     <div style="text-align: end" class="col-sm-6 ">
                                         <div class="">
-                                            <label for="">Thanh toán</label>
+                                            <label>Thanh toán</label>
                                         </div>
                                         <div class="">
-                                            <label for="">Khách đưa</label>
+                                            <label>Khách đưa</label>
                                         </div>
                                         <hr>
                                         <div class="">
-                                            <label for="">Còn lại</label>
+                                            <label>Còn lại</label>
                                         </div>
                                     </div>
                                     <div style="text-align: center" class="col-sm-6">
@@ -106,58 +106,6 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <div style="width: 100%; border: gray 1px solid; border-radius: 5px;">
-                        <div class="text-center font-weight-bold ">
-                            <div id="information" class="">
-                                <a class="font-size-24" lass="btn btn-primary" role="button">
-                                    Thông tin đơn hàng
-                                </a>
-                                <div style=" height: 355px ;" class="" id="infoOrder">
-                                    <div>
-                                        <div class="card card-body">
-                                            <h5 style="top:2px; position: absolute;" class="font-size-14">Nhân viên đặt
-                                                hàng</h5>
-<!--                                            <span class="font-size-18">sinh</span>-->
-                                        </div>
-                                    </div>
-                                    <div class=" mt-2">
-                                        <div class="card card-body">
-                                            <h5 style="top:2px; position: absolute;" class="font-size-14">Ngày đặt hàng</h5>
-<!--                                            <input id="currentDate" type="text">-->
-                                            <input class="form-control mt-2" id="dateCreateID" type="datetime-local" name="dateTime"/>
-                                            <!--                                            <span class="font-size-18">23/02/2022</span>-->
-                                        </div>
-                                    </div>
-<!--                                    <div class="  mt-2">-->
-<!--                                        <div style="position:relative; height: 50px; background-color: #f1f1f1;"-->
-<!--                                             class="card card-body">-->
-<!--                                            <h5 style="top:2px; position: absolute;" class="font-size-14">Dự kiến giao-->
-<!--                                            </h5>-->
-<!--                                            <input id="estimatedTime" type="datetime-local">-->
-<!--                                            &lt;!&ndash;                                            <span class="font-size-18">23/02/2022</span>&ndash;&gt;-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-                                    <div class=" collapse  mt-2" id="collapseExample">
-                                        <div style="position:relative; height: 90px;  background-color: #f1f1f1;"
-                                             class="card card-body  ">
-                                            <h5 style="top:2px; position: absolute;" class="font-size-14">Ghi chú </h5>
-                                            <span class="font-size-18">
-                                            <textarea style="height:59px;
-                                                      width:540px"
-                                                      class=" form-control"
-                                                      name="" id=""
-                                                      cols="20"
-                                                      rows="10">
-                                            </textarea>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
                     <div class="mt-4" style="max-width: 100% ; border-top: gray 1px solid; border-radius: 5px;">
                         <div class="font-weight-bold">
                             <div class="text-center">
@@ -167,25 +115,24 @@
                                 <div class="row">
                                     <input type="hidden" id="idCustomerCre" value="0"/>
                                     <div class="wrapper1">
-                                        <div class="select-btn bg-primary">
+                                        <div id="select-btn-customers" class="select-btn bg-primary">
                                             <span id="selectCustomer">Chọn khách hàng</span>
 
                                             <i class="uil uil-angle-down"></i>
                                         </div>
-                                        <div class="content">
+                                        <div id="content_selected" class="content">
                                             <div class="search">
                                                 <i class="uil uil-search"></i>
                                                 <input id="completeUser" spellcheck="false" type="text"
                                                        placeholder="Search">
                                             </div>
-                                            <ul class="options1">
+                                            <ul id="optionCus" class="options1">
 
                                             </ul>
                                         </div>
                                         <div class="plus">
-                                            <a data-toggle="collapse"
-                                               href="#modalCreateCustomer" role="button" aria-expanded="false"
-                                               aria-controls="collapseExample" class="mr-3">
+                                            <a role="button" aria-expanded="false"
+                                               class="mr-3 btn btn-primary">
                                                 <i role="button" class="fas fa-plus"></i>
                                             </a>
                                         </div>
@@ -196,13 +143,13 @@
 
                             <hr style="background: gray; height: 1px;">
 
-                            <div id="modalCreateCustomer" style=" height: 355px; float: left;" class="collapse ml-4 ">
-                                <div class="modal-alert-danger hidden"></div>
+                            <div id="modalCreateCustomer" style=" height: 355px; float: left;" class="ml-4 ">
+                                <div class="modal-alert-danger"></div>
                                 <form id="frmCreateCus">
                                     <div id="form-create-customer" class="form-row text-center">
                                         <div class="form-group col-sm-8 ">
                                             <label for="nameCus">Tên Khách Hàng</label>
-                                            <input type="text" class="form-control" name="nameCus" id="nameCus"
+                                            <input  type="text" class="form-control" name="nameCus" id="nameCus"
                                                    placeholder="Nguyễn Văn A">
                                         </div>
                                         <div class="form-group col-sm-8 ">
@@ -293,12 +240,13 @@
                     </td>
                     <td>
                         <input class="text-center" type="number" id="price" name="price"
-                        value="${new Intl.NumberFormat('vi-VN').format(product.price)}"
+                        value="${product.price}"
                         />
 
                     </td>
                     <td>
-                        <input disabled class="form-control-sm-2" id="itemTotalAmount" type="number" value="${new Intl.NumberFormat('vi-VN').format(0)}">
+                        <input class="form-control-sm-2" id="itemTotalAmount" type="text" value="0">
+
                     </td>
                 </tr>`
         return str;
@@ -365,8 +313,8 @@
             "orderItems": [{
                 "quantity": +$("#inputQuantity").val(),
                 "productId": 1
-            }]
-
+            }],
+            "paid": $("#remainingAmount").val()
         }
         $.ajax({
             headers: {
@@ -389,14 +337,14 @@
                 // setTimeout(() => {
                 //     window.location.href = "/customer_order/create"
                 // },1500)
-                $("#inputQuantity").val("0");
+                $("#inputQuantity").val(0);
                 $("#selectCustomer").text("Chọn khách hàng");
                 }).fail((jqXHR) => {
                 iziToast.warning({
                     title: 'FAIL',
                     position: 'topRight',
                     timeout: 1500,
-                    message: 'Không tìm thấy id khách hàng!!!'
+                    message: jqXHR.responseJSON
                 });
             console.log(jqXHR);
 
@@ -414,6 +362,7 @@
         let totalAmount = quantity * price;
         $("#itemTotalAmount").val(totalAmount)
         $("#totalAmount").val(totalAmount)
+        $("#remainingAmount").val(totalAmount)
     }
 
     function handleReduceQuantity() {
@@ -427,6 +376,7 @@
         let totalAmount = quantity * price;
         $("#itemTotalAmount").val(totalAmount)
         $("#totalAmount").val(totalAmount)
+        $("#remainingAmount").val(totalAmount)
     }
 
     function getAllOrderItem() {
@@ -459,6 +409,7 @@
             $("#itemTotalAmount").val(totalAmount);
 
             $("#totalAmount").val(totalAmount);
+            $("#remainingAmount").val(totalAmount)
         })
     }
 
@@ -480,57 +431,6 @@
         )
     }
 
-    $(function(){
-            //Display Only Date till today //
-            let dtToday = new Date();
-
-
-            let day = dtToday.getDate();
-            let month = dtToday.getMonth() + 1;
-            let year = dtToday.getFullYear();
-            if(month < 10)
-                month = '0' + month.toString();
-            if(day < 10)
-                day = '0' + day.toString();
-
-            let maxDate = day + '-' + month + '-' + year;
-        $('#dateCreateID').attr('max', maxDate );
-        }
-    )
-
-    document.getElementById('dateCreateID').value = new Date().toISOString().slice(0,16);
-    // document.getElementById('dateCreateID').value =new Date(isoD).toISOString().slice(0, 16);
-
-    // function datetimeLocal(){
-    //     let currentDate = new Date();
-    //     let datetime = "Now: " + currentDate.getDate() + "/"
-    //         + (currentDate.getMonth()+1)  + "/"
-    //         + currentDate.getFullYear() + " @ "
-    //         + currentDate.getHours() + ":"
-    //         + currentDate.getMinutes() + ":"
-    //         + currentDate.getSeconds();
-    //     return $('#currentDate').text(datetime);
-    // return datetime;
-    // }
-    // datetimeLocal();
-
-
-    // function dateTimeLocal() {
-    //     const today = new Date();
-    //     const yyyy = today.getFullYear();
-    //     let mm = today.getMonth() + 1; // Months start at 0!
-    //     let dd = today.getDate();
-    //     let hours = today.getHours();
-    //     let minutes = today.getMinutes();
-    //
-    //     if (dd < 10) dd = '0' + dd;
-    //     if (mm < 10) mm = '0' + mm;
-    //
-    //     const formattedToday = dd + '/' + mm + '/' + yyyy + " " + hours + ":" + minutes;
-    //
-    //     document.getElementById('currentDate').value = formattedToday;
-    // }
-    // dateTimeLocal();
 
     function handleInputPriceCustomer() {
         $("#inputPriceCustomer").on("input", function () {

@@ -62,7 +62,7 @@ class User {
 
 
 class Order {
-    constructor(id, grandTotal, product, userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone, orderItem) {
+    constructor(id, grandTotal, product, userId, user, orderStatus, orderType, address, createdBy, createdAt, fullName, phone, orderItem, paid) {
         this.id = id;
         this.grandTotal = grandTotal;
         this.userId = userId;
@@ -76,6 +76,7 @@ class Order {
         this.fullName = fullName;
         this.phone = phone;
         this.orderItem = orderItem;
+        this.paid = paid;
     }
 }
 
@@ -146,4 +147,18 @@ class Role {
         this.code = code;
         this.name = name;
     }
+<<<<<<< HEAD
+=======
+
+}
+
+class PaymentCustomer {
+    constructor(id, createdAt, userId, orderId, paid) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.userId = userId;
+        this.orderId = orderId;
+        this.paid = paid;
+    }
+>>>>>>> thien_dev
 }
