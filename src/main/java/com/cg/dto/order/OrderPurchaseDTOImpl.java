@@ -30,6 +30,8 @@ public class OrderPurchaseDTOImpl implements OrderPurchaseDTO{
 
     private BigDecimal grandTotal;
 
+    private BigDecimal paid;
+
 
     public void setFromOrderPurchaseView(OrderPurchaseView orderPurchaseView) {
         this.createdBy = orderPurchaseView.getCreatedBy();
@@ -38,6 +40,7 @@ public class OrderPurchaseDTOImpl implements OrderPurchaseDTO{
         this.orderStatus = orderPurchaseView.getOrderStatus();
         this.fullName = orderPurchaseView.getFullName();
         this.grandTotal = orderPurchaseView.getGrandTotal();
+        this.paid = orderPurchaseView.getPaid();
     }
     @Override
     public Long getId() {
@@ -70,5 +73,10 @@ public class OrderPurchaseDTOImpl implements OrderPurchaseDTO{
     @Override
     public String getFULLNAME() {
         return this.fullName;
+    }
+
+    @Override
+    public BigDecimal getPAID() {
+        return this.paid;
     }
 }

@@ -1,6 +1,8 @@
 package com.cg.services;
 
+import com.cg.dto.product.ProductParam;
 import com.cg.dto.product.ProductResult;
+import com.cg.dto.product.ProductUpdate;
 import com.cg.repositories.model.Product;
 
 import java.util.List;
@@ -14,5 +16,9 @@ public interface IProductService {
     List<ProductResult> findProductByTitle (String title);
 
     ProductResult findProductById(Long productId);
+
+    ProductResult createProduct(ProductParam productParam);
+
+    ProductResult updateProduct(ProductUpdate productUpdate);
 
 }

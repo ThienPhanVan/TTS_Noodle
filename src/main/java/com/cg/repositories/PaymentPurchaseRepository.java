@@ -9,5 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface PaymentPurchaseRepository extends JpaRepository<PaymentPurchase, Long> {
-
 }

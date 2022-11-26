@@ -32,4 +32,6 @@ public class OrderPurchaseView {
 
     private BigDecimal grandTotal;
 
+    private BigDecimal paid;
+
 }

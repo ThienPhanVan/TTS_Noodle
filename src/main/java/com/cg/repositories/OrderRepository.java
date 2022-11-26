@@ -84,9 +84,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "u.fullName, " +
             "o.orderType, " +
             "o.orderStatus, " +
-            "o.grandTotal) " +
+            "o.grandTotal, " +
+            "p.paid) " +
             "FROM Order AS o " +
             "JOIN User AS u ON u.id = o.userId " +
+            "JOIN PaymentPurchase AS p ON p.orderId = o.id " +
             "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'" )
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 

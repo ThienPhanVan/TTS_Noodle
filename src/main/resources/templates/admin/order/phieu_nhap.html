@@ -469,7 +469,7 @@
 
         })
 
-        $("#cusPayment").on("input", function (){;
+        $("#cusPayment").on("input", function (){
             let payment = +$("#cusPayment").val();
             let newPayment = grandTotal - payment;
 
@@ -696,7 +696,7 @@
                 message: 'Thêm nhà cung cấp thành công!!'
             });
 
-            $("#modalCreateSupplier").modal('hide')
+            $("#modalCreateSupplier").modal('hide');
 
             enableTooltip();
 
