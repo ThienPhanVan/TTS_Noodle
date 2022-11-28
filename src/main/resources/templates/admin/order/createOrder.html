@@ -126,7 +126,7 @@
                                                 <input id="completeUser" spellcheck="false" type="text"
                                                        placeholder="Search">
                                             </div>
-                                            <ul class="options1">
+                                            <ul id="optionCus" class="options1">
 
                                             </ul>
                                         </div>
@@ -149,7 +149,7 @@
                                     <div id="form-create-customer" class="form-row text-center">
                                         <div class="form-group col-sm-8 ">
                                             <label for="nameCus">Tên Khách Hàng</label>
-                                            <input type="text" class="form-control" name="nameCus" id="nameCus"
+                                            <input  type="text" class="form-control" name="nameCus" id="nameCus"
                                                    placeholder="Nguyễn Văn A">
                                         </div>
                                         <div class="form-group col-sm-8 ">
@@ -302,33 +302,20 @@
 
     function doCreateOrderCustomer() {
         let user_id = $("#idCustomerCre").val();
-        let newOrder = "";
         if (user_id == 0) {
             user_id = null;
-            newOrder = {
-                "userId": user_id,
-                "fullName": $("#nameCus").val(),
-                "address": $("#addressCus").val(),
-                "phone": $("#phoneCus").val(),
-                "orderItems": [{
-                    "quantity": +$("#inputQuantity").val(),
-                    "productId": 1
-                }],
-                "paid": +$("#remainingAmount").val()
-            }
-        }else {
-                newOrder = {
-                    "userId": user_id,
-                    "fullName": user.fullName,
-                    "address": user.address,
-                    "phone": user.phone,
-                    "orderItems": [{
-                        "quantity": +$("#inputQuantity").val(),
-                        "productId": 1
-                    }],
-                    "paid": +$("#remainingAmount").val()
-                }
-            }
+        }
+        let newOrder = {
+            "userId": user_id,
+            "fullName": $("#nameCus").val(),
+            "address": $("#addressCus").val(),
+            "phone": $("#phoneCus").val(),
+            "orderItems": [{
+                "quantity": +$("#inputQuantity").val(),
+                "productId": 1
+            }],
+            "paid": $("#remainingAmount").val()
+        }
         $.ajax({
             headers: {
                 accept: "application/json",
@@ -351,13 +338,17 @@
                 //     window.location.href = "/customer_order/create"
                 // },1500)
                 $("#inputQuantity").val(0);
+                $("#itemTotalAmount").val(0);
+                $("#inputPriceCustomer").val(0);
+                $("#totalAmount").val(0);
+                $("#remainingAmount").val(0);
                 $("#selectCustomer").text("Chọn khách hàng");
                 }).fail((jqXHR) => {
                 iziToast.warning({
                     title: 'FAIL',
                     position: 'topRight',
                     timeout: 1500,
-                    message: jqXHR.responseJSON.errors[0]
+                    message: jqXHR.responseJSON
                 });
             console.log(jqXHR);
 
@@ -375,6 +366,7 @@
         let totalAmount = quantity * price;
         $("#itemTotalAmount").val(totalAmount)
         $("#totalAmount").val(totalAmount)
+        $("#remainingAmount").val(totalAmount)
     }
 
     function handleReduceQuantity() {
@@ -388,6 +380,7 @@
         let totalAmount = quantity * price;
         $("#itemTotalAmount").val(totalAmount)
         $("#totalAmount").val(totalAmount)
+        $("#remainingAmount").val(totalAmount)
     }
 
     function getAllOrderItem() {
@@ -420,6 +413,7 @@
             $("#itemTotalAmount").val(totalAmount);
 
             $("#totalAmount").val(totalAmount);
+            $("#remainingAmount").val(totalAmount)
         })
     }
 
@@ -440,6 +434,7 @@
             })
         )
     }
+
 
     function handleInputPriceCustomer() {
         $("#inputPriceCustomer").on("input", function () {

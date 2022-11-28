@@ -16,6 +16,7 @@ import java.time.Instant;
 @Data
 @Accessors(chain = true)
 public class OrderResultDTO {
+
     private Long id;
 
     private Instant createdAt;
@@ -29,5 +30,7 @@ public class OrderResultDTO {
     private OrderStatus orderStatus;
 
     private BigDecimal grandTotal;
+
+    private BigDecimal paid;
 
 }

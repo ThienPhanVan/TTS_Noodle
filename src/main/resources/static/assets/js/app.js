@@ -87,10 +87,7 @@ class OrderPayment {
         this.createdAt = createdAt;
         this.paid = paid;
     }
-
-
 }
-
 
 class OrderItem {
     constructor(id, price, quantity, itemId, orderId, productId) {

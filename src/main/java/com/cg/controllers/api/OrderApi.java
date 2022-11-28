@@ -72,7 +72,7 @@ public class OrderApi {
     @GetMapping("/exportsNoodle")
     public ResponseEntity<?> getAllOrderByExportNoodle(){
 
-        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
+        List<OrderResultDTO> orderResultList = orderService.findAllByOrderView();
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
@@ -108,10 +108,18 @@ public class OrderApi {
 
         List<OrderPurchaseDTO> orderListPurchaseList = orderService.findOrderByFullNameContainsAndOrderType(keyword);
 
-        //List<OrderPurchaseDTO>
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.ACCEPTED);
-
     }
+
+    @GetMapping("/searchCustomer/{keyword}")
+    public ResponseEntity<?> doSearchCustomer(@PathVariable String keyword) {
+
+        List<OrderResultDTO> orderResultDTOS = orderService.findOrderByFullNameAndAddressContainsAndOrderType(keyword);
+
+
+        return new ResponseEntity<>(orderResultDTOS, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody OrderParam orderParam) {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.CREATED);
@@ -121,15 +129,15 @@ public class OrderApi {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
 
-//        List<OrderResult> orderListPurchaseList = orderService.findAllByUserId(id);
-
         OrderResult orderResult = orderService.findById(id);
 
         return new ResponseEntity<>(orderResult, HttpStatus.OK);
+
     }
 
     @PatchMapping("updateStatus")
     public ResponseEntity<?> doUpdateStatus(String orderStatus){
+
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
     }

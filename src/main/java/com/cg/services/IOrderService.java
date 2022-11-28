@@ -11,6 +11,7 @@ import com.cg.dto.order.OrderResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 
 
 public interface IOrderService {
@@ -59,6 +60,8 @@ public interface IOrderService {
 
     List<OrderPurchaseDTO> findOrderByFullNameContainsAndOrderType(String keySearch);
 
+    List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(String keySearch);
+
     List<OrderResult> getAllOrderByRole();
 
     BigDecimal chartOneDay();
@@ -68,5 +71,9 @@ public interface IOrderService {
     OrderResultDTO setStatusOrderPending(Long id);
 
     OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
+
+    List<OrderResultDTO> findAllByOrderView();
+
+
 
 }

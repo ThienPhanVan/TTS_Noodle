@@ -4,9 +4,6 @@ package com.cg.repositories;
 import com.cg.dto.order.OrderPurchaseDTO;
 import com.cg.dto.order.OrderResultDTO;
 import com.cg.dto.order.OrderPurchaseView;
-import com.cg.dto.order.OrderResult;
-import com.cg.dto.order.OrderResultDTO;
-import com.cg.dto.order.OrderPurchaseView;
 import com.cg.dto.order.OrderResultChart;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderStatus;
@@ -25,6 +22,21 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findOrderByUserId(Long userId);
 
     List<Order> findAllByOrderType(OrderType orderType);
+
+
+    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+            "o.id, " +
+            "o.createdAt, " +
+            "o.fullName, " +
+            "o.address, " +
+            "o.orderType, " +
+            "o.orderStatus, " +
+            "o.grandTotal, " +
+            "p.paid) " +
+            "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
+            "WHERE o.orderType = 'CUSTOMER' " )
+    List<OrderResultDTO> findAllByOrderView();
 
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
@@ -45,8 +57,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "o.address, " +
             "o.orderType, " +
             "o.orderStatus, " +
-            "o.grandTotal) " +
+            "o.grandTotal, " +
+            "p.paid) " +
             "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
             "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'COMPLETED'" )
     List<OrderResultDTO> findAllOrderStatusCompleted();
 
@@ -58,12 +72,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "o.address, " +
             "o.orderType, " +
             "o.orderStatus, " +
-            "o.grandTotal) " +
+            "o.grandTotal, " +
+            "p.paid) " +
             "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
             "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'PENDING'" )
     List<OrderResultDTO> findAllOrderStatusPending();
-//    List<OrderResultDTO> findAllOrderPurchaseStatusPending();
-
 
     @Query(value = "SELECT * FROM purchase_order_status_completed", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete();
@@ -84,15 +98,33 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "u.fullName, " +
             "o.orderType, " +
             "o.orderStatus, " +
-            "o.grandTotal) " +
+            "o.grandTotal, " +
+            "p.paid) " +
             "FROM Order AS o " +
             "JOIN User AS u ON u.id = o.userId " +
+            "JOIN PaymentPurchase AS p ON p.orderId = o.id " +
             "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'" )
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 
 
-    @Query(value = "call  getallorderbyrole()", nativeQuery = true)
-    List<Order> getAllOrderByRole();
+
+    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+            "o.id, " +
+            "o.createdAt, " +
+            "o.fullName, " +
+            "o.address, " +
+            "o.orderType, " +
+            "o.orderStatus, " +
+            "o.grandTotal, " +
+            "p.paid) " +
+            "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
+            "JOIN User AS u ON u.id = o.userId " +
+            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') OR u.address LIKE CONCAT('%',:keySearch,'%')  AND o.orderType = 'CUSTOMER' " )
+    List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(@Param("keySearch") String keySearch);
+
+    @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
+     List<Order> getAllOrderByRole();
 
     @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
