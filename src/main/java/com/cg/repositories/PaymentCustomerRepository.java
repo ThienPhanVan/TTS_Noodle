@@ -1,5 +1,6 @@
 package com.cg.repositories;
 
+import com.cg.dto.payment.ListPaymentUser;
 import com.cg.repositories.model.PaymentCustomer;
 import com.cg.repositories.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,8 @@ import java.util.List;
 @Repository
 public interface PaymentCustomerRepository extends JpaRepository<PaymentCustomer, Long> {
 
+    List<PaymentCustomer> findAllByUserId(Long id);
+
+    @Query(name = "sp_getPaymentUser" , nativeQuery = true)
+    List<ListPaymentUser> getPaymetnUser();
 }

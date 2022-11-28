@@ -3,17 +3,15 @@ package com.cg.controllers.api;
 
 import com.cg.dto.order.*;
 
+import com.cg.dto.payment.PaymentCustomerResult;
 import com.cg.dto.payment.PaymentResult;
 import com.cg.repositories.model.*;
 
 
 import com.cg.dto.role.RoleResult;
 import com.cg.repositories.model.Order;
-import com.cg.services.impl.OrderService;
+import com.cg.services.impl.*;
 
-import com.cg.services.impl.PaymentPurchaseService;
-import com.cg.services.impl.RoleService;
-import com.cg.services.impl.UserService;
 import org.hibernate.sql.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +41,8 @@ public class OrderApi {
 
     @Autowired
     private PaymentPurchaseService paymentPurchaseService;
+    @Autowired
+    private PaymentCustomerService paymentCustomerService;
 
     @GetMapping("/imports")
     public ResponseEntity<?> getAllOrderByImport(){
@@ -221,14 +221,15 @@ public class OrderApi {
 
         return new ResponseEntity<>(orderListPurchaseList, HttpStatus.OK);
     }
-
     @GetMapping("/paymentPurchase/{id}")
     public ResponseEntity<?> getAllPaymentPurchase(@PathVariable Long id) {
-
         List<PaymentResult> listPaymentPurchase = paymentPurchaseService.findAllByUserId(id);
-
         return new ResponseEntity<>(listPaymentPurchase, HttpStatus.OK);
     }
 
-
+    @GetMapping("/paymentCustomer/{id}")
+    public ResponseEntity<?> getAllPaymentCustomer(@PathVariable Long id) {
+        List<PaymentCustomerResult> listPaymentCustomer = paymentCustomerService.getPaymentByUserId(id);
+        return new ResponseEntity<>(listPaymentCustomer, HttpStatus.OK);
+    }
 }

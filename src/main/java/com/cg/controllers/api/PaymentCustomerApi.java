@@ -1,6 +1,7 @@
 package com.cg.controllers.api;
 
 
+import com.cg.dto.payment.ListPaymentUser;
 import com.cg.dto.payment.PaymentCustomerResult;
 import com.cg.services.IPaymentCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +26,11 @@ public class PaymentCustomerApi {
         List<PaymentCustomerResult> paymentCustomerResults = paymentCustomerService.findAll();
         return new ResponseEntity<>(paymentCustomerResults, HttpStatus.OK);
     }
+
+    @GetMapping("/paymentCus")
+    public ResponseEntity<?> getPayment(){
+        List<ListPaymentUser> paymentCustomerResults = paymentCustomerService.getPaymentUser();
+        return new ResponseEntity<>(paymentCustomerResults, HttpStatus.OK);
+    }
+
 }

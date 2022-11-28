@@ -91,10 +91,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 
 
-    @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
+    @Query(value = "call  getallorderbyrole()", nativeQuery = true)
     List<Order> getAllOrderByRole();
 
-    @Query(value = "call noodle.totalOneday()", nativeQuery = true)
+    @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
 
 

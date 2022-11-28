@@ -10,10 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class ReportController {
 
-    @GetMapping("doanhSo")
+    @GetMapping("profit")
     public ModelAndView showSales(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/report/sales");
+        modelAndView.setViewName("/admin/report/profit");
         return modelAndView;
     }
 

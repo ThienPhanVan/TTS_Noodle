@@ -31,7 +31,6 @@
                             </div>
                             <p class="text-secondary">Doanh Số</p>
                             <div id="doanhSo" class="d-flex align-items-center justify-content-between">
-
                             </div>
                         </div>
                     </div>
@@ -42,7 +41,7 @@
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-danger">
                                 <i class="ri-pantone-line"></i>
                             </div>
-                            <p class="text-secondary">Số Đơn  Gạo
+                            <p class="text-secondary">Số Đơn Gạo
                             <div id="donNhap" class="d-flex align-items-center justify-content-between">
 
                             </div>
@@ -69,8 +68,7 @@
                                 <i class="ri-pie-chart-2-line"></i>
                             </div>
                             <p class="text-secondary">Tiền Nợ</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>0</b></h4>
+                            <div id="totalDebt" class="d-flex align-items-center justify-content-between">
 
                             </div>
                         </div>
@@ -78,80 +76,102 @@
                 </div>
             </div>
 
-            <!-- bar chart -->
-            <div class="container min-vh-100 d-flex flex-column justify-content-center">
-                <div style="background-color: #ffffff">
-                    <div class="row my-3">
-                        <div class="col name_chart">
-                            <h4>Thống Kê Số Lượng Bán Bún NHập Gạo (KG)</h4>
+            <div class="row">
+                <div class="col-sm-8" style="width: 50%">
+                    <div class=" item min-vh-100 d-flex flex-column justify-content-center">
+                        <div style="background-color: #ffffff">
+                            <div class="row my-3">
+                                <div class="col name_chart">
+                                    <h4>Thống Kê Số Lượng Bán Bún NHập Gạo (KG)</h4>
+                                </div>
+                                <div class="mr-5">
+                                    <label>
+                                        <select id="quantityNR" class="selectpicker text-center">
+                                            <option selected value="toDay">Hôm Nay</option>
+                                            <option value="sevenDay">7 Ngày Gần Nhất</option>
+                                            <option value="oneMonth">30 Ngày Gần Nhất</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div style="background-color: #ffffff" class="card-body">
+                                            <canvas selected style="display: block" id="chartQuantity1day"
+                                                    height="100"></canvas>
+                                            <canvas style="display: none" id="chartQuantity1week" height="80"></canvas>
+                                            <canvas style="display: none" id="chartQuantity1month" height="80"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="mr-5">
-                            <label>
-                                <select id="quantityNR" class="selectpicker text-center">
-                                    <option selected value="toDay">Hôm Nay</option>
-                                    <option value="sevenDay">7 Ngày Gần Nhất</option>
-                                    <option value="oneMonth">30 Ngày Gần Nhất</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row my-2">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div style="background-color: #ffffff" class="card-body">
-                                    <canvas selected style="display: block" id="chartQuantity1day"
-                                            height="100"></canvas>
-                                    <canvas style="display: none" id="chartQuantity1week" height="100"></canvas>
-                                    <canvas style="display: none" id="chartQuantity1month" height="100"></canvas>
+                        <hr>
+                        <div style="background-color: #ffffff">
+                            <div class="row my-3">
+                                <div class="col name_chart">
+                                    <h4>Doanh Thu Bán Bún (VNĐ)</h4>
+                                </div>
+                                <div class="mr-5">
+                                    <label>
+                                        <select id="statistical" class="selectpicker text-center">
+                                            <option selected value="toDay">Hôm Nay</option>
+                                            <option value="sevenDay">7 Ngày Gần Nhất</option>
+                                            <option value="oneMonth">30 Ngày Gần Nhất</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div style="background-color: #ffffff" id="charts" class="card-body">
+                                            <canvas style="display: block" id="chartOneDay" height="80"></canvas>
+                                            <canvas style="display: none" id="chart7day" height="80"></canvas>
+                                            <canvas style="display: none" id="chart1month" height="80"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <hr>
-                <div style="background-color: #ffffff">
-                    <div class="row my-3">
-                        <div class="col name_chart">
-                            <h4>Doanh Thu Bán Bún (VNĐ)</h4>
-                        </div>
-                        <div class="mr-5">
-                            <label>
-                                <select id="statistical" class="selectpicker text-center">
-                                    <option selected value="toDay">Hôm Nay</option>
-                                    <option value="sevenDay">7 Ngày Gần Nhất</option>
-                                    <option value="oneMonth">30 Ngày Gần Nhất</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row my-2">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div style="background-color: #ffffff" id="charts" class="card-body">
-                                    <canvas style="display: block" id="chartOneDay" height="100"></canvas>
-                                    <canvas style="display: none" id="chart7day" height="100"></canvas>
-                                    <canvas style="display: none" id="chart1month" height="100"></canvas>
+                <!-- bar chart -->
+                <div class="col-sm-4 ">
+                    <div class=" item d-flex flex-column justify-content-center">
+                        <div style="background-color: #ffffff">
+                            <div class="row ">
+                                <div class="col name_debt">
+                                    <h4>Khách Hàng Nợ</h4>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="row my-2">
+                                <div class="col-md-12">
+                                    <div class="card my-custom-scrollbar">
+                                        <div style="background-color: #ffffff ; " class="card-body">
+                                            <div id="userDebt" class="row ">
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
             </div>
+
         </div>
     </div>
     <!-- Wrapper END -->
     <!-- Footer -->
-    <footer class="iq-footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    TTS-Noodle
-                </div>
-            </div>
-        </div>
-    </footer>
+    <th:block th:replace="/layout/footer/footer.html"></th:block>
 </div>
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer"/>
@@ -159,6 +179,7 @@
 </body>
 <script>
     let order = new Order();
+    let user = new User();
     let dayyy = new Date().getDate();
     let todayNow = new Date().getDay();
     let day_name = "";
@@ -245,7 +266,6 @@
 
     function chartToDay() {
 
-        console.log(dayyy, "dayyy")
         $.ajax({
             headers:
                 {
@@ -314,13 +334,11 @@
         }).done((data) => {
             let days = [];
             let total = [];
-            console.log(data, "data")
             $.each(data, (i, orderSD) => {
                 // console.log(orderSD, "order7day")
                 total.push(orderSD.grandTotal)
                 days.push(moment(orderSD.createdAt).date());
             })
-            console.log(total, "day")
             let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
             let chart7day = document.getElementById("chart7day").getContext('2d');
             let chartStatus = Chart.getChart("chart7day");
@@ -336,7 +354,7 @@
                             label: 'Bún',
                             data: [...total],
                             backgroundColor: colors[4],
-                            barThickness: 100,
+                            barThickness: 50,
                         }
                     ]
                 },
@@ -376,13 +394,11 @@
         }).done((data) => {
             let days = [];
             let total = [];
-            console.log(data, "data")
             $.each(data, (i, orderSD) => {
                 // console.log(orderSD, "order7day")
                 total.push(orderSD.grandTotal)
                 days.push(moment(orderSD.createdAt).date());
             })
-            console.log(total, "day")
             let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
             let chart7day = document.getElementById("chart1month").getContext('2d');
             let chartStatus = Chart.getChart("chart1month");
@@ -398,7 +414,7 @@
                             label: 'Bún',
                             data: [...total],
                             backgroundColor: colors[4],
-                            barThickness: 100,
+                            barThickness: 50,
                         }
                     ]
                 },
@@ -492,24 +508,19 @@
         let quantityR = [];
         getQuantityNoodle1Week(customer).then((noodle) => {
             $.each(noodle, (i, itemNoodle) => {
-                console.log(itemNoodle)
                 daysN.push(moment(itemNoodle.createdAt).date());
                 quantityN.push(itemNoodle.quantity);
             })
         })
-        console.log(daysN, "day bún")
         getQuantityNoodle1Week(purchase).then((rice) => {
             $.each(rice, (i, itemRice) => {
-                console.log(itemRice)
                 daysR.push(moment(itemRice.createdAt).date());
                 quantityR.push(itemRice.quantity);
             })
         })
-        console.log(daysR, "day gạo")
         let myDay = daysR.concat(daysN);
         let mySet = new Set(myDay);
         let result = Array.from(mySet).sort();
-        console.log(result, "dayy")
         let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
         let chartOneDay = document.getElementById("chartQuantity1week").getContext('2d');
         let chartStatus = Chart.getChart("chartQuantity1week");
@@ -574,11 +585,9 @@
                 quantityR.push(itemRice.quantity);
             })
         })
-        console.log(daysN + " +" + daysR)
         let myDay = daysR.concat(daysN);
         let mySet = new Set(myDay);
         let result = Array.from(mySet);
-        console.log(result.sort(), "dayy")
         let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
         let chartOneDay = document.getElementById("chartQuantity1month").getContext('2d');
         let chartStatus = Chart.getChart("chartQuantity1month");
@@ -634,7 +643,6 @@
                 type: "GET",
                 url: "http://localhost:8080/api/order-items/chartQuantityNoodleOD/" + type,
             }).done((data) => {
-                console.log(data, "tyope1")
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
@@ -653,7 +661,7 @@
                 type: "GET",
                 url: "http://localhost:8080/api/order-items/chartQuantityNoodleOW/" + type,
             }).done((data) => {
-             }).fail((jxHQR) => {
+            }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
         )
@@ -671,7 +679,6 @@
                 type: "GET",
                 url: "http://localhost:8080/api/order-items/chartQuantityNoodleOM/" + type,
             }).done((data) => {
-                console.log(data, "type1")
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
@@ -697,7 +704,10 @@
                 doanhSo += item.grandTotal;
                 donban = order.length;
             })
-            let ds = `<h4><b>${new Intl.NumberFormat('vi-VN',{style :'currency', currency : 'VND'}).format(doanhSo)}</b></h4>`;
+            let ds = `<h4><b>${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(doanhSo)}</b></h4>`;
             let db = `<h4><b>${donban}</b></h4>`;
             $("#doanhSo").prepend(ds);
             $("#donXuat").prepend(db);
@@ -721,7 +731,6 @@
             let donNhap = 0;
             order = data;
             donNhap = order.length;
-            console.log(donNhap, "don ban hang");
             let str = `<h4><b>${donNhap}</b></h4>`;
             $('#donNhap').prepend(str);
         }).fail((jqXHR) => {
@@ -731,6 +740,72 @@
 
     getOrderSup();
 
+
+    function loadDebt() {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                type: "GET",
+                async: false,
+                url: "http://localhost:8080/api/paymentCustomer/paymentCus",
+            }).done((data) => {
+                let totalDebt = 0;
+                $.each(data, (i, user) => {
+                    let avatar ;
+                    let name ;
+                    totalDebt += user.paid;
+                    getUserById(user.id).then((userPayment)=>{
+                        name = userPayment.fullName;
+                        avatar = userPayment.avatarUrl;
+
+                        let str = `
+                        <div id="tr_${user.id}" style="width: 110px ; " class=" col-sm-4">
+                           <div class="card text-center">
+                              <img height="110" src="  ${avatar}"class="card-img-top" alt="avatar">
+                            <div class=" ">
+                              <h5 class="mt-2 mb-2">${name}</h5>
+                              <p>Nợ : <span>${new Intl.NumberFormat('vi-vn').format(user.paid)}</span></p>
+                              <p>Ngày <br> <span>${moment(user.createdAt).format("DD/MM/YYYY")}</span></p>
+                            </div>
+                         </div>
+                       </div>
+                      `;
+                        $("#userDebt").prepend(str)
+                    })
+                })
+                let totalDebts =`
+                  <h4><b>${new Intl.NumberFormat("vi-VN",{style : "currency", currency :'VND'}).format(totalDebt)}</b></h4>
+                `;
+                $("#totalDebt").prepend(totalDebts)
+             }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+    }
+
+    loadDebt();
+
+
+    function getUserById(userId) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                async : false,
+                type: "GET",
+                url: "http://localhost:8080/api/users/" + userId,
+            }).done((data) => {
+                // showModalUpdateCus(data);
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+    }
 
 </script>
 

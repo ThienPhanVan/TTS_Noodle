@@ -1,6 +1,8 @@
 package com.cg.repositories.model;
 
 
+import com.cg.dto.order.ListCreatedBy;
+import com.cg.dto.payment.ListPaymentUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,25 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
+
+@NamedNativeQuery(
+        name = "sp_getPaymentUser",
+        query =
+                "call sp_paymentUser();",
+        resultSetMapping = "result_getPaymentUser"
+)
+@SqlResultSetMapping(
+        name = "result_getPaymentUser",
+        classes = @ConstructorResult(
+                targetClass = ListPaymentUser.class,
+                columns = {
+                        @ColumnResult(name = "userId", type = Long.class),
+                        @ColumnResult(name = "createdAt", type = Instant.class),
+                        @ColumnResult(name = "paid", type = BigDecimal.class)
+                }
+        )
+)
+
 
 @Data
 @NoArgsConstructor

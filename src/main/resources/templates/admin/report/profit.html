@@ -18,7 +18,25 @@
 
     <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
-    <th:block th:replace="/layout/topNav/topNav :: topNav"></th:block>
+
+    <div class="iq-top-navbar">
+        <div style="margin-top: 13px;" class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+
+                 <h4 class="text-primary">Báo Cáo Lợi Nhuận</h4>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li class="line-height">
+                        <div></div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -85,13 +103,11 @@
                                     <thead class="btn-primary">
 
                                     <tr class="text-center">
-                                        <th>Mã ĐH</th>
-                                        <th>Ngày Bán</th>
-                                        <th>NV Bán</th>
-                                        <th>Số Lượng</th>
+                                        <th>Mã SP</th>
+                                        <th>Ngày</th>
                                         <th>Doanh Số</th>
-                                        <th>Thực Thu</th>
-                                        <th>Nợ</th>
+                                        <th>Chi Phí</th>
+                                        <th>Lãi Gộp</th>
                                     </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -99,11 +115,9 @@
                                         <td>123</td>
                                         <td>26-11-2022</td>
                                         <td>Thắng</td>
-                                        <td>10</td>
-                                        <td>40.000đ</td>
+                                         <td>40.000đ</td>
                                         <td>30.000đ</td>
-                                        <td>10.000đ</td>
-                                    </tr>
+                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -116,22 +130,8 @@
     </div>
     <!-- Wrapper END -->
     <!-- Footer -->
-    <footer class="iq-footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-6 text-right">
-                    Copyright 2020 <a href="#">FinDash</a> All Rights Reserved.
+    <th:block th:replace="/layout/footer/footer.html"></th:block>
 
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Footer END -->
 

@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface PaymentPurchaseRepository extends JpaRepository<PaymentPurchase, Long> {
 
     List<PaymentPurchase> findAllByUserId(Long id);
-}
+
+ }

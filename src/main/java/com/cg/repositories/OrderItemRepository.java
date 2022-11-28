@@ -2,7 +2,6 @@ package com.cg.repositories;
 
  import com.cg.dto.order_item.OrderItemChart;
  import com.cg.repositories.model.OrderItem;
-  import com.cg.repositories.model.OrderType;
  import org.springframework.data.jpa.repository.JpaRepository;
   import org.springframework.data.jpa.repository.Query;
  import org.springframework.data.repository.query.Param;
@@ -20,7 +19,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     Optional<OrderItem> getOrderItemByOrderId(Long oderItemId);
 
 
-    @Query(value = "call noodle.getQuantityNoodleOneDay(:type)" , nativeQuery = true)
+    @Query(value = "call getQuantityNoodleOneDay(:type)" , nativeQuery = true)
     Integer chartQuantityNoodleOneDay(@Param("type") String type);
 
     @Query(name = "sp_getQuantityNR1Week" , nativeQuery = true)

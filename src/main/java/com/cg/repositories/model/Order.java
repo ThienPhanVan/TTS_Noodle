@@ -15,7 +15,7 @@ import java.time.Instant;
 @NamedNativeQuery(
         name = "noodle.chartSevenDay",
         query =
-                "call noodle.chartSevenDay();",
+                "call chartSevenDay();",
         resultSetMapping = "result_chartSevenDay"
 )
 @SqlResultSetMapping(
@@ -32,7 +32,7 @@ import java.time.Instant;
 @NamedNativeQuery(
         name = "noodle.chartOneMonth",
         query =
-                "call noodle.chartOneMonth();",
+                "call chartOneMonth();",
         resultSetMapping = "result_chartOneMonth"
 )
 @SqlResultSetMapping(
@@ -48,7 +48,7 @@ import java.time.Instant;
 @NamedNativeQuery(
         name = "sp_getCreatedBy",
         query =
-                "call noodle.getCreatedBy(:idCreate);",
+                "call getCreatedBy(:idCreate);",
         resultSetMapping = "result_getCreatedBy"
 )
 @SqlResultSetMapping(
