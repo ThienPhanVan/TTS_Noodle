@@ -23,7 +23,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderType(OrderType orderType);
 
-
     @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
             "o.id, " +
             "o.createdAt, " +

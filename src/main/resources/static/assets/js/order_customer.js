@@ -21,7 +21,7 @@ function addCustomer(selectedCountry) {
     options1.innerHTML = "";
     customers.forEach(country => {
         let isSelected = country == selectedCountry ? "selected" : "";
-        let li = `<li id="${country.id}" onclick="updateName(this)" class="${isSelected}">${country.fullName}</li>`;
+        let li = `<li id="${country.id}" onclick="updateName(this)" class="${isSelected} selectCustomers">${country.fullName}</li>`;
         options1.insertAdjacentHTML("beforeend", li);
     });
 }
@@ -69,7 +69,7 @@ selectBtn.addEventListener("click", () => {
     let arr = [];
     arr = customers.map(data => {
         let isSelected = data == selectBtn.firstElementChild.innerText ? "selected" : "";
-        return `<li id="${data.id}" onclick="updateName(this)" class="${isSelected}">${data.fullName}</li>`;
+        return `<li id="${data.id}" onclick="updateName(this)" class="${isSelected} selectCustomers">${data.fullName}</li>`;
     }).join("");
     options1.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Không tìm thấy khách hàng!</p>`;
 });
