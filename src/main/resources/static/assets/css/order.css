@@ -11,11 +11,11 @@ body{
     width: 370px;
     margin: 85px auto 0;
 }
-#select-btn-customers, li{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
+/*#select-btn-customers, li{*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    cursor: pointer;*/
+/*}*/
 #select-btn-customers{
     height: 55px;
     padding: 0 75px;
