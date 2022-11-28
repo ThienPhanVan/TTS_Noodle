@@ -1,5 +1,6 @@
 package com.cg.services.impl;
 
+import com.cg.dto.orderItem.OrderItemView;
 import com.cg.dto.order_item.OrderItemChart;
 import com.cg.dto.order_item.OrderItemResult;
 import com.cg.mapper.OrderItemMapper;
@@ -63,6 +64,11 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public List<OrderItemChart> chartQuantityNoodleOneMonth(String type) {
         return orderItemRepository.chartQuantityNoodleOneMonth(type);
+    }
+
+    @Override
+    public List<OrderItemView> findAllOrderView(Long orderId) {
+        return orderItemRepository.findAllOrderView(orderId);
     }
 
     @Override

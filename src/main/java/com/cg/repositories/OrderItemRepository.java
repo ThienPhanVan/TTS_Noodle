@@ -1,5 +1,6 @@
 package com.cg.repositories;
 
+ import com.cg.dto.orderItem.OrderItemView;
  import com.cg.dto.order_item.OrderItemChart;
  import com.cg.dto.order_item.OrderItemResult;
  import com.cg.repositories.model.OrderItem;
@@ -31,4 +32,22 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
 
     List<OrderItem> findAllByOrderId(Long orderId);
+
+    @Query(value = "SELECT NEW com.cg.dto.orderItem.OrderItemView (" +
+                "oi.id," +
+                "oi.quantity," +
+                "oi.price," +
+                "pd.title," +
+                "u.fullName," +
+                "o.grandTotal," +
+                "p.paid" +
+                ")" +
+                "FROM OrderItem AS oi " +
+                "JOIN Product AS pd ON pd.id = oi.productId " +
+                "JOIN Order AS o ON o.id = oi.orderId " +
+                "JOIN User AS u ON u.id = o.userId " +
+                "JOIN PaymentPurchase p ON o.id = p.orderId" +
+               " WHERE((o.orderType = 'PURCHASE')  AND (o.id = ?1))"
+    )
+    List<OrderItemView> findAllOrderView(Long orderId);
 }

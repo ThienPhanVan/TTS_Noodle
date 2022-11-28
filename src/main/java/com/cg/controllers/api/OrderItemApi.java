@@ -1,6 +1,7 @@
 package com.cg.controllers.api;
 
 import com.cg.dto.order.OrderItemPurchase;
+import com.cg.dto.orderItem.OrderItemView;
 import com.cg.dto.order_item.OrderItemChart;
 import com.cg.dto.order_item.OrderItemResult;
 import com.cg.repositories.model.OrderType;
@@ -29,9 +30,11 @@ public class OrderItemApi {
     @GetMapping("{id}")
     public ResponseEntity<?> getCartItemByOrderId(@PathVariable Long id){
 
-        List<OrderItemResult> orderItemResult = orderItemService.findAllByOrderId(id);
+//        List<OrderItemResult> orderItemResult = orderItemService.findAllByOrderId(id);
 
-        return new ResponseEntity<>(orderItemResult, HttpStatus.ACCEPTED);
+        List<OrderItemView> orderItemViews = orderItemService.findAllOrderView(id);
+
+        return new ResponseEntity<>(orderItemViews, HttpStatus.ACCEPTED);
     }
 
 

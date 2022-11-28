@@ -62,9 +62,6 @@
                         </td>
                         <td>Tổng tiền</td>
                         <td>Ngày Nhập</td>
-                        <td>
-                            Hành động
-                        </td>
                     </tr>
                     </thead>
                     <tbody style="text-align: center">
@@ -145,8 +142,11 @@
 
     let orderItem = new OrderItem();
 
-    let orderId = null;
+    let product = new Product();
 
+    let productId = null;
+
+    let orderId = null;
 
 
     function renderOrder(obj){
@@ -174,7 +174,7 @@
         // </select>
 
         let str = `
-              <tr class="list-product change" id="tr_${obj.id}">
+              <tr class="list-product change"  data-toggle="collapse" data-target="#trc_${obj.id}" id="tr_${obj.id}" aria-expanded="false" aria-controls="collapseExample">
                         <th>${obj.id}</th>
                         <th>${obj.fullname}</th>
                         <th>${obj.code}</th>
@@ -183,14 +183,36 @@
                         <th style="text-align: right">${obj.grandtotal} đ </br>
                                  ${s2}
                         </th>
-                          <th>${obj.createdat}</th>
-                        <th>
-                             <i class="fas fa-edit btnEdit"></i>
-                        </th>
+                        <th>${obj.createdat}</th>
               </tr>
+              <div class="collapse" id="trc_${obj.id}">
+                  <tr class="payment_info hide" id="trh_${obj.id}">
+                        <td class="payment_info_tr"  colspan="6">
+                             <table class="table" id="tbItemPurchase">
+                                <thead class="bg-primary">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tên sản phẩm</th>
+                                    <th scope="col">Số lượng(kg)</th>
+                                    <th scope="col">Giá nhập(đ)</th>
+                                    <th scope="col">Thành tiền(đ)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </td>
+                  </tr>
+              </div>
         `
         return str;
     }
+
+    $('#collapseExample').collapse({
+        toggle: false,
+        dispose: false
+    })
 
     $('.search').on('input', function (){
         let keyword = $('.search').val();
@@ -408,44 +430,72 @@
             })
     }
 
+    function renderTablePayment(obj){
+
+        let grandTotal = +obj.quantity * +obj.price
+
+        let str = `
+                   <tr id="trd_${obj.id}">
+                        <th scope="row">${obj.id}</th>
+                        <td>${obj.title}</td>
+                        <td>${obj.quantity}</td>
+                        <td>${obj.price}</td>
+                        <td>${grandTotal}</td>
+                    </tr>
+                   `
+
+        return str
+    }
+
+    function renderInforPayment(obj){
+
+        let oldPayment = +obj.grandtotal - +obj.paid;
+
+        let std = `
+                     <div class="paid_info">
+                            <span>Đã trả</span>
+                            <span style="float: right;" id="payment">${oldPayment}</span>
+                        </div>
+                        <div class="paid_info">
+                            <span>Còn nợ</span>
+                            <span style="float: right;" id="debt">${obj.paid}</span>
+                        </div>
+                        <div class="paid_info">
+                            <span>Thanh toán</span>
+                            <input type="number" style="float: right;" id="paid"/>
+                        </div>
+                        <button>Trả nợ</button>
+                     </div>
+                   `
+    return std;
+    }
+
     function handleUpdatePayment(){
-        $(".btnEdit").on("click", function (){
 
-            let id = $(this).val();
-            console.log(orderId);
-
-            $.ajax({
-                "headers": {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                "type": "GET",
-                "url": "http://localhost:8080/api/order-items/" + orderId
-            })
-            .done((data)=>{
-                $("#tbItemPurchase tbody").html("");
-                $.each(data, (i,item)=>{
-
-                    orderItem = item;
-                    let grandTotal = +item.quantity * +item.price;
-
-                    let str = `
-                                let grandTotal = +${item.quantity} * +${item.price}
-
-                                <tr id="tr_${item.id}">
-                                    <th scope="row">${item.id}</th>
-                                    <td>Mark</td>
-                                    <td>${item.quantity}</td>
-                                    <td>${item.price}</td>
-                                    <td>${grandTotal}</td>
-                                </tr>
-                    `
-
-                    $("#tbItemPurchase tbody").append(str);
-                })
-            })
-            $("#modalChangeStatusOrder").modal("show");
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/order-items/" + orderId
         })
+        .done( (data) => {
+            $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("")
+            $.each(data, (i,item)=>{
+                orderItem = item;
+
+                let str = renderTablePayment(item)
+
+
+                $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).prepend(str);
+                $(`#trh_${orderId}`).removeClass("hide").addClass("show")
+            })
+        })
+        .fail((jqXHR) => {
+            console.log(jqXHR);
+        })
+
     }
 
     function getAllOrder(){
@@ -461,9 +511,6 @@
             $("#tbListOrder tbody").html("")
             $.each(data , (i,item) => {
 
-
-                console.log(item);
-
                 order = item;
 
                 order.createdat = $.FormatDateTime(order.createdat);
@@ -478,20 +525,19 @@
 
                 handleClick();
                 handleEvent();
-                handleUpdatePayment();
-
             })
         })
     }
 
     function handleClick(){
         $("#tbListOrder tbody tr").on("click", function () {
+
             orderId = $(this).attr('id').replace('tr_', '');
-            // changeStatus();
-            console.log(orderId);
+
             handleUpdatePayment();
         })
     }
+
     function handleEvent(){
         $("#tbListOrder tbody tr .statusOrder").on("click", function (){
             orderStatus = $(this).attr('value');
@@ -533,6 +579,25 @@
             })
         })
     }
+
+    function getProductById(productId){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/products/" + productId
+        })
+        .done((data) => {
+
+            product = data;
+
+        })
+    }
+
+    $('.collapse').collapse()
+
 
     $.FormatDateTime = function (dateToFormat) {
 

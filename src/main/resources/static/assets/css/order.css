@@ -130,9 +130,9 @@ body{
     display: none;
 }
 
-.show {
-    display: block !important;
-}
+/*.show {*/
+/*    display: block !important;*/
+/*}*/
 
 #message-alert {
     width: 100vw;
