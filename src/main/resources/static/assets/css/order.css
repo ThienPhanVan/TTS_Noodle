@@ -11,21 +11,13 @@ body{
     width: 370px;
     margin: 85px auto 0;
 }
-<<<<<<< HEAD
 
-
-/*.select-btn, li{*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    cursor: pointer;*/
-/*}*/
-=======
 .selectCustomers{
     display: flex;
     align-items: center;
     cursor: pointer;
 }
->>>>>>> thien_dev
+
 #select-btn-customers{
     height: 55px;
     padding: 0 75px;
