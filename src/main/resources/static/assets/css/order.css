@@ -11,7 +11,9 @@ body{
     width: 370px;
     margin: 85px auto 0;
 }
-/*#select-btn-customers, li{*/
+
+
+/*.select-btn, li{*/
 /*    display: flex;*/
 /*    align-items: center;*/
 /*    cursor: pointer;*/

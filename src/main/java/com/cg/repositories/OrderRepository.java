@@ -4,9 +4,6 @@ package com.cg.repositories;
 import com.cg.dto.order.OrderPurchaseDTO;
 import com.cg.dto.order.OrderResultDTO;
 import com.cg.dto.order.OrderPurchaseView;
-import com.cg.dto.order.OrderResult;
-import com.cg.dto.order.OrderResultDTO;
-import com.cg.dto.order.OrderPurchaseView;
 import com.cg.dto.order.OrderResultChart;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderStatus;
@@ -110,6 +107,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 
 
+
     @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
             "o.id, " +
             "o.createdAt, " +
@@ -126,9 +124,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(@Param("keySearch") String keySearch);
 
     @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
-    List<Order> getAllOrderByRole();
+     List<Order> getAllOrderByRole();
 
-    @Query(value = "call noodle.totalOneday()", nativeQuery = true)
+    @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
 
 

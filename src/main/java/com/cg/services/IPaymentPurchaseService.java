@@ -1,6 +1,7 @@
 package com.cg.services;
 
 
+import com.cg.dto.payment.PaymentResult;
 import com.cg.repositories.model.PaymentPurchase;
 
 import java.util.List;
@@ -11,6 +12,6 @@ public interface IPaymentPurchaseService {
     Optional<PaymentPurchase> findById(Long id);
 
 
-    List<PaymentPurchase> findAll();
+    List<PaymentResult> findAllByUserId(Long id);
 
 }

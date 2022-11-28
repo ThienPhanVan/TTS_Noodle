@@ -13,7 +13,7 @@ import java.time.Instant;
 @NamedNativeQuery(
         name = "sp_getQuantityNR1Week",
         query =
-                "call noodle.getQuantityNR1Week(:type);",
+                "call getQuantityNR1Week(:type);",
         resultSetMapping = "result_QuantityNR1Week"
 )
 @SqlResultSetMapping(
@@ -30,7 +30,7 @@ import java.time.Instant;
 @NamedNativeQuery(
         name = "sp_getQuantityNR1Month",
         query =
-                "call noodle.getQuntityNR1Month(:type);",
+                "call getQuntityNR1Month(:type);",
         resultSetMapping = "result_QuantityNR1Month"
 )
 @SqlResultSetMapping(

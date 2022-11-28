@@ -19,4 +19,17 @@
     font-size: 15px;
     margin-left: 50px;
 }
+.name_debt{
+    font-size: 15px;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+#debt{
+    color: red;
+}
+
+.card{
+    height: 265px;
+}
 
