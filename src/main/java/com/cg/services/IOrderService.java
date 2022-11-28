@@ -27,6 +27,8 @@ public interface IOrderService {
 
     OrderResult createOrderExport(OrderParam orderParam);
 
+    OrderResult updateOrderExport(OrderParam orderParam);
+
     List<OrderListPurchase> findAllByOrderTypePurchaseList ();
 
     List<OrderListPurchase> findAllByOrderTypeCustomerList();
@@ -73,7 +75,6 @@ public interface IOrderService {
     OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
 
     List<OrderResultDTO> findAllByOrderView();
-
 
 
 }

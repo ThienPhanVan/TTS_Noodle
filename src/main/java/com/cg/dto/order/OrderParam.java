@@ -16,7 +16,6 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class OrderParam {
-    //  private Long id;
 
     private Long userId;
     List<OrderItemParam> orderItems;

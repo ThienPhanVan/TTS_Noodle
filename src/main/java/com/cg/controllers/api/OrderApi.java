@@ -34,8 +34,10 @@ public class OrderApi {
 
     @Autowired
     private OrderService orderService;
+
     @Autowired
     UserService userService;
+
     @Autowired
     RoleService roleService;
 
@@ -56,13 +58,7 @@ public class OrderApi {
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
-//    @GetMapping("/exportsNoodle")
-//    public ResponseEntity<?> getAllOrderByExportNoodle(){
-//
-//        List<OrderResult> orderResultList = orderService.findAllByOrderTypeCustomer();
-//
-//        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
-//    }
+
 
     @GetMapping("/exportsNoodle")
     public ResponseEntity<?> getAllOrderByExportNoodle(){
@@ -117,9 +113,21 @@ public class OrderApi {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@Valid @RequestBody OrderParam orderParam) {
+    public ResponseEntity<?> createExportCustomer(@Valid @RequestBody OrderParam orderParam) {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.CREATED);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateExportCustomer(@Valid @RequestBody OrderParam orderParam) {
+        return new ResponseEntity<>(orderService.updateOrderExport(orderParam), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/debtDeduction")
+    public ResponseEntity<?> debtDeductionCustomer(Long id) {
+        return null;
+    }
+
 
 
     @GetMapping("/{id}")
@@ -132,7 +140,7 @@ public class OrderApi {
         return new ResponseEntity<>(orderResult, HttpStatus.OK);
     }
 
-    @PatchMapping("updateStatus")
+    @PatchMapping("/updateStatus")
     public ResponseEntity<?> doUpdateStatus(String orderStatus){
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
 

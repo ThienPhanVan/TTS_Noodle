@@ -11,7 +11,7 @@ body{
     width: 370px;
     margin: 85px auto 0;
 }
-#select-btn-customers, li{
+.selectCustomers{
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -130,9 +130,10 @@ body{
     display: none;
 }
 
-.show {
-    display: block !important;
-}
+/*.show {*/
+/*    display: block !important;*/
+/*}*/
+
 
 #message-alert {
     width: 100vw;
