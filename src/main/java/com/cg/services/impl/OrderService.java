@@ -12,9 +12,6 @@ import com.cg.repositories.model.*;
 import com.cg.dto.order.OrderItemParam;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
-import com.cg.mapper.OrderItemMapper;
-
-import com.cg.mapper.UserMapper;
 import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
@@ -27,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
+
 import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
@@ -58,9 +56,6 @@ public class OrderService implements IOrderService {
     @Autowired
     private PaymentPurchaseRepository paymentPurchaseRepository;
 
-    @Autowired
-    private UserMapper userMapper;
-
 
     @Autowired
     private PaymentCustomerRepository paymentCustomerRepository;
@@ -80,15 +75,14 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public OrderResult createOrderExport(OrderParam orderParam) {
-
         //order Item
         Long userId = orderParam.getUserId();
-        if (userId != null && !userRepository.existsById(userId)) {
+        if (userId != null && !userRepository.existsById(userId))
             throw new NotFoundException("Id khach hang khong hop le");
-        }
         //Transient
         Order order = orderMapper.toModel(orderParam);
-
+        if (userId != null)
+        order.setUserId(userId);
         order.setCreatedAt(Instant.now());
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(1L);
@@ -149,100 +143,17 @@ public class OrderService implements IOrderService {
                 orderItem.setPrice(item.getPrice());
                 orderItemRepository.save(orderItem);
             }
-            PaymentCustomer paymentCustomer = new PaymentCustomer();
-            paymentCustomer.setId(orderParam.getUserId());
-            paymentCustomer.setOrderId(order.getId());
-            paymentCustomer.setPaid(orderParam.getPaid());
-            paymentCustomerRepository.save(paymentCustomer);
         }
+        PaymentCustomer paymentCustomer = new PaymentCustomer();
+        BigDecimal paymentInput = orderParam.getPaid();
+        BigDecimal totalAmount = grandTotal.subtract(paymentInput);
+        paymentCustomer.setOrderId(order.getId());
+        if (userId != null)
+        paymentCustomer.setUserId(userId);
+        paymentCustomer.setPaid(totalAmount);
+        paymentCustomerRepository.save(paymentCustomer);
         return orderMapper.toDTO(order);
     }
-
-
-    @Override
-    @Transactional
-    public OrderResult updateOrderExport(OrderParam orderParam) {
-
-        //order Item
-        Long userId = orderParam.getUserId();
-        if (userId != null && !userRepository.existsById(userId)) {
-            throw new NotFoundException("Id khach hang khong hop le");
-        }
-        //Transient
-        Order order = orderMapper.toModel(orderParam);
-
-        order.setCreatedAt(Instant.now());
-        order.setOrderStatus(OrderStatus.PENDING);
-        order.setCreatedBy(1L);
-        order.setOrderType(OrderType.CUSTOMER);
-        order.setGrandTotal(new BigDecimal(0));
-        order = orderRepository.save(order);
-
-//        Optional <PaymentCustomer> paymentCustomerOptional = paymentCustomerRepository.findById(userId);
-//        PaymentCustomer paid = paymentCustomerOptional.get().setPaid(orderParam.getPaid());
-        BigDecimal grandTotal = BigDecimal.valueOf(0);
-        for (OrderItemParam itemParam : orderParam.getOrderItems()) {
-            //kiem tra product ton tai
-            //lay toan item theo productId
-            long productId = itemParam.getProductId();
-            Optional<Product> productOptional = productRepository.findById(productId);
-            if (!productOptional.isPresent()) {
-                throw new NotFoundException("Không Tìm Thấy productId " + itemParam.getProductId());
-            }
-
-            BigDecimal price = productOptional.get().getPrice();
-            // lấy số lượng customer order
-            int quantityCustomer = itemParam.getQuantity();
-            //tổng giá sản phẩm = giá sản phẩm * số lượng sản phẩm khách hàng order
-            grandTotal = price.multiply(new BigDecimal(quantityCustomer));
-            order.setGrandTotal(grandTotal);
-
-//             lay toan item theo productId
-            List<Item> items = itemRepository.findAllByProductIdAndAvailableGreaterThanOrderByCreatedAt(productId, 0);
-            long totalAvailable = items.stream().mapToInt(Item::getAvailable).sum();
-            // nếu tổng sản phẩm nhỏ hơn số lượng order thì gửi thông báo số lượng k đủ
-            if (totalAvailable < itemParam.getQuantity()) {
-                throw new NotEnoughQuantityException("Không đủ số lượng, vui lòng kiểm tra số lượng!");
-            }
-
-            for (Item item : items) {
-                if (quantityCustomer == 0) {
-                    break;
-                }
-                int available = item.getAvailable();
-                int orderItemSold;
-                if (quantityCustomer >= available) {
-                    quantityCustomer = quantityCustomer - available;
-                    item.setAvailable(0);
-                    orderItemSold = available;
-                    int itemSold = item.getSold() + available;
-                    item.setSold(itemSold);
-                } else {
-                    available = available - quantityCustomer;
-                    item.setAvailable(available);
-                    orderItemSold = quantityCustomer;
-                    int itemSold = item.getSold() + quantityCustomer;
-                    item.setSold(itemSold);
-                    quantityCustomer = 0;
-                }
-                OrderItem orderItem = new OrderItem();
-                orderItem.setQuantity(orderItemSold);
-                orderItem.setProductId(item.getProductId());
-                orderItem.setItemId(item.getId());
-                orderItem.setOrderId(order.getId());
-                orderItem.setPrice(item.getPrice());
-                orderItemRepository.save(orderItem);
-            }
-
-            PaymentCustomer paymentCustomer = new PaymentCustomer();
-            paymentCustomer.setId(order.getId());
-            paymentCustomer.setOrderId(order.getId());
-            paymentCustomer.setPaid(orderParam.getPaid());
-            paymentCustomerRepository.save(paymentCustomer);
-        }
-        return orderMapper.toDTO(order);
-    }
-
 
     @Override
     public List<OrderListPurchase> findAllByOrderTypePurchaseList() {
@@ -352,7 +263,6 @@ public class OrderService implements IOrderService {
         paymentPurchaseRepository.save(newPaymentPurchase);
 
 
-
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
             BigDecimal price = orderItemPurchase.getPrice();
             int quantity = orderItemPurchase.getQuantity();
@@ -450,7 +360,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(String keySearch) {
-       return orderRepository.findOrderByFullNameAndAddressContainsAndOrderType(keySearch);
+        return orderRepository.findOrderByFullNameAndAddressContainsAndOrderType(keySearch);
     }
 
     public void updateOrderStatus(OrderResult orderResult) {
@@ -472,7 +382,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderResultDTO> findAllOrderStatusCompleted() {
-    return orderRepository.findAllOrderStatusCompleted();
+        return orderRepository.findAllOrderStatusCompleted();
     }
 
     @Override

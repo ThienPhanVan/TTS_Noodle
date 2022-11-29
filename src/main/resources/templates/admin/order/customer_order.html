@@ -191,9 +191,12 @@
 <script>
     let order = new Order();
     let user = new User();
-    let paymentCustomer = new PaymentCustomer();
 
     function renderOrderCustomer(order, i) {
+        let grandTotal = +order.grandTotal;
+        let paid = +order.paid;
+        let liabilities = grandTotal - paid;
+        console.log(liabilities)
         let str = `
                 <tr data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}" >
                     <td>${order.id}</td>
@@ -202,7 +205,7 @@
                     <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>
-                    <span id="inDebt">(Nợ: ${new Intl.NumberFormat('vi-VN').format(order.paid)})</span></td>
+                    <span id="inDebt">(Nợ: ${new Intl.NumberFormat('vi-VN').format(liabilities)})</span></td>
                     <td>
                           <button class="btn btn-outline-primary edit"
                             data-toggle="tooltip" data-placement="top" title="Edit">
@@ -211,12 +214,28 @@
                     </td>
                 </tr>
 
-             <tr class="show">
-                <td class="collapse" colspan="12" id="tr_${order.id}">
-                   fsfsf
-</td>
-
-                </tr>
+                 <tr class="show">
+                    <td class="collapse" colspan="1" id="tr_${order.id}">
+                       Số lượng
+                    </td>
+                    <td class="collapse" colspan="1" id="tr_${order.id}">
+                       Giá tiền
+                    </td>
+                      <td class="collapse" colspan="1" id="tr_${order.id}">
+                       Thành tiền
+                    </td>
+                 </tr>
+                   <tr class="show">
+                    <td class="collapse" colspan="1" id="tr_${order.id}">
+                       Số lượng
+                    </td>
+                    <td class="collapse" colspan="1" id="tr_${order.id}">
+                   
+                    </td>
+                      <td class="collapse" colspan="1" id="tr_${order.id}">
+                         ${order.grandTotal}
+                    </td>
+                 </tr>
 
 
             `;
@@ -228,8 +247,8 @@
         $("#modalEditOrder").modal("show");
     }
 
-    function showModalCustomerId(orderId) {
-    }
+    // function showModalCustomerId(orderId) {
+    // }
 
     // function renderOrderStatusCompleted(order) {
     //     let str = `
@@ -260,7 +279,7 @@
             let totalLiabilities = 0;
             data.forEach(item => {
                 totalOrder += item.grandTotal;
-                totalLiabilities += item.paid;
+                totalLiabilities +=(item.grandTotal - item.paid);
                 let str = renderOrderCustomer(item);
                 $("#tbOrder tbody").prepend(str);
 
@@ -285,23 +304,38 @@
 
 
 
-    function findAllPaymentCustomer() {
-        $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/paymentCustomer",
-        }).done((data) => {
-            paymentCustomer = data;
 
-        }).fail((jqXHR) => {
-            console.log(jqXHR);
-        })
-    }
+    // function findAllPaymentCustomer() {
+    //     $.ajax({
+    //         headers: {
+    //             "accept": "application/json",
+    //             "content-type": "application/json"
+    //         },
+    //         type: "GET",
+    //         url: "http://localhost:8080/api/paymentCustomer",
+    //     }).done((data) => {
+    //         paymentCustomer = data;
+    //     })
+    // }
+    // function findAllPaymentCustomer() {
+    //     $.ajax({
+    //         headers: {
+    //             "accept": "application/json",
+    //             "content-type": "application/json"
+    //         },
+    //         type: "GET",
+    //         url: "http://localhost:8080/api/paymentCustomer",
+    //     }).done((data) => {
+    //         paymentCustomer = data;
+    //
+    //     }).fail((jqXHR) => {
+    //         console.log(jqXHR);
+    //     })
+    // }
 
-    findAllPaymentCustomer();
+
+    // findAllPaymentCustomer();
+
 
 
     function findAllCustomerStatus() {
@@ -310,6 +344,20 @@
         })
     }
 
+
+    function editStatusOrder(orderId){
+        $("#statusPending").on("click", function () {
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/orders/statusPending",
+            }).done((data) => {
+            })
+        })
+    }
 
     function findAllStatusPending() {
         $("#statusPending").on("click", function () {
@@ -322,7 +370,6 @@
                 url: "http://localhost:8080/api/orders/statusPending",
             }).done((data) => {
                 $("#tbOrder tbody").html("");
-                order = data;
                 data.forEach((item, i) => {
                     let str = renderOrderCustomer(item, i);
                     $("#tbOrder tbody").prepend(str);
@@ -348,7 +395,6 @@
             }).done((data) => {
                 $("#tbOrder tbody").html("");
                 order = data;
-                console.log(order)
                 data.forEach((item, i) => {
                     let str = renderOrderCustomer(item, i);
                     $("#tbOrder tbody").prepend(str);
