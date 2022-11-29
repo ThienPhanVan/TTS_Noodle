@@ -178,17 +178,20 @@
                         // console.log(paymentList, "payment")
                         paymentCustomer += paymentList.paid;
                     })
+                    console.log(paymentCustomer, "tiền trả")
                 })
                 let total = 0;
                 let days;
+                let debts= 0;
                 getOrderById(userList.id).then((orderItem) => {
-                    console.log(orderItem, "order")
-                    $.each(orderItem, (i, orders) => {
+                     $.each(orderItem, (i, orders) => {
                         // console.log(orders, "order")
                         total += orders.grandTotal;
                         days = orders.createdAt;
                         totalOrder += orders.grandTotal
+                         debts = total - paymentCustomer;
                     })
+                    console.log(paymentCustomer, "nợ")
                     let str = `
                 <tr id="tr_${userList.id}">
                     <td><img height="50" src=${userList.avatarUrl} alt="noavatar"></td>
@@ -197,7 +200,7 @@
                     <td>${userList.phone}</td>
                     <td>${userList.address}</td>
                     <td id="to"> ${new Intl.NumberFormat('vi-VN').format(total)} </td>
-                    <td id="debt">${new Intl.NumberFormat('vi-VN').format(paymentCustomer)}</td>
+                    <td id="debt">${new Intl.NumberFormat('vi-VN').format(debts)}</td>
                     <td id="cra">${days === undefined ? "Chưa Mua Hàng" : moment(days).format('DD/MM/YYYY -- hh:mm')} </td>
                        <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${userList.id}" data-toggle="tooltip"
@@ -241,7 +244,7 @@
                 async: false,
                 url: "http://localhost:8080/api/orders/byIdUser/" + userId,
             }).done((data) => {
-                console.log(data,"data")
+                // console.log(data,"data")
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
@@ -296,7 +299,7 @@
             "phone": $('#phoneCus').val(),
             "email": $('#emailCus').val(),
             "address": $('#addressCus').val(),
-            "avatarUrl": $('#avatar').val(),
+            "avatarUrl": "https://img.pikbest.com/png-images/qianku/default-avatar_2404265.png!bw700",
         }
         // console.log(createUser)
         $.ajax({
@@ -360,8 +363,7 @@
         let debt = 0;
         getOrderById(userId).then((orderId) => {
             $.each(orderId, (i, itemOrder) => {
-                console.log(itemOrder, "iteam order")
-                total += itemOrder.grandTotal;
+                 total += itemOrder.grandTotal;
                 days = itemOrder.createdAt
             })
         })
