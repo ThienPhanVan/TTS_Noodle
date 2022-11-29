@@ -29,10 +29,9 @@ addCustomer();
 
 function updateName(selectedLi) {
   let id = $(selectedLi).attr('id')
-    console.log(id, "id1")
     getUserById(id).then((userId)=>{
-        console.log(userId, "usser")
-         $("#nameCus").val(userId.fullName);
+
+        $("#nameCus").val(userId.fullName);
         $("#nameCus").attr("disabled", "disabled");
         $("#addressCus").val(userId.address);
         $("#addressCus").attr("disabled", "disabled");
@@ -43,7 +42,6 @@ function updateName(selectedLi) {
     addCustomer(selectedLi.innerText);
     wrapper.classList.remove("active");
     selectBtn.firstElementChild.innerText = selectedLi.innerText;
-
     $("#idCustomerCre").val(selectedLi.id);
 }
 
@@ -57,7 +55,6 @@ function getUserById(userId) {
             type: "GET",
             url: "http://localhost:8080/api/users/" + userId,
         }).done((data) => {
-            // showModalUpdateCus(data);
         }).fail((jxHQR) => {
             console.log(jxHQR)
         })
