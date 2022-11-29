@@ -12,9 +12,6 @@ import com.cg.repositories.model.*;
 import com.cg.dto.order.OrderItemParam;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
-import com.cg.mapper.OrderItemMapper;
-
-import com.cg.mapper.UserMapper;
 import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
@@ -76,12 +73,13 @@ public class OrderService implements IOrderService {
 
         //order Item
         Long userId = orderParam.getUserId();
-        if (userId != null && !userRepository.existsById(userId)) {
+        if (userId != null && !userRepository.existsById(userId))
             throw new NotFoundException("Id khach hang khong hop le");
-        }
+
         //Transient
         Order order = orderMapper.toModel(orderParam);
-
+        if(userId != null)
+            order.setUserId(userId);
         order.setCreatedAt(Instant.now());
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(1L);
@@ -142,12 +140,16 @@ public class OrderService implements IOrderService {
                 orderItem.setPrice(item.getPrice());
                 orderItemRepository.save(orderItem);
             }
-            PaymentCustomer paymentCustomer = new PaymentCustomer();
-            paymentCustomer.setId(orderParam.getUserId());
-            paymentCustomer.setOrderId(order.getId());
-            paymentCustomer.setPaid(orderParam.getPaid());
-            paymentCustomerRepository.save(paymentCustomer);
+
         }
+        PaymentCustomer paymentCustomer = new PaymentCustomer();
+        BigDecimal paymentInput = orderParam.getPaid();
+        BigDecimal totalAmount = grandTotal.subtract(paymentInput);
+        paymentCustomer.setOrderId(order.getId());
+        if(userId != null)
+        paymentCustomer.setUserId(userId);
+        paymentCustomer.setPaid(totalAmount);
+        paymentCustomerRepository.save(paymentCustomer);
         return orderMapper.toDTO(order);
     }
 
@@ -435,7 +437,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(String keySearch) {
-       return orderRepository.findOrderByFullNameAndAddressContainsAndOrderType(keySearch);
+        return orderRepository.findOrderByFullNameAndAddressContainsAndOrderType(keySearch);
     }
 
     public void updateOrderStatus(OrderResult orderResult) {
@@ -457,7 +459,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderResultDTO> findAllOrderStatusCompleted() {
-    return orderRepository.findAllOrderStatusCompleted();
+        return orderRepository.findAllOrderStatusCompleted();
     }
 
     @Override

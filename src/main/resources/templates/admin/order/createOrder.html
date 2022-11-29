@@ -130,11 +130,8 @@
 
                                             </ul>
                                         </div>
-                                        <div class="plus">
-                                            <a role="button" aria-expanded="false"
-                                               class="mr-3 btn btn-primary">
-                                                <i role="button" class="fas fa-plus"></i>
-                                            </a>
+                                        <div class="plus btn btn-primary">
+                                            <button onclick="resetFormCustomer()">Reset Form</button>
                                         </div>
                                     </div>
 
@@ -343,7 +340,8 @@
                 $("#totalAmount").val(0);
                 $("#remainingAmount").val(0);
                 $("#selectCustomer").text("Chọn khách hàng");
-                }).fail((jqXHR) => {
+                resetFormCustomer();
+            }).fail((jqXHR) => {
                 iziToast.warning({
                     title: 'FAIL',
                     position: 'topRight',
@@ -353,6 +351,18 @@
             console.log(jqXHR);
 
         })
+    }
+
+    function resetFormCustomer(){
+        $("#nameCus").removeAttr("disabled");
+
+        $("#addressCus").removeAttr("disabled");
+
+        $("#phoneCus").removeAttr("disabled");
+
+        $("#frmCreateCus")[0].reset();
+
+        $("#selectCustomer").text("Chọn khách hàng");
     }
 
     function handleIncreaseQuantity() {
@@ -428,7 +438,6 @@
                 url: "http://localhost:8080/api/users/" + userId,
             }).done((data) => {
                 user = data;
-
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
