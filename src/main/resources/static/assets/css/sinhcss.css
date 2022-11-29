@@ -15,6 +15,10 @@
     border-radius: 25px
 }
 
+.selectProfit{
+    height: 36px;
+    width: 160px;
+ }
 .name_chart{
     font-size: 15px;
     margin-left: 50px;

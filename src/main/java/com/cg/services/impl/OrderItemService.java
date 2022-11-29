@@ -1,6 +1,8 @@
 package com.cg.services.impl;
 
 import com.cg.dto.order_item.OrderItemChart;
+import com.cg.dto.order_item.OrderItemProfit;
+import com.cg.dto.order_item.OrderItemProfitOD;
 import com.cg.dto.order_item.OrderItemResult;
 import com.cg.mapper.OrderItemMapper;
 import com.cg.repositories.OrderItemRepository;
@@ -63,5 +65,15 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public List<OrderItemChart> chartQuantityNoodleOneMonth(String type) {
         return orderItemRepository.chartQuantityNoodleOneMonth(type);
+    }
+
+    @Override
+    public List<OrderItemProfitOD> getProfit1Day() {
+        return orderItemRepository.getProfit1Day();
+    }
+
+    @Override
+    public List<OrderItemProfit> getProfit1Week() {
+        return orderItemRepository.getProfit1Week();
     }
 }

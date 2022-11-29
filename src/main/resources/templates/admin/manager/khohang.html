@@ -234,9 +234,11 @@
         getItemByProductId(idProduct).then((item) => {
             console.log(item,  "item")
             let totalQuantity =0;
+            let vonkho = 0;
             $('#tbRiceImport tbody').empty();
             item.forEach(itemCard => {
-                totalQuantity += itemCard.quantity;
+                 totalQuantity += itemCard.quantity;
+                 vonkho = totalQuantity * itemCard.price;
                 console.log(itemCard, "item 2")
                 let str = `
                  <tr id="tr_${itemCard.id}">
@@ -245,6 +247,7 @@
                     <td>${moment(itemCard.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
                      <td>${itemCard.quantity}</td>
                     <td>${totalQuantity}</td>
+                    <td>${new Intl.NumberFormat("vi-VN").format(vonkho)}</td>
                   </tr>
                          `;
                 $('#tbRiceImport tbody').append(str)

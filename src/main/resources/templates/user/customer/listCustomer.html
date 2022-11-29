@@ -129,14 +129,14 @@
     function renderUser(obj) {
         let totalOrders;
         let dayCre;
-        let debt ;
+        let debt;
         if (dayCre === undefined) {
             dayCre = "Chưa Mua Hàng"
         }
         if (totalOrders === undefined) {
             totalOrders = 0;
         }
-        if (debt === undefined){
+        if (debt === undefined) {
             debt = 0;
         }
         return `
@@ -175,17 +175,21 @@
                 let paymentCustomer = 0;
                 getPaymentByUserid(userList.id).then((payment) => {
                     $.each(payment, (i, paymentList) => {
-                         paymentCustomer += paymentList.paid;
+                        // console.log(paymentList, "payment")
+                        paymentCustomer += paymentList.paid;
                     })
-                     getOrderById(userList.id).then((orderItem) => {
-                        let total = 0;
-                        let days;
-                        $.each(orderItem, (i, orders) => {
-                            total += orders.grandTotal;
-                            days = orders.createdAt;
-                            totalOrder += orders.grandTotal
-                        })
-                        let str = `
+                })
+                let total = 0;
+                let days;
+                getOrderById(userList.id).then((orderItem) => {
+                    console.log(orderItem, "order")
+                    $.each(orderItem, (i, orders) => {
+                        // console.log(orders, "order")
+                        total += orders.grandTotal;
+                        days = orders.createdAt;
+                        totalOrder += orders.grandTotal
+                    })
+                    let str = `
                 <tr id="tr_${userList.id}">
                     <td><img height="50" src=${userList.avatarUrl} alt="noavatar"></td>
                     <td>${userList.fullName}</td>
@@ -203,9 +207,9 @@
                                </a>
                        </td>
                     </tr> `;
-                        $("#tbCustomer tbody").prepend(str);
-                    })
+                    $("#tbCustomer tbody").prepend(str);
                 })
+
             })
 
             let sum = `
@@ -237,7 +241,7 @@
                 async: false,
                 url: "http://localhost:8080/api/orders/byIdUser/" + userId,
             }).done((data) => {
-                order = data;
+                console.log(data,"data")
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
@@ -272,7 +276,7 @@
                 type: "GET",
                 url: "http://localhost:8080/api/orders/paymentCustomer/" + userId,
             }).done((data) => {
-                console.log(data, "paymentaaa")
+                // console.log(data, "paymentaaa")
             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
@@ -352,18 +356,19 @@
             "avatarUrl": $('#avatarUp').val(),
         }
         let total = 0;
-        let days = "Chưa Mua Hàng";
+        let days ;
         let debt = 0;
         getOrderById(userId).then((orderId) => {
             $.each(orderId, (i, itemOrder) => {
+                console.log(itemOrder, "iteam order")
                 total += itemOrder.grandTotal;
                 days = itemOrder.createdAt
             })
         })
-        getPaymentByUserid(userId).then((paymentId)=>{
+        getPaymentByUserid(userId).then((paymentId) => {
             $.each(paymentId, (i, itemPayment) => {
                 debt += itemPayment.paid;
-             })
+            })
         })
         $.ajax({
             headers: {
@@ -382,9 +387,9 @@
                     <td>${user.email}</td>
                     <td>${user.phone}</td>
                     <td>${user.address}</td>
-                    <td ${total} </td>
-                    <td style="color: red">>${debt} </td>
-                    <td >${moment(days).format("DD/MM/YYYY - hh:mm")}</td>
+                    <td>${total}</td>
+                    <td style="color: red">${debt} </td>
+                    <td >${days === undefined ? "Chưa Mua Hàng" : moment(days).format("DD/MM/YYYY - hh:mm")}</td>
                     <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${user.id}" data-toggle="tooltip"
                                 data-toggle="modal" data-target="#modalUpdateCus"
@@ -423,11 +428,11 @@
                     let days = "Chưa Mua Hàng";
                     getOrderById(user.id).then((userId) => {
                         $.each(userId, (i, itemUser) => {
-                             total += itemUser.grandTotal;
+                            total += itemUser.grandTotal;
                             days = itemUser.createdAt;
                         })
                     })
-                     let str =
+                    let str =
                         ` <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
                     <td>${user.fullName}</td>

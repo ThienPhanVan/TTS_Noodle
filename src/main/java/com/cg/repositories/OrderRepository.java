@@ -40,10 +40,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
-    @Query(name = "noodle.chartSevenDay", nativeQuery = true)
+    @Query(name = "sp_chartSevenDay", nativeQuery = true)
     List<OrderResultChart> findOrderSevenDay();
 
-    @Query(name = "noodle.chartOneMonth", nativeQuery = true)
+    @Query(name = "sp_chartOneMonth", nativeQuery = true)
     List<OrderResultChart> findOrderOneMonth();
 
 
@@ -129,5 +129,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
 
-
-}
+ }

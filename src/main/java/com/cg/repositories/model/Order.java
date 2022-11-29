@@ -13,7 +13,7 @@ import java.time.Instant;
 
 
 @NamedNativeQuery(
-        name = "noodle.chartSevenDay",
+        name = "sp_chartSevenDay",
         query =
                 "call chartSevenDay();",
         resultSetMapping = "result_chartSevenDay"
@@ -30,7 +30,7 @@ import java.time.Instant;
 )
 
 @NamedNativeQuery(
-        name = "noodle.chartOneMonth",
+        name = "sp_chartOneMonth",
         query =
                 "call chartOneMonth();",
         resultSetMapping = "result_chartOneMonth"
