@@ -1,6 +1,8 @@
 package com.cg.services;
 
 import com.cg.dto.order_item.OrderItemChart;
+import com.cg.dto.order_item.OrderItemProfit;
+import com.cg.dto.order_item.OrderItemProfitOD;
 import com.cg.dto.order_item.OrderItemResult;
 import com.cg.repositories.model.OrderItem;
  import com.cg.repositories.model.OrderType;
@@ -26,5 +28,8 @@ public interface IOrderItemService {
     List<OrderItemChart> chartQuantityNoodleOneWeek(String type);
 
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
+
+    List<OrderItemProfitOD> getProfit1Day();
+    List<OrderItemProfit> getProfit1Week();
 
 }

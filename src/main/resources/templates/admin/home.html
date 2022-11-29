@@ -695,7 +695,7 @@
             },
             async: false,
             type: "GET",
-            url: "http://localhost:8080/api/orders/exportsNoodle"
+            url: "http://localhost:8080/api/orders/exports"
         }).done((data) => {
             let doanhSo = 0;
             let donban = 0;
@@ -728,6 +728,7 @@
             type: "GET",
             url: "http://localhost:8080/api/orders/imports"
         }).done((data) => {
+            console.log(data,  "dataa")
             let donNhap = 0;
             order = data;
             donNhap = order.length;

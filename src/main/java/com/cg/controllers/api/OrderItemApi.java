@@ -2,6 +2,8 @@ package com.cg.controllers.api;
 
 import com.cg.dto.order.OrderItemPurchase;
 import com.cg.dto.order_item.OrderItemChart;
+import com.cg.dto.order_item.OrderItemProfit;
+import com.cg.dto.order_item.OrderItemProfitOD;
 import com.cg.dto.order_item.OrderItemResult;
 import com.cg.repositories.model.OrderType;
 import com.cg.services.IOrderItemService;
@@ -54,5 +56,17 @@ public class OrderItemApi {
     public ResponseEntity<?> chartQuantityNoodleOM(@PathVariable String type){
         List<OrderItemChart> orderItemCharts= orderItemService.chartQuantityNoodleOneMonth(type);
         return new ResponseEntity<>(orderItemCharts,HttpStatus.OK);
+    }
+
+    @GetMapping("/getProfit1Day")
+    public ResponseEntity<?> getProfit1Day(){
+        List<OrderItemProfitOD> orderItemProfits= orderItemService.getProfit1Day();
+        return new ResponseEntity<>(orderItemProfits,HttpStatus.OK);
+    }
+
+    @GetMapping("/getProfit1Week")
+    public ResponseEntity<?> getProfit1Week(){
+        List<OrderItemProfit> orderItemProfits= orderItemService.getProfit1Week();
+        return new ResponseEntity<>(orderItemProfits,HttpStatus.OK);
     }
 }

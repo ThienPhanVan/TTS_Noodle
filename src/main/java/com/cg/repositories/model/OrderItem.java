@@ -1,7 +1,9 @@
 package com.cg.repositories.model;
 
  import com.cg.dto.order_item.OrderItemChart;
-import lombok.AllArgsConstructor;
+ import com.cg.dto.order_item.OrderItemProfit;
+ import com.cg.dto.order_item.OrderItemProfitOD;
+ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -43,6 +45,42 @@ import java.time.Instant;
                 }
         )
 )
+
+@NamedNativeQuery(
+        name = "sp_getProfit1Week",
+        query =
+                "call sp_getProfit1Week();",
+        resultSetMapping = "result_getProfit1Week"
+)
+
+@SqlResultSetMapping(
+        name = "result_getProfit1Week",
+        classes = @ConstructorResult(
+                targetClass = OrderItemProfit.class,
+                columns = {
+                        @ColumnResult(name = "productId", type = Long.class),
+                        @ColumnResult(name = "quantity", type = Integer.class),
+                        @ColumnResult(name  = "createdAt", type = Instant.class)
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "sp_getProfit1day",
+        query =
+                "call sp_getProfit1day();",
+        resultSetMapping = "result_getProfit1day"
+)
+@SqlResultSetMapping(
+        name = "result_getProfit1day",
+        classes = @ConstructorResult(
+                targetClass = OrderItemProfitOD.class,
+                columns = {
+                        @ColumnResult(name = "productId", type = Long.class),
+                        @ColumnResult(name = "quantity", type = Integer.class),
+                 }
+        )
+)
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

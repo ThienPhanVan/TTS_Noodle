@@ -119,16 +119,18 @@
                 'content-type': "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/orders/exportsNoodle"
+            url: "http://localhost:8080/api/orders/exports"
         }).done((data) => {
+            console.log(data,  "customer")
             let createBy = "";
             $.each(role, (i, item) => {
-                if (item.id === 1) {
+
+                 if (item.id === 1) {
                     createBy = item.code
                 }
 
             })
-            console.log(createBy, "created")
+            console.log(data, "created")
             let sumTotal = 0;
             data.forEach(orderItem => {
                 sumTotal += orderItem.grandTotal;
