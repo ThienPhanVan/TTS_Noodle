@@ -155,7 +155,7 @@
         switch (obj.orderstatus) {
             case "PENDING":
                 s1 = "<option value='PENDING'>PENDING</option>" +
-                    "<option value='COMPLETED'>COMPLETED</option>" +
+                     "<option value='COMPLETED'>COMPLETED</option>" +
                     "<option value='CANCELLED'>CANCELLED</option>"
                 break;
             case "COMPLETED":
@@ -174,7 +174,7 @@
         // </select>
 
         let str = `
-              <tr class="list-product change"  data-toggle="collapse" data-target="#trc_${obj.id}" id="tr_${obj.id}" aria-expanded="false" aria-controls="collapseExample">
+              <tr class="list-product change"  data-toggle="collapse" data-target="#trc_${obj.id}" id="tr_${obj.id}" aria-expanded="false" aria-controls="trc_${obj.id}">
                         <th>${obj.id}</th>
                         <th>${obj.fullname}</th>
                         <th>${obj.code}</th>
@@ -185,33 +185,39 @@
                         </th>
                         <th>${obj.createdat}</th>
               </tr>
-              <div class="collapse" id="trc_${obj.id}">
-                  <tr class="payment_info hide" id="trh_${obj.id}">
-                        <td class="payment_info_tr"  colspan="6">
-                             <table class="table" id="tbItemPurchase">
-                                <thead class="bg-primary">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Tên sản phẩm</th>
-                                    <th scope="col">Số lượng(kg)</th>
-                                    <th scope="col">Giá nhập(đ)</th>
-                                    <th scope="col">Thành tiền(đ)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+              <tr class="payment_info hide" id="trh_${obj.id}">
+                    <td class="payment_info_tr"  colspan="6">
+                         <div class="row collapse" id="trc_${obj.id}">
+                            <div class="col-lg-8">
+                                <table class="table" id="tbItemPurchase">
+                                    <thead class="bg-primary">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Số lượng(kg)</th>
+                                        <th scope="col">Giá nhập(đ)</th>
+                                        <th scope="col">Thành tiền(đ)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                                </tbody>
-                            </table>
-                        </td>
-                  </tr>
-              </div>
+                                    </tbody>
+                                 </table>
+                            </div>
+                            <div class="col-lg-4 payment">
+
+                            </div>
+                         </div>
+                    </td>
+              </tr>
+
         `
         return str;
     }
 
     $('#collapseExample').collapse({
-        toggle: false,
-        dispose: false
+        toggle: true,
+        dispose: true
     })
 
     $('.search').on('input', function (){
@@ -439,33 +445,38 @@
                         <th scope="row">${obj.id}</th>
                         <td>${obj.title}</td>
                         <td>${obj.quantity}</td>
-                        <td>${obj.price}</td>
-                        <td>${grandTotal}</td>
+                        <td>${App.formatNumberSpace(obj.price)}</td>
+                        <td>${App.formatNumberSpace(grandTotal)}</td>
                     </tr>
                    `
 
         return str
     }
 
-    function renderInforPayment(obj){
+    function renderInfoPayment(obj){
 
-        let oldPayment = +obj.grandtotal - +obj.paid;
+        let oldPayment = +obj.grandTotal - +obj.paid;
 
         let std = `
-                     <div class="paid_info">
-                            <span>Đã trả</span>
-                            <span style="float: right;" id="payment">${oldPayment}</span>
+                  <div class="card">
+                        <ul  class="list-group list-group-flush">
+                            <li  class="list-group-item">
+                                 <span style="float: left">Đã trả</span>
+                                 <span style="float: right;" id="payment">${App.formatNumberSpace(oldPayment)} đ</span>
+                            </li >
+                           <li  class="list-group-item">
+                                <span style="float: left">Còn nợ</span>
+                                <span style="float: right; color: red" id="debt">${App.formatNumberSpace(obj.paid)} đ</span>
+                            </li >
+                            <li  class="list-group-item">
+                                <span style="float: left">Thanh toán</span>
+                                <input type="number" style="float: right;" id="paid"/>
+                            </li>
+                        </li >
+                        <div class="card-body">
+                            <button class="btn btn-success">Trả nợ</button>
                         </div>
-                        <div class="paid_info">
-                            <span>Còn nợ</span>
-                            <span style="float: right;" id="debt">${obj.paid}</span>
-                        </div>
-                        <div class="paid_info">
-                            <span>Thanh toán</span>
-                            <input type="number" style="float: right;" id="paid"/>
-                        </div>
-                        <button>Trả nợ</button>
-                     </div>
+                  </div>
                    `
     return std;
     }
@@ -482,15 +493,23 @@
         })
         .done( (data) => {
             $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("")
+            $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).html("")
             $.each(data, (i,item)=>{
                 orderItem = item;
 
                 let str = renderTablePayment(item)
 
-
                 $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).prepend(str);
-                $(`#trh_${orderId}`).removeClass("hide").addClass("show")
+
+                $(`#trh_${orderId}`).removeClass("hide").addClass("show");
             })
+
+            if(orderItem.paid === 0){
+
+            }
+            let std = renderInfoPayment(orderItem);
+
+            $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(std);
         })
         .fail((jqXHR) => {
             console.log(jqXHR);
