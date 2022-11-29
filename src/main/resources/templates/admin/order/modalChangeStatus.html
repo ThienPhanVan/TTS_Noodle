@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <th:block th:fragment="modalChangeStatus">
-    <div class="modal fade" id="modalChangeStatusOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
+    <div class="modal fade bd-example-modal-lg" id="modalChangeStatusOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tạo Khách Hàng</h5>
@@ -11,43 +11,56 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="" id="frmChangeStatus">
-                        <div class="form-row">
-                                <div class="form-group ">
-                                    <label for="nameSup">Nhà cung cấp</label>
-                                    <input disabled type="text" class="form-control" name="nameSup" id="nameSup">
+                    <div class="row">
+                        <div class="list-group col-md-8">
+                            <form class="" id="frmChangeStatus">
+                                <table class="table" id="tbItemPurchase">
+                                    <thead class="bg-primary">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Số lượng(kg)</th>
+                                        <th scope="col">Giá nhập(đ)</th>
+                                        <th scope="col">Thành tiền(đ)</th>
+                                        <th>
+                                            <i class="fas fa-triangle"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="list-group col-md-4">
+                            <div class="list-group" id="payment_info">
+                                <div class="paid_info">
+                                    <span>Đã trả</span>
+                                    <span style="float: right;" id="payment">5000</span>
                                 </div>
-                                <div class="form-group ">
-                                    <label for="Admin">Người nhập</label>
-                                    <input disabled type="text" class="form-control" name="Admin" id="Admin">
+                                <div class="paid_info">
+                                    <span>Còn nợ</span>
+                                    <span style="float: right;" id="debt">3000</span>
                                 </div>
-                                <div class="form-group">
-                                    <label>Trạng thái</label>
-                                    <select class="form-control selectStatus" style="height: fit-content;  text-align: center" name="cars" id="cars">
-                                        <option disabled selected value="Trạng thái">Trạng thái</option>
-                                        <option value="PENDING">PENDING</option>
-                                        <option value="COMPLETED">COMPLETED</option>
-                                        <option value="CANCELLED">CANCELLED</option>
-                                    </select>
+                                <div class="paid_info">
+                                    <span>Thanh toán</span>
+                                    <input style="float: right;" id="paid"/>
                                 </div>
-                                <div class="form-group ">
-                                    <label for="grandTotal">Tổng tiền</label>
-                                    <input disabled type="text" class="form-control" name="grandTotal" id="grandTotal">
-                                </div>
-                                <div class="form-group">
-                                    <label for="datetime">Ngày nhập</label>
-                                    <input disabled type="text" class="form-control" name="datetime" id="datetime">
-                                </div>
+                                <button>Trả nợ</button>
                             </div>
-                    </form>
-
-
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                         <button type="button" id="btnChangeStatus" class="btn btn-primary">Save</button>
                     </div>
-
-
                 </div>
             </div>
         </div>

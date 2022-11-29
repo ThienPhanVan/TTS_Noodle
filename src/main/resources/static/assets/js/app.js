@@ -147,6 +147,10 @@ class Role {
         this.code = code;
         this.name = name;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> tai_dev
 }
 
 class PaymentCustomer {

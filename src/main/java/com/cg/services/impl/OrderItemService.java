@@ -1,5 +1,6 @@
 package com.cg.services.impl;
 
+import com.cg.dto.orderItem.OrderItemView;
 import com.cg.dto.order_item.OrderItemChart;
 import com.cg.dto.order_item.OrderItemProfit;
 import com.cg.dto.order_item.OrderItemProfitOD;
@@ -68,6 +69,7 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
+<<<<<<< HEAD
     public List<OrderItemProfitOD> getProfit1Day() {
         return orderItemRepository.getProfit1Day();
     }
@@ -75,5 +77,16 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public List<OrderItemProfit> getProfit1Week() {
         return orderItemRepository.getProfit1Week();
+=======
+    public List<OrderItemView> findAllOrderView(Long orderId) {
+        return orderItemRepository.findAllOrderView(orderId);
+    }
+
+    @Override
+    public List<OrderItemResult> findAllByOrderId(Long orderId) {
+        return orderItemRepository.findAllByOrderId(orderId)
+                .stream().map(orderItem -> orderItemMapper.toDTO(orderItem))
+                .collect(Collectors.toList());
+>>>>>>> tai_dev
     }
 }

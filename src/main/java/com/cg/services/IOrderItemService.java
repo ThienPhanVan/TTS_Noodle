@@ -1,11 +1,13 @@
 package com.cg.services;
 
+import com.cg.dto.orderItem.OrderItemView;
 import com.cg.dto.order_item.OrderItemChart;
 import com.cg.dto.order_item.OrderItemProfit;
 import com.cg.dto.order_item.OrderItemProfitOD;
 import com.cg.dto.order_item.OrderItemResult;
 import com.cg.repositories.model.OrderItem;
  import com.cg.repositories.model.OrderType;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
@@ -29,7 +31,14 @@ public interface IOrderItemService {
 
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
 
+<<<<<<< HEAD
     List<OrderItemProfitOD> getProfit1Day();
     List<OrderItemProfit> getProfit1Week();
+=======
+    List<OrderItemView> findAllOrderView(Long orderId);
+
+
+    List<OrderItemResult> findAllByOrderId(Long orderId);
+>>>>>>> tai_dev
 
 }

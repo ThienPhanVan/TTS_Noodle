@@ -289,7 +289,8 @@
             console.log(obj);
 
             $(".search-supplier").val(filename);
-            $(".search-supplier").attr("id", id)
+            $(".search-supplier").attr("id", id);
+            $(".search-supplier").attr("disabled", "success");
 
             iziToast.success({
                 title: 'OK',
