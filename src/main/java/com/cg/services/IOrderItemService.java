@@ -31,14 +31,14 @@ public interface IOrderItemService {
 
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
 
-<<<<<<< HEAD
     List<OrderItemProfitOD> getProfit1Day();
+
     List<OrderItemProfit> getProfit1Week();
-=======
+
     List<OrderItemView> findAllOrderView(Long orderId);
 
 
     List<OrderItemResult> findAllByOrderId(Long orderId);
->>>>>>> tai_dev
+
 
 }

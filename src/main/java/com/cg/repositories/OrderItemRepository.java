@@ -2,12 +2,8 @@ package com.cg.repositories;
 
  import com.cg.dto.orderItem.OrderItemView;
  import com.cg.dto.order_item.OrderItemChart;
-<<<<<<< HEAD
  import com.cg.dto.order_item.OrderItemProfit;
  import com.cg.dto.order_item.OrderItemProfitOD;
-=======
- import com.cg.dto.order_item.OrderItemResult;
->>>>>>> tai_dev
  import com.cg.repositories.model.OrderItem;
  import org.springframework.data.jpa.repository.JpaRepository;
   import org.springframework.data.jpa.repository.Query;
@@ -35,13 +31,13 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query(name = "sp_getQuantityNR1Month" , nativeQuery = true)
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
 
-<<<<<<< HEAD
+
     @Query(name = "sp_getProfit1day" , nativeQuery = true)
     List<OrderItemProfitOD> getProfit1Day();
 
     @Query(name = "sp_getProfit1Week" , nativeQuery = true)
     List<OrderItemProfit> getProfit1Week();
-=======
+
     List<OrderItem> findAllByOrderId(Long orderId);
 
     @Query(value = "SELECT NEW com.cg.dto.orderItem.OrderItemView (" +
@@ -61,5 +57,5 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
                " WHERE((o.orderType = 'PURCHASE')  AND (o.id = ?1))"
     )
     List<OrderItemView> findAllOrderView(Long orderId);
->>>>>>> tai_dev
+
 }

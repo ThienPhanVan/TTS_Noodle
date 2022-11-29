@@ -191,12 +191,7 @@
 <script>
     let order = new Order();
     let user = new User();
-<<<<<<< HEAD
-    let paymentCustomer = new PaymentCustomer();
-=======
     let  paymentCustomer = new PaymentCustomer();
-    function renderOrderCustomer(order) {
->>>>>>> tai_dev
 
     function renderOrderCustomer(order, i) {
         let str = `
@@ -309,14 +304,14 @@
     findAllPaymentCustomer();
 
 
-<<<<<<< HEAD
+
     function findAllCustomerStatus() {
         $("#allStatusCustomer").on("click", function () {
             loadOrders();
         })
     }
 
-=======
+
     function editStatusOrder(orderId){
         $("#statusPending").on("click", function () {
             $.ajax({
@@ -330,7 +325,6 @@
             })
         })
     }
->>>>>>> tai_dev
 
     function findAllStatusPending() {
         $("#statusPending").on("click", function () {
