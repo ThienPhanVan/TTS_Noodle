@@ -74,5 +74,6 @@ public interface IOrderService {
 
     List<OrderResultDTO> findAllByOrderView();
 
+    OrderResultDTO findAllByOrderViewById(Long id);
 
 }

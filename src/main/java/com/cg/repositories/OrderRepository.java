@@ -37,6 +37,21 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE o.orderType = 'CUSTOMER' " )
     List<OrderResultDTO> findAllByOrderView();
 
+    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
+            "o.id, " +
+            "o.createdAt, " +
+            "o.fullName, " +
+            "o.address, " +
+            "o.orderType, " +
+            "o.orderStatus, " +
+            "o.grandTotal, " +
+            "p.paid) " +
+            "FROM Order AS o " +
+            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
+            "WHERE o.orderType = 'CUSTOMER' AND o.id= ?1" )
+    OrderResultDTO findAllByOrderViewById(Long id);
+
+
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
     @Query(name = "sp_chartSevenDay", nativeQuery = true)

@@ -1,40 +1,89 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="debt_deduction">
-  <div class="modal fade" id="modalDebtDeduction" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal withdraw money</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="" id="frmWithdraw">
-            <div class="row">
-              <div class="col-lg-6 mt-3">
-                <label for="quantity">Số lượng</label>
-                <span type="text" id="quantity"></span>
-              </div>
-              <div class="col-lg-6 mt-3">
-                <label for="price">Giá</label>
-                <span type="text" id="price"></span>
-              </div>
-              <div class="col-lg-6 mt-3">
-                <label for="balanceWd">Current balance ($)</label>
-                <input type="text" class="form-control" id="balanceWd" readonly>
-              </div>
-              <div class="col-lg-6 mt-3">
-                <label for="transactionAmountWd">Transaction Amount ($)</label>
-                <input type="text" class="form-control" id="transactionAmountWd">
-              </div>
+    <div class="modal fade" id="modalDebtDeduction" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" style="color: white">Chi tiết đơn hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <span aria-hidden="true">X</span>
+                </div>
+                <div class="modal-body" id="modalPaymentCustomer">
+
+                    <div class="container-fluid">
+                        <div class="row">
+
+                            <div class="col-md-7 mt-2" style="color: black">
+                                <table>
+                                    <tr class="col-12 text-center">
+                                        <th class="col-4">
+                                            Số lượng (kg)
+                                        </th>
+                                        <th class="col-4">
+                                            Giá (đ)
+                                        </th>
+                                        <th class="col-4 justify-content-end">
+                                            Thành tiền (đ)
+                                        </th>
+                                    </tr>
+                                    <tr class="col-12 text-center">
+                                        <td class="col-4" >
+                                            100
+                                        </td>
+                                        <td class="col-4" id="pricePay">
+                                            8.000
+                                        </td>
+                                        <td class="col-4" id="totalPrice">
+                                            80.0000 đ
+                                        </td>
+                                    </tr>
+                                    <tr class="col-12 mt-4">
+                                        <td class="fullNamePayment">
+                                            Tên khách hàng : Tài chợ nọ
+                                        </td>
+                                        <td class="col-4" style="left: 127px; color: blue">
+                                            Tổng tiền : 80.000 đ
+                                        </td>
+                                    </tr>
+                                    <tr class="col-12 text-center">
+                                        <td class="fullNamePayment">
+                                            Lịch sử : 03:15 - 29/11/2022
+                                        </td>
+                                        <td class="col-4" style="left: 129px">
+                                            Đã trả : 30.000 đ
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-5 mt-2" style="background-color: white; border-radius: 10px;">
+
+                                <h5 class="mt-4">Thanh toán nợ : <span>50.0000đ</span></h5>
+
+                                <hr>
+                                <h5>Nhập số tiền muốn trả</h5>
+                                <div class="mt-2">
+                                    <input style="border: none; width: 200px; text-align: end"   value="0" placeholder="Nhập số tiền muốn trả">
+                                </div>
+                                <hr>
+                                <div class="mt-2" >
+                                    <input id="datetimeLocalPayment" type="date" style="border: none; width: 200px">
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <button id="savePayment" type="button" class="btn btn-primary" data-dismiss="modal" style="float: right">Lưu lại</button>
+
+                </div>
+
+
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-warning" id="btnWithdraw">Withdraw</button>
-        </div>
-      </div>
+
+
+         </div>
     </div>
-  </div>
 </th:block>

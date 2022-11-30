@@ -5079,7 +5079,7 @@ body.two-sidebar.sidebar-main .iq-sidebar {
   text-align: right;
 }
 thead{
-  background-color: #1e3d73;
-  color: white;
+  /*background-color: #1e3d73;*/
+  color: black;
   text-align: center;
 }

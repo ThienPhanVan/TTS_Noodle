@@ -427,4 +427,9 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllByOrderView();
     }
 
+    @Override
+    public OrderResultDTO findAllByOrderViewById(Long id) {
+       return orderRepository.findAllByOrderViewById(id);
+
+    }
 }
