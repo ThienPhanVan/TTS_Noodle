@@ -120,11 +120,6 @@ public class OrderApi {
         return new ResponseEntity<>(orderService.createOrderExport(orderParam), HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateExportCustomer(@Valid @RequestBody OrderParam orderParam) {
-        return new ResponseEntity<>(orderService.updateOrderExport(orderParam), HttpStatus.OK);
-    }
-
 
     @PostMapping("/debtDeduction")
     public ResponseEntity<?> debtDeductionCustomer(Long id) {

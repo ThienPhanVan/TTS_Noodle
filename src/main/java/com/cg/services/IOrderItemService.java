@@ -31,8 +31,12 @@ public interface IOrderItemService {
 
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> development
     List<OrderItemProfitOD> getProfit1Day();
+
     List<OrderItemProfit> getProfit1Week();
 
     List<OrderItemView> findAllOrderView(Long orderId);

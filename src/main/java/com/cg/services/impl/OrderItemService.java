@@ -77,6 +77,10 @@ public class OrderItemService implements IOrderItemService {
     public List<OrderItemProfit> getProfit1Week() {
         return orderItemRepository.getProfit1Week();
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
     public List<OrderItemView> findAllOrderView(Long orderId) {
         return orderItemRepository.findAllOrderView(orderId);
     }
