@@ -1,7 +1,9 @@
 package com.cg.mapper;
 
+ import com.cg.dto.payment.PaymentCustomerResult;
  import com.cg.dto.payment.PaymentPurchaseResult;
  import com.cg.dto.payment.PaymentResult;
+ import com.cg.repositories.model.PaymentCustomer;
  import com.cg.repositories.model.PaymentPurchase;
  import org.springframework.stereotype.Component;
 
@@ -30,5 +32,13 @@ public class PaymentMapper {
                 .setUserId(paymentResultPurchase.getUserId())
                 .setOrderId(paymentResultPurchase.getOrderId())
                 .setPaid(paymentResultPurchase.getPaid());
+    }
+    public PaymentCustomerResult toDTO(PaymentCustomer paymentCustomer) {
+        return new PaymentCustomerResult()
+                .setId(paymentCustomer.getId())
+                .setUserId(paymentCustomer.getUserId())
+                .setOrderId(paymentCustomer.getOrderId())
+                .setPaid(paymentCustomer.getPaid())
+                .setCreatedAt(paymentCustomer.getCreatedAt());
     }
 }

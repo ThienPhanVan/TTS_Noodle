@@ -1,10 +1,7 @@
 package com.cg.repositories;
 
 
-import com.cg.dto.order.OrderPurchaseDTO;
-import com.cg.dto.order.OrderResultDTO;
-import com.cg.dto.order.OrderPurchaseView;
-import com.cg.dto.order.OrderResultChart;
+import com.cg.dto.order.*;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderStatus;
 import com.cg.repositories.model.OrderType;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -23,34 +21,18 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderType(OrderType orderType);
 
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal, " +
-            "p.paid) " +
-            "FROM Order AS o " +
-            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
-            "WHERE o.orderType = 'CUSTOMER' " )
-    List<OrderResultDTO> findAllByOrderView();
+    @Query(value = "call sp_find_by_order_view()" , nativeQuery = true)
+    List<OrderResultDTOS> findAllByOrderView();
 
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal, " +
-            "p.paid) " +
-            "FROM Order AS o " +
-            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
-            "WHERE o.orderType = 'CUSTOMER' AND o.id= ?1" )
-    OrderResultDTO findAllByOrderViewById(Long id);
 
+    @Query(value = "call sp_find_by_order_view_by_id(:orderId)" , nativeQuery = true)
+    OrderResultDTOS findAllByOrderViewById(@Param("orderId") Long id);
+
+    @Query(value = "call sp_find_by_order_view_status_completed" , nativeQuery = true)
+    List<OrderResultDTOS> findAllOrderStatusCompleted();
+
+    @Query(value = "call sp_find_by_order_view_status_pending" , nativeQuery = true)
+    List<OrderResultDTOS> findAllOrderStatusPending();
 
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
@@ -64,34 +46,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "SELECT * FROM purchase_order", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal, " +
-            "p.paid) " +
-            "FROM Order AS o " +
-            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
-            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'COMPLETED'" )
-    List<OrderResultDTO> findAllOrderStatusCompleted();
-
-
-    @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
-            "o.id, " +
-            "o.createdAt, " +
-            "o.fullName, " +
-            "o.address, " +
-            "o.orderType, " +
-            "o.orderStatus, " +
-            "o.grandTotal, " +
-            "p.paid) " +
-            "FROM Order AS o " +
-            "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
-            "WHERE o.orderType = 'CUSTOMER' AND o.orderStatus = 'PENDING'" )
-    List<OrderResultDTO> findAllOrderStatusPending();
 
     @Query(value = "SELECT * FROM purchase_order_status_completed", nativeQuery = true)
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusComplete();
@@ -117,9 +71,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "FROM Order AS o " +
             "JOIN User AS u ON u.id = o.userId " +
             "JOIN PaymentPurchase AS p ON p.orderId = o.id " +
-            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'" )
+            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'")
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
-
 
 
     @Query(value = "SELECT NEW com.cg.dto.order.OrderResultDTO (" +
@@ -134,13 +87,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "FROM Order AS o " +
             "JOIN PaymentCustomer AS p ON p.orderId = o.id " +
             "JOIN User AS u ON u.id = o.userId " +
-            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') OR u.address LIKE CONCAT('%',:keySearch,'%')  AND o.orderType = 'CUSTOMER' " )
+            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') OR u.address LIKE CONCAT('%',:keySearch,'%')  AND o.orderType = 'CUSTOMER' ")
     List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(@Param("keySearch") String keySearch);
 
     @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
-     List<Order> getAllOrderByRole();
+    List<Order> getAllOrderByRole();
 
     @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
 
- }
+}

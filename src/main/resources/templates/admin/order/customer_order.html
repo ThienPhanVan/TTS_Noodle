@@ -232,6 +232,26 @@
 
     }
 
+    function renderOrderCustomerCompleted(order, i) {
+        let str = `
+                <tr id="#tr_${order.id}" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
+                    <td>${order.id}</td>
+                    <td>${moment(order.createdAt).format("hh:mm - DD/MM/YYYY")}</td>
+                    <td>${order.fullName}</td>
+                    <td>${order.address}</td>
+                    <td>${order.orderStatus}</td>
+                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>
+                    <td>
+                             <i class="fa fa-check btn btn-success"></i>
+                    </td>
+                </tr>
+
+
+            `;
+        return str;
+
+    }
+
     function loadOrders() {
         $.ajax({
             headers: {
@@ -265,11 +285,12 @@
                       `
             $("#totalOrderCustomers").prepend(sum);
             handleShowUpdateModal();
+            findAllStatusPending();
+            findAllStatusCompleted();
         }).fail((jqXHR) => {
             console.log(jqXHR);
         })
     }
-
 
     function handleShowUpdateModal() {
         $(".editPayment").on("click", function () {
@@ -405,11 +426,29 @@
                 url: "http://localhost:8080/api/orders/statusPending",
             }).done((data) => {
                 $("#tbOrder tbody").html("");
-                data.forEach((item, i) => {
-                    let str = renderOrderCustomer(item, i);
+                $("#totalOrderCustomers").html("");
+                let totalOrder = 0;
+                let totalLiabilities = 0;
+                data.forEach(item => {
+                    totalOrder += item.grandTotal;
+                    totalLiabilities +=(item.grandTotal - item.paid);
+                    let str = renderOrderCustomer(item);
                     $("#tbOrder tbody").prepend(str);
                 })
-
+                let sum = `
+                       <span>Tổng số đơn: ${data.length} || </span>
+                       <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN', {
+                    style: "currency",
+                    currency: 'VND'
+                }).format(totalOrder)}</span>
+                       <span class="i text-danger">|| Tổng nợ: ${new Intl.NumberFormat('vi-VN', {
+                    style: "currency",
+                    currency: 'VND'
+                }).format(totalLiabilities)} </span>
+                      `
+                $("#totalOrderCustomers").prepend(sum);
+                handleShowUpdateModal();
+                findAllStatusCompleted();
             }).fail((jqXHR) => {
                 console.log(jqXHR);
             })
@@ -429,11 +468,22 @@
                 url: "http://localhost:8080/api/orders/statusCompleted",
             }).done((data) => {
                 $("#tbOrder tbody").html("");
-                order = data;
-                data.forEach((item, i) => {
-                    let str = renderOrderCustomer(item, i);
+                $("#totalOrderCustomers").html("");
+                let totalOrder = 0;
+                data.forEach(item => {
+                    totalOrder += item.grandTotal;
+                    let str = renderOrderCustomerCompleted(item);
                     $("#tbOrder tbody").prepend(str);
                 })
+                let sum = `
+                       <span>Tổng số đơn: ${data.length} || </span>
+                       <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN', {
+                    style: "currency",
+                    currency: 'VND'
+                }).format(totalOrder)}</span>
+                      `
+                $("#totalOrderCustomers").prepend(sum);
+                handleShowUpdateModal();
             }).fail((jqXHR) => {
                 console.log(jqXHR);
             })

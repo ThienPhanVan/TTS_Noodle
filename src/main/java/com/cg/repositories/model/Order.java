@@ -2,6 +2,8 @@ package com.cg.repositories.model;
 
 import com.cg.dto.order.ListCreatedBy;
 import com.cg.dto.order.OrderResultChart;
+import com.cg.dto.order.OrderResultDTO;
+import com.cg.dto.order.OrderResultDTOS;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

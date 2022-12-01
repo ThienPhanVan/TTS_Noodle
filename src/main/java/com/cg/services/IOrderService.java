@@ -52,7 +52,7 @@ public interface IOrderService {
 
     List<OrderPurchaseDTO> findAllOrderPurchase();
 
-    List<OrderResultDTO> findAllOrderStatusCompleted();
+    List<OrderResultDTOS> findAllOrderStatusCompleted();
 
     List<OrderPurchaseDTO> findAllOrderPurchaseStatusPending();
 
@@ -68,15 +68,15 @@ public interface IOrderService {
 
     BigDecimal chartOneDay();
 
-    List<OrderResultDTO> findAllOrderStatusPending();
+    List<OrderResultDTOS> findAllOrderStatusPending();
 
     OrderResultDTO setStatusOrderPending(Long id);
 
     OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
 
-    List<OrderResultDTO> findAllByOrderView();
+    List<OrderResultDTOS> findAllByOrderView();
 
-    OrderResultDTO findAllByOrderViewById(Long id);
+    OrderResultDTOS findAllByOrderViewById(Long id);
 
     PaymentPurchaseResult doPaid(OrderPaid orderPaid);
 
