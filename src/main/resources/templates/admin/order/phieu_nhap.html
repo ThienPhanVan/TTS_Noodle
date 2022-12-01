@@ -104,8 +104,8 @@
                             <div class="payment_purchase">
                                 <span>Tiền trả:</span>
                                 <input class="form-control" type="number" id="cusPayment"/>
-                                <span>Còn nợ</span>
-                                <span class="paid"></span>
+                                <span>Còn nợ: </span>
+                                <span class="paid" style="float: right; color: red; font-weight: 600; font-size: 17px"></span>
                             </div>
                             <button type="button" id="btnImportOrder" class="btn btn-primary">
                                 Nhập hàng
@@ -533,7 +533,7 @@
 
         orderPayment.createdAt = $("#dateID").val();
 
-        orderPayment.paid = $(".paid").text().replaceAll(" ", "").replaceAll("đ", "");
+        orderPayment.paid = $("#cusPayment").val();
 
         orderPayment.orderItemPurchases = arr;
 

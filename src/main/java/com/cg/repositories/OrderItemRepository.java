@@ -4,6 +4,7 @@ package com.cg.repositories;
  import com.cg.dto.order_item.OrderItemChart;
  import com.cg.dto.order_item.OrderItemProfit;
  import com.cg.dto.order_item.OrderItemProfitOD;
+ import com.cg.dto.order_item.OrderItemResult;
  import com.cg.repositories.model.OrderItem;
  import org.springframework.data.jpa.repository.JpaRepository;
   import org.springframework.data.jpa.repository.Query;
@@ -31,7 +32,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query(name = "sp_getQuantityNR1Month" , nativeQuery = true)
     List<OrderItemChart> chartQuantityNoodleOneMonth(String type);
 
-
     @Query(name = "sp_getProfit1day" , nativeQuery = true)
     List<OrderItemProfitOD> getProfit1Day();
 
@@ -47,15 +47,15 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
                 "pd.title," +
                 "u.fullName," +
                 "o.grandTotal," +
-                "p.paid" +
+                "SUM(p.paid)" +
                 ")" +
                 "FROM OrderItem AS oi " +
                 "JOIN Product AS pd ON pd.id = oi.productId " +
                 "JOIN Order AS o ON o.id = oi.orderId " +
                 "JOIN User AS u ON u.id = o.userId " +
                 "JOIN PaymentPurchase p ON o.id = p.orderId" +
-               " WHERE((o.orderType = 'PURCHASE')  AND (o.id = ?1))"
+               " WHERE((o.orderType = 'PURCHASE')  AND (o.id = ?1))" +
+                "GROUP BY oi.id"
     )
     List<OrderItemView> findAllOrderView(Long orderId);
-
 }

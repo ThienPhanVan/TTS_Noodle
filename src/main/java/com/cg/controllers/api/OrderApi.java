@@ -4,6 +4,7 @@ package com.cg.controllers.api;
 import com.cg.dto.order.*;
 
 import com.cg.dto.payment.PaymentCustomerResult;
+import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.dto.payment.PaymentResult;
 import com.cg.repositories.model.*;
 
@@ -248,5 +249,10 @@ public class OrderApi {
     public ResponseEntity<?> getAllPaymentCustomer(@PathVariable Long id) {
         List<PaymentCustomerResult> listPaymentCustomer = paymentCustomerService.getPaymentByUserId(id);
         return new ResponseEntity<>(listPaymentCustomer, HttpStatus.OK);
+    }
+    @PostMapping("/payable")
+    public  ResponseEntity<?> doPaid(@RequestBody OrderPaid orderPaid){
+
+        return new ResponseEntity<>(orderService.doPaid(orderPaid),HttpStatus.ACCEPTED);
     }
 }
