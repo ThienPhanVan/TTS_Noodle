@@ -18,5 +18,5 @@ public interface PaymentCustomerRepository extends JpaRepository<PaymentCustomer
     List<PaymentCustomer> findAllByUserId(Long id);
 
     @Query(name = "sp_getPaymentUser" , nativeQuery = true)
-    List<ListPaymentUser> getPaymetnUser();
+    List<ListPaymentUser> getPaymentUser();
 }

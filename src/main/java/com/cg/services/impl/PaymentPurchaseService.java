@@ -1,5 +1,6 @@
 package com.cg.services.impl;
 
+import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.dto.payment.PaymentResult;
 import com.cg.mapper.PaymentMapper;
 import com.cg.repositories.PaymentPurchaseRepository;
@@ -32,5 +33,10 @@ public class PaymentPurchaseService implements IPaymentPurchaseService {
         return paymentPurchaseRepository.findAllByUserId(id)
                 .stream().map(paymentPurchase -> paymentMapper.toDTO(paymentPurchase))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PaymentPurchase> findAllByOrderId(Long orderId) {
+        return paymentPurchaseRepository.findAllByOrderId(orderId);
     }
 }

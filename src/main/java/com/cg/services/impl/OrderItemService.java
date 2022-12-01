@@ -69,7 +69,6 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
-<<<<<<< HEAD
     public List<OrderItemProfitOD> getProfit1Day() {
         return orderItemRepository.getProfit1Day();
     }
@@ -77,7 +76,7 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public List<OrderItemProfit> getProfit1Week() {
         return orderItemRepository.getProfit1Week();
-=======
+    }
     public List<OrderItemView> findAllOrderView(Long orderId) {
         return orderItemRepository.findAllOrderView(orderId);
     }
@@ -87,6 +86,5 @@ public class OrderItemService implements IOrderItemService {
         return orderItemRepository.findAllByOrderId(orderId)
                 .stream().map(orderItem -> orderItemMapper.toDTO(orderItem))
                 .collect(Collectors.toList());
->>>>>>> tai_dev
     }
 }

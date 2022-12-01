@@ -35,6 +35,6 @@ public class PaymentCustomerService implements IPaymentCustomerService {
 
     @Override
     public List<ListPaymentUser> getPaymentUser() {
-        return paymentCustomerRepository.getPaymetnUser();
+        return paymentCustomerRepository.getPaymentUser();
     }
 }

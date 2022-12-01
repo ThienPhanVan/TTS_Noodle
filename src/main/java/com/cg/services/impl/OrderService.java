@@ -2,17 +2,18 @@ package com.cg.services.impl;
 
 
 import com.cg.dto.order.*;
+import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.exceptions.DataInputException;
 import com.cg.mapper.OrderMapper;
 import com.cg.exceptions.NotEnoughQuantityException;
 import com.cg.exceptions.NotFoundException;
+import com.cg.mapper.PaymentMapper;
 import com.cg.repositories.*;
 import com.cg.repositories.model.*;
 
 import com.cg.dto.order.OrderItemParam;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
-import com.cg.mapper.OrderItemMapper;
 
 import com.cg.mapper.UserMapper;
 import com.cg.repositories.ItemRepository;
@@ -28,7 +29,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,6 +60,9 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private PaymentMapper paymentMapper;
 
 
     @Autowired
@@ -333,9 +336,14 @@ public class OrderService implements IOrderService {
             totalAmount = totalAmount.add(price.multiply(new BigDecimal(quantity)));
 
             newOrder.setGrandTotal(totalAmount);
+            if (totalAmount.compareTo(orderPurchase.getPaid()) == 0){
+                newOrder.setOrderStatus(OrderStatus.COMPLETED);
+            } else {
+                newOrder.setOrderStatus(OrderStatus.PENDING);
+            }
 
         }
-        newOrder.setOrderStatus(OrderStatus.PENDING);
+
         newOrder.setCreatedBy(1L);
         newOrder.setAddress(userOptional.get().getAddress());
         newOrder.setUserId(userId);
@@ -350,7 +358,6 @@ public class OrderService implements IOrderService {
         newPaymentPurchase.setPaid(orderPurchase.getPaid());
         newPaymentPurchase.setUserId(userId);
         paymentPurchaseRepository.save(newPaymentPurchase);
-
 
 
         for (OrderItemPurchase orderItemPurchase : orderItemPurchaseList) {
@@ -517,4 +524,60 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllByOrderView();
     }
 
+    @Override
+    @Transactional
+    public PaymentPurchaseResult doPaid(OrderPaid orderPaid) {
+
+        Optional<Order> orderOptional = orderRepository.findById(orderPaid.getOrderId());
+
+        BigDecimal grandTotal = orderOptional.get().getGrandTotal();
+
+        Long userId = orderOptional.get().getUserId();
+
+        BigDecimal paid = orderPaid.getPaid();
+
+        List<PaymentPurchase> paymentResultPurchases = paymentPurchaseRepository.findAllByOrderId(orderPaid.getOrderId());
+
+        BigDecimal newAmount = BigDecimal.valueOf(0);
+
+        for(PaymentPurchase paymentPurchase : paymentResultPurchases){
+           BigDecimal amount = paymentPurchase.getPaid();
+
+            newAmount = newAmount.add(amount);
+        }
+
+        BigDecimal newTotal = newAmount.add(paid);
+
+        PaymentPurchase newPaymentPurchase = new PaymentPurchase();
+
+        if (grandTotal.compareTo(newTotal) == 1){
+
+            newPaymentPurchase.setUserId(userId);
+            newPaymentPurchase.setOrderId(orderPaid.getOrderId());
+            newPaymentPurchase.setPaid(orderPaid.getPaid());
+
+            paymentPurchaseRepository.save(newPaymentPurchase);
+
+            return paymentMapper.toDTOS(newPaymentPurchase);
+
+        }
+        if (grandTotal.compareTo(newTotal) == -1){
+            throw new DataInputException("Lỗi hệ thống vui lòng liên hệ quản trị viên!!");
+        }
+        if (grandTotal.compareTo(newTotal) == 0){
+
+            orderOptional.get().setOrderStatus(OrderStatus.COMPLETED);
+
+            orderRepository.save(orderOptional.get());
+            newPaymentPurchase.setUserId(userId);
+            newPaymentPurchase.setOrderId(orderPaid.getOrderId());
+            newPaymentPurchase.setPaid(orderPaid.getPaid());
+
+            paymentPurchaseRepository.save(newPaymentPurchase);
+
+            return paymentMapper.toDTOS(newPaymentPurchase);
+
+        }
+        return paymentMapper.toDTOS(newPaymentPurchase);
+    }
 }
