@@ -8,8 +8,10 @@ import java.time.Instant;
 import java.util.List;
 
 import com.cg.dto.order.OrderResult;
+import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.repositories.model.Order;
 import com.cg.repositories.model.OrderType;
+import com.cg.repositories.model.PaymentPurchase;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 
@@ -74,5 +76,7 @@ public interface IOrderService {
 
     List<OrderResultDTO> findAllByOrderView();
 
-    BigDecimal totalOrderOneMonth();
-}
+     BigDecimal totalOrderOneMonth();
+     PaymentPurchaseResult doPaid(OrderPaid orderPaid);
+
+ }

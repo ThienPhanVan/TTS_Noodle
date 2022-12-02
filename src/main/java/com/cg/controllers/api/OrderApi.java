@@ -4,6 +4,7 @@ package com.cg.controllers.api;
 import com.cg.dto.order.*;
 
 import com.cg.dto.payment.PaymentCustomerResult;
+import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.dto.payment.PaymentResult;
 import com.cg.repositories.model.*;
 
@@ -236,7 +237,13 @@ public class OrderApi {
     }
 
     @GetMapping("/totalOrderOM")
-    public ResponseEntity<?> totalOrderOM(){
-        return new ResponseEntity<>( orderService.totalOrderOneMonth(), HttpStatus.OK);
+    public ResponseEntity<?> totalOrderOM() {
+        return new ResponseEntity<>(orderService.totalOrderOneMonth(), HttpStatus.OK);
     }
+
+     @PostMapping("/payable")
+    public  ResponseEntity<?> doPaid(@RequestBody OrderPaid orderPaid){
+
+        return new ResponseEntity<>(orderService.doPaid(orderPaid),HttpStatus.ACCEPTED);
+     }
 }

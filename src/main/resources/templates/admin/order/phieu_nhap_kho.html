@@ -62,6 +62,7 @@
                         </td>
                         <td>Tổng tiền</td>
                         <td>Ngày Nhập</td>
+                        <td>Hành động</td>
                     </tr>
                     </thead>
                     <tbody style="text-align: center">
@@ -72,6 +73,8 @@
         </div>
     </div>
     </div>
+
+
 <!-- Wrapper END -->
 <!-- Footer -->
 <footer class="iq-footer">
@@ -144,12 +147,16 @@
 
     let product = new Product();
 
+    let paymentPurchase = new PaymentPurchase();
+
     let productId = null;
 
     let orderId = null;
 
 
     function renderOrder(obj){
+
+        let debt = +obj.grandtotal - +obj.paid;
 
         let s1 = "";
         switch (obj.orderstatus) {
@@ -166,8 +173,8 @@
                 break;
         }
         let s2 = ""
-        if (obj.paid !== 0){
-            s2 =  `<i style="color: red;font-size: smaller;">Nợ (${obj.paid} đ)</i>`
+        if (debt !== 0){
+            s2 =  `<i style="color: red;font-size: smaller;">Nợ (${debt} đ)</i>`
         }
         // <select class="form-control statusOrder" style="height: fit-content;color: black;font-weight: bold; text-align: center" name="cars" id="cars">
         //   ${s1}
@@ -180,17 +187,22 @@
                         <th>${obj.code}</th>
                         <th>${obj.orderstatus}
                         </th>
-                        <th style="text-align: right">${obj.grandtotal} đ </br>
+                        <th style="text-align: right">${App.formatNumberSpace(obj.grandtotal)} đ </br>
                                  ${s2}
                         </th>
                         <th>${obj.createdat}</th>
+                        <th>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </th>
               </tr>
               <tr class="payment_info hide" id="trh_${obj.id}">
-                    <td class="payment_info_tr"  colspan="6">
+                    <td class="payment_info_tr"  colspan="7">
                          <div class="row collapse" id="trc_${obj.id}">
                             <div class="col-lg-8">
                                 <table class="table" id="tbItemPurchase">
-                                    <thead class="bg-primary">
+                                    <thead style="background-color: #acacac; color: black; ">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên sản phẩm</th>
@@ -242,8 +254,6 @@
                 order = item;
 
                 order.createdat = $.FormatDateTime(order.createdat);
-
-                order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
                 let str =  renderOrder(item);
 
@@ -357,17 +367,29 @@
 
                     order.createdat = $.FormatDateTime(order.createdat);
 
-                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
-
                     let str =  renderOrder(item);
 
                     $("#tbListOrder tbody").prepend(str);
 
                 })
+                if (data.length === 0){
+                    let std = `<tr style="text-align: center">
+                                <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                            </tr>`
+
+                    $("#tbListOrder tbody").prepend(std);
+                }
 
             })
             .fail((jqXHR)=>{
                 console.log(jqXHR)
+                if (data.length === 0){
+                    let std = `<tr style="text-align: center">
+                                <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                            </tr>`
+
+                    $("#tbListOrder tbody").prepend(std);
+                }
             })
     }
 
@@ -389,17 +411,30 @@
 
                 order.createdat = $.FormatDateTime(order.createdat);
 
-                order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
                 let str =  renderOrder(item);
 
                 $("#tbListOrder tbody").prepend(str);
 
             })
+            if (data.length === 0){
+                let std = `<tr style="text-align: center">
+                                <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                            </tr>`
+
+                $("#tbListOrder tbody").prepend(std);
+            }
 
         })
         .fail((jqXHR)=>{
             console.log(jqXHR)
+            if (data.length === 0){
+                let std = `<tr style="text-align: center">
+                                <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                            </tr>`
+
+                $("#tbListOrder tbody").prepend(std);
+            }
         })
     }
 
@@ -422,17 +457,31 @@
 
                     order.createdat = $.FormatDateTime(order.createdat);
 
-                    order.grandtotal = App.formatNumberSpace(order.grandtotal);
 
                     let str =  renderOrder(item);
 
                     $("#tbListOrder tbody").prepend(str);
 
                 })
+                if (data.length === 0){
+                    let std = `<tr style="text-align: center">
+                                    <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                                </tr>
+                               `
+
+                    $("#tbListOrder tbody").prepend(std);
+                }
 
             })
             .fail((jqXHR)=>{
                 console.log(jqXHR)
+                if (data.length === 0){
+                    let std = `<tr style="text-align: center">
+                                <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
+                            </tr>`
+
+                    $("#tbListOrder tbody").prepend(std);
+                }
             })
     }
 
@@ -461,20 +510,28 @@
                   <div class="card">
                         <ul  class="list-group list-group-flush">
                             <li  class="list-group-item">
-                                 <span style="float: left">Đã trả</span>
-                                 <span style="float: right;" id="payment">${App.formatNumberSpace(oldPayment)} đ</span>
-                            </li >
-                           <li  class="list-group-item">
+                                 <span style="float: left" id="pay_money_${orderId}">Đã trả</span>
+                                 <span style="float: right;" id="payment_${orderId}">${App.formatNumberSpace(obj.paid)} đ</span>
+                            </li>
+                           <li class="list-group-item">
                                 <span style="float: left">Còn nợ</span>
-                                <span style="float: right; color: red" id="debt">${App.formatNumberSpace(obj.paid)} đ</span>
+                                <span style="float: right; color: red" id="debt_${orderId}">${App.formatNumberSpace(oldPayment)} đ</span>
                             </li >
                             <li  class="list-group-item">
                                 <span style="float: left">Thanh toán</span>
-                                <input type="number" style="float: right;" id="paid"/>
+                                <input type="number" style="float: right; text-align: right" id="paid_${orderId}"/>
                             </li>
                         </li >
                         <div class="card-body">
-                            <button class="btn btn-success">Trả nợ</button>
+                            <button class="btn btn-success" id="doPaid_${orderId}">Thanh toán</button>
+                        </div>
+                         <div id="panelCart_${orderId}" class="panelCart hide">
+                            <div class="card border-dark mb-3" style="max-width: 18rem;">
+                                <div class="card-header" style="color: #1a179e;font: initial;background-color: #acacac;font-weight: 700;">Lịch sử thanh toán</div>
+                                <div class="card-body text-dark infor" style="padding-top: 8px;padding-bottom: 8px;overflow: scroll;">
+
+                                </div>
+                            </div>
                         </div>
                   </div>
                    `
@@ -495,6 +552,7 @@
             $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("")
             $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).html("")
             $.each(data, (i,item)=>{
+
                 orderItem = item;
 
                 let str = renderTablePayment(item)
@@ -502,19 +560,111 @@
                 $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).prepend(str);
 
                 $(`#trh_${orderId}`).removeClass("hide").addClass("show");
+
+
             })
 
-            if(orderItem.paid === 0){
+            if(orderItem.paid !== orderItem.grandTotal){
+                let std = renderInfoPayment(orderItem);
 
+                $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(std);
+                doPaid();
             }
-            let std = renderInfoPayment(orderItem);
 
-            $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(std);
+            handleShowHistoryPayment();
+
+
         })
         .fail((jqXHR) => {
             console.log(jqXHR);
         })
 
+    }
+
+    function doPaid(){
+        $(`#doPaid_${orderId}`).on("click", function (){
+
+            paymentPurchase.orderId = orderId.replaceAll("trh_", "");
+
+            paymentPurchase.paid = $(`#paid_${paymentPurchase.orderId}`).val();
+
+            $.ajax({
+                "headers": {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                "type": "POST",
+                "url": "http://localhost:8080/api/orders/payable",
+                "data": JSON.stringify(paymentPurchase)
+            })
+            .done((data) => {
+                paymentPurchase = data;
+
+                console.log(orderId);
+
+                let newOrderId = orderId.replaceAll("trh_", "");
+
+                console.log(newOrderId);
+
+                let oldPaid  = $(`#payment_${newOrderId}`).text().replaceAll(" ", "").replaceAll("đ", "");
+
+                console.log(oldPaid);
+
+                let newPaid = +oldPaid + +paymentPurchase.paid;
+
+                console.log(newPaid);
+
+                let debt = $(`#debt_${newOrderId}`).text().replaceAll(" ", "").replaceAll("đ", "");
+
+                console.log(debt);
+
+                let newDebt = +debt - +paymentPurchase.paid;
+
+                console.log(newDebt);
+                $(`#trh_${newOrderId} .payment_info_tr #trc_${newOrderId} .payment .card`).html("");
+
+                let std = `
+                  <div class="card">
+                        <ul  class="list-group list-group-flush">
+                            <li  class="list-group-item">
+                                 <span style="float: left">Đã trả</span>
+                                 <span style="float: right;" id="payment_${newOrderId}">${newPaid} đ</span>
+                            </li >
+                           <li  class="list-group-item">
+                                <span style="float: left">Còn nợ</span>
+                                <span style="float: right; color: red" id="debt_${newOrderId}">${App.formatNumberSpace(newDebt)} đ</span>
+                            </li >
+                            <li  class="list-group-item">
+                                <span style="float: left">Thanh toán</span>
+                                <input type="number" style="float: right; text-align: right" id="paid"/>
+                            </li>
+                        </li >
+                        <div class="card-body">
+                            <button class="btn btn-success" id="doPaid">Thanh toán</button>
+                        </div>
+                  </div>
+                   `
+
+                $(`#trh_${newOrderId} .payment_info_tr #trc_${newOrderId} .payment .card`).prepend(std);
+
+                iziToast.success({
+                    title: 'OK',
+                    position: 'bottomLeft',
+                    timeout: 1500,
+                    message: 'Thanh toán đơn hàng thành công!!'
+                });
+
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR);
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2000,
+                    message: 'Thanh toán đơn hàng thất bại!!'
+                });
+            })
+        })
     }
 
     function getAllOrder(){
@@ -534,22 +684,22 @@
 
                 order.createdat = $.FormatDateTime(order.createdat);
 
-                order.grandtotal = App.formatNumberSpace(order.grandtotal);
-
                 let str =  renderOrder(item);
 
                 $(".btnEdit").attr("id", order.id);
 
                 $("#tbListOrder tbody").prepend(str);
 
-                handleClick();
-                handleEvent();
+
             })
+            handleClick();
+            handleEvent();
         })
     }
 
     function handleClick(){
-        $("#tbListOrder tbody tr").on("click", function () {
+
+        $("#tbListOrder tbody tr.change").on("click", function () {
 
             orderId = $(this).attr('id').replace('tr_', '');
 
@@ -587,13 +737,9 @@
 
                 order.createdat = $.FormatDateTime(order.createdat);
 
-                order.grandtotal = App.formatNumberSpace(order.grandtotal);
-
                 let str =  renderOrder(item);
 
                 $("#tbListOrder tbody").prepend(str);
-
-                // handleClick();
 
             })
         })
@@ -615,7 +761,53 @@
         })
     }
 
+    function handleShowHistoryPayment(){
+        $(`#pay_money_${orderId}`).on("click", function (){
+
+            $(`#panelCart_${orderId}`).removeClass("hide").addClass("show");
+
+            loadAllPayment();
+
+        })
+    }
+
+    function loadAllPayment(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/paymentPurchase/" + orderId
+        })
+        .done((data) => {
+            $(`#panelCart_${orderId} .infor`).html("");
+
+            $.each(data , (i,item) => {
+
+                paymentPurchase = item;
+
+                paymentPurchase.createdAt = $.FormatDateTime(paymentPurchase.createdAt);
+
+                paymentPurchase.paid = App.formatNumberSpace(paymentPurchase.paid);
+
+                let str =  `
+                       <div class="card-title">
+                            <span style="float: left">${paymentPurchase.createdAt}</span>
+                            <span style="float: right">${paymentPurchase.paid} đ</span>
+                        </div>
+                `
+
+                $(`#panelCart_${orderId} .infor`).prepend(str);
+
+            })
+        })
+    }
+
+
     $('.collapse').collapse()
+
+
 
 
     $.FormatDateTime = function (dateToFormat) {
