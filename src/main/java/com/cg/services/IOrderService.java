@@ -74,5 +74,5 @@ public interface IOrderService {
 
     List<OrderResultDTO> findAllByOrderView();
 
-
+    BigDecimal totalOrderOneMonth();
 }

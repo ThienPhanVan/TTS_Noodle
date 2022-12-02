@@ -375,6 +375,7 @@ public class OrderService implements IOrderService {
         return orderRepository.chartOneDay();
     }
 
+
     @Override
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
@@ -427,4 +428,8 @@ public class OrderService implements IOrderService {
         return orderRepository.findAllByOrderView();
     }
 
+    @Override
+    public BigDecimal totalOrderOneMonth() {
+        return orderRepository.totalOrderOneMonth();
+    }
 }
