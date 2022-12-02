@@ -5083,3 +5083,16 @@ thead{
   color: white;
   text-align: center;
 }
+.panelCart{
+  background-color: #fdfbfb;
+  /* opacity: 0.4; */
+  margin-top: 50px;
+  color: #0b0b0b;
+  width: 327px;
+  right: 0px;
+  top: 0px;
+  position: absolute;
+}
+.card-title{
+  padding-bottom: 15px;
+}

@@ -73,6 +73,8 @@
         </div>
     </div>
     </div>
+
+
 <!-- Wrapper END -->
 <!-- Footer -->
 <footer class="iq-footer">
@@ -200,7 +202,7 @@
                          <div class="row collapse" id="trc_${obj.id}">
                             <div class="col-lg-8">
                                 <table class="table" id="tbItemPurchase">
-                                    <thead style="background-color: whitesmoke; color: black; ">
+                                    <thead style="background-color: #acacac; color: black; ">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên sản phẩm</th>
@@ -508,10 +510,10 @@
                   <div class="card">
                         <ul  class="list-group list-group-flush">
                             <li  class="list-group-item">
-                                 <span style="float: left">Đã trả</span>
+                                 <span style="float: left" id="pay_money_${orderId}">Đã trả</span>
                                  <span style="float: right;" id="payment_${orderId}">${App.formatNumberSpace(obj.paid)} đ</span>
-                            </li >
-                           <li  class="list-group-item">
+                            </li>
+                           <li class="list-group-item">
                                 <span style="float: left">Còn nợ</span>
                                 <span style="float: right; color: red" id="debt_${orderId}">${App.formatNumberSpace(oldPayment)} đ</span>
                             </li >
@@ -523,14 +525,20 @@
                         <div class="card-body">
                             <button class="btn btn-success" id="doPaid_${orderId}">Thanh toán</button>
                         </div>
+                         <div id="panelCart_${orderId}" class="panelCart hide">
+                            <div class="card border-dark mb-3" style="max-width: 18rem;">
+                                <div class="card-header" style="color: #1a179e;font: initial;background-color: #acacac;font-weight: 700;">Lịch sử thanh toán</div>
+                                <div class="card-body text-dark infor" style="padding-top: 8px;padding-bottom: 8px;overflow: scroll;">
+
+                                </div>
+                            </div>
+                        </div>
                   </div>
                    `
     return std;
     }
 
     function handleUpdatePayment(){
-
-        console.log(orderId);
 
         $.ajax({
             "headers": {
@@ -562,6 +570,8 @@
                 $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(std);
                 doPaid();
             }
+
+            handleShowHistoryPayment();
 
 
         })
@@ -680,14 +690,16 @@
 
                 $("#tbListOrder tbody").prepend(str);
 
-                handleClick();
-                handleEvent();
+
             })
+            handleClick();
+            handleEvent();
         })
     }
 
     function handleClick(){
-        $("#tbListOrder tbody tr").on("click", function () {
+
+        $("#tbListOrder tbody tr.change").on("click", function () {
 
             orderId = $(this).attr('id').replace('tr_', '');
 
@@ -748,6 +760,50 @@
 
         })
     }
+
+    function handleShowHistoryPayment(){
+        $(`#pay_money_${orderId}`).on("click", function (){
+
+            $(`#panelCart_${orderId}`).removeClass("hide").addClass("show");
+
+            loadAllPayment();
+
+        })
+    }
+
+    function loadAllPayment(){
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": "http://localhost:8080/api/paymentPurchase/" + orderId
+        })
+        .done((data) => {
+            $(`#panelCart_${orderId} .infor`).html("");
+
+            $.each(data , (i,item) => {
+
+                paymentPurchase = item;
+
+                paymentPurchase.createdAt = $.FormatDateTime(paymentPurchase.createdAt);
+
+                paymentPurchase.paid = App.formatNumberSpace(paymentPurchase.paid);
+
+                let str =  `
+                       <div class="card-title">
+                            <span style="float: left">${paymentPurchase.createdAt}</span>
+                            <span style="float: right">${paymentPurchase.paid} đ</span>
+                        </div>
+                `
+
+                $(`#panelCart_${orderId} .infor`).prepend(str);
+
+            })
+        })
+    }
+
 
     $('.collapse').collapse()
 
