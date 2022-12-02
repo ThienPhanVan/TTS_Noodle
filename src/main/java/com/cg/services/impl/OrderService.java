@@ -569,4 +569,9 @@ public class OrderService implements IOrderService {
         }
         return paymentMapper.toDTO(newPaymentCustomer);
     }
+
+    @Override
+    public OrderResultPaidDTO findOrderByIdPaidCustomer(Long id) {
+        return orderRepository.findOrderByIdPaidCustomer(id);
+    }
 }

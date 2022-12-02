@@ -191,14 +191,15 @@
 <script>
     let order = new Order();
     let user = new User();
+    let orderID = null;
 
-    Date.prototype.toDateInputValue = (function() {
+    Date.prototype.toDateInputValue = (function () {
         let local = new Date(this);
         local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0,10);
+        return local.toJSON().slice(0, 10);
     });
 
-    $(document).ready(function (){
+    $(document).ready(function () {
         $("#datetimeLocalPayment").val(new Date().toDateInputValue())
     });
 
@@ -206,20 +207,34 @@
         let grandTotal = order.grandTotal;
         let paid = order.paid;
         let liabilities = grandTotal - paid;
-        let quantity = grandTotal/8;
-        let price = quantity*8;
-        let  total = grandTotal - liabilities;
+        let quantity = grandTotal / 8;
+        let price = quantity * 8;
+        let total = grandTotal - liabilities;
+
+        let s1 = "";
+        switch (order.orderStatus) {
+            case "PENDING":
+                s1 = "<option value='PENDING'>Đang xử lý</option>";
+                break;
+            case "COMPLETED":
+                s1 = "<option value='COMPLETED'>Hoàn thành</option>";
+                break;
+            case "CANCELLED":
+                s1 = "<option value='CANCELLED'>Đã hủy</option>";
+                break;
+        }
+        let s2 = ""
         let str = `
-                <tr id="#tr_${order.id}" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
+                <tr class="text-center" id="#tr_${order.id}" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
                     <td>${order.id}</td>
-                    <td>${moment(order.createdAt).format("hh:mm - DD/MM/YYYY")}</td>
+                    <td>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</td>
                     <td>${order.fullName}</td>
                     <td>${order.address}</td>
-                    <td>${order.orderStatus}</td>
+                    <td>${s1}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>
                     <span id="inDebt">(Nợ: ${new Intl.NumberFormat('vi-VN').format(liabilities)})</span></td>
                     <td>
-                          <button class="btn btn-outline-primary editPayment"
+                          <button class="btn btn-outline-primary editPayment" data-id="${order.id}"
                             data-toggle="tooltip" data-placement="top" title="Edit">
                             <i class="fas fa-edit"></i>
                         </button>
@@ -233,13 +248,26 @@
     }
 
     function renderOrderCustomerCompleted(order, i) {
+        let s1 = "";
+        switch (order.orderStatus) {
+            case "PENDING":
+                s1 = "<option value='PENDING'>Đang xử lý</option>";
+                break;
+            case "COMPLETED":
+                s1 = "<option value='COMPLETED'>Hoàn thành</option>";
+                break;
+            case "CANCELLED":
+                s1 = "<option value='CANCELLED'>Đã hủy</option>";
+                break;
+        }
+        let s2 = ""
         let str = `
-                <tr id="#tr_${order.id}" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
+                <tr id="#tr_${order.id}" class="text-center" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
                     <td>${order.id}</td>
-                    <td>${moment(order.createdAt).format("hh:mm - DD/MM/YYYY")}</td>
+                    <td>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</td>
                     <td>${order.fullName}</td>
                     <td>${order.address}</td>
-                    <td>${order.orderStatus}</td>
+                    <td>${s1}</td>
                     <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>
                     <td>
                              <i class="fa fa-check btn btn-success"></i>
@@ -267,7 +295,7 @@
             let totalLiabilities = 0;
             data.forEach(item => {
                 totalOrder += item.grandTotal;
-                totalLiabilities +=(item.grandTotal - item.paid);
+                totalLiabilities += (item.grandTotal - item.paid);
                 let str = renderOrderCustomer(item);
                 $("#tbOrder tbody").prepend(str);
 
@@ -294,120 +322,77 @@
 
     function handleShowUpdateModal() {
         $(".editPayment").on("click", function () {
-        $("#modalDebtDeduction").modal("show");
+            let orderID = $(this).data("id");
+            console.log(orderID, "id")
+            getOrderPaymentCustomerById(orderID).then((item) => {
+                console.log(item, "ITEM")
+                let str = `
+                                         <tr class="col-12 text-center">
+                                            <td id="quantityCustomer" class="col-4">
+                                                        <span>${item.quantity}</span>
+                                            </td>
+                                            <td class="col-4" id="pricePay">
+                                                <span>${new Intl.NumberFormat('vi-VN', {
+                                                        style: "currency",
+                                                        currency: 'VND'
+                                                    }).format(item.price)}
+                                                </span>
+                                            </td>
+                                            <td class="col-4" id="totalPrice">
+                                                  <span>${new Intl.NumberFormat('vi-VN', {
+                                                        style: "currency",
+                                                        currency: 'VND'
+                                                    }).format(item.grandTotal)}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="col-12 mt-4">
+                                            <td class="fullNamePayment">
+                                                Tên khách hàng :  <span>${item.fullName}</span>
+                                            </td>
+                                            <td class="col-4" style="left: 127px; color: blue">
+                                                Tổng tiền :     <span>${new Intl.NumberFormat('vi-VN', {
+                                                                    style: "currency",
+                                                                    currency: 'VND'
+                                                                }).format(item.grandTotal)}
+                                                                 </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="col-12 text-center">
+                                            <td class="fullNamePayment">
+                                                Lịch sử : <span>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</span>
+                                            </td>
+                                            <td class="col-4" style="left: 129px">
+                                                Đã trả : <span>${item.paid}</span>
+                                            </td>
+                                        </tr>
+                        `;
+                $("#tbPaymentCustomer").append(str);
+                $("#modalDebtDeduction").modal("show");
+            }).fail((jqXHR) => {
+                alert(jqXHR);
+            });
         })
+    }
 
-    //         let order = $(this).data("id");
-    //         getOrderPaymentById(order).then(() => {
-    //
-    //         })
-    //         let str = `
-    //         <div class="modal fade" id="modalDebtDeduction" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    //      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    //     <div class="modal-dialog modal-xl modal-dialog-centered">
-    //         <div class="modal-content">
-    //             <div class="modal-header btn-primary">
-    //                 <h5 class="modal-title" style="color: white">Chi tiết đơn hàng</h5>
-    //                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-    //                 <span aria-hidden="true">X</span>
-    //             </div>
-    //             <div class="modal-body" id="modalPaymentCustomer">
-    //
-    //                 <div class="container-fluid">
-    //                     <div class="row">
-    //
-    //                         <div class="col-md-7 mt-2" style="color: black">
-    //                             <table>
-    //                                 <tr class="col-12 text-center">
-    //                                     <th class="col-4">
-    //                                         Số lượng (kg)
-    //                                     </th>
-    //                                     <th class="col-4">
-    //                                         Giá (đ)
-    //                                     </th>
-    //                                     <th class="col-4 justify-content-end">
-    //                                         Thành tiền (đ)
-    //                                     </th>
-    //                                 </tr>
-    //                                 <tr class="col-12 text-center">
-    //                                     <td class="col-4" >
-    //
-    //                                     </td>
-    //                                     <td class="col-4">
-    //                                         <span id="pricePay"></span>
-    //                                     </td>
-    //                                     <td class="col-4">
-    //                                         <span id="totalPrice"></span>
-    //                                     </td>
-    //                                 </tr>
-    //                                 <tr class="col-12 mt-4">
-    //                                     <td class="fullNamePayment">
-    //                                         <p id="namePay">Tên khách hàng : Tài chợ nọ</p>
-    //                                     </td>
-    //                                     <td class="col-4" style="left: 127px; color: blue">
-    //                                         <span id="totalPayment">Tổng tiền : 80.000 đ</span>
-    //                                     </td>
-    //                                 </tr>
-    //                                 <tr class="col-12 text-center">
-    //                                     <td class="fullNamePayment">
-    //                                         Lịch sử : 03:15 - 29/11/2022
-    //                                     </td>
-    //                                     <td class="col-4" style="left: 129px">
-    //                                         Đã trả : 30.000 đ
-    //                                     </td>
-    //                                 </tr>
-    //                             </table>
-    //                         </div>
-    //                         <div class="col-md-5 mt-2" style="background-color: white; border-radius: 10px;">
-    //
-    //                             <h5 class="mt-4">Thanh toán nợ : <span>50.0000đ</span></h5>
-    //
-    //                             <hr>
-    //                             <h5>Nhập số tiền muốn trả</h5>
-    //                             <div class="mt-2">
-    //                                 <input style="border: none; width: 200px; text-align: end"   value="0" placeholder="Nhập số tiền muốn trả">
-    //                             </div>
-    //                             <hr>
-    //                             <div class="mt-2" >
-    //                                 <input id="datetimeLocalPayment" type="date" style="border: none; width: 200px">
-    //                             </div>
-    //                             <hr>
-    //                         </div>
-    //                     </div>
-    //
-    //                 </div>
-    //                 <hr>
-    //                 <button id="savePayment" type="button" class="btn btn-primary" data-dismiss="modal" style="float: right">Lưu lại</button>
-    //
-    //             </div>
-    //
-    //
-    //         </div>
-    //
-    //
-    //      </div>
-    // </div>
-    //         `
-    //     })
-    // }
-    //
-    //
-    // function getOrderPaymentById(userId) {
-    //         return (
-    //             $.ajax({
-    //                 headers: {
-    //                     "Accept": 'application/json',
-    //                     "Content-type": 'application'
-    //                 },
-    //                 type: "GET",
-    //                 url: "http://localhost:8080/api/orders/exportsNoodle/" + userId,
-    //             }).done((data) => {
-    //                 user = data;
-    //             }).fail((jxHQR) => {
-    //                 console.log(jxHQR)
-    //             })
-    //         )
-        }
+    function getOrderPaymentCustomerById(orderID) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/orders/exportsNoodlePaid/" + orderID,
+            }).done((data) => {
+                order = data;
+                console.log("userIdPaid = ", orderID)
+            }).fail((jxHQR) => {
+                    console.log(jxHQR)
+                }
+            ))
+    }
+
 
     function findAllCustomerStatus() {
         $("#allStatusCustomer").on("click", function () {
@@ -431,7 +416,7 @@
                 let totalLiabilities = 0;
                 data.forEach(item => {
                     totalOrder += item.grandTotal;
-                    totalLiabilities +=(item.grandTotal - item.paid);
+                    totalLiabilities += (item.grandTotal - item.paid);
                     let str = renderOrderCustomer(item);
                     $("#tbOrder tbody").prepend(str);
                 })
@@ -455,7 +440,6 @@
         })
     }
 
-    findAllStatusPending();
 
     function findAllStatusCompleted() {
         $("#statusCompleted").on("click", function () {
@@ -494,6 +478,7 @@
 
     loadOrders();
     findAllCustomerStatus();
+    findAllStatusPending();
 </script>
 
 </html>

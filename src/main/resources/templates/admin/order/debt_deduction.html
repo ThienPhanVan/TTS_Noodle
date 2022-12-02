@@ -16,7 +16,8 @@
                         <div class="row">
 
                             <div class="col-md-7 mt-2" style="color: black">
-                                <table>
+                                <table id="tbPaymentCustomer">
+                                    <thead>
                                     <tr class="col-12 text-center">
                                         <th class="col-4">
                                             Số lượng (kg)
@@ -28,33 +29,12 @@
                                             Thành tiền (đ)
                                         </th>
                                     </tr>
-                                    <tr class="col-12 text-center">
-                                        <td class="col-4" >
-                                            100
-                                        </td>
-                                        <td class="col-4" id="pricePay">
-                                            8.000
-                                        </td>
-                                        <td class="col-4" id="totalPrice">
-                                            80.0000 đ
-                                        </td>
-                                    </tr>
-                                    <tr class="col-12 mt-4">
-                                        <td class="fullNamePayment">
-                                            Tên khách hàng : Tài chợ nọ
-                                        </td>
-                                        <td class="col-4" style="left: 127px; color: blue">
-                                            Tổng tiền : 80.000 đ
-                                        </td>
-                                    </tr>
-                                    <tr class="col-12 text-center">
-                                        <td class="fullNamePayment">
-                                            Lịch sử : 03:15 - 29/11/2022
-                                        </td>
-                                        <td class="col-4" style="left: 129px">
-                                            Đã trả : 30.000 đ
-                                        </td>
-                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    </tbody>
+
                                 </table>
                             </div>
                             <div class="col-md-5 mt-2" style="background-color: white; border-radius: 10px;">
@@ -64,10 +44,11 @@
                                 <hr>
                                 <h5>Nhập số tiền muốn trả</h5>
                                 <div class="mt-2">
-                                    <input style="border: none; width: 200px; text-align: end"   value="0" placeholder="Nhập số tiền muốn trả">
+                                    <input style="border: none; width: 200px; text-align: end" value="0"
+                                           placeholder="Nhập số tiền muốn trả">
                                 </div>
                                 <hr>
-                                <div class="mt-2" >
+                                <div class="mt-2">
                                     <input id="datetimeLocalPayment" type="date" style="border: none; width: 200px">
                                 </div>
                                 <hr>
@@ -76,7 +57,9 @@
 
                     </div>
                     <hr>
-                    <button id="savePayment" type="button" class="btn btn-primary" data-dismiss="modal" style="float: right">Lưu lại</button>
+                    <button id="savePayment" type="button" class="btn btn-primary" data-dismiss="modal"
+                            style="float: right">Lưu lại
+                    </button>
 
                 </div>
 
@@ -84,6 +67,6 @@
             </div>
 
 
-         </div>
+        </div>
     </div>
 </th:block>

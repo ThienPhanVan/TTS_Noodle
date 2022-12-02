@@ -34,6 +34,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "call sp_find_by_order_view_status_pending" , nativeQuery = true)
     List<OrderResultDTOS> findAllOrderStatusPending();
 
+    @Query(value = "call sp_find_by_id_paid_customer(:orderId)" , nativeQuery = true)
+    OrderResultPaidDTO findOrderByIdPaidCustomer(@Param("orderId") Long id);
+
+
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
     @Query(name = "sp_chartSevenDay", nativeQuery = true)

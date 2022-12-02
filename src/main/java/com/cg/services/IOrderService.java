@@ -80,5 +80,5 @@ public interface IOrderService {
 
     PaymentPurchaseResult doPaid(OrderPaid orderPaid);
 
-
+    OrderResultPaidDTO findOrderByIdPaidCustomer(Long id);
 }

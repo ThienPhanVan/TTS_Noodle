@@ -80,6 +80,14 @@ public class OrderApi {
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
     }
 
+    @GetMapping("/exportsNoodlePaid/{id}")
+    public ResponseEntity<?> getOrderByIdPaidCustomer(@PathVariable Long id){
+
+        OrderResultPaidDTO orderResultPaidDTO = orderService.findOrderByIdPaidCustomer(id);
+
+        return new ResponseEntity<>(orderResultPaidDTO, HttpStatus.OK);
+    }
+
 //    @GetMapping("/exNoodle/{data}")
 //    public ResponseEntity<?> getAllOrderByExport(@PathVariable Instant data){
 //        List<OrderResult> orderResultList = orderService.findAllByCreatedAtAndOrderType(data, OrderType.CUSTOMER);
