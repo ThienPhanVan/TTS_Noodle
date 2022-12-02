@@ -5,7 +5,11 @@ package com.cg.repositories;
  import com.cg.dto.order_item.OrderItemProfit;
  import com.cg.dto.order_item.OrderItemProfitOD;
 
+<<<<<<< HEAD
 
+=======
+ import com.cg.dto.order_item.OrderItemResult;
+>>>>>>> development
  import com.cg.repositories.model.OrderItem;
  import org.springframework.data.jpa.repository.JpaRepository;
   import org.springframework.data.jpa.repository.Query;
@@ -59,4 +63,8 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
                 "GROUP BY oi.id"
     )
     List<OrderItemView> findAllOrderView(Long orderId);
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
 }

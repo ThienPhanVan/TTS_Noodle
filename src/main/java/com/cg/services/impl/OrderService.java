@@ -14,9 +14,15 @@ import com.cg.repositories.model.*;
 import com.cg.dto.order.OrderItemParam;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
+<<<<<<< HEAD
 
 
 import com.cg.mapper.UserMapper;
+=======
+
+import com.cg.mapper.UserMapper;
+
+>>>>>>> development
 import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
@@ -427,8 +433,6 @@ public class OrderService implements IOrderService {
         Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
 
         Order newOrder = orderOptional.get();
-
-        System.out.println(newOrder);
 
         newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
 
