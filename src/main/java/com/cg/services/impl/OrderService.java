@@ -166,12 +166,12 @@ public class OrderService implements IOrderService {
                 paymentCustomerRepository.save(paymentCustomer);
                 return orderMapper.toDTO(order);
             }else {
-                throw new NotFoundException("Không đủ số tiền!!!");
+                throw new NotFoundException("Số tiền nhập vào không đủ, vui lòng nhập đủ số tiền!!!");
             }
         }else {
             if (paymentInput.compareTo(newTotal) == 0){
-                order.setOrderStatus(OrderStatus.COMPLETED);
                 paymentCustomer.setUserId(userId);
+                order.setOrderStatus(OrderStatus.COMPLETED);
                 paymentCustomer.setPaid(totalAmount);
                 paymentCustomerRepository.save(paymentCustomer);
                 return orderMapper.toDTO(order);
