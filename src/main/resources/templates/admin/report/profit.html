@@ -37,7 +37,7 @@
                                 <select id="selectDay" class="selectProfit text-center">
                                     <option selected value="toDay">Hôm Nay</option>
                                     <option value="sevenDay">7 Ngày Gần Nhất</option>
-                                    <option  value="oneMonth">1 Tháng</option>
+                                    <option value="oneMonth">1 Tháng</option>
                                 </select>
                             </label>
                         </div>
@@ -94,7 +94,7 @@
                 <div class="col-sm-12">
                     <div class="iq-card">
                         <div class="iq-card-body">
-                            <div style="display: none" id="s1" class="table-responsive">
+                            <div style="display: block" id="s1" class="table-responsive">
                                 <table class="table table-striped table-bordered mt-4"
                                        role="grid"
                                        aria-describedby="user-list-page-info">
@@ -136,51 +136,24 @@
                             </div>
 
                             <div style="display: none" id="s3" class="table-responsive">
-                                <div class="d-flex justify-content-between">
-                                    <h5>Phiếu Tính Lợi Nhuận Tháng</h5>
-                                    <p>Doanh Số : <span>12.000.000đ</span></p>
-                                </div>
                                 <table class="table table-striped table-bordered mt-4"
                                        role="grid"
                                        aria-describedby="user-list-page-info">
+
                                     <thead class="btn-primary">
 
                                     <tr class="text-center">
-                                        <th>Số TT</th>
-                                        <th>Chi Tiêu</th>
-                                        <th>Số Tiền</th>
-                                        <th>Ghi Chú</th>
+                                        <th>Mã SP</th>
+                                        <th>Tên</th>
+                                        <th>Ngày</th>
+                                        <th>Doanh Số</th>
+                                        <th>Chi Phí</th>
+                                        <th>Lợi Nhuận</th>
                                     </tr>
                                     </thead>
                                     <tbody class="text-center">
-                                    <tr id="1" class="item">
-                                        <td class="stt">1</td>
-                                        <td>
-                                            <label>
-                                                <select  class="selectProfit text-center">
-                                                    <option selected value="toDay">Chọn</option>
-                                                    <option value="water">Nước</option>
-                                                    <option value="electric">Điện</option>
-                                                    <option value="rice">Gạo</option>
-                                                    <option value="bot">Bột Lọc</option>
-                                                    <option value="nv">Nhân Viên</option>
-                                                    <option value="other">Khác</option>
-                                                </select>
-                                            </label>
-                                        </td>
-                                        <td><label>
-                                            <input class="money" id type="number">
-                                        </label>
-                                        </td>
-                                        <td><label>
-                                            <input type="text">
-                                        </label></td>
-                                    </tr>
                                     </tbody>
                                 </table>
-                                <button id="addRow" class="btn btn-outline-danger">Thêm Ô</button>
-                                <button id="accept" class="btn btn-outline-danger float-right">Xác Nhận</button>
-
                             </div>
 
                         </div>
@@ -240,13 +213,34 @@
     })
 
 
-    function getProfit1Month(){
-        $("#s3 tbody").empty();
-        turnover.empty();
-        costs.empty();
-        profits.empty();
+    // function getProfit1Month(){
+    //     $("#s3 tbody").empty();
+    //     turnover.empty();
+    //     costs.empty();
+    //     profits.empty();
+    //
+    // }
 
+
+    function getProduct() {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                async: false,
+                type: "GET",
+                url: "http://localhost:8080/api/products",
+            }).done((data) => {
+                user = data
+                console.log(user, "1")
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
     }
+    getProduct();
 
     $("#selectDay").on('change', () => {
         let getValue = $('#selectDay').val();
@@ -294,7 +288,6 @@
             async: false,
             url: "http://localhost:8080/api/order-items/getProfit1Day",
         }).done((data) => {
-
             console.log("1dd")
             let id;
             let nameProduct;
@@ -347,7 +340,7 @@
         })
     }
 
-    // getProfit1Day();
+    getProfit1Day();
 
     function getProfit1Week() {
         $("#s2 tbody").empty();
@@ -421,6 +414,81 @@
 
     // getProfit1Week();
 
+    function getProfit1Month() {
+        $("#s3 tbody").empty();
+        turnover.empty();
+        costs.empty();
+        profits.empty();
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/profits",
+        }).done((data) => {
+            console.log(data,"dataa")
+             let sumTotalOrder = 0;
+            let sumCost = 0;
+            let sumProfit = 0;
+            let id;
+            let nameProduct;
+            $.each(user, (i,item)=>{
+                if (item.id ===1){
+                    return(
+                    id = item.id ,
+                    nameProduct = item.title)
+                }
+
+            })
+            $.each(data, (i, item) => {
+                console.log(item, "item")
+
+                let cost = item.bag + item.powder + item.staff + item.rice + item.water + item.electric;
+                let turnover = item.turnover;
+                let days = item.createdAt;
+                let profit = turnover - cost;
+                sumTotalOrder += turnover;
+                sumCost += cost;
+                sumProfit += profit;
+                console.log(cost + "+" + turnover, "cost")
+
+                    let str = `
+                                <tr  id="tr_${id}">
+                                        <td>${id}</td>
+                                        <td>${nameProduct}</td>
+                                        <td>${moment(days).format("DD/MM/YYYY")}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(turnover)}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(cost)}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(profit)}</td>
+                                </tr>
+                                `;
+                    $("#s3 tbody").append(str);
+
+            })
+            let doanhso = `<h4><b>${new Intl.NumberFormat("vi-VN", {
+                style: 'currency',
+                currency: 'VND'
+            }).format(sumTotalOrder)}</b></h4> `;
+            let chiphi = `<h4><b>${new Intl.NumberFormat("vi-VN", {
+                style: 'currency',
+                currency: 'VND'
+            }).format(sumCost)}</b></h4> `;
+            let loinhuan = `<h4><b>${new Intl.NumberFormat("vi-VN", {
+                style: 'currency',
+                currency: 'VND'
+            }).format(sumProfit)}</b></h4> `;
+            turnover.prepend(doanhso);
+            costs.prepend(chiphi);
+            profits.prepend(loinhuan);
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
+
+    // getProfit1Month();
+
     function getProductById(productId) {
         return (
             $.ajax({
@@ -438,6 +506,7 @@
             })
         )
     }
+
 
 
 </script>
