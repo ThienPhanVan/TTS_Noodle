@@ -382,9 +382,10 @@
             .fail((jqXHR)=>{
                 console.log(jqXHR)
                 if (data.length === 0){
-                    let std = `<tr style="text-align: center">
+                    let std = `    <tr style="text-align: center">
                                 <td colspan="6" style="font-size: 15px">Không tìm thấy đơn hàng</td>
-                            </tr>`
+                                </tr>
+                                `
 
                     $("#tbListOrder tbody").prepend(std);
                 }
@@ -512,8 +513,14 @@
                   <div class="card">
                         <ul  class="list-group list-group-flush">
                             <li  class="list-group-item">
-                                 <span style="float: left" id="pay_money_${orderId}">Đã trả</span>
-                                 <span style="float: right;" id="payment_${orderId}">${App.formatNumberSpace(obj.paid)} đ</span>
+                                <span style="float: left;" id="dropdownMenuOffset_${orderId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
+                                  Đã trả
+                                    <div class="dropdown mr-1">
+                                      <div class="dropdown-menu" style="width: 300px;" aria-labelledby="dropdownMenuOffset_${orderId}">
+                                        </div>
+                                    </div>
+                                </span>
+                                <span style="float: right;" id="payment_${orderId}">${App.formatNumberSpace(obj.paid)} đ</span>
                             </li>
                            <li class="list-group-item">
                                 <span style="float: left">Còn nợ</span>
@@ -531,7 +538,6 @@
                             <div class="card border-dark mb-3" style="max-width: 18rem;">
                                 <div class="card-header" style="color: #1a179e;font: initial;background-color: #acacac;font-weight: 700;">Lịch sử thanh toán</div>
                                 <div class="card-body text-dark infor" style="padding-top: 8px;padding-bottom: 8px;overflow: scroll;">
-
                                 </div>
                             </div>
                         </div>
@@ -574,6 +580,7 @@
             }
 
             handleShowHistoryPayment();
+            handleShowHistoryPayments();
 
 
         })
@@ -624,7 +631,7 @@
                   <div class="card">
                         <ul  class="list-group list-group-flush">
                             <li  class="list-group-item">
-                                 <span style="float: left">Đã trả</span>
+                                 <span style="float: left" id="pay_money_${newOrderId}">Đã trả</span>
                                  <span style="float: right;" id="payment_${newOrderId}">${newPaid} đ</span>
                             </li >
                            <li  class="list-group-item">
@@ -777,6 +784,12 @@
         })
     }
 
+    function handleShowHistoryPayments(){
+        $(`#dropdownMenuOffset_${orderId}`).on("click", function (){
+            loadAllPayment();
+        })
+    }
+
     function loadAllPayment(){
         $.ajax({
             "headers": {
@@ -788,7 +801,12 @@
         })
         .done((data) => {
             $(`#panelCart_${orderId} .infor`).html("");
+            $(".dropdown .dropdown-menu").html("");
 
+            let stdHeader = `
+                            <p class="dropdown-header" style="color: #1a179e;font: initial;background-color: #acacac;font-weight: 700;text-align: center;">Lịch sử thanh toán</p>
+                         `;
+            $(".dropdown .dropdown-menu").append(stdHeader);
             $.each(data , (i,item) => {
 
                 paymentPurchase = item;
@@ -803,8 +821,15 @@
                             <span style="float: right">${paymentPurchase.paid} đ</span>
                         </div>
                 `
+                let std = `
+                            <div class="dropdown-item">
+                                 <span style="float: left;margin-right: 50px">${paymentPurchase.createdAt}</span>
+                                 <span style="float: right; font-weight: 600;">${paymentPurchase.paid} đ</span>
+                            </div>
+                         `
 
                 $(`#panelCart_${orderId} .infor`).prepend(str);
+                $(".dropdown .dropdown-menu").append(std);
 
             })
         })
