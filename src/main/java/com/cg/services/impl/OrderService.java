@@ -64,7 +64,6 @@ public class OrderService implements IOrderService {
     private PaymentMapper paymentMapper;
 
 
-
     @Autowired
     private PaymentCustomerRepository paymentCustomerRepository;
 
@@ -90,7 +89,7 @@ public class OrderService implements IOrderService {
         //Transient
         Order order = orderMapper.toModel(orderParam);
         if (userId != null)
-        order.setUserId(userId);
+            order.setUserId(userId);
         order.setCreatedAt(Instant.now());
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(1L);
@@ -159,25 +158,26 @@ public class OrderService implements IOrderService {
         BigDecimal totalAmount = grandTotal.subtract(paymentInput);
         paymentCustomer.setOrderId(order.getId());
 
-        if (userId == null){
-            if(paymentInput.compareTo(newTotal) == 0) {
+        if (userId == null) {
+            if (paymentInput.compareTo(grandTotal) == 0) {
                 order.setOrderStatus(OrderStatus.COMPLETED);
-                paymentCustomer.setPaid(orderParam.getPaid());
+                paymentCustomer.setPaid(paymentInput);
                 paymentCustomerRepository.save(paymentCustomer);
                 return orderMapper.toDTO(order);
-            }else {
+            } else {
                 throw new NotFoundException("Số tiền nhập vào không đủ, vui lòng nhập đủ số tiền!!!");
             }
-        }else {
-            if (paymentInput.compareTo(newTotal) == 0){
+        } else {
+            if (paymentInput.compareTo(grandTotal) == 0) {
+
                 paymentCustomer.setUserId(userId);
                 order.setOrderStatus(OrderStatus.COMPLETED);
-                paymentCustomer.setPaid(totalAmount);
+                paymentCustomer.setPaid(orderParam.getPaid());
                 paymentCustomerRepository.save(paymentCustomer);
                 return orderMapper.toDTO(order);
-            }else {
+            } else {
                 paymentCustomer.setUserId(userId);
-                paymentCustomer.setPaid(orderParam.getPaid());
+                paymentCustomer.setPaid(paymentInput);
                 paymentCustomerRepository.save(paymentCustomer);
                 return orderMapper.toDTO(order);
             }
@@ -274,7 +274,7 @@ public class OrderService implements IOrderService {
             totalAmount = totalAmount.add(price.multiply(new BigDecimal(quantity)));
 
             newOrder.setGrandTotal(totalAmount);
-            if (totalAmount.compareTo(orderPurchase.getPaid()) == 0){
+            if (totalAmount.compareTo(orderPurchase.getPaid()) == 0) {
                 newOrder.setOrderStatus(OrderStatus.COMPLETED);
             } else {
                 newOrder.setOrderStatus(OrderStatus.PENDING);
@@ -483,8 +483,8 @@ public class OrderService implements IOrderService {
 
         BigDecimal newAmount = BigDecimal.valueOf(0);
 
-        for(PaymentPurchase paymentPurchase : paymentResultPurchases){
-           BigDecimal amount = paymentPurchase.getPaid();
+        for (PaymentPurchase paymentPurchase : paymentResultPurchases) {
+            BigDecimal amount = paymentPurchase.getPaid();
 
             newAmount = newAmount.add(amount);
         }
@@ -493,7 +493,7 @@ public class OrderService implements IOrderService {
 
         PaymentPurchase newPaymentPurchase = new PaymentPurchase();
 
-        if (grandTotal.compareTo(newTotal) == 1){
+        if (grandTotal.compareTo(newTotal) == 1) {
 
             newPaymentPurchase.setUserId(userId);
             newPaymentPurchase.setOrderId(orderPaid.getOrderId());
@@ -504,10 +504,10 @@ public class OrderService implements IOrderService {
             return paymentMapper.toDTOS(newPaymentPurchase);
 
         }
-        if (grandTotal.compareTo(newTotal) == -1){
+        if (grandTotal.compareTo(newTotal) == -1) {
             throw new DataInputException("Lỗi hệ thống vui lòng liên hệ quản trị viên!!");
         }
-        if (grandTotal.compareTo(newTotal) == 0){
+        if (grandTotal.compareTo(newTotal) == 0) {
 
             orderOptional.get().setOrderStatus(OrderStatus.COMPLETED);
 
@@ -526,47 +526,63 @@ public class OrderService implements IOrderService {
 
     @Transactional
     public PaymentCustomerResult doPaidCustomer(OrderCustomerPaid orderCustomerPaid) {
-        Optional<Order> orderOptional = orderRepository.findById(orderCustomerPaid.getOrderId());
-        BigDecimal grandTotal = orderOptional.get().getGrandTotal();
-        Long userId = orderOptional.get().getUserId();
+        Optional<Order> orderOpt = orderRepository.findById(orderCustomerPaid.getOrderId());
+        //kiem tra order ton tai
+
+        if (!orderOpt.isPresent())
+            System.out.println("tu xu");
+        //throw
+        Order order = orderOpt.get();
+        BigDecimal grandTotal =order.getGrandTotal();
+        Long userId = order.getUserId();
         BigDecimal paid = orderCustomerPaid.getPaid();
-        List<PaymentCustomer> paymentCustomers = paymentCustomerRepository.findAllByOrderId(orderCustomerPaid.getOrderId());
-        BigDecimal newAmount = BigDecimal.valueOf(0);
-        for (PaymentCustomer paymentCustomer: paymentCustomers){
-            BigDecimal amount = paymentCustomer.getPaid();
-            newAmount = newAmount.add(amount);
-        }
-        BigDecimal newTotal = newAmount.add(paid);
+       // List<PaymentCustomer> paymentCustomers = paymentCustomerRepository.findAllByOrderId(orderCustomerPaid.getOrderId());
+        BigDecimal newwTotal = paymentCustomerRepository
+        .findAllByOrderId(orderCustomerPaid.getOrderId())
+                .stream().map(PaymentCustomer::getPaid)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//        BigDecimal newAmount = BigDecimal.valueOf(0);
+//        for (PaymentCustomer paymentCustomer : paymentCustomers) {
+//            BigDecimal amount = paymentCustomer.getPaid();
+//            newAmount = newAmount.add(amount);
+//        }
+        BigDecimal newTotal = newwTotal.add(paid);
 
         PaymentCustomer newPaymentCustomer = new PaymentCustomer();
-        if (grandTotal.compareTo(newTotal) == 1){
-
-            newPaymentCustomer.setUserId(userId);
-            newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
-            newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
-
-            paymentCustomerRepository.save(newPaymentCustomer);
-
-            return paymentMapper.toDTO(newPaymentCustomer);
-
-        }
-        if (grandTotal.compareTo(newTotal) == -1){
+//        if (grandTotal.compareTo(newTotal) > 0) {
+//
+//           tien chua tra du
+//        newPaymentCustomer.setUserId(userId);
+//        newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
+//        newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
+//
+//        paymentCustomerRepository.save(newPaymentCustomer);
+//
+//        return paymentMapper.toDTO(newPaymentCustomer);
+//
+//        }
+        if (grandTotal.compareTo(newTotal) < 0) {
             throw new DataInputException("Lỗi hệ thống vui lòng liên hệ quản trị viên!!");
         }
-        if (grandTotal.compareTo(newTotal) == 0){
+        if (grandTotal.compareTo(newTotal) == 0) {
 
-            orderOptional.get().setOrderStatus(OrderStatus.COMPLETED);
+            order.setOrderStatus(OrderStatus.COMPLETED);
 
-            orderRepository.save(orderOptional.get());
-            newPaymentCustomer.setUserId(userId);
-            newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
-            newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
-
-            paymentCustomerRepository.save(newPaymentCustomer);
-
-            return paymentMapper.toDTO(newPaymentCustomer);
+//            newPaymentCustomer.setUserId(userId);
+//            newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
+//            newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
+//
+//            paymentCustomerRepository.save(newPaymentCustomer);
+//
+//            return paymentMapper.toDTO(newPaymentCustomer);
 
         }
+        newPaymentCustomer.setUserId(userId);
+        newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
+        newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
+
+        paymentCustomerRepository.save(newPaymentCustomer);
+
         return paymentMapper.toDTO(newPaymentCustomer);
     }
 

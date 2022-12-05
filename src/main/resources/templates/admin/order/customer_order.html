@@ -192,7 +192,7 @@
     let order = new Order();
     let user = new User();
     let orderID = null;
-
+    let ids ;
     Date.prototype.toDateInputValue = (function () {
         let local = new Date(this);
         local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -207,9 +207,11 @@
         let grandTotal = order.grandTotal;
         let paid = order.paid;
         let liabilities = grandTotal - paid;
-        let quantity = grandTotal / 8;
-        let price = quantity * 8;
-        let total = grandTotal - liabilities;
+        let ss2 = "";
+        if(liabilities !== 0)
+        {
+             ss2 = `<span id=\"inDebt\">(Nợ: ${new Intl.NumberFormat('vi-VN').format(liabilities)})</span>`
+        }
 
         let s1 = "";
         switch (order.orderStatus) {
@@ -223,6 +225,7 @@
                 s1 = "<option value='CANCELLED'>Đã hủy</option>";
                 break;
         }
+
         let s2 = ""
         let str = `
                 <tr class="text-center" id="#tr_${order.id}" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
@@ -231,8 +234,8 @@
                     <td>${order.fullName}</td>
                     <td>${order.address}</td>
                     <td>${s1}</td>
-                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>
-                    <span id="inDebt">(Nợ: ${new Intl.NumberFormat('vi-VN').format(liabilities)})</span></td>
+                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>${ss2}
+                    </td>
                     <td>
                           <button class="btn btn-outline-primary editPayment" data-id="${order.id}"
                             data-toggle="tooltip" data-placement="top" title="Edit">
@@ -291,6 +294,7 @@
         }).done((data) => {
             $("#tbOrder tbody").html("");
             $("#totalOrderCustomers").html("");
+
             let totalOrder = 0;
             let totalLiabilities = 0;
             data.forEach(item => {
@@ -320,16 +324,78 @@
         })
     }
 
+
+    $("#savePayment").on('click', () =>{
+
+        $("#modalDebtDeduction").modal("show");
+        // let inputPrice = $("#inputPricePayments").val();
+        // let debts = $("#debts").val();
+        // if(inputPrice > debts){
+        //     iziToast.warning({
+        //         title: 'FAIL',
+        //         position: 'topRight',
+        //         timeout: 1500,
+        //         message: "Số tiền trả nhập vào không đc quá số tiền nợ!"
+        //     });
+        //     // return false;
+        // }
+        doUpdatePayment();
+    })
+
+
+
+    function doUpdatePayment(){
+        console.log("orderID = ", ids)
+        let newUpdatePayment = {
+                "orderId": ids,
+                "paid": +$("#inputPricePayments").val()
+            }
+        $.ajax({
+            headers: {
+                accept: "application/json",
+                "content-type": "application/json"
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/orders/paymentCustomer",
+            data: JSON.stringify(newUpdatePayment)
+        })
+            .done((data) => {
+                let totalOrder = 0;
+                let totalLiabilities = 0;
+                    totalOrder = item.grandTotal;
+                console.log("totalOrder = ", totalOrder);
+                    totalLiabilities += (item.grandTotal - item.paid);
+                iziToast.success({
+                    title: 'OK',
+                    position: 'topRight',
+                    timeout: 1500,
+                    message: 'Trả tiền thành công!!'
+                })
+
+            }).fail((jqXHR) => {
+            iziToast.warning({
+                title: 'FAIL',
+                position: 'topRight',
+                timeout: 1500,
+                message: jqXHR.responseJSON.message
+            });
+        })
+    }
+
+
     function handleShowUpdateModal() {
         $(".editPayment").on("click", function () {
             let orderID = $(this).data("id");
             console.log(orderID, "id")
+            let debts = 0;
+            $("#tbPaymentCustomer tbody").html("");
             getOrderPaymentCustomerById(orderID).then((item) => {
-                console.log(item, "ITEM")
                 let str = `
                                          <tr class="col-12 text-center">
+
                                             <td id="quantityCustomer" class="col-4">
                                                         <span>${item.quantity}</span>
+                                                        <hr>
                                             </td>
                                             <td class="col-4" id="pricePay">
                                                 <span>${new Intl.NumberFormat('vi-VN', {
@@ -337,6 +403,7 @@
                                                         currency: 'VND'
                                                     }).format(item.price)}
                                                 </span>
+                                                <hr>
                                             </td>
                                             <td class="col-4" id="totalPrice">
                                                   <span>${new Intl.NumberFormat('vi-VN', {
@@ -344,11 +411,13 @@
                                                         currency: 'VND'
                                                     }).format(item.grandTotal)}
                                                 </span>
+                                                <hr>
                                             </td>
                                         </tr>
                                         <tr class="col-12 mt-4">
                                             <td class="fullNamePayment">
                                                 Tên khách hàng :  <span>${item.fullName}</span>
+                                                <hr>
                                             </td>
                                             <td class="col-4" style="left: 127px; color: blue">
                                                 Tổng tiền :     <span>${new Intl.NumberFormat('vi-VN', {
@@ -356,6 +425,7 @@
                                                                     currency: 'VND'
                                                                 }).format(item.grandTotal)}
                                                                  </span>
+                                                                 <hr>
                                             </td>
                                         </tr>
                                         <tr class="col-12 text-center">
@@ -363,17 +433,39 @@
                                                 Lịch sử : <span>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</span>
                                             </td>
                                             <td class="col-4" style="left: 129px">
-                                                Đã trả : <span>${item.paid}</span>
+                                                Đã trả :  <span>${new Intl.NumberFormat('vi-VN', {
+                                                                style: "currency",
+                                                                currency: 'VND'
+                                                            }).format(item.paid)}
+                                                                 </span>
                                             </td>
                                         </tr>
                         `;
-                $("#tbPaymentCustomer").append(str);
+                $("#tbPaymentCustomer tbody").append(str);
+
+                debts = item.grandTotal - item.paid;
+                let debtsSp = `  <span>${new Intl.NumberFormat('vi-VN', {
+                                            style: "currency",
+                                            currency: 'VND'
+                                        }).format(debts)}
+                                 </span>`
+                $("#debts").html(debtsSp);
+
                 $("#modalDebtDeduction").modal("show");
+
+                // $(".inputPricePms").on('keyup', function(){
+                //     let n = parseInt($(this).val().replace(/\D/g,''),10);
+                //     console.log(n ,"nn")
+                //     $(this).val(n.toLocaleString());
+                // });
+
             }).fail((jqXHR) => {
                 alert(jqXHR);
             });
         })
     }
+
+
 
     function getOrderPaymentCustomerById(orderID) {
         return (
@@ -386,6 +478,7 @@
                 url: "http://localhost:8080/api/orders/exportsNoodlePaid/" + orderID,
             }).done((data) => {
                 order = data;
+                ids = orderID;
                 console.log("userIdPaid = ", orderID)
             }).fail((jxHQR) => {
                     console.log(jxHQR)
