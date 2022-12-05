@@ -15,6 +15,10 @@ import com.cg.repositories.model.*;
 import com.cg.dto.order.OrderItemParam;
 import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
+
+import com.cg.mapper.UserMapper;
+import com.cg.mapper.UserMapper;
+
 import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
 import com.cg.repositories.OrderRepository;
@@ -59,6 +63,9 @@ public class OrderService implements IOrderService {
     @Autowired
     private PaymentPurchaseRepository paymentPurchaseRepository;
 
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private PaymentMapper paymentMapper;
@@ -410,6 +417,7 @@ public class OrderService implements IOrderService {
         return orderRepository.chartOneDay();
     }
 
+
     @Override
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
@@ -447,8 +455,6 @@ public class OrderService implements IOrderService {
 
         Order newOrder = orderOptional.get();
 
-        System.out.println(newOrder);
-
         newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
 
         orderRepository.save(newOrder);
@@ -463,10 +469,14 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-
     public OrderResultDTOS findAllByOrderViewById(Long id) {
         return orderRepository.findAllByOrderViewById(id);
     }
+
+    public BigDecimal totalOrderOneMonth() {
+        return orderRepository.totalOrderOneMonth();
+    }
+
 
     @Transactional
     public PaymentPurchaseResult doPaid(OrderPaid orderPaid) {
@@ -590,4 +600,5 @@ public class OrderService implements IOrderService {
     public OrderResultPaidDTO findOrderByIdPaidCustomer(Long id) {
         return orderRepository.findOrderByIdPaidCustomer(id);
     }
+
 }

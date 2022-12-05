@@ -31,10 +31,12 @@ public class ReportController {
         return modelAndView;
     }
 
-    @GetMapping("warehouse")
-    public ModelAndView showWarehouse(){
+    @GetMapping("profitCa")
+    public ModelAndView showProfitCalculation(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin/report/warehouse");
+        modelAndView.setViewName("admin/report/profit_calculation");
         return modelAndView;
     }
+
+
 }

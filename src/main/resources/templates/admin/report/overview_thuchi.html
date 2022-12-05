@@ -2,152 +2,393 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <th:block th:replace="/layout/script/head :: head"/>
+    <th:block th:replace="/layout/script/head :: head"></th:block>
+    <title>Profit Calculation</title>
 </head>
 
 <body>
+<!-- loader Start -->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Sidebar  -->
-    <th:block th:replace="/layout/sidebar/left_side_bar :: left_side_bar"/>
 
+    <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
-    <th:block th:replace="/layout/topNav/topNav :: topNav"/>
+
+    <div class="iq-top-navbar">
+        <div style="margin-top: 13px;" class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+
+                <h4 class="text-primary">Phiếu Tính Lợi Nhuận</h4>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li class="line-height">
+                        <div class="mr-5">
+                            <label>
+                                <select id="selectTurnover" class="selectProfit text-center">
+                                    <option selected value="toDay">Hôm Nay</option>
+                                    <option value="sevenDay">1 Tuần</option>
+                                    <option value="oneMonth">1 Tháng</option>
+                                </select>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-primary">
-                                <i class="ri-focus-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Doanh Số</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>500.000đ</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-danger">
-                                <i class="ri-pantone-line"></i>
-                            </div>
-                            <p class="text-secondary">Tiền Bán Hàng</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>1.000.000đ</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-success">
-                                <i class="ri-database-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Số Đơn Hàng</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>45</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
-                                <i class="ri-pie-chart-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Tiền Nợ</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>123.456đ</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="iq-header-title">
-                                <h4 class="card-title">Customer List</h4>
-                            </div>
-                        </div>
                         <div class="iq-card-body">
-                            <div class="table-responsive">
 
-                                <table id="user-list-table" class="table table-striped table-bordered mt-4"
-                                       role="grid" aria-describedby="user-list-page-info">
-                                    <thead>
-                                    <tr>
-                                        <th>Profile</th>
-                                        <th>Name</th>
-                                        <th>Contact</th>
-                                        <th>Email</th>
-                                        <th>Country</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                            <div id="s3" class="table-responsive">
+                                <div class="float-right mb-2">
+                                    <h5 class="d-flex">Doanh Số :
+                                        <span id="dso"></span>
+                                        <!--                                        <span style="display: none" id="dso1w"></span>-->
+                                        <!--                                        <span style="display: none" id="dso1m"></span>-->
+                                    </h5>
+                                </div>
+                                <form id="formCreate">
+                                    <table class="table table-striped table-bordered mt-4"
+                                           role="grid"
+                                           aria-describedby="user-list-page-info">
+                                        <thead class="btn-primary">
+                                        <tr class="text-center">
+                                            <th>Số TT</th>
+                                            <th>Chi Tiêu</th>
+                                            <th>Số Tiền (đ)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="text-center">
 
-                                    <tr>
-                                        <td class="text-center"><img class="rounded img-fluid avatar-40"
-                                                                     src="assets/images/user/06.jpg" alt="profile"></td>
-                                        <td>Eric Shun</td>
-                                        <td>+55 25685 256 589</td>
-                                        <td>ericshun@gmail.com</td>
-                                        <td>Brazil</td>
-                                        <td><span class="badge iq-bg-warning">Pending</span></td>
+                                        <tr id="2" class="item">
+                                            <td class="stt">1</td>
+                                            <td>
+                                                <span>Gạo</span>
+                                            </td>
+                                            <td id="rice">
+                                            </td>
+                                            <!--                                        <td style="display: none" id="rice1week">-->
+                                            <!--                                        </td>-->
+                                            <!--                                        <td style="display: none" id="rice1month">-->
+                                            <!--                                        </td>-->
+                                        </tr>
+                                        <tr id="3" class="item">
+                                            <td class="stt">2</td>
+                                            <td>
+                                                <span>Điện</span>
+                                            </td>
+                                            <td id="electric">
+                                                <input class="test" type="text">
+                                            </td>
+                                        </tr>
+                                        <tr id="4" class="item">
+                                            <td class="stt">3</td>
+                                            <td>
+                                                <span>Nước</span>
+                                            </td>
+                                            <td id="water">
+                                                <input class="test" type="text">
+                                            </td>
 
-                                        <td class="w-45">
-                                            <div class="flex align-items-center list-user-action">
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="top" title="" data-original-title="Add"
-                                                   href="#"><i class="ri-user-add-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="top" title="" data-original-title="Edit"
-                                                   href="#"><i class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="top" title="" data-original-title="Delete"
-                                                   href="#"><i class="ri-delete-bin-line"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                        </tr>
+                                        <tr id="5" class="item">
+                                            <td class="stt">4</td>
+                                            <td>
+                                                <span>Bột Lọc</span>
+                                            </td>
+                                            <td id="powder">
+                                                <input class="test" type="text">
+                                            </td>
+
+                                        </tr>
+                                        <tr id="6" class="item">
+                                            <td class="stt">5</td>
+                                            <td>
+                                                <span>Bao Bì</span>
+                                            </td>
+                                            <td id="bag">
+                                                <input class="test" type="text">
+                                            </td>
+                                        </tr>
+                                        <tr id="7" class="item">
+                                            <td class="stt">6</td>
+                                            <td>
+                                                <span>Nhân viên</span>
+                                            </td>
+                                            <td id="staff">
+                                                <input class="test" type="text">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" id="addRow" class="btn btn-outline-danger">Thêm Ô</button>
+                                    <button type="button" id="confirms" class="btn btn-outline-danger float-right">Xác Nhận</button>
+                                </form>
                             </div>
 
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+    <!-- Wrapper END -->
+    <!-- Footer -->
+    <th:block th:replace="/layout/footer/footer.html"></th:block>
+    <!-- Footer END -->
+
 </div>
-<!-- Wrapper END -->
-<!-- Footer -->
-<footer class="iq-footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                TTS-Noodle
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Footer END -->
-<th:block th:replace="/layout/script/footer :: footer"/>
+<th:block th:replace="/layout/script/footer :: footer"></th:block>
 
 </body>
 
+<script>
+    let user = new User();
+    let product = new Product();
+    let value = 6;
+    let totalTurnover1d = 0;
+    let totalTurnover1w = 0;
+    let totalTurnover1m;
 
+    function formatMoney() {
+        $(".test").on('keyup', function () {
+            let n = parseInt($(this).val().replace(/\D/g, ''), 10);
+            $(this).val(n.toLocaleString());
+        });
+    }
+    formatMoney();
+
+    $("#selectTurnover").on('change', () => {
+        let getValue = $('#selectTurnover').val();
+        let totalTurnover1d = $("#dso1d");
+        let totalTurnover1w = $("#dso1w");
+        let totalTurnover1m = $("#dso1m");
+        switch (getValue) {
+            case "toDay":
+                totalTurnover1d.css('display', 'block');
+                totalTurnover1w.css('display', 'none');
+                totalTurnover1m.css('display', 'none');
+                totalTurnover1day();
+                break;
+            case "sevenDay" :
+                totalTurnover1d.css('display', 'none');
+                totalTurnover1m.css('display', 'none');
+                totalTurnover1w.css('display', 'block');
+                totalTurnover1week();
+                break;
+            case "oneMonth" :
+                totalTurnover1w.css('display', 'none');
+                totalTurnover1d.css('display', 'none');
+                totalTurnover1m.css('display', 'block');
+                totalTurnover1month();
+                break;
+            default :
+                alert("hazz")
+        }
+    })
+
+    let totalTurnover = $("#dso");
+    // let turnover1week = $("#dso1w");
+    // let turnover1month = $("#dso1m");
+    let totalRicess = $("#rice");
+    // let rice1week = $("#rice1week");
+    // let rice1month = $("#rice1month");
+
+
+    function addRow() {
+        $("#addRow").on('click', function () {
+            value++;
+            let str = `
+                      <tr id="${value}" >
+                         <td>${value}</td>
+                         <td style=" width: 272.8px;" >
+                             <input class="text-center test" id="inputName_${value}" type="text">
+                        </td>
+                        <td  style="    width: 708.9px" >
+                                <input id="trs_${value}" class="text-center test valueOther"  type="text">
+                        </td>
+                    </tr>
+                                     `;
+            $("#s3 tbody").append(str);
+            formatMoney();
+
+        })
+    }
+    addRow();
+
+    function totalTurnover1day() {
+        totalTurnover.empty();
+        totalRicess.empty();
+
+        $.ajax({
+            headers: {
+                "Accept": 'application/json',
+                "Content-type": 'application'
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/orders/chartOneDay",
+        }).done((data) => {
+            totalTurnover1d = data;
+            let quantityNoodle = totalTurnover1d / 8000;
+            let quantityRice = quantityNoodle / 2.4;
+            let totalRices = Math.floor(quantityRice * 10000);
+            let str = `
+                 <span> ${new Intl.NumberFormat("vi-VN").format(totalTurnover1d)}</span>
+            `;
+            totalTurnover.html(str);
+
+            let totalRice = `
+                  <span id="totalRice">${new Intl.NumberFormat("vi-VN", {maximumFractionDigits: 0,}).format(totalRices)}</span>
+                     `;
+            totalRicess.html(totalRice);
+            console.log(totalTurnover1d, "1dayy")
+        }).fail((jxHQR) => {
+            console.log(jxHQR)
+        })
+    }
+
+    totalTurnover1day();
+
+    function totalTurnover1week() {
+        totalTurnover.empty();
+        totalRicess.empty();
+
+        $.ajax({
+            headers: {
+                "Accept": 'application/json',
+                "Content-type": 'application'
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/profits/totalOrderOWeek",
+        }).done((data) => {
+            totalTurnover1w = data;
+            let quantityNoodle = totalTurnover1w / 8000;
+            let quantityRice = quantityNoodle / 2.4;
+            let totalRices = Math.floor(quantityRice * 10000);
+            let str = `
+                 <span> ${new Intl.NumberFormat("vi-VN").format(totalTurnover1w)}</span>
+            `;
+            totalTurnover.html(str);
+
+            let totalRice = `
+                  <span id="totalRice">${new Intl.NumberFormat("vi-VN", {maximumFractionDigits: 0,}).format(totalRices)}</span>
+                     `;
+            totalRicess.html(totalRice);
+            console.log(totalTurnover1w, "1 weekk")
+        }).fail((jxHQR) => {
+            console.log(jxHQR)
+        })
+    }
+
+    function totalTurnover1month() {
+        totalTurnover.empty();
+        totalRicess.empty();
+
+        $.ajax({
+            headers: {
+                "Accept": 'application/json',
+                "Content-type": 'application'
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/orders/totalOrderOM",
+        }).done((data) => {
+            console.log(data, "1 month")
+            totalTurnover1m = data;
+            let quantityNoodle = totalTurnover1m / 8000;
+            let quantityRice = quantityNoodle / 2.4;
+            let totalRices = Math.floor(quantityRice * 10000);
+            console.log(totalRices, "totalRie")
+            let str = `
+                 <span> ${new Intl.NumberFormat("vi-VN").format(totalTurnover1m)}</span>
+            `;
+            totalTurnover.html(str);
+
+            let totalRice = `
+                  <span id="totalRice">${new Intl.NumberFormat("vi-VN", {maximumFractionDigits: 0,}).format(totalRices)}</span>
+                     `;
+            totalRicess.html(totalRice);
+        }).fail((jxHQR) => {
+            console.log(jxHQR)
+        })
+    }
+
+    let btnConfirm = $("#confirms");
+    let totalOther = 0;
+
+    function other() {
+        let x = document.querySelectorAll(".valueOther");
+        let total = 0;
+        for (let i = 0; i < x.length; i++) {
+            total += Number(x[i].value.replace(/\D/g, ''));
+        }
+        totalOther = total;
+        console.log(totalOther)
+    }
+
+    btnConfirm.on('click', function () {
+        other();
+        let turnover = Number($('#dso').text().replace(/\D/g, ''));
+        let rice = Number($('#totalRice').text().replace(/\D/g, ''));
+        let electric = Number($('#electric input').val().replace(/\D/g, ''));
+        let water = Number($('#water input').val().replace(/\D/g, ''));
+        let powder = Number($('#powder input').val().replace(/\D/g, ''));
+        let bag = Number($('#bag input').val().replace(/\D/g, ''));
+        let staff = Number($('#staff input').val().replace(/\D/g, ''));
+
+        // let totalchitieu = rice + electric + water + powder + bag + totalss;
+
+        // console.log(rice + ab , "log")
+        console.log(totalTurnover, "totalOrder")
+        let creatProfit = {
+            "turnover": turnover,
+            "rice": rice,
+            "powder": powder,
+            "staff": staff,
+            "bag": bag,
+            "other": totalOther,
+            "electric": electric,
+            "water": water
+        }
+        console.log(creatProfit, "crear")
+        $.ajax({
+            headers: {
+                "Accept": 'application/json',
+                "Content-type": 'application/json'
+            },
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/api/profits/create",
+            data: JSON.stringify(creatProfit)
+        }).done((data) => {
+            console.log(data, data)
+            $('#formCreate')[0].reset();
+        }).fail((jxHQR) => {
+            console.log(jxHQR)
+        })
+
+    })
+
+
+</script>
 </html>

@@ -100,4 +100,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
 
-}
+
+    @Query(value = "call sp_sumOrderOM()", nativeQuery = true)
+    BigDecimal totalOrderOneMonth();
+
+
+ }
+

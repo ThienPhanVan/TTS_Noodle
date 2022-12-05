@@ -78,7 +78,8 @@ public interface IOrderService {
 
     OrderResultDTOS findAllByOrderViewById(Long id);
 
-    PaymentPurchaseResult doPaid(OrderPaid orderPaid);
-
+     BigDecimal totalOrderOneMonth();
     OrderResultPaidDTO findOrderByIdPaidCustomer(Long id);
-}
+     PaymentPurchaseResult doPaid(OrderPaid orderPaid);
+
+ }

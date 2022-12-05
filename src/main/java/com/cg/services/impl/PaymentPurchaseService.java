@@ -3,6 +3,7 @@ package com.cg.services.impl;
 import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.dto.payment.PaymentResult;
 import com.cg.mapper.PaymentMapper;
+import com.cg.mapper.PaymentPurchaseMapper;
 import com.cg.repositories.PaymentPurchaseRepository;
 import com.cg.repositories.model.PaymentPurchase;
 import com.cg.services.IPaymentPurchaseService;
@@ -24,6 +25,8 @@ public class PaymentPurchaseService implements IPaymentPurchaseService {
     @Autowired
     private PaymentMapper paymentMapper;
 
+    @Autowired
+    private PaymentPurchaseMapper paymentPurchaseMapper;
     @Override
     public Optional<PaymentPurchase> findById(Long id) {
         return Optional.empty();
@@ -37,7 +40,9 @@ public class PaymentPurchaseService implements IPaymentPurchaseService {
     }
 
     @Override
-    public List<PaymentPurchase> findAllByOrderId(Long orderId) {
-        return paymentPurchaseRepository.findAllByOrderId(orderId);
+    public List<PaymentPurchaseResult> findAllByOrderId(Long orderId) {
+        return paymentPurchaseRepository.findAllByOrderId(orderId)
+                .stream().map(paymentPurchase -> paymentPurchaseMapper.toDTO(paymentPurchase))
+                .collect(Collectors.toList());
     }
 }

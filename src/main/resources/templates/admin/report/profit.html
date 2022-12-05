@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"></th:block>
+    <title>Lợi Nhuận</title>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
                                 <select id="selectDay" class="selectProfit text-center">
                                     <option selected value="toDay">Hôm Nay</option>
                                     <option value="sevenDay">7 Ngày Gần Nhất</option>
-                                    <option value="oneMonth">30 Ngày Gần Nhất</option>
+                                    <option value="oneMonth">1 Tháng</option>
                                 </select>
                             </label>
                         </div>
@@ -134,19 +135,39 @@
                                 </table>
                             </div>
 
+                            <div style="display: none" id="s3" class="table-responsive">
+                                <table class="table table-striped table-bordered mt-4"
+                                       role="grid"
+                                       aria-describedby="user-list-page-info">
+
+                                    <thead class="btn-primary">
+
+                                    <tr class="text-center">
+                                        <th>Mã SP</th>
+                                        <th>Tên</th>
+                                        <th>Ngày</th>
+                                        <th>Doanh Số</th>
+                                        <th>Chi Phí</th>
+                                        <th>Lợi Nhuận</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
     <!-- Wrapper END -->
     <!-- Footer -->
     <th:block th:replace="/layout/footer/footer.html"></th:block>
-
-
     <!-- Footer END -->
-
 
 </div>
 <!--<script src="/static/assets/js/app.js"></script>-->
@@ -157,12 +178,75 @@
 <script>
     let user = new User();
     let product = new Product();
+    let value = 1;
+    $("#addRow").on('click', function (){
+        // value  = +$(".item .stt").text();
+        value++;
+        console.log("value", value)
+
+        let str = `
+        <tr id="${value}" >
+            <td>${value}</td>
+            <td>
+                <label>
+                    <select  class="selectProfit text-center">
+                        <option selected value="toDay">Chọn</option>
+                        <option value="sevenDay">Nước</option>
+                        <option value="oneMonth">Điện</option>
+                        <option value="oneMonth">Gạo</option>
+                        <option value="oneMonth">Bột Lọc</option>
+                        <option value="oneMonth">Bao Bì</option>
+                        <option value="oneMonth">Nhân Viên</option>
+                    </select>
+                </label>
+            </td>
+            <td><label>
+                <input type="number">
+            </label>
+            </td>
+            <td><label>
+                <input type="text">
+            </label></td>
+        </tr>
+        `;
+        $("#s3 tbody").append(str);
+    })
+
+
+    // function getProfit1Month(){
+    //     $("#s3 tbody").empty();
+    //     turnover.empty();
+    //     costs.empty();
+    //     profits.empty();
+    //
+    // }
+
+
+    function getProduct() {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                async: false,
+                type: "GET",
+                url: "http://localhost:8080/api/products",
+            }).done((data) => {
+                user = data
+                console.log(user, "1")
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+    }
+    getProduct();
 
     $("#selectDay").on('change', () => {
         let getValue = $('#selectDay').val();
         let profitOD = $("#s1");
         let profitOW = $("#s2");
-        let profitOM = $("#chart1month");
+        let profitOM = $("#s3");
         switch (getValue) {
             case "toDay":
                 profitOD.css('display', 'block');
@@ -180,18 +264,21 @@
                 profitOW.css('display', 'none');
                 profitOD.css('display', 'none');
                 profitOM.css('display', 'block');
-                chartOneMonth();
+                getProfit1Month();
                 break;
             default :
                 alert("hazz")
         }
     })
+    let turnover = $("#doanhso");
+    let costs = $("#chiphi");
+    let profits = $("#loinhuan");
 
     function getProfit1Day() {
         $("#s1 tbody").empty();
-        $("#doanhso").empty();
-        $("#chiphi").empty();
-        $("#loinhuan").empty();
+        turnover.empty();
+        costs.empty();
+        profits.empty();
         $.ajax({
             headers: {
                 "accept": "application/json",
@@ -201,7 +288,6 @@
             async: false,
             url: "http://localhost:8080/api/order-items/getProfit1Day",
         }).done((data) => {
-
             console.log("1dd")
             let id;
             let nameProduct;
@@ -210,6 +296,7 @@
             let quantityRice = quantity / 2.4;
             let cost = quantityRice * 10000;
             let profit = 0;
+
             let dateObj = new Date();
             let month = dateObj.getUTCMonth() + 1; //months from 1-12
             let day = dateObj.getUTCDate();
@@ -245,9 +332,9 @@
                 style: 'currency',
                 currency: 'VND'
             }).format(profit)}</b></h4> `;
-            $("#doanhso").prepend(doanhso);
-            $("#chiphi").prepend(chiphi);
-            $("#loinhuan").prepend(loinhuan);
+            turnover.prepend(doanhso);
+            costs.prepend(chiphi);
+            profits.prepend(loinhuan);
         }).fail((jqXHR) => {
             console.log(jqXHR)
         })
@@ -257,9 +344,9 @@
 
     function getProfit1Week() {
         $("#s2 tbody").empty();
-        $("#doanhso").empty();
-        $("#chiphi").empty();
-        $("#loinhuan").empty();
+        turnover.empty();
+        costs.empty();
+        profits.empty();
         $.ajax({
             headers: {
                 "accept": "application/json",
@@ -317,15 +404,90 @@
                 style: 'currency',
                 currency: 'VND'
             }).format(sumProfit)}</b></h4> `;
-            $("#doanhso").prepend(doanhso);
-            $("#chiphi").prepend(chiphi);
-            $("#loinhuan").prepend(loinhuan);
+            turnover.prepend(doanhso);
+            costs.prepend(chiphi);
+            profits.prepend(loinhuan);
         }).fail((jqXHR) => {
             console.log(jqXHR)
         })
     }
 
     // getProfit1Week();
+
+    function getProfit1Month() {
+        $("#s3 tbody").empty();
+        turnover.empty();
+        costs.empty();
+        profits.empty();
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/profits",
+        }).done((data) => {
+            console.log(data,"dataa")
+             let sumTotalOrder = 0;
+            let sumCost = 0;
+            let sumProfit = 0;
+            let id;
+            let nameProduct;
+            $.each(user, (i,item)=>{
+                if (item.id ===1){
+                    return(
+                    id = item.id ,
+                    nameProduct = item.title)
+                }
+
+            })
+            $.each(data, (i, item) => {
+                console.log(item, "item")
+
+                let cost = item.bag + item.powder + item.staff + item.rice + item.water + item.electric;
+                let turnover = item.turnover;
+                let days = item.createdAt;
+                let profit = turnover - cost;
+                sumTotalOrder += turnover;
+                sumCost += cost;
+                sumProfit += profit;
+                console.log(cost + "+" + turnover, "cost")
+
+                    let str = `
+                                <tr  id="tr_${id}">
+                                        <td>${id}</td>
+                                        <td>${nameProduct}</td>
+                                        <td>${moment(days).format("DD/MM/YYYY")}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(turnover)}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(cost)}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(profit)}</td>
+                                </tr>
+                                `;
+                    $("#s3 tbody").append(str);
+
+            })
+            let doanhso = `<h4><b>${new Intl.NumberFormat("vi-VN", {
+                style: 'currency',
+                currency: 'VND'
+            }).format(sumTotalOrder)}</b></h4> `;
+            let chiphi = `<h4><b>${new Intl.NumberFormat("vi-VN", {
+                style: 'currency',
+                currency: 'VND'
+            }).format(sumCost)}</b></h4> `;
+            let loinhuan = `<h4><b>${new Intl.NumberFormat("vi-VN", {
+                style: 'currency',
+                currency: 'VND'
+            }).format(sumProfit)}</b></h4> `;
+            turnover.prepend(doanhso);
+            costs.prepend(chiphi);
+            profits.prepend(loinhuan);
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
+
+    // getProfit1Month();
 
     function getProductById(productId) {
         return (
@@ -344,6 +506,7 @@
             })
         )
     }
+
 
 
 </script>

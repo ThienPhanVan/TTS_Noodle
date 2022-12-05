@@ -33,7 +33,16 @@
     color: red;
 }
 
-.card{
-    height: 265px;
+.cardDebt{
+    height: 248px;
 }
 
+.detailDebt{
+    position: absolute;
+    bottom: 0;
+    right: 24px;
+}
+
+.test{
+   text-align: center;
+}
