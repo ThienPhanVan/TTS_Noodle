@@ -446,7 +446,9 @@ public class OrderService implements IOrderService {
     public BigDecimal totalOrderOneMonth() {
         return orderRepository.totalOrderOneMonth();
     }
-     @Transactional
+
+
+    @Transactional
     public PaymentPurchaseResult doPaid(OrderPaid orderPaid) {
 
         Optional<Order> orderOptional = orderRepository.findById(orderPaid.getOrderId());
@@ -501,4 +503,5 @@ public class OrderService implements IOrderService {
         }
         return paymentMapper.toDTOS(newPaymentPurchase);
      }
+
 }
