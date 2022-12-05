@@ -24,7 +24,7 @@
     <div id="content-page" class="content-page">
         <div class="title_menu">
             <div class="">
-                <p class="font-weight-bold">Phiếu nhập / Nhập hàng</p>
+                <p class="font-weight-bold" style="font: initial;font-size: large;">Phiếu nhập / Nhập hàng</p>
             </div>
         </div>
         <div class="button_create_order">
@@ -335,7 +335,6 @@
         if(type === "ALL"){
             getAllOrder();
         }
-
         if (type === "PENDING"){
             handleShowOrderPending();
         }
@@ -377,6 +376,7 @@
 
                     $("#tbListOrder tbody").prepend(std);
                 }
+                handleClick();
 
             })
             .fail((jqXHR)=>{
@@ -422,6 +422,8 @@
 
                 $("#tbListOrder tbody").prepend(std);
             }
+
+            handleClick();
 
         })
         .fail((jqXHR)=>{
@@ -469,6 +471,8 @@
 
                     $("#tbListOrder tbody").prepend(std);
                 }
+
+                handleClick();
 
             })
             .fail((jqXHR)=>{
