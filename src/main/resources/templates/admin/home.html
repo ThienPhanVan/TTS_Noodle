@@ -23,7 +23,7 @@
     <div id="content-page" class="content-page">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="col-sm-6 col-md-6 col-lg-2">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-primary">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="col-sm-6 col-md-6 col-lg-2">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-danger">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="col-sm-6 col-md-6 col-lg-2">
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-success">
@@ -67,8 +67,21 @@
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
                                 <i class="ri-pie-chart-2-line"></i>
                             </div>
-                            <p class="text-secondary">Tiền Nợ</p>
+                            <p class="text-secondary">Khách Hàng Nợ</p>
                             <div id="totalDebt" class="d-flex align-items-center justify-content-between">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-body iq-box-relative">
+                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
+                                <i class="ri-pie-chart-2-line"></i>
+                            </div>
+                            <p class="text-secondary">Nợ NCC</p>
+                            <div id="totalDebts" class="d-flex align-items-center justify-content-between">
 
                             </div>
                         </div>
@@ -77,12 +90,12 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-8" style="width: 50%">
+                <div class="col-sm-6">
                     <div class=" item min-vh-100 d-flex flex-column justify-content-center">
                         <div style="background-color: #ffffff">
                             <div class="row my-3">
                                 <div class="col name_chart">
-                                    <h4>Thống Kê Số Lượng Bán Bún NHập Gạo (KG)</h4>
+                                    <h4>Thống Kê Số Lượng (KG)</h4>
                                 </div>
                                 <div class="mr-5">
                                     <label>
@@ -100,8 +113,8 @@
                                         <div style="background-color: #ffffff" class="card-body">
                                             <canvas selected style="display: block" id="chartQuantity1day"
                                                     height="100"></canvas>
-                                            <canvas style="display: none" id="chartQuantity1week" height="80"></canvas>
-                                            <canvas style="display: none" id="chartQuantity1month" height="80"></canvas>
+                                            <canvas style="display: none" id="chartQuantity1week" height="100"></canvas>
+                                            <canvas style="display: none" id="chartQuantity1month" height="100"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -128,9 +141,9 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div style="background-color: #ffffff" id="charts" class="card-body">
-                                            <canvas style="display: block" id="chartOneDay" height="80"></canvas>
-                                            <canvas style="display: none" id="chart7day" height="80"></canvas>
-                                            <canvas style="display: none" id="chart1month" height="80"></canvas>
+                                            <canvas style="display: block" id="chartOneDay" height="100"></canvas>
+                                            <canvas style="display: none" id="chart7day" height="100"></canvas>
+                                            <canvas style="display: none" id="chart1month" height="100"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -139,31 +152,56 @@
                     </div>
                 </div>
                 <!-- bar chart -->
-                <div class="col-sm-4 ">
-                    <div class=" item d-flex flex-column justify-content-center">
+                <div class="col-sm-6 ">
+                    <div class=" item min-vh-100 d-flex flex-column justify-content-center">
                         <div style="background-color: #ffffff">
-                            <div class="row ">
-                                <div class="col name_debt">
-                                    <h4>Khách Hàng Nợ</h4>
+                            <div class="row my-3">
+                                <div class="col name_chart">
+                                    <h4>Top 5 Khách Hàng Nợ (VNĐ) </h4>
+                                </div>
+                                <div class="mr-5">
+                                    <label>
+
+                                    </label>
                                 </div>
                             </div>
                             <div class="row my-2">
                                 <div class="col-md-12">
-                                    <div class="card my-custom-scrollbar">
-                                        <div style="background-color: #ffffff ; " class="card-body">
-                                            <div id="userDebt" class="row ">
-
-                                            </div>
+                                    <div class="cardDebt">
+                                        <div style="background-color: #ffffff" class="card-body">
+                                            <canvas  id="chartDebt" height="100"></canvas>
+                                        </div>
+                                        <div class="detailDebt">
+                                            <a href="/customer" class="btn btn-outline-warning">Xem Chi Tiết</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-
+                        <hr>
+                        <div style="background-color: #ffffff">
+                            <div class="row my-3">
+                                <div class="col name_chart">
+                                    <h4>Top 5 NNC Đang Nợ (VNĐ)</h4>
+                                </div>
+                                <div class="mr-5">
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-md-12">
+                                    <div class="cardDebt">
+                                        <div style="background-color: #ffffff" class="card-body">
+                                            <canvas style="display: block" id="chartDebtSup" height="100"></canvas>
+                                        </div>
+                                        <div class="detailDebt">
+                                            <a href="/customer" class="btn btn-outline-warning">Xem Chi Tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -178,125 +216,190 @@
 
 </body>
 <script>
-    let order = new Order();
-    let user = new User();
-    let dayyy = new Date().getDate();
-    let todayNow = new Date().getDay();
-    let day_name = "";
-    switch (todayNow) {
-        case 0:
-            day_name = "Chủ nhật";
-            break;
-        case 1:
-            day_name = "Thứ hai";
-            break;
-        case 2:
-            day_name = "Thứ ba";
-            break;
-        case 3:
-            day_name = "Thứ tư";
-            break;
-        case 4:
-            day_name = "Thứ năm";
-            break;
-        case 5:
-            day_name = "Thứ sáu";
-            break;
-        case 6:
-            day_name = "Thứ bảy";
-    }
 
-    $("#statistical").on('change', () => {
-        let getValue = $('#statistical').val();
-        let chartOD = $("#chartOneDay");
-        let chartOW = $("#chart7day");
-        let chartOM = $("#chart1month");
-        switch (getValue) {
-            case "toDay":
-                chartOD.css('display', 'block');
-                chartOW.css('display', 'none');
-                chartOM.css('display', 'none');
-                chartToDay();
+
+
+        let order = new Order();
+        let user = new User();
+
+        let dayyy = new Date().getDate();
+        let todayNow = new Date().getDay();
+        let day_name = "";
+        switch (todayNow) {
+            case 0:
+                day_name = "Chủ nhật";
                 break;
-            case "sevenDay" :
-                chartOD.css('display', 'none');
-                chartOM.css('display', 'none');
-                chartOW.css('display', 'block');
-                chartSevenDay();
+            case 1:
+                day_name = "Thứ hai";
                 break;
-            case "oneMonth" :
-                chartOW.css('display', 'none');
-                chartOD.css('display', 'none');
-                chartOM.css('display', 'block');
-                chartOneMonth();
+            case 2:
+                day_name = "Thứ ba";
                 break;
-            default :
-                alert("hazz")
+            case 3:
+                day_name = "Thứ tư";
+                break;
+            case 4:
+                day_name = "Thứ năm";
+                break;
+            case 5:
+                day_name = "Thứ sáu";
+                break;
+            case 6:
+                day_name = "Thứ bảy";
         }
-    })
 
-    $("#quantityNR").on('change', () => {
-        let getValue = $('#quantityNR').val();
-        let chartOD = $("#chartQuantity1day");
-        let chartOW = $("#chartQuantity1week");
-        let chartOM = $("#chartQuantity1month");
-        switch (getValue) {
-            case "toDay":
-                chartOD.css('display', 'block');
-                chartOW.css('display', 'none');
-                chartOM.css('display', 'none');
-                chartQuantityNR1Day();
-                break;
-            case "sevenDay" :
-                chartOD.css('display', 'none');
-                chartOM.css('display', 'none');
-                chartOW.css('display', 'block');
-                chartQuantityNR1Week();
-                break;
-            case "oneMonth" :
-                chartOW.css('display', 'none');
-                chartOD.css('display', 'none');
-                chartOM.css('display', 'block');
-                chartQuantityNR1Month();
-                break;
-            default :
-                alert("hazz")
-        }
-    })
-
-    function chartToDay() {
-
-        $.ajax({
-            headers:
-                {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-            type: "GET",
-            url: "http://localhost:8080/api/orders/chartOneDay",
-        }).done((data) => {
-            let total = data;
-            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-            let chartOneDay = document.getElementById("chartOneDay").getContext('2d');
-            let chartStatus = Chart.getChart("chartOneDay");
-            if (chartStatus !== undefined) {
-                chartStatus.destroy();
+        $("#statistical").on('change', () => {
+            let getValue = $('#statistical').val();
+             let chartOD = $("#chartOneDay");
+            let chartOW = $("#chart7day");
+            let chartOM = $("#chart1month");
+            switch (getValue) {
+                case "toDay":
+                    chartOD.css('display', 'block');
+                    chartOW.css('display', 'none');
+                    chartOM.css('display', 'none');
+                    chartToDay();
+                    break;
+                case "sevenDay" :
+                    chartOD.css('display', 'none');
+                    chartOM.css('display', 'none');
+                    chartOW.css('display', 'block');
+                    chartSevenDay();
+                    break;
+                case "oneMonth" :
+                    chartOW.css('display', 'none');
+                    chartOD.css('display', 'none');
+                    chartOM.css('display', 'block');
+                    chartOneMonth();
+                    break;
+                default :
+                    alert("hazz")
             }
-            let chartDataSell = {
-                labels: [day_name + " / " + dayyy],
-                datasets: [
+        })
+
+        $("#quantityNR").on('change', () => {
+            let getValue = $('#quantityNR').val();
+            let chartOD = $("#chartQuantity1day");
+            let chartOW = $("#chartQuantity1week");
+            let chartOM = $("#chartQuantity1month");
+            switch (getValue) {
+                case "toDay":
+                    chartOD.css('display', 'block');
+                    chartOW.css('display', 'none');
+                    chartOM.css('display', 'none');
+                    chartQuantityNR1Day();
+                    break;
+                case "sevenDay" :
+                    chartOD.css('display', 'none');
+                    chartOM.css('display', 'none');
+                    chartOW.css('display', 'block');
+                    chartQuantityNR1Week();
+                    break;
+                case "oneMonth" :
+                    chartOW.css('display', 'none');
+                    chartOD.css('display', 'none');
+                    chartOM.css('display', 'block');
+                    chartQuantityNR1Month();
+                    break;
+                default :
+                    alert("hazz")
+            }
+        })
+
+        function chartToDay() {
+
+            $.ajax({
+                headers:
                     {
-                        label: 'Bún',
-                        data: [total],
-                        backgroundColor: colors[4],
-                        barThickness: 100,
-                    }
-                ]
-            };
-            if (chartOneDay) {
-                new Chart(chartOneDay, {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                type: "GET",
+                url: "http://localhost:8080/api/orders/chartOneDay",
+            }).done((data) => {
+                let total = data;
+                let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+                let chartOneDay = document.getElementById("chartOneDay").getContext('2d');
+                let chartStatus = Chart.getChart("chartOneDay");
+                if (chartStatus !== undefined) {
+                    chartStatus.destroy();
+                }
+                let chartDataSell = {
+                    labels: [day_name + " / " + dayyy],
+                    datasets: [
+                        {
+                            label: 'Bún',
+                            data: [total],
+                            backgroundColor: colors[4],
+                            barThickness: 100,
+                        }
+                    ]
+                };
+                if (chartOneDay) {
+                    new Chart(chartOneDay, {
+                        type: 'bar',
+                        data: chartDataSell,
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: 0.4,
+                                    categoryPercentage: 0.5,
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: false
+                                    }
+                                }]
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+                }
+            }).fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+        }
+
+        chartToDay();
+
+        function chartSevenDay() {
+
+            $.ajax({
+                headers: {
+                    'accept': "application/json",
+                    'content-type': "application/json"
+                },
+                type: 'GET',
+                url: "http://localhost:8080/api/orders/chartSevenDay"
+            }).done((data) => {
+                let days = [];
+                let total = [];
+                $.each(data, (i, orderSD) => {
+                    // console.log(orderSD, "order7day")
+                    total.push(orderSD.grandTotal)
+                    days.push(moment(orderSD.createdAt).date());
+                })
+                let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+                let chart7day = document.getElementById("chart7day").getContext('2d');
+                let chartStatus = Chart.getChart("chart7day");
+                if (chartStatus !== undefined) {
+                    chartStatus.destroy();
+                }
+                myChart = new Chart(chart7day, {
                     type: 'bar',
-                    data: chartDataSell,
+                    data: {
+                        labels: [...days],
+                        datasets: [
+                            {
+                                label: 'Bún',
+                                data: [...total],
+                                backgroundColor: colors[4],
+                                barThickness: 50,
+                            }
+                        ]
+                    },
                     options: {
                         scales: {
                             xAxes: [{
@@ -313,500 +416,592 @@
                             display: false
                         }
                     }
+                })
+
+            }).fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+        }
+
+        // chartSevenDay();
+
+        function chartOneMonth() {
+            $.ajax({
+                headers: {
+                    'accept': "application/json",
+                    'content-type': "application/json"
+                },
+                type: 'GET',
+                url: "http://localhost:8080/api/orders/chartOneMonth"
+            }).done((data) => {
+                let days = [];
+                let total = [];
+                $.each(data, (i, orderSD) => {
+                    // console.log(orderSD, "order7day")
+                    total.push(orderSD.grandTotal)
+                    days.push(moment(orderSD.createdAt).date());
+                })
+                let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+                let chart7day = document.getElementById("chart1month").getContext('2d');
+                let chartStatus = Chart.getChart("chart1month");
+                if (chartStatus !== undefined) {
+                    chartStatus.destroy();
+                }
+                myChart = new Chart(chart7day, {
+                    type: 'bar',
+                    data: {
+                        labels: [...days],
+                        datasets: [
+                            {
+                                label: 'Bún',
+                                data: [...total],
+                                backgroundColor: colors[4],
+                                barThickness: 50,
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                barPercentage: 0.4,
+                                categoryPercentage: 0.5,
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                })
+
+            }).fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+        }
+
+        // chartOneMonth();
+
+        function chartQuantityNR1Day() {
+            let customer = 'customer';
+            let purchase = "purchase";
+            let rices = 0;
+            let noodles = 0;
+            getQuantityNoodle1d(customer).then((noodle) => {
+                noodles = noodle;
+            })
+            getQuantityNoodle1d(purchase).then((rice) => {
+                rices = rice;
+            })
+            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+            let chartOneDay = document.getElementById("chartQuantity1day").getContext('2d');
+            let chartStatus = Chart.getChart("chartQuantity1day");
+            if (chartStatus !== undefined) {
+                chartStatus.destroy();
+            }
+            let chartDataSell = {
+                labels: [day_name + " / " + dayyy],
+                datasets: [
+                    {
+                        label: 'Bún',
+                        data: [noodles],
+                        backgroundColor: colors[2],
+                        maxBarThickness: 70,
+                    },
+                    {
+                        label: 'Gạo',
+                        data: [rices],
+                        backgroundColor: colors[3],
+                        maxBarThickness: 70,
+                    }
+                ]
+            };
+            if (chartOneDay) {
+                new Chart(chartOneDay, {
+                    type: 'bar',
+                    data: chartDataSell,
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                barPercentage: 0.4,
+                                categoryPercentage: 0.5,
+                            }],
+
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
                 });
             }
-        }).fail((jqXHR) => {
-            console.log(jqXHR)
-        })
-    }
-
-    chartToDay();
-
-    function chartSevenDay() {
-
-        $.ajax({
-            headers: {
-                'accept': "application/json",
-                'content-type': "application/json"
-            },
-            type: 'GET',
-            url: "http://localhost:8080/api/orders/chartSevenDay"
-        }).done((data) => {
-            let days = [];
-            let total = [];
-            $.each(data, (i, orderSD) => {
-                // console.log(orderSD, "order7day")
-                total.push(orderSD.grandTotal)
-                days.push(moment(orderSD.createdAt).date());
-            })
-            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-            let chart7day = document.getElementById("chart7day").getContext('2d');
-            let chartStatus = Chart.getChart("chart7day");
-            if (chartStatus !== undefined) {
-                chartStatus.destroy();
-            }
-            myChart = new Chart(chart7day, {
-                type: 'bar',
-                data: {
-                    labels: [...days],
-                    datasets: [
-                        {
-                            label: 'Bún',
-                            data: [...total],
-                            backgroundColor: colors[4],
-                            barThickness: 50,
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            barPercentage: 0.4,
-                            categoryPercentage: 0.5,
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: false
-                            }
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            })
-
-        }).fail((jqXHR) => {
-            console.log(jqXHR)
-        })
-    }
-
-    // chartSevenDay();
-
-    function chartOneMonth() {
-        $.ajax({
-            headers: {
-                'accept': "application/json",
-                'content-type': "application/json"
-            },
-            type: 'GET',
-            url: "http://localhost:8080/api/orders/chartOneMonth"
-        }).done((data) => {
-            let days = [];
-            let total = [];
-            $.each(data, (i, orderSD) => {
-                // console.log(orderSD, "order7day")
-                total.push(orderSD.grandTotal)
-                days.push(moment(orderSD.createdAt).date());
-            })
-            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-            let chart7day = document.getElementById("chart1month").getContext('2d');
-            let chartStatus = Chart.getChart("chart1month");
-            if (chartStatus !== undefined) {
-                chartStatus.destroy();
-            }
-            myChart = new Chart(chart7day, {
-                type: 'bar',
-                data: {
-                    labels: [...days],
-                    datasets: [
-                        {
-                            label: 'Bún',
-                            data: [...total],
-                            backgroundColor: colors[4],
-                            barThickness: 50,
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            barPercentage: 0.4,
-                            categoryPercentage: 0.5,
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: false
-                            }
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            })
-
-        }).fail((jqXHR) => {
-            console.log(jqXHR)
-        })
-    }
-
-    // chartOneMonth();
-
-    function chartQuantityNR1Day() {
-        let customer = 'customer';
-        let purchase = "purchase";
-        let rices = 0;
-        let noodles = 0;
-        getQuantityNoodle1d(customer).then((noodle) => {
-            noodles = noodle;
-        })
-        getQuantityNoodle1d(purchase).then((rice) => {
-            rices = rice;
-        })
-        let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-        let chartOneDay = document.getElementById("chartQuantity1day").getContext('2d');
-        let chartStatus = Chart.getChart("chartQuantity1day");
-        if (chartStatus !== undefined) {
-            chartStatus.destroy();
         }
-        let chartDataSell = {
-            labels: [day_name + " / " + dayyy],
-            datasets: [
-                {
-                    label: 'Bún',
-                    data: [noodles],
-                    backgroundColor: colors[2],
-                    maxBarThickness: 70,
-                },
-                {
-                    label: 'Gạo',
-                    data: [rices],
-                    backgroundColor: colors[3],
-                    maxBarThickness: 70,
-                }
-            ]
-        };
-        if (chartOneDay) {
-            new Chart(chartOneDay, {
-                type: 'bar',
-                data: chartDataSell,
-                options: {
-                    scales: {
-                        xAxes: [{
-                            barPercentage: 0.4,
-                            categoryPercentage: 0.5,
-                        }],
 
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            });
-        }
-    }
+        chartQuantityNR1Day();
 
-    chartQuantityNR1Day();
-
-    function chartQuantityNR1Week() {
-        let customer = 'customer';
-        let purchase = "purchase";
-        let daysN = [];
-        let quantityN = [];
-        let daysR = [];
-        let quantityR = [];
-        getQuantityNoodle1Week(customer).then((noodle) => {
-            $.each(noodle, (i, itemNoodle) => {
-                daysN.push(moment(itemNoodle.createdAt).date());
-                quantityN.push(itemNoodle.quantity);
-            })
-        })
-        getQuantityNoodle1Week(purchase).then((rice) => {
-            $.each(rice, (i, itemRice) => {
-                daysR.push(moment(itemRice.createdAt).date());
-                quantityR.push(itemRice.quantity);
-            })
-        })
-        let myDay = daysR.concat(daysN);
-        let mySet = new Set(myDay);
-        let result = Array.from(mySet).sort();
-        let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-        let chartOneDay = document.getElementById("chartQuantity1week").getContext('2d');
-        let chartStatus = Chart.getChart("chartQuantity1week");
-        if (chartStatus !== undefined) {
-            chartStatus.destroy();
-        }
-        let chartDataSell = {
-            labels: [...result],
-            datasets: [
-                {
-                    label: 'Bún',
-                    data: [...quantityN],
-                    backgroundColor: colors[2],
-                    maxBarThickness: 70,
-                },
-                {
-                    label: 'Gạo',
-                    data: [...quantityR],
-                    backgroundColor: colors[3],
-                    maxBarThickness: 70,
-                }
-            ]
-        };
-        if (chartOneDay) {
-            new Chart(chartOneDay, {
-                type: 'bar',
-                data: chartDataSell,
-                options: {
-                    scales: {
-                        xAxes: [{
-                            barPercentage: 0.4,
-                            categoryPercentage: 0.5,
-                        }],
-
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            });
-        }
-    }
-
-    // chartQuantityNR1Week();
-
-    function chartQuantityNR1Month() {
-        let customer = 'customer';
-        let purchase = "purchase";
-        let daysN = [];
-        let quantityN = [];
-        let daysR = [];
-        let quantityR = [];
-        getQuantityNoodle1Month(customer).then((noodle) => {
-            $.each(noodle, (i, itemNoodle) => {
-                daysN.push(moment(itemNoodle.createdAt).date());
-                quantityN.push(itemNoodle.quantity);
-            })
-        })
-        getQuantityNoodle1Month(purchase).then((rice) => {
-            $.each(rice, (i, itemRice) => {
-                daysR.push(moment(itemRice.createdAt).date());
-                quantityR.push(itemRice.quantity);
-            })
-        })
-        let myDay = daysR.concat(daysN);
-        let mySet = new Set(myDay);
-        let result = Array.from(mySet);
-        let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
-        let chartOneDay = document.getElementById("chartQuantity1month").getContext('2d');
-        let chartStatus = Chart.getChart("chartQuantity1month");
-        if (chartStatus !== undefined) {
-            chartStatus.destroy();
-        }
-        let chartDataSell = {
-            labels: [...result],
-            datasets: [
-                {
-                    label: 'Bún',
-                    data: [...quantityN],
-                    backgroundColor: colors[2],
-                    maxBarThickness: 70,
-                },
-                {
-                    label: 'Gạo',
-                    data: [...quantityR],
-                    backgroundColor: colors[3],
-                    maxBarThickness: 70,
-                }
-            ]
-        };
-        if (chartOneDay) {
-            new Chart(chartOneDay, {
-                type: 'bar',
-                data: chartDataSell,
-                options: {
-                    scales: {
-                        xAxes: [{
-                            barPercentage: 0.4,
-                            categoryPercentage: 0.5,
-                        }],
-
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            });
-        }
-    }
-
-
-    function getQuantityNoodle1d(type) {
-        return (
-            $.ajax({
-                headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
-                },
-                async: false,
-                type: "GET",
-                url: "http://localhost:8080/api/order-items/chartQuantityNoodleOD/" + type,
-            }).done((data) => {
-            }).fail((jxHQR) => {
-                console.log(jxHQR)
-            })
-        )
-
-    }
-
-    function getQuantityNoodle1Week(type) {
-        return (
-            $.ajax({
-                headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
-                },
-                async: false,
-                type: "GET",
-                url: "http://localhost:8080/api/order-items/chartQuantityNoodleOW/" + type,
-            }).done((data) => {
-            }).fail((jxHQR) => {
-                console.log(jxHQR)
-            })
-        )
-
-    }
-
-    function getQuantityNoodle1Month(type) {
-        return (
-            $.ajax({
-                headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
-                },
-                async: false,
-                type: "GET",
-                url: "http://localhost:8080/api/order-items/chartQuantityNoodleOM/" + type,
-            }).done((data) => {
-            }).fail((jxHQR) => {
-                console.log(jxHQR)
-            })
-        )
-
-    }
-
-
-    function getOrderCus() {
-        return $.ajax({
-            headers: {
-                'accept': "application/json",
-                'content-type': "application/json"
-            },
-            async: false,
-            type: "GET",
-            url: "http://localhost:8080/api/orders/exports"
-        }).done((data) => {
-            let doanhSo = 0;
-            let donban = 0;
-            order = data;
-            $.each(order, (i, item) => {
-                doanhSo += item.grandTotal;
-                donban = order.length;
-            })
-            let ds = `<h4><b>${new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(doanhSo)}</b></h4>`;
-            let db = `<h4><b>${donban}</b></h4>`;
-            $("#doanhSo").prepend(ds);
-            $("#donXuat").prepend(db);
-        }).fail((jqXHR) => {
-            console.log(jqXHR)
-        })
-    }
-
-    getOrderCus();
-
-    function getOrderSup() {
-        return $.ajax({
-            headers: {
-                'accept': "application/json",
-                'content-type': "application/json"
-            },
-            async: false,
-            type: "GET",
-            url: "http://localhost:8080/api/orders/imports"
-        }).done((data) => {
-            console.log(data,  "dataa")
-            let donNhap = 0;
-            order = data;
-            donNhap = order.length;
-            let str = `<h4><b>${donNhap}</b></h4>`;
-            $('#donNhap').prepend(str);
-        }).fail((jqXHR) => {
-            console.log(jqXHR)
-        })
-    }
-
-    getOrderSup();
-
-
-    function loadDebt() {
-        return (
-            $.ajax({
-                headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
-                },
-                type: "GET",
-                async: false,
-                url: "http://localhost:8080/api/paymentCustomer/paymentCus",
-            }).done((data) => {
-                let totalDebt = 0;
-                $.each(data, (i, user) => {
-                    let avatar ;
-                    let name ;
-                    totalDebt += user.paid;
-                    getUserById(user.id).then((userPayment)=>{
-                        name = userPayment.fullName;
-                        avatar = userPayment.avatarUrl;
-
-                        let str = `
-                        <div id="tr_${user.id}" style="width: 110px ; " class=" col-sm-4">
-                           <div class="card text-center">
-                              <img height="110" src="  ${avatar}"class="card-img-top" alt="avatar">
-                            <div class=" ">
-                              <h5 class="mt-2 mb-2">${name}</h5>
-                              <p>Nợ : <span>${new Intl.NumberFormat('vi-vn').format(user.paid)}</span></p>
-                              <p>Ngày <br> <span>${moment(user.createdAt).format("DD/MM/YYYY")}</span></p>
-                            </div>
-                         </div>
-                       </div>
-                      `;
-                        $("#userDebt").prepend(str)
-                    })
+        function chartQuantityNR1Week() {
+            let customer = 'customer';
+            let purchase = "purchase";
+            let daysN = [];
+            let quantityN = [];
+            let daysR = [];
+            let quantityR = [];
+            getQuantityNoodle1Week(customer).then((noodle) => {
+                $.each(noodle, (i, itemNoodle) => {
+                    daysN.push(moment(itemNoodle.createdAt).date());
+                    quantityN.push(itemNoodle.quantity);
                 })
-                let totalDebts =`
-                  <h4><b>${new Intl.NumberFormat("vi-VN",{style : "currency", currency :'VND'}).format(totalDebt)}</b></h4>
-                `;
-                $("#totalDebt").prepend(totalDebts)
-             }).fail((jxHQR) => {
-                console.log(jxHQR)
             })
-        )
-    }
+            getQuantityNoodle1Week(purchase).then((rice) => {
+                $.each(rice, (i, itemRice) => {
+                    daysR.push(moment(itemRice.createdAt).date());
+                    quantityR.push(itemRice.quantity);
+                })
+            })
+            let myDay = daysR.concat(daysN);
+            let mySet = new Set(myDay);
+            let result = Array.from(mySet).sort();
+            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+            let chartOneDay = document.getElementById("chartQuantity1week").getContext('2d');
+            let chartStatus = Chart.getChart("chartQuantity1week");
+            if (chartStatus !== undefined) {
+                chartStatus.destroy();
+            }
+            let chartDataSell = {
+                labels: [...result],
+                datasets: [
+                    {
+                        label: 'Bún',
+                        data: [...quantityN],
+                        backgroundColor: colors[2],
+                        maxBarThickness: 70,
+                    },
+                    {
+                        label: 'Gạo',
+                        data: [...quantityR],
+                        backgroundColor: colors[3],
+                        maxBarThickness: 70,
+                    }
+                ]
+            };
+            if (chartOneDay) {
+                new Chart(chartOneDay, {
+                    type: 'bar',
+                    data: chartDataSell,
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                barPercentage: 0.4,
+                                categoryPercentage: 0.5,
+                            }],
 
-    loadDebt();
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                });
+            }
+        }
+
+        // chartQuantityNR1Week();
+
+        function chartQuantityNR1Month() {
+            let customer = 'customer';
+            let purchase = "purchase";
+            let daysN = [];
+            let quantityN = [];
+            let daysR = [];
+            let quantityR = [];
+            getQuantityNoodle1Month(customer).then((noodle) => {
+                $.each(noodle, (i, itemNoodle) => {
+                    daysN.push(moment(itemNoodle.createdAt).date());
+                    quantityN.push(itemNoodle.quantity);
+                })
+            })
+            getQuantityNoodle1Month(purchase).then((rice) => {
+                $.each(rice, (i, itemRice) => {
+                    daysR.push(moment(itemRice.createdAt).date());
+                    quantityR.push(itemRice.quantity);
+                })
+            })
+            let myDay = daysR.concat(daysN);
+            let mySet = new Set(myDay);
+            let result = Array.from(mySet);
+            let colors = ['#00DD00', '#FF99FF', '#CC66FF', '#FF6600', '#FF3366', '#BFEFFF'];
+            let chartOneDay = document.getElementById("chartQuantity1month").getContext('2d');
+            let chartStatus = Chart.getChart("chartQuantity1month");
+            if (chartStatus !== undefined) {
+                chartStatus.destroy();
+            }
+            let chartDataSell = {
+                labels: [...result],
+                datasets: [
+                    {
+                        label: 'Bún',
+                        data: [...quantityN],
+                        backgroundColor: colors[2],
+                        maxBarThickness: 70,
+                    },
+                    {
+                        label: 'Gạo',
+                        data: [...quantityR],
+                        backgroundColor: colors[3],
+                        maxBarThickness: 70,
+                    }
+                ]
+            };
+            if (chartOneDay) {
+                new Chart(chartOneDay, {
+                    type: 'bar',
+                    data: chartDataSell,
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                barPercentage: 0.4,
+                                categoryPercentage: 0.5,
+                            }],
+
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                });
+            }
+        }
 
 
-    function getUserById(userId) {
-        return (
+        function getQuantityNoodle1d(type) {
+            return (
+                $.ajax({
+                    headers: {
+                        "Accept": 'application/json',
+                        "Content-type": 'application'
+                    },
+                    async: false,
+                    type: "GET",
+                    url: "http://localhost:8080/api/order-items/chartQuantityNoodleOD/" + type,
+                }).done((data) => {
+                }).fail((jxHQR) => {
+                    console.log(jxHQR)
+                })
+            )
+
+        }
+
+        function getQuantityNoodle1Week(type) {
+            return (
+                $.ajax({
+                    headers: {
+                        "Accept": 'application/json',
+                        "Content-type": 'application'
+                    },
+                    async: false,
+                    type: "GET",
+                    url: "http://localhost:8080/api/order-items/chartQuantityNoodleOW/" + type,
+                }).done((data) => {
+                }).fail((jxHQR) => {
+                    console.log(jxHQR)
+                })
+            )
+
+        }
+
+        function getQuantityNoodle1Month(type) {
+            return (
+                $.ajax({
+                    headers: {
+                        "Accept": 'application/json',
+                        "Content-type": 'application'
+                    },
+                    async: false,
+                    type: "GET",
+                    url: "http://localhost:8080/api/order-items/chartQuantityNoodleOM/" + type,
+                }).done((data) => {
+                }).fail((jxHQR) => {
+                    console.log(jxHQR)
+                })
+            )
+
+        }
+
+
+        function getOrderCus() {
+            return $.ajax({
+                headers: {
+                    'accept': "application/json",
+                    'content-type': "application/json"
+                },
+                async: false,
+                type: "GET",
+                url: "http://localhost:8080/api/orders/exports"
+            }).done((data) => {
+                let doanhSo = 0;
+                let donban = 0;
+                order = data;
+                $.each(order, (i, item) => {
+                    doanhSo += item.grandTotal;
+                    donban = order.length;
+                })
+                let ds = `<h4><b>${new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(doanhSo)}</b></h4>`;
+                let db = `<h4><b>${donban}</b></h4>`;
+                $("#doanhSo").prepend(ds);
+                $("#donXuat").prepend(db);
+            }).fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+        }
+
+        getOrderCus();
+
+        function getOrderSup() {
+            return $.ajax({
+                headers: {
+                    'accept': "application/json",
+                    'content-type': "application/json"
+                },
+                async: false,
+                type: "GET",
+                url: "http://localhost:8080/api/orders/imports"
+            }).done((data) => {
+                console.log(data, "dataa")
+                let donNhap = 0;
+                order = data;
+                donNhap = order.length;
+                let str = `<h4><b>${donNhap}</b></h4>`;
+                $('#donNhap').prepend(str);
+            }).fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+        }
+
+        getOrderSup();
+
+
+
+        function chartDebtCus() {
             $.ajax({
                 headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
+                    "accept": "application/json",
+                    "content-type": "application/json"
                 },
-                async : false,
                 type: "GET",
-                url: "http://localhost:8080/api/users/" + userId,
-            }).done((data) => {
-                // showModalUpdateCus(data);
-            }).fail((jxHQR) => {
-                console.log(jxHQR)
+                url: "http://localhost:8080/api/users/getUserByRoleId/" + 2,
+            }).done((data)=> {
+                let debt = [];
+                let name = []
+                $.each(data, (i, userList) => {
+                    // console.log(userList, "user")
+                    let paymentCustomer = 0;
+                    getPaymentByUserid(userList.id).then((payment) => {
+                        $.each(payment, (i, paymentList) => {
+                            paymentCustomer += paymentList.paid;
+                        })
+                    })
+                    let total = 0;
+                    let debts = 0;
+                    getOrderById(userList.id).then((orderItem) => {
+                        $.each(orderItem, (i, orders) => {
+                            total += orders.grandTotal;
+                            debts = total - paymentCustomer;
+
+                        })
+                    })
+                    debt.push(debts)
+                    name.push(userList.fullName)
+                })
+                debt.length = 5;
+                name.length = 5;
+                console.log(debt, "no")
+                let chBar = document.getElementById("chartDebt").getContext('2d');
+                let chartStatus = Chart.getChart("chartDebt");
+                if (chartStatus !== undefined)
+                    chartStatus.destroy();
+                let chartDataPro = {
+                    labels: [...name],
+                    datasets: [
+                        {
+                            label: 'Khách Hàng',
+                            data: [...debt],
+                            backgroundColor: "#FF99FF",
+                            maxBarThickness : 40,
+                        }]
+                };
+                if (chBar) {
+                    new Chart(chBar, {
+                        type: 'bar',
+                        data: chartDataPro,
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: 0.4,
+                                    categoryPercentage: 0.5,
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: false
+                                    }
+                                }]
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+                }
+            }).fail((jqXHR)=>{
+                console.log(jqXHR)
             })
-        )
-    }
+        }
+        chartDebtCus();
+
+        function getOrderById(userId) {
+            return (
+                $.ajax({
+                    headers: {
+                        "Accept": 'application/json',
+                        "Content-type": 'application'
+                    },
+                    type: "GET",
+                    async: false,
+                    url: "http://localhost:8080/api/orders/byIdUser/" + userId,
+                }).done((data) => {
+                    // console.log(data,"data")
+                }).fail((jxHQR) => {
+                    console.log(jxHQR)
+                })
+            )
+        }
+        function getPaymentByUserid(userId) {
+            return (
+                $.ajax({
+                    headers: {
+                        "Accept": 'application/json',
+                        "Content-type": 'application'
+                    },
+                    async: false,
+                    type: "GET",
+                    url: "http://localhost:8080/api/orders/paymentCustomer/" + userId,
+                }).done((data) => {
+                    // console.log(data, "paymentaaa")
+                }).fail((jxHQR) => {
+                    console.log(jxHQR)
+                })
+            )
+
+        }
+
+        function chartDebtSup() {
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/users/getUserByRoleId/" + 3,
+            }).done((data)=> {
+                let debt = [];
+                let name = []
+                $.each(data, (i, userList) => {
+                    // console.log(userList, "user")
+                    let paymentSup =0;
+                    getPaymentSupByUserid(userList.id).then((orderItem) => {
+                        $.each(orderItem, (i, paymentItem) => {
+                            // console.log(paymentItem,"pyment")
+                            paymentSup += paymentItem.paid;
+                        })
+                     })
+                    let total = 0;
+                    let debts = 0;
+                    let totalDebt = 0;
+                    getOrderById(userList.id).then((orderItem) => {
+                        $.each(orderItem, (i, orders) => {
+                            total += orders.grandTotal;
+                            debts = total - paymentSup;
+                            totalDebt += debts;
+
+                         })
+
+                    })
+                    console.log( totalDebt, "total")
+                    debt.push(debts)
+                    name.push(userList.fullName)
+                })
+                let newDebt = debt.filter(function (item){
+                    return (item > 0);
+                }) ;
+
+
+                name.length = newDebt.length;
+                 let chBar = document.getElementById("chartDebtSup").getContext('2d');
+                let chartStatus = Chart.getChart("chartDebtSup");
+                if (chartStatus !== undefined)
+                    chartStatus.destroy();
+                let chartDataPro = {
+                    labels: [...name],
+                    datasets: [
+                        {
+                            label: 'Khách Hàng',
+                            data: [...newDebt],
+                            backgroundColor: "#0000FF",
+                            maxBarThickness : 40,
+                        }]
+                };
+                if (chBar) {
+                    new Chart(chBar, {
+                        type: 'bar',
+                        data: chartDataPro,
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: 0.4,
+                                    categoryPercentage: 0.5,
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: false
+                                    }
+                                }]
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+                }
+            }).fail((jqXHR)=>{
+                console.log(jqXHR)
+            })
+        }
+        chartDebtSup();
+
+        function getPaymentSupByUserid(userId) {
+            return (
+                $.ajax({
+                    headers: {
+                        "Accept": 'application/json',
+                        "Content-type": 'application'
+                    },
+                    async: false,
+                    type: "GET",
+                    url: "http://localhost:8080/api/orders/paymentPurchase/" + userId,
+                }).done((data) => {
+                    // console.log(data, "paymentaaa")
+                }).fail((jxHQR) => {
+                    console.log(jxHQR)
+                })
+            )
+
+        }
+
+
+
 
 </script>
 

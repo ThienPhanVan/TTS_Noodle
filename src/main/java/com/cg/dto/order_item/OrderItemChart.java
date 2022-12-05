@@ -18,5 +18,4 @@ public class OrderItemChart {
     private Instant createdAt;
 
 
-
 }

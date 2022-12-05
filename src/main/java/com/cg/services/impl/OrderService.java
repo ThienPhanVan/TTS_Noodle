@@ -391,6 +391,7 @@ public class OrderService implements IOrderService {
         return orderRepository.chartOneDay();
     }
 
+
     @Override
     public List<OrderResultChart> findOrderOneMonth() {
         return orderRepository.findOrderOneMonth();
@@ -442,7 +443,10 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    @Transactional
+    public BigDecimal totalOrderOneMonth() {
+        return orderRepository.totalOrderOneMonth();
+    }
+     @Transactional
     public PaymentPurchaseResult doPaid(OrderPaid orderPaid) {
 
         Optional<Order> orderOptional = orderRepository.findById(orderPaid.getOrderId());
@@ -496,5 +500,5 @@ public class OrderService implements IOrderService {
 
         }
         return paymentMapper.toDTOS(newPaymentPurchase);
-    }
+     }
 }

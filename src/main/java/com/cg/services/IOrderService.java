@@ -76,6 +76,7 @@ public interface IOrderService {
 
     List<OrderResultDTO> findAllByOrderView();
 
-    PaymentPurchaseResult doPaid(OrderPaid orderPaid);
+     BigDecimal totalOrderOneMonth();
+     PaymentPurchaseResult doPaid(OrderPaid orderPaid);
 
-}
+ }

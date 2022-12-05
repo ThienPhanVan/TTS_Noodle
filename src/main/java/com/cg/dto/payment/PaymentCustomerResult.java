@@ -1,6 +1,6 @@
 package com.cg.dto.payment;
 
-import lombok.Data;
+  import lombok.Data;
 import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 import java.time.Instant;

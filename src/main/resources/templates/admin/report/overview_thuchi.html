@@ -2,152 +2,230 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <th:block th:replace="/layout/script/head :: head"/>
+    <th:block th:replace="/layout/script/head :: head"></th:block>
+    <title>Profit Calculation</title>
 </head>
 
 <body>
+<!-- loader Start -->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Sidebar  -->
-    <th:block th:replace="/layout/sidebar/left_side_bar :: left_side_bar"/>
 
+    <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
-    <th:block th:replace="/layout/topNav/topNav :: topNav"/>
+
+    <div class="iq-top-navbar">
+        <div style="margin-top: 13px;" class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+
+                <h4 class="text-primary">Phiếu Tính Lợi Nhuận</h4>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li class="line-height">
+                        <div class="mr-5">
+                            <label>
+                                <select id="selectDay" class=" text-center">
+                                    <option value="toDay">Hôm Nay</option>
+                                    <option value="sevenDay">7 Ngày Gần Nhất</option>
+                                    <option selected value="oneMonth">1 Tháng</option>
+                                </select>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-primary">
-                                <i class="ri-focus-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Doanh Số</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>500.000đ</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-danger">
-                                <i class="ri-pantone-line"></i>
-                            </div>
-                            <p class="text-secondary">Tiền Bán Hàng</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>1.000.000đ</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-success">
-                                <i class="ri-database-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Số Đơn Hàng</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>45</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-3">
-                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body iq-box-relative">
-                            <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
-                                <i class="ri-pie-chart-2-line"></i>
-                            </div>
-                            <p class="text-secondary">Tiền Nợ</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4><b>123.456đ</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="iq-header-title">
-                                <h4 class="card-title">Customer List</h4>
-                            </div>
-                        </div>
                         <div class="iq-card-body">
-                            <div class="table-responsive">
 
-                                <table id="user-list-table" class="table table-striped table-bordered mt-4"
-                                       role="grid" aria-describedby="user-list-page-info">
-                                    <thead>
-                                    <tr>
-                                        <th>Profile</th>
-                                        <th>Name</th>
-                                        <th>Contact</th>
-                                        <th>Email</th>
-                                        <th>Country</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                            <div id="s3" class="table-responsive">
+                                <table class="table table-striped table-bordered mt-4"
+                                       role="grid"
+                                       aria-describedby="user-list-page-info">
+                                    <thead class="btn-primary">
+
+                                    <tr class="text-center">
+                                        <th>Số TT</th>
+                                        <th>Chi Tiêu</th>
+                                        <th>Số Tiền (đ)</th>
+                                        <th>Ghi Chú</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-
-                                    <tr>
-                                        <td class="text-center"><img class="rounded img-fluid avatar-40"
-                                                                     src="assets/images/user/06.jpg" alt="profile"></td>
-                                        <td>Eric Shun</td>
-                                        <td>+55 25685 256 589</td>
-                                        <td>ericshun@gmail.com</td>
-                                        <td>Brazil</td>
-                                        <td><span class="badge iq-bg-warning">Pending</span></td>
-
-                                        <td class="w-45">
-                                            <div class="flex align-items-center list-user-action">
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="top" title="" data-original-title="Add"
-                                                   href="#"><i class="ri-user-add-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="top" title="" data-original-title="Edit"
-                                                   href="#"><i class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip"
-                                                   data-placement="top" title="" data-original-title="Delete"
-                                                   href="#"><i class="ri-delete-bin-line"></i></a>
-                                            </div>
+                                    <tbody class="text-center">
+                                    <tr id="1" class="item">
+                                        <td class="stt">1</td>
+                                        <td>
+                                            <span>Doanh Số</span>
                                         </td>
+                                        <td id="dso">
+
+                                        </td>
+                                        <td><label>
+                                            <input type="text">
+                                        </label></td>
+                                    </tr>
+                                    <tr id="2" class="item">
+                                        <td class="stt">2</td>
+                                        <td>
+                                            <span>Gạo</span>
+                                        </td>
+                                        <td id="rice">
+
+                                        </td>
+                                        <td><label>
+                                            <input type="text">
+                                        </label></td>
+                                    </tr>
+                                    <tr id="3" class="item">
+                                        <td class="stt">1</td>
+                                        <td>
+                                            <span>Điện</span>
+                                        </td>
+                                        <td id="dien">
+                                            <input type="text">
+                                        </td>
+                                        <td><label>
+                                            <input type="text">
+                                        </label></td>
+                                    </tr><tr id="4" class="item">
+                                        <td class="stt">1</td>
+                                        <td>
+                                            <span>Nước</span>
+                                        </td>
+                                        <td id="nuoc">
+                                            <input type="text">
+                                        </td>
+                                        <td><label>
+                                            <input type="text">
+                                        </label></td>
+                                    </tr><tr id="5" class="item">
+                                        <td class="stt">1</td>
+                                        <td>
+                                            <span>Bột Lọc</span>
+                                        </td>
+                                        <td id="botloc">
+                                            <input type="text">
+                                        </td>
+                                        <td><label>
+                                            <input type="text">
+                                        </label></td>
+                                    </tr><tr id="6" class="item">
+                                        <td class="stt">1</td>
+                                        <td>
+                                            <span>Bao Bì</span>
+                                        </td>
+                                        <td id="baobi">
+                                            <input type="text">
+                                        </td>
+                                        <td><label>
+                                            <input type="text">
+                                        </label></td>
                                     </tr>
                                     </tbody>
                                 </table>
+                                <button id="addRow" class="btn btn-outline-danger">Thêm Ô</button>
+                                <button id="accept" class="btn btn-outline-danger float-right">Xác Nhận</button>
+
                             </div>
 
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+
+
+    <!-- Wrapper END -->
+    <!-- Footer -->
+    <th:block th:replace="/layout/footer/footer.html"></th:block>
+    <!-- Footer END -->
+
 </div>
-<!-- Wrapper END -->
-<!-- Footer -->
-<footer class="iq-footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                TTS-Noodle
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Footer END -->
-<th:block th:replace="/layout/script/footer :: footer"/>
+<!--<script src="/static/assets/js/app.js"></script>-->
+<th:block th:replace="/layout/script/footer :: footer"></th:block>
 
 </body>
 
+<script>
+    let user = new User();
+    let product = new Product();
+    let value = 2;
 
+    let totalOrder;
+
+    function getTotalOrder1Month() {
+        $.ajax({
+            headers: {
+                "Accept": 'application/json',
+                "Content-type": 'application'
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/orders/totalOrderOM",
+        }).done((data) => {
+            // console.log(data, "total")
+            totalOrder = data;
+            let quantityNoodle = totalOrder / 8000;
+            console.log(quantityNoodle, "rice")
+            let quantityRice = quantityNoodle / 2.4;
+            let totalRices = quantityRice * 10000;
+            console.log(totalRices, "totalRie")
+            let str = `
+                 <span>${new Intl.NumberFormat("vi-VN").format(totalOrder)}</span>
+            `;
+            $("#dso").html(str);
+
+            let totalRice = `
+                  <span>${new Intl.NumberFormat("vi-VN", {maximumFractionDigits: 0,}).format(totalRices)}</span>
+                     `;
+            $("#rice").html(totalRice);
+        }).fail((jxHQR) => {
+            console.log(jxHQR)
+        })
+    }
+
+    getTotalOrder1Month();
+
+    console.log(totalOrder, "total")
+
+    function getProductById(productId) {
+        return (
+            $.ajax({
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-type": 'application'
+                },
+                async: false,
+                type: "GET",
+                url: "http://localhost:8080/api/products/" + productId,
+            }).done((data) => {
+                // console.log(data, "1")
+            }).fail((jxHQR) => {
+                console.log(jxHQR)
+            })
+        )
+    }
+
+
+</script>
 </html>

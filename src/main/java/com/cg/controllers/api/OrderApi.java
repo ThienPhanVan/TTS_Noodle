@@ -9,23 +9,16 @@ import com.cg.dto.payment.PaymentResult;
 import com.cg.repositories.model.*;
 
 
-import com.cg.dto.role.RoleResult;
-import com.cg.repositories.model.Order;
-import com.cg.services.impl.*;
+  import com.cg.services.impl.*;
 
-import org.hibernate.sql.Insert;
-import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
+ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -242,9 +235,15 @@ public class OrderApi {
         List<PaymentCustomerResult> listPaymentCustomer = paymentCustomerService.getPaymentByUserId(id);
         return new ResponseEntity<>(listPaymentCustomer, HttpStatus.OK);
     }
-    @PostMapping("/payable")
+
+    @GetMapping("/totalOrderOM")
+    public ResponseEntity<?> totalOrderOM() {
+        return new ResponseEntity<>(orderService.totalOrderOneMonth(), HttpStatus.OK);
+    }
+
+     @PostMapping("/payable")
     public  ResponseEntity<?> doPaid(@RequestBody OrderPaid orderPaid){
 
         return new ResponseEntity<>(orderService.doPaid(orderPaid),HttpStatus.ACCEPTED);
-    }
+     }
 }
