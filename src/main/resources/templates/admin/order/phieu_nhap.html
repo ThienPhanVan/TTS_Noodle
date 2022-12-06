@@ -45,7 +45,7 @@
                                             <div class="dropdown">
                                                 <input style="width: 217px;" class="form-control search" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" id="searchProduct" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <div style="width: 216px" class="dropdown-item" >Vui lòng nhập tên sản phẩm</div>
+                                                    <div style="width: 216px;font-size: 14px;" class="dropdown-item" >Vui lòng nhập tên sản phẩm</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,18 +96,22 @@
                                 </div>
                                 <input class="form-control mt-2" id="dateID" type="datetime-local" min="2022-01-01T13:00" name="dateTime" value="Ngày tạo"/>
                             </div>
-                            <div class="bill_info" style="margin-top: 15px;">
-                                <h5 style="font: initial;font-size: large;">Thông tin thanh toán</h5>
+                            <div class="bill_info" style="margin-top: 20px;">
+                                <h5 style="font: initial;font-size: large;margin-bottom: 7px;">Thông tin thanh toán</h5>
                                 <span style="font: initial;font-size: medium;">Tổng cộng</span>
                                 <span class="grandTotal"></span>
                             </div>
                             <div class="payment_purchase">
-                                <span style="font: initial;font-size: medium;">Tiền trả:</span>
-                                <input class="form-control form-control-sm" type="number" id="cusPayment"/>
-                                <span style="font: initial;font-size: medium;">Còn nợ: </span>
-                                <span class="paid" style="float: right; color: red; font-weight: 600; font-size: 17px"></span>
+                                <div style="margin-bottom: 20px;margin-top: 10px;">
+                                    <span style="font: initial;font-size: medium;">Đã thanh toán:</span>
+                                    <input class="form-control form-control-sm" style="float: right; width: 240px; text-align: right" type="number" id="cusPayment"/>
+                                </div>
+                                <div>
+                                    <span style="font: initial;font-size: medium;">Còn nợ: </span>
+                                    <span class="paid" style="float: right; color: red; font-weight: 600; font-size: 17px"></span>
+                                </div>
                             </div>
-                            <button type="button" id="btnImportOrder" class="btn btn-primary" style="font: initial;font-size: large;">
+                            <button type="button" id="btnImportOrder" class="btn btn-primary" style="font: initial;font-size: large;margin-top: 5px;">
                                 Nhập hàng
                             </button>
 <!--                        </form>-->

@@ -137,6 +137,8 @@
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
 <th:block th:replace="/admin/order/modalChangeStatus :: modalChangeStatus" />
+<th:block th:replace="/admin/order/print_order :: print_order"/>
+
 <script>
 
     let order = new Order();
@@ -190,12 +192,12 @@
                         </th>
                         <th>${obj.createdat}</th>
                         <th>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" id="btnPrint">
                                 <i class="fas fa-print"></i>
                             </button>
                         </th>
               </tr>
-              <tr class="payment_info hide" id="trh_${obj.id}">
+              <tr class="payment_info_${obj.id} hide" id="trh_${obj.id}">
                     <td class="payment_info_tr"  colspan="7">
                          <div class="row collapse" id="trc_${obj.id}">
                             <div class="col-lg-8">
@@ -560,8 +562,7 @@
         .done( (data) => {
             $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("")
             $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).html("")
-            let expanded =  $(this).attr("aria-expanded");
-            console.log(expanded);
+
 
 
             $.each(data, (i,item)=>{
@@ -583,14 +584,8 @@
                 $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(std);
                 doPaid();
             }
-            if (expanded === true){
-                $("#tbListOrder tbody .payment_info").removeClass("show").addClass("hide");
-            }
-
             handleShowHistoryPayment();
             handleShowHistoryPayments();
-
-
         })
         .fail((jqXHR) => {
             console.log(jqXHR);
@@ -715,14 +710,25 @@
             })
             handleClick();
             handleEvent();
+            handleShowPrint();
         })
     }
 
     function handleClick(){
-
         $("#tbListOrder tbody tr.change").on("click", function () {
 
             orderId = $(this).attr('id').replace('tr_', '');
+
+            let expanded =  $(this).attr("aria-expanded");
+            console.log(expanded);
+
+            let rowId = $(`#tbListOrder tbody .payment_info_${orderId}`).val();
+
+            console.log(rowId);
+
+            if (expanded === true) {
+                $(`#tbListOrder tbody .payment_info_${orderId}`).removeClass("show").addClass("hide");
+            }
 
             handleUpdatePayment();
         })
@@ -798,7 +804,9 @@
         $(`#dropdownMenuOffset_${orderId}`).on("click", function (){
 
             paymentOrderId =  $(this).attr("id").replaceAll("dropdownMenuOffset_", "");
+
             console.log(paymentOrderId);
+
             loadAllPayment();
         })
     }
@@ -845,6 +853,11 @@
                 $(".dropdown .dropdown-menu").append(std);
 
             })
+        })
+    }
+    function handleShowPrint(){
+        $("#btnPrint").on("click", function (){
+            window.print();
         })
     }
 
