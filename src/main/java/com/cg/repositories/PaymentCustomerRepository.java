@@ -1,5 +1,6 @@
 package com.cg.repositories;
 
+import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.ListPaymentUser;
 import com.cg.repositories.model.PaymentCustomer;
 import com.cg.repositories.model.User;
@@ -19,4 +20,7 @@ public interface PaymentCustomerRepository extends JpaRepository<PaymentCustomer
 
     @Query(name = "sp_getPaymentUser" , nativeQuery = true)
     List<ListPaymentUser> getPaymentUser();
+
+    @Query(name =  "sp_getChartDebtCus", nativeQuery = true)
+    List<ChartDebt> getChartDebtCus();
 }

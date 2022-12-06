@@ -791,19 +791,14 @@
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/users/getUserByRoleId/" + 2,
+            url: "http://localhost:8080/api/paymentCustomer/chartDebtCus",
         }).done((data) => {
             let debt = [];
             let name = []
             let totalDebtCus = 0;
             $.each(data, (i, userList) => {
                 // console.log(userList, "user")
-                let paymentCustomer = 0;
-                getPaymentByUserid(userList.id).then((payment) => {
-                    $.each(payment, (i, paymentList) => {
-                        paymentCustomer += paymentList.paid;
-                    })
-                })
+                let paymentCustomer = userList.paid;
                 let total = 0;
                 let debts = 0;
                 getOrderById(userList.id).then((orderItem) => {
@@ -813,9 +808,16 @@
                     })
                 })
                 totalDebtCus += debts;
+                console.log(userList.paid, "paidđ")
+                if (debts === 0 ){
+                    userList.fullName = ""
+                }
+                else {
+                    debt.push(debts)
+                    name.push(userList.fullName)
+                }
+                console.log(debts,"debttt")
 
-                debt.push(debts)
-                name.push(userList.fullName)
             })
             debt.length = 5;
             name.length = 5;
@@ -830,7 +832,7 @@
                     {
                         label: 'Khách Hàng',
                         data: [...debt],
-                        backgroundColor: "#FF99FF",
+                        backgroundColor: "#32CD32",
                         maxBarThickness: 40,
                     }]
             };
@@ -913,20 +915,14 @@
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/users/getUserByRoleId/" + 3,
+            url: "http://localhost:8080/api/paymentPurchase/chartDebtSup",
         }).done((data) => {
             let debt = [];
             let name = [];
             let totalDebtSup = 0;
             $.each(data, (i, userList) => {
                 console.log(userList, "user")
-                let paymentSup = 0;
-                getPaymentSupByUserid(userList.id).then((orderItem) => {
-                    $.each(orderItem, (i, paymentItem) => {
-                        // console.log(paymentItem,"pyment")
-                        paymentSup += paymentItem.paid;
-                    })
-                })
+                let paymentSup = userList.paid;
                 let total = 0;
                 let debts = 0;
                 let totalDebt = 0;
@@ -935,14 +931,20 @@
                         total += orders.grandTotal;
                         debts = total - paymentSup;
                         totalDebt += debts;
-
                     })
 
                 })
                 totalDebtSup += debts;
 
-                debt.push(debts)
-                name.push(userList.fullName)
+                if (debts === 0 ){
+                    userList.fullName = ""
+                }
+                else {
+                    debt.push(debts)
+                    name.push(userList.fullName)
+                }
+                // debt.push(debts)
+                // name.push(userList.fullName)
             })
             console.log(debt, "total")
             console.log(name, "name")
@@ -1001,24 +1003,6 @@
 
     chartDebtSup();
 
-    function getPaymentSupByUserid(userId) {
-        return (
-            $.ajax({
-                headers: {
-                    "Accept": 'application/json',
-                    "Content-type": 'application'
-                },
-                async: false,
-                type: "GET",
-                url: "http://localhost:8080/api/orders/paymentPurchase/" + userId,
-            }).done((data) => {
-                // console.log(data, "paymentaaa")
-            }).fail((jxHQR) => {
-                console.log(jxHQR)
-            })
-        )
-
-    }
 
 
 </script>

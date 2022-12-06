@@ -1,5 +1,6 @@
 package com.cg.services;
 
+import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.ListPaymentUser;
 import com.cg.dto.payment.PaymentCustomerResult;
 
@@ -13,4 +14,7 @@ public interface IPaymentCustomerService {
     List<PaymentCustomerResult> getPaymentByUserId(Long id);
 
     List<ListPaymentUser> getPaymentUser();
+
+    List<ChartDebt> getChartDebtCus();
+
 }

@@ -1,6 +1,8 @@
 package com.cg.repositories.model;
 
 
+import com.cg.dto.order.OrderResultChart;
+import com.cg.dto.payment.ChartDebt;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,30 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
+
+@NamedNativeQuery(
+        name = "sp_getChartDebtSup",
+        query =
+                "call sp_chartDebtSup()",
+        resultSetMapping = "result_getChartDebtSup"
+)
+@NamedNativeQuery(
+        name = "sp_getChartDebtCus",
+        query =
+                "call sp_chartDebtCus()",
+        resultSetMapping = "result_getChartDebtSup"
+)
+@SqlResultSetMapping(
+        name = "result_getChartDebtSup",
+        classes = @ConstructorResult(
+                targetClass = ChartDebt.class,
+                columns = {
+                        @ColumnResult(name = "id", type = Long.class),
+                        @ColumnResult(name = "fullName", type = String.class),
+                        @ColumnResult(name = "paid", type = BigDecimal.class)
+                }
+        )
+)
 
 @Data
 @NoArgsConstructor

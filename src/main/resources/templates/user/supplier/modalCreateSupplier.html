@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="createSupplier">
-    <div class="modal fade" id="modalCreateSupplier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg ">
+    <div class="modal fade" id="modalCreateSupplier" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tạo Khách Hàng</h5>
+                    <h5 class="modal-title text-primary" id="exampleModalLabel">Tạo Khách Hàng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -15,30 +16,26 @@
 
                     <form class="" id="frmCreateSup">
                         <div class="form-row">
-                                <div class="form-group col-sm-6 ">
-                                    <label for="nameSup">Tên Khách Hàng</label>
-                                    <input type="text" class="form-control" name="nameSup" id="nameSup"
-                                           placeholder="Nguyễn Văn A">
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                    <label class="label" for="nameSup">Tên Khách Hàng</label>
+                                    <input type="text" class="form-control" name="nameSup" id="nameSup">
                                 </div>
-                                <div class="form-group col-sm-6  ">
-                                    <label for="emailSup">Email</label>
-                                    <input type="text" class="form-control" name="emailSup" id="emailSup"
-                                           placeholder="24 Nguyễn Tri Phương">
+                                <div class="form-group  ">
+                                    <label class="label" for="emailSup">Email</label>
+                                    <input type="text" class="form-control" name="emailSup" id="emailSup">
                                 </div>
-                                <div class="form-group col-sm-6 ">
-                                    <label for="phoneSup">Điện Thoại</label>
-                                    <input type="tel" class="form-control" name="phoneSup" id="phoneSup"
-                                           placeholder="0123456789">
+                                <div class="form-group  ">
+                                    <label class="label" for="phoneSup">Điện Thoại</label>
+                                    <input type="tel" class="form-control" name="phoneSup" id="phoneSup">
                                 </div>
-                                <div class="form-group col-sm-6 ">
-                                    <label for="addressSup">Địa Chỉ</label>
-                                    <input type="text" class="form-control" name="addressSup" id="addressSup"
-                                           placeholder="24 Nguyễn Tri Phương">
+                                <div class="form-group  ">
+                                    <label class="label" for="addressSup">Địa Chỉ</label>
+                                    <input type="text" class="form-control" name="addressSup" id="addressSup">
                                 </div>
+                            </div>
                         </div>
                     </form>
-
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                         <button type="button" id="btnCreateSup" class="btn btn-primary">Thêm Mới</button>

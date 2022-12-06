@@ -1,17 +1,16 @@
 package com.cg.services;
 
-import com.cg.dto.order.OrderResult;
 import com.cg.dto.userDTO.CreateUserParam;
 import com.cg.dto.userDTO.UpdateUserParam;
 import com.cg.dto.userDTO.UserResult;
 import com.cg.repositories.model.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 
-public interface IUserService  {
+public interface IUserService extends UserDetailsService {
 
     List<UserResult> findAll ();
 
@@ -37,4 +36,7 @@ public interface IUserService  {
     List<UserResult> findAllByFullNameOrPhone(String keyword);
 
 
-}
+    User getByUsername(String username);
+
+     User saves(User user);
+ }

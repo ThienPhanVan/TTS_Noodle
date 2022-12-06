@@ -46,3 +46,11 @@
 .test{
    text-align: center;
 }
+
+.label{
+    color: black;
+}
+
+.label + input{
+    font-size: 18px;
+}

@@ -1,6 +1,7 @@
 package com.cg.services.impl;
 
 import com.cg.dto.order.OrderResult;
+import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.ListPaymentUser;
 import com.cg.dto.payment.PaymentCustomerResult;
 import com.cg.mapper.PaymentCustomerMapper;
@@ -36,5 +37,10 @@ public class PaymentCustomerService implements IPaymentCustomerService {
     @Override
     public List<ListPaymentUser> getPaymentUser() {
         return paymentCustomerRepository.getPaymentUser();
+    }
+
+    @Override
+    public List<ChartDebt> getChartDebtCus() {
+        return paymentCustomerRepository.getChartDebtCus();
     }
 }

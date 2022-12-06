@@ -1,27 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>FinDash - Responsive Bootstrap 4 Admin Dashboard Template</title>
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="/assets/images/favicon.ico" />
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-  <!-- Typography CSS -->
-  <link rel="stylesheet" href="/assets/css/typography.css">
-  <!-- Style CSS -->
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <!-- Responsive CSS -->
-  <link rel="stylesheet" href="/assets/css/responsive.css">
+ <th:block th:replace="/layout/script/head.html"></th:block>
+  <title>Login</title>
+
   <style>
     .boxx {
       position: relative;
       width: 380px;
-      height: 488px;
+      height: 463px;
       border-radius: 8px;
       overflow: hidden;
     }
@@ -94,32 +82,32 @@
         <div class="box1 m-0">
           <div class=" bg-white sign-in-page-data">
             <div class="sign-in-from">
-              <h1 class=" sg mb-0 text-center">Welcome !
+              <h1 class=" sg mb-0 text-center">TTS - NOODLE !
               </h1>
               <img id="nudo" src="https://cdn-icons-png.flaticon.com/512/2082/2082086.png" alt="">
               <form class="mt-4">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control mb-0" id="exampleInputEmail1"
-                         placeholder="Enter email">
+                  <label for="username">UserName</label>
+                  <input type="email" class="form-control mb-0" id="username"/>
+
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <a href="#" class="float-right">Forgot password?</a>
-                  <input type="password" class="form-control mb-0" id="exampleInputPassword1"
-                         placeholder="Password">
+                  <label for="password">Password</label>
+<!--                  <a href="#" class="float-right">Forgot password?</a>-->
+                  <input type="password" class="form-control mb-0" id="password"
+                         >
                 </div>
                 <div class="d-inline-block w-100">
                   <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
                     <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Remember Me</label>
+<!--                    <label class="custom-control-label" for="customCheck1">Remember Me</label>-->
                   </div>
                 </div>
                 <div class="sign-info text-center">
-                  <button type="submit" class="btn btn-primary d-block w-100 mb-2">Sign
+                  <button type="button" id="btnLogin" class="btn btn-primary d-block w-100 mb-2">Sign
                     in</button>
-                  <span class="text-dark dark-color d-inline-block line-height-2">Don't have an
-                                            account? <a href="#">Sign up</a></span>
+<!--                  <span class="text-dark dark-color d-inline-block line-height-2">Don't have an-->
+<!--                                            account? <a href="#">Sign up</a></span>-->
                 </div>
               </form>
             </div>
@@ -136,39 +124,38 @@
 <!-- Sign in END -->
 
 <!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/js/popper.min.js"></script>
-<script src="/assets/js/bootstrap.min.js"></script>
-<!-- Appear JavaScript -->
-<script src="/assets/js/jquery.appear.js"></script>
-<!-- Countdown JavaScript -->
-<script src="/assets/js/countdown.min.js"></script>
-<!-- Counterup JavaScript -->
-<script src="/assets/js/waypoints.min.js"></script>
-<script src="/assets/js/jquery.counterup.min.js"></script>
-<!-- Wow JavaScript -->
-<script src="/assets/js/wow.min.js"></script>
-<!-- Apexcharts JavaScript -->
-<script src="/assets/js/apexcharts.js"></script>
-<!-- lottie JavaScript -->
-<script src="/assets/js/lottie.js"></script>
-<!-- Slick JavaScript -->
-<script src="/assets/js/slick.min.js"></script>
-<!-- Select2 JavaScript -->
-<script src="/assets/js/select2.min.js"></script>
-<!-- Owl Carousel JavaScript -->
-<script src="/assets/js/owl.carousel.min.js"></script>
-<!-- Magnific Popup JavaScript -->
-<script src="/assets/js/jquery.magnific-popup.min.js"></script>
-<!-- Smooth Scrollbar JavaScript -->
-<script src="/assets/js/smooth-scrollbar.js"></script>
-<!-- Style Customizer -->
-<script src="/assets/js/style-customizer.js"></script>
-<!-- Chart Custom JavaScript -->
-<script src="/assets/js/chart-custom.js"></script>
-<!-- Custom JavaScript -->
-<script src="/assets/js/custom.js"></script>
+<th:block th:replace="/layout/script/footer.html"></th:block>
 </body>
 
+<script>
+
+  let btnSignIn = $("#btnLogin");
+  btnSignIn.on('click', () => {
+
+    let account = {
+      "username" : $("#username").val(),
+      "password" : $("#password").val()
+    }
+
+    $.ajax({
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      },
+      type: 'POST',
+      url: "http://localhost:8080/api/auth/login",
+      data: JSON.stringify(account)
+    }).done((data) => {
+      console.log(data)
+      App.iziToast.showSuccessAlert("Đăng Nhập Thành Công")
+      setTimeout(() => {
+        location.href = "/home";
+      }, 1000);
+    }).fail((jqXHR) => {
+     App.iziToast.showErrorAlert("Tài Khoản & Mật Khẩu Không Đúng !")
+    })
+
+  })
+
+</script>
 </html>

@@ -1,8 +1,6 @@
 package com.cg.repositories.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -29,4 +27,5 @@ public class Role {
     public Role(long id) {
         this.id = id;
     }
+
 }
