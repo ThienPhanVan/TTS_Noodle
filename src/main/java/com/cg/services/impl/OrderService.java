@@ -540,7 +540,7 @@ public class OrderService implements IOrderService {
         //kiem tra order ton tai
 
         if (!orderOpt.isPresent())
-            System.out.println("tu xu");
+            System.out.println("Id khách hàng không tồn tại!");
         //throw
         Order order = orderOpt.get();
         BigDecimal grandTotal =order.getGrandTotal();
@@ -557,7 +557,6 @@ public class OrderService implements IOrderService {
 //            newAmount = newAmount.add(amount);
 //        }
         BigDecimal newTotal = newwTotal.add(paid);
-
         PaymentCustomer newPaymentCustomer = new PaymentCustomer();
 //        if (grandTotal.compareTo(newTotal) > 0) {
 //
@@ -572,10 +571,9 @@ public class OrderService implements IOrderService {
 //
 //        }
         if (grandTotal.compareTo(newTotal) < 0) {
-            throw new DataInputException("Lỗi hệ thống vui lòng liên hệ quản trị viên!!");
+            throw new DataInputException("Vui lòng nhập đúng số tiền cần trả!!");
         }
         if (grandTotal.compareTo(newTotal) == 0) {
-
             order.setOrderStatus(OrderStatus.COMPLETED);
 
 //            newPaymentCustomer.setUserId(userId);
@@ -585,7 +583,6 @@ public class OrderService implements IOrderService {
 //            paymentCustomerRepository.save(newPaymentCustomer);
 //
 //            return paymentMapper.toDTO(newPaymentCustomer);
-
         }
         newPaymentCustomer.setUserId(userId);
         newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
