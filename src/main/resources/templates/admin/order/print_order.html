@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en" >
+<th:block th:fragment="print_order">
+    <div class="container print" id="showPrint">
+    <div class="text-center mt-3">TTS Noodles
+        <div class="my-3">Địa chỉ : Số 28 Nguyễn Tri Phương</div>
+        <div class="fw-bold">Điện thoại: 0363636366</div>
+    </div>
+
+    <div class="text-center mt-2 fw-bold"><h1>HÓA ĐƠN NHẬP HÀNG</h1></div>
+    <div class="row mt-4">
+        <div class="col-6">
+            <div id="timeBills" class="fw-bold">Ngày Nhập: <span></span></div>
+            <div id="userBills" class="my-3 fw-bold">Người Nhập: <span></span></div>
+            <div id="timeInput" class="fw-bold">Thời gian vào : <span></span></div>
+        </div>
+        <div class="col-6">
+            <div id="customerBills" class="text-end fw-bold ">Nhà cung cấp: <span></span></div>
+            <div id="timeSendBills" class="text-end fw-bold my-3">Thời gian nhập vào : <span></span></div>
+        </div>
+    </div>
+
+    <div class="border-bottom my-3"></div>
+    <div class="row">
+        <table class="" id="renderBills">
+            <thead>
+            <tr>
+                <th class="text-start">Tên Sản Phẩm</th>
+                <th class="text-end">Số Lượng</th>
+                <th class="text-end">Giá</th>
+                <th class="text-end">Thành tiền (đ)</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+            <tr class="text-end">
+                <td colspan="3" class="fw-bold">Tổng tiền hàng:</td>
+                <td id="totalBills"></td>
+            </tr>
+            <tr class="text-end">
+                <td colspan="3" class="fw-bold">Tổng cộng:</td>
+                <td id="totalAmountBills"></td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+    <div class="text-center mt-3 fst-italic">!-----TTS Noodles-----!</div>
+</div>
+</th:block>
