@@ -60,9 +60,25 @@ public class OrderApi {
     @GetMapping("/exportsNoodle")
     public ResponseEntity<?> getAllOrderByExportNoodle(){
 
-        List<OrderResultDTO> orderResultList = orderService.findAllByOrderView();
+        List<OrderResultDTOS> orderResultList = orderService.findAllByOrderView();
 
         return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+    }
+
+    @GetMapping("/exportsNoodle/{id}")
+    public ResponseEntity<?> getOrderExportNoodleById(@PathVariable Long id){
+
+        OrderResultDTOS orderResultList = orderService.findAllByOrderViewById(id);
+
+        return new ResponseEntity<>(orderResultList, HttpStatus.OK);
+    }
+
+    @GetMapping("/exportsNoodlePaid/{id}")
+    public ResponseEntity<?> getOrderByIdPaidCustomer(@PathVariable Long id){
+
+        OrderResultPaidDTO orderResultPaidDTO = orderService.findOrderByIdPaidCustomer(id);
+
+        return new ResponseEntity<>(orderResultPaidDTO, HttpStatus.OK);
     }
 
 //    @GetMapping("/exNoodle/{data}")
@@ -151,7 +167,7 @@ public class OrderApi {
 
     @GetMapping("/statusCompleted")
     public ResponseEntity<?> getStatusCompleted() {
-        List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusCompleted();
+        List<OrderResultDTOS> orderResultDTOS = orderService.findAllOrderStatusCompleted();
         return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
     }
 
@@ -165,7 +181,7 @@ public class OrderApi {
 
     @GetMapping("/statusPending")
     public ResponseEntity<?> getStatusPendingCustomer() {
-        List<OrderResultDTO> orderResultDTOS = orderService.findAllOrderStatusPending();
+        List<OrderResultDTOS> orderResultDTOS = orderService.findAllOrderStatusPending();
         return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
     }
     @GetMapping("/pending")
@@ -245,5 +261,13 @@ public class OrderApi {
     public  ResponseEntity<?> doPaid(@RequestBody OrderPaid orderPaid){
 
         return new ResponseEntity<>(orderService.doPaid(orderPaid),HttpStatus.ACCEPTED);
-     }
+
+    }
+
+    @PostMapping("/paymentCustomer")
+    public  ResponseEntity<?> doPaidCustomer(@RequestBody OrderCustomerPaid orderCustomerPaid){
+
+        return new ResponseEntity<>(orderService.doPaidCustomer(orderCustomerPaid),HttpStatus.ACCEPTED);
+    }
+
 }

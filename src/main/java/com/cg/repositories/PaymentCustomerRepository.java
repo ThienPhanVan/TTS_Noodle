@@ -3,6 +3,7 @@ package com.cg.repositories;
 import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.ListPaymentUser;
 import com.cg.repositories.model.PaymentCustomer;
+import com.cg.repositories.model.PaymentPurchase;
 import com.cg.repositories.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,8 @@ import java.util.List;
 public interface PaymentCustomerRepository extends JpaRepository<PaymentCustomer, Long> {
 
     List<PaymentCustomer> findAllByUserId(Long id);
+
+    List<PaymentCustomer> findAllByOrderId(Long orderId);
 
     @Query(name = "sp_getPaymentUser" , nativeQuery = true)
     List<ListPaymentUser> getPaymentUser();

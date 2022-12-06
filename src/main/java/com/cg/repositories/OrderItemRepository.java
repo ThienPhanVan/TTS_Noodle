@@ -59,5 +59,4 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
                 "GROUP BY oi.id"
     )
     List<OrderItemView> findAllOrderView(Long orderId);
-
 }

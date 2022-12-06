@@ -385,7 +385,7 @@ Buttons
 /*--------------*/
 .btn-primary { background: var(--iq-primary); border-color: var(--iq-primary); }
 .btn-secondary { background-color: var(--iq-secondary); border-color: var(--iq-secondary); }
-.btn-success { background-color: var(--iq-success); border-color: var(--iq-success); }
+.btn-success { background-color: #16c170; border-color: var(--iq-success); }
 .btn-danger { background-color: var(--iq-danger); border-color: var(--iq-danger); }
 .btn-warning { background-color: var(--iq-warning); border-color: var(--iq-warning); }
 .btn-info { background-color: var(--iq-info); border-color: var(--iq-info); }

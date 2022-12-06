@@ -2,6 +2,7 @@ package com.cg.services.impl;
 
 
 import com.cg.dto.order.*;
+import com.cg.dto.payment.PaymentCustomerResult;
 import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.exceptions.DataInputException;
 import com.cg.mapper.OrderMapper;
@@ -16,6 +17,7 @@ import com.cg.dto.order.OrderParam;
 import com.cg.dto.order.OrderResult;
 
 import com.cg.mapper.UserMapper;
+import com.cg.mapper.UserMapper;
 
 import com.cg.repositories.ItemRepository;
 import com.cg.repositories.OrderItemRepository;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
@@ -93,7 +96,7 @@ public class OrderService implements IOrderService {
         //Transient
         Order order = orderMapper.toModel(orderParam);
         if (userId != null)
-        order.setUserId(userId);
+            order.setUserId(userId);
         order.setCreatedAt(Instant.now());
         order.setOrderStatus(OrderStatus.PENDING);
         order.setCreatedBy(1L);
@@ -156,14 +159,37 @@ public class OrderService implements IOrderService {
             }
         }
         PaymentCustomer paymentCustomer = new PaymentCustomer();
+
         BigDecimal paymentInput = orderParam.getPaid();
+        BigDecimal newTotal = new BigDecimal(0);
         BigDecimal totalAmount = grandTotal.subtract(paymentInput);
         paymentCustomer.setOrderId(order.getId());
-        if (userId != null)
-        paymentCustomer.setUserId(userId);
-        paymentCustomer.setPaid(totalAmount);
-        paymentCustomerRepository.save(paymentCustomer);
-        return orderMapper.toDTO(order);
+
+        if (userId == null) {
+            if (paymentInput.compareTo(grandTotal) == 0) {
+                order.setOrderStatus(OrderStatus.COMPLETED);
+                paymentCustomer.setPaid(paymentInput);
+                paymentCustomerRepository.save(paymentCustomer);
+                return orderMapper.toDTO(order);
+            } else {
+                throw new NotFoundException("Số tiền nhập vào không đủ, vui lòng nhập đủ số tiền!!!");
+            }
+        } else {
+            if (paymentInput.compareTo(grandTotal) == 0) {
+
+                paymentCustomer.setUserId(userId);
+                order.setOrderStatus(OrderStatus.COMPLETED);
+                paymentCustomer.setPaid(orderParam.getPaid());
+                paymentCustomerRepository.save(paymentCustomer);
+                return orderMapper.toDTO(order);
+            } else {
+                paymentCustomer.setUserId(userId);
+                paymentCustomer.setPaid(paymentInput);
+                paymentCustomerRepository.save(paymentCustomer);
+                return orderMapper.toDTO(order);
+            }
+
+        }
     }
 
     @Override
@@ -255,7 +281,7 @@ public class OrderService implements IOrderService {
             totalAmount = totalAmount.add(price.multiply(new BigDecimal(quantity)));
 
             newOrder.setGrandTotal(totalAmount);
-            if (totalAmount.compareTo(orderPurchase.getPaid()) == 0){
+            if (totalAmount.compareTo(orderPurchase.getPaid()) == 0) {
                 newOrder.setOrderStatus(OrderStatus.COMPLETED);
             } else {
                 newOrder.setOrderStatus(OrderStatus.PENDING);
@@ -398,12 +424,12 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<OrderResultDTO> findAllOrderStatusCompleted() {
+    public List<OrderResultDTOS> findAllOrderStatusCompleted() {
         return orderRepository.findAllOrderStatusCompleted();
     }
 
     @Override
-    public List<OrderResultDTO> findAllOrderStatusPending() {
+    public List<OrderResultDTOS> findAllOrderStatusPending() {
         return orderRepository.findAllOrderStatusPending();
     }
 
@@ -438,11 +464,15 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<OrderResultDTO> findAllByOrderView() {
+    public List<OrderResultDTOS> findAllByOrderView() {
         return orderRepository.findAllByOrderView();
     }
 
     @Override
+    public OrderResultDTOS findAllByOrderViewById(Long id) {
+        return orderRepository.findAllByOrderViewById(id);
+    }
+
     public BigDecimal totalOrderOneMonth() {
         return orderRepository.totalOrderOneMonth();
     }
@@ -463,8 +493,8 @@ public class OrderService implements IOrderService {
 
         BigDecimal newAmount = BigDecimal.valueOf(0);
 
-        for(PaymentPurchase paymentPurchase : paymentResultPurchases){
-           BigDecimal amount = paymentPurchase.getPaid();
+        for (PaymentPurchase paymentPurchase : paymentResultPurchases) {
+            BigDecimal amount = paymentPurchase.getPaid();
 
             newAmount = newAmount.add(amount);
         }
@@ -473,7 +503,7 @@ public class OrderService implements IOrderService {
 
         PaymentPurchase newPaymentPurchase = new PaymentPurchase();
 
-        if (grandTotal.compareTo(newTotal) == 1){
+        if (grandTotal.compareTo(newTotal) == 1) {
 
             newPaymentPurchase.setUserId(userId);
             newPaymentPurchase.setOrderId(orderPaid.getOrderId());
@@ -484,10 +514,10 @@ public class OrderService implements IOrderService {
             return paymentMapper.toDTOS(newPaymentPurchase);
 
         }
-        if (grandTotal.compareTo(newTotal) == -1){
+        if (grandTotal.compareTo(newTotal) == -1) {
             throw new DataInputException("Lỗi hệ thống vui lòng liên hệ quản trị viên!!");
         }
-        if (grandTotal.compareTo(newTotal) == 0){
+        if (grandTotal.compareTo(newTotal) == 0) {
 
             orderOptional.get().setOrderStatus(OrderStatus.COMPLETED);
 
@@ -502,6 +532,73 @@ public class OrderService implements IOrderService {
 
         }
         return paymentMapper.toDTOS(newPaymentPurchase);
-     }
+    }
+
+    @Transactional
+    public PaymentCustomerResult doPaidCustomer(OrderCustomerPaid orderCustomerPaid) {
+        Optional<Order> orderOpt = orderRepository.findById(orderCustomerPaid.getOrderId());
+        //kiem tra order ton tai
+
+        if (!orderOpt.isPresent())
+            System.out.println("tu xu");
+        //throw
+        Order order = orderOpt.get();
+        BigDecimal grandTotal =order.getGrandTotal();
+        Long userId = order.getUserId();
+        BigDecimal paid = orderCustomerPaid.getPaid();
+       // List<PaymentCustomer> paymentCustomers = paymentCustomerRepository.findAllByOrderId(orderCustomerPaid.getOrderId());
+        BigDecimal newwTotal = paymentCustomerRepository
+        .findAllByOrderId(orderCustomerPaid.getOrderId())
+                .stream().map(PaymentCustomer::getPaid)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//        BigDecimal newAmount = BigDecimal.valueOf(0);
+//        for (PaymentCustomer paymentCustomer : paymentCustomers) {
+//            BigDecimal amount = paymentCustomer.getPaid();
+//            newAmount = newAmount.add(amount);
+//        }
+        BigDecimal newTotal = newwTotal.add(paid);
+
+        PaymentCustomer newPaymentCustomer = new PaymentCustomer();
+//        if (grandTotal.compareTo(newTotal) > 0) {
+//
+//           tien chua tra du
+//        newPaymentCustomer.setUserId(userId);
+//        newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
+//        newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
+//
+//        paymentCustomerRepository.save(newPaymentCustomer);
+//
+//        return paymentMapper.toDTO(newPaymentCustomer);
+//
+//        }
+        if (grandTotal.compareTo(newTotal) < 0) {
+            throw new DataInputException("Lỗi hệ thống vui lòng liên hệ quản trị viên!!");
+        }
+        if (grandTotal.compareTo(newTotal) == 0) {
+
+            order.setOrderStatus(OrderStatus.COMPLETED);
+
+//            newPaymentCustomer.setUserId(userId);
+//            newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
+//            newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
+//
+//            paymentCustomerRepository.save(newPaymentCustomer);
+//
+//            return paymentMapper.toDTO(newPaymentCustomer);
+
+        }
+        newPaymentCustomer.setUserId(userId);
+        newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
+        newPaymentCustomer.setPaid(orderCustomerPaid.getPaid());
+
+        paymentCustomerRepository.save(newPaymentCustomer);
+
+        return paymentMapper.toDTO(newPaymentCustomer);
+    }
+
+    @Override
+    public OrderResultPaidDTO findOrderByIdPaidCustomer(Long id) {
+        return orderRepository.findOrderByIdPaidCustomer(id);
+    }
 
 }

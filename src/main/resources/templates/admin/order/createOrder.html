@@ -130,8 +130,8 @@
 
                                             </ul>
                                         </div>
-                                        <div class="plus btn btn-primary">
-                                            <button onclick="resetFormCustomer()">Reset Form</button>
+                                        <div class="plus">
+                                            <button class="btn btn-primary" onclick="resetFormCustomer()">Reset Form</button>
                                         </div>
                                     </div>
 
@@ -311,7 +311,7 @@
                 "quantity": +$("#inputQuantity").val(),
                 "productId": 1
             }],
-            "paid": $("#remainingAmount").val()
+            "paid": $("#inputPriceCustomer").val()
         }
         $.ajax({
             headers: {
@@ -331,25 +331,30 @@
                     timeout: 1500,
                     message: 'Order sản phẩm thành công!!'
                 })
-                // setTimeout(() => {
-                //     window.location.href = "/customer_order/create"
-                // },1500)
+
                 $("#inputQuantity").val(0);
                 $("#itemTotalAmount").val(0);
                 $("#inputPriceCustomer").val(0);
                 $("#totalAmount").val(0);
                 $("#remainingAmount").val(0);
+                $("#selectCustomer").val(0);
                 $("#selectCustomer").text("Chọn khách hàng");
                 resetFormCustomer();
+                // setTimeout(() => {
+                //     window.location.href = "/customer_order/create"
+                // },500)
             }).fail((jqXHR) => {
                 iziToast.warning({
                     title: 'FAIL',
                     position: 'topRight',
                     timeout: 1500,
-                    message: jqXHR.responseJSON
+                    message: jqXHR.responseJSON.message
                 });
-            console.log(jqXHR);
-
+            // console.log(jqXHR);
+            // if(jqXHR.responseJSON.message){
+            //     let msg = jqXHR.responseJSON.responseText.;
+            //     iziToast.warning(msg);
+            // }
         })
     }
 
@@ -361,6 +366,8 @@
         $("#phoneCus").removeAttr("disabled");
 
         $("#frmCreateCus")[0].reset();
+
+        $("#selectCustomer").val(0);
 
         $("#selectCustomer").text("Chọn khách hàng");
     }

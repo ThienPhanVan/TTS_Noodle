@@ -135,10 +135,7 @@ body{
 /*.show {*/
 /*    display: block !important;*/
 /*}*/
-<<<<<<< HEAD
 
-=======
->>>>>>> tai_dev
 
 #message-alert {
     width: 100vw;
@@ -239,4 +236,18 @@ input.error {
 #content_selected{
     left: -324px;
     top: 90px;
+}
+
+.showViewDetailCustomer{
+    background-color: lightgrey;
+}
+#modalPaymentCustomer{
+    background-color: #d3d3d338;
+    font-size: 15px;
+}
+.fullNamePayment{
+    position: relative;
+     width: 40%;
+    padding-right: 15px;
+    padding-left: 15px;
 }
