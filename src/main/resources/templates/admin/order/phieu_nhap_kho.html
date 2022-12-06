@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="button_create_order">
-            <a href="/purchase_order" class="btn btn-primary">
+            <a href="/purchase_order" style="font: initial;" class="btn btn-primary">
                 <i class="fas fa-plus"></i>Nhập hàng
             </a>
         </div>
@@ -512,20 +512,21 @@
         let std = `
                   <div class="card">
                         <ul  class="list-group list-group-flush">
+
+                           <li class="list-group-item">
+                                <span style="float: left">Còn nợ</span>
+                                <span style="float: right; color: red" id="debt_${orderId}">${App.formatNumberSpace(oldPayment)} đ</span>
+                            </li >
                             <li  class="list-group-item">
                                 <span style="float: left;" id="dropdownMenuOffset_${orderId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
                                   Đã trả
-                                    <div class="dropdown mr-1">
-                                      <div class="dropdown-menu" style="width: 300px;" aria-labelledby="dropdownMenuOffset_${orderId}">
+                                    <div class="dropdown mr-1" style="left: -43px;top: -47px">
+                                      <div class="dropdown-menu" style="width: 327px;height: 200px;overflow: scroll;" aria-labelledby="dropdownMenuOffset_${orderId}">
                                         </div>
                                     </div>
                                 </span>
                                 <span style="float: right;" id="payment_${orderId}">${App.formatNumberSpace(obj.paid)} đ</span>
                             </li>
-                           <li class="list-group-item">
-                                <span style="float: left">Còn nợ</span>
-                                <span style="float: right; color: red" id="debt_${orderId}">${App.formatNumberSpace(oldPayment)} đ</span>
-                            </li >
                             <li  class="list-group-item">
                                 <span style="float: left">Thanh toán</span>
                                 <input type="number" style="float: right; text-align: right" id="paid_${orderId}"/>
@@ -559,6 +560,10 @@
         .done( (data) => {
             $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("")
             $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).html("")
+            let expanded =  $(this).attr("aria-expanded");
+            console.log(expanded);
+
+
             $.each(data, (i,item)=>{
 
                 orderItem = item;
@@ -577,6 +582,9 @@
 
                 $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(std);
                 doPaid();
+            }
+            if (expanded === true){
+                $("#tbListOrder tbody .payment_info").removeClass("show").addClass("hide");
             }
 
             handleShowHistoryPayment();
@@ -630,13 +638,13 @@
                 let std = `
                   <div class="card">
                         <ul  class="list-group list-group-flush">
-                            <li  class="list-group-item">
-                                 <span style="float: left" id="pay_money_${newOrderId}">Đã trả</span>
-                                 <span style="float: right;" id="payment_${newOrderId}">${newPaid} đ</span>
-                            </li >
                            <li  class="list-group-item">
                                 <span style="float: left">Còn nợ</span>
                                 <span style="float: right; color: red" id="debt_${newOrderId}">${App.formatNumberSpace(newDebt)} đ</span>
+                            </li >
+                            <li  class="list-group-item">
+                                 <span style="float: left" id="pay_money_${newOrderId}">Đã trả</span>
+                                 <span style="float: right;" id="payment_${newOrderId}">${newPaid} đ</span>
                             </li >
                             <li  class="list-group-item">
                                 <span style="float: left">Thanh toán</span>
@@ -784,8 +792,13 @@
         })
     }
 
+    let paymentOrderId = null;
+
     function handleShowHistoryPayments(){
         $(`#dropdownMenuOffset_${orderId}`).on("click", function (){
+
+            paymentOrderId =  $(this).attr("id").replaceAll("dropdownMenuOffset_", "");
+            console.log(paymentOrderId);
             loadAllPayment();
         })
     }
@@ -797,10 +810,10 @@
                 "content-type": "application/json"
             },
             "type": "GET",
-            "url": "http://localhost:8080/api/paymentPurchase/" + orderId
+            "url": "http://localhost:8080/api/paymentPurchase/" + paymentOrderId
         })
         .done((data) => {
-            $(`#panelCart_${orderId} .infor`).html("");
+            console.log(paymentOrderId);
             $(".dropdown .dropdown-menu").html("");
 
             let stdHeader = `
@@ -822,24 +835,20 @@
                         </div>
                 `
                 let std = `
-                            <div class="dropdown-item">
+                            <div class="dropdown-item" style="margin-bottom: 5px;">
                                  <span style="float: left;margin-right: 50px">${paymentPurchase.createdAt}</span>
                                  <span style="float: right; font-weight: 600;">${paymentPurchase.paid} đ</span>
+                                 <div style="clear: both"></div>
                             </div>
                          `
 
-                $(`#panelCart_${orderId} .infor`).prepend(str);
                 $(".dropdown .dropdown-menu").append(std);
 
             })
         })
     }
 
-
     $('.collapse').collapse()
-
-
-
 
     $.FormatDateTime = function (dateToFormat) {
 
