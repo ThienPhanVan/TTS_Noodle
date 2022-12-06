@@ -90,6 +90,7 @@ public class OrderService implements IOrderService {
     @Transactional
     public OrderResult createOrderExport(OrderParam orderParam) {
         //order Item
+        Double quantityPrice = 0.0;
         Long userId = orderParam.getUserId();
         if (userId != null && !userRepository.existsById(userId))
             throw new NotFoundException("Id khach hang khong hop le");
@@ -117,6 +118,7 @@ public class OrderService implements IOrderService {
             BigDecimal price = productOptional.get().getPrice();
             // lấy số lượng customer order
             int quantityCustomer = itemParam.getQuantity();
+            quantityPrice = (quantityCustomer/2.4);
             //tổng giá sản phẩm = giá sản phẩm * số lượng sản phẩm khách hàng order
             grandTotal = price.multiply(new BigDecimal(quantityCustomer));
             order.setGrandTotal(grandTotal);
@@ -133,10 +135,11 @@ public class OrderService implements IOrderService {
                 if (quantityCustomer == 0) {
                     break;
                 }
+
                 int available = item.getAvailable();
                 int orderItemSold;
                 if (quantityCustomer >= available) {
-                    quantityCustomer = quantityCustomer - available;
+                    quantityCustomer = (quantityCustomer - available);
                     item.setAvailable(0);
                     orderItemSold = available;
                     int itemSold = item.getSold() + available;
@@ -149,6 +152,7 @@ public class OrderService implements IOrderService {
                     item.setSold(itemSold);
                     quantityCustomer = 0;
                 }
+
                 OrderItem orderItem = new OrderItem();
                 orderItem.setQuantity(orderItemSold);
                 orderItem.setProductId(item.getProductId());
@@ -161,8 +165,6 @@ public class OrderService implements IOrderService {
         PaymentCustomer paymentCustomer = new PaymentCustomer();
 
         BigDecimal paymentInput = orderParam.getPaid();
-        BigDecimal newTotal = new BigDecimal(0);
-        BigDecimal totalAmount = grandTotal.subtract(paymentInput);
         paymentCustomer.setOrderId(order.getId());
 
         if (userId == null) {
