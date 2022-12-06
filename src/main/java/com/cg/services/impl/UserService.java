@@ -12,9 +12,13 @@ import com.cg.repositories.UserRepository;
  import com.cg.repositories.model.Role;
 import com.cg.repositories.model.User;
 import com.cg.repositories.model.UserStatus;
+import com.cg.security.userPrinciple.UserPrinciple;
 import com.cg.services.IUserService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,11 +37,15 @@ public class UserService implements IUserService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private OrderMapper orderMapper;
+//    @Autowired
+//    private OrderMapper orderMapper;
 
     @Autowired
-    private PaymentCustomerRepository paymentCustomerRepository;
+    private PasswordEncoder passwordEncoder;
+
+
+//    @Autowired
+//    private PaymentCustomerRepository paymentCustomerRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -169,5 +177,23 @@ public class UserService implements IUserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public User getByUsername(String username) {
+        return userRepository.getByUsername(username);
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrinciple.build(userOptional.get());
+     }
+
+    @Override
+    public User saves(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
 }

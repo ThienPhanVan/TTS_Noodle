@@ -1,13 +1,9 @@
 package com.cg.repositories.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 @Data
@@ -64,5 +60,6 @@ public class User {
         this.role = new Role(roleId);
         return this;
     }
+
 
 }

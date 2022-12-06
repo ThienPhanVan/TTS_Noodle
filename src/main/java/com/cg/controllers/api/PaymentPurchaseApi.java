@@ -1,5 +1,6 @@
 package com.cg.controllers.api;
 
+import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.mapper.PaymentPurchaseMapper;
 import com.cg.repositories.model.PaymentPurchase;
@@ -26,10 +27,12 @@ public class PaymentPurchaseApi {
 
     @GetMapping("/{orderId}")
     public ResponseEntity<?> getAllPaymentPurchaseByOrderId(@PathVariable Long orderId){
-
         List<PaymentPurchaseResult> paymentPurchaseResultList = paymentPurchaseService.findAllByOrderId(orderId);
-
-
         return new ResponseEntity<>(paymentPurchaseResultList,HttpStatus.OK);
+    }
+    @GetMapping("/chartDebtSup")
+    public ResponseEntity<?> chartDebtSup(){
+        List<ChartDebt> chartDebts = paymentPurchaseService.getChartDebt();
+        return new ResponseEntity<>(chartDebts,HttpStatus.OK);
     }
 }

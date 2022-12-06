@@ -2,6 +2,7 @@ package com.cg.services;
 
 
 
+import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.dto.payment.PaymentResult;
 import com.cg.repositories.model.PaymentPurchase;
@@ -17,5 +18,7 @@ public interface IPaymentPurchaseService {
     List<PaymentResult> findAllByUserId(Long id);
 
     List<PaymentPurchaseResult> findAllByOrderId(Long orderId);
+
+    List<ChartDebt> getChartDebt();
 
 }

@@ -1,5 +1,6 @@
 package com.cg.services.impl;
 
+import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.PaymentPurchaseResult;
 import com.cg.dto.payment.PaymentResult;
 import com.cg.mapper.PaymentMapper;
@@ -44,5 +45,10 @@ public class PaymentPurchaseService implements IPaymentPurchaseService {
         return paymentPurchaseRepository.findAllByOrderId(orderId)
                 .stream().map(paymentPurchase -> paymentPurchaseMapper.toDTO(paymentPurchase))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ChartDebt> getChartDebt() {
+        return paymentPurchaseRepository.getChartDebt();
     }
 }

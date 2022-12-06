@@ -1,6 +1,7 @@
 package com.cg.controllers.api;
 
 
+import com.cg.dto.payment.ChartDebt;
 import com.cg.dto.payment.ListPaymentUser;
 import com.cg.dto.payment.PaymentCustomerResult;
 import com.cg.services.IPaymentCustomerService;
@@ -31,6 +32,12 @@ public class PaymentCustomerApi {
     public ResponseEntity<?> getPayment(){
         List<ListPaymentUser> paymentCustomerResults = paymentCustomerService.getPaymentUser();
         return new ResponseEntity<>(paymentCustomerResults, HttpStatus.OK);
+    }
+
+    @GetMapping("/chartDebtCus")
+    public ResponseEntity<?> chartDebtSup(){
+        List<ChartDebt> chartDebts = paymentCustomerService.getChartDebtCus();
+        return new ResponseEntity<>(chartDebts,HttpStatus.OK);
     }
 
 }
