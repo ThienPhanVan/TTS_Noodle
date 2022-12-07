@@ -3,11 +3,6 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
-    <style>
-        .yesPrint {
-        display: block !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -67,7 +62,6 @@
                         </td>
                         <td>Tổng tiền</td>
                         <td>Ngày Nhập</td>
-                        <td>Hành động</td>
                     </tr>
                     </thead>
                     <tbody style="text-align: center">
@@ -196,11 +190,6 @@
                                  ${s2}
                         </th>
                         <th>${obj.createdat}</th>
-                        <th>
-                            <button class="btn btn-primary" id="btnPrint">
-                                <i class="fas fa-print"></i>
-                            </button>
-                        </th>
               </tr>
               <tr class="payment_info_${obj.id} hide" id="trh_${obj.id}">
                     <td class="payment_info_tr"  colspan="7">
@@ -541,6 +530,9 @@
                         </li >
                         <div class="card-body">
                             <button class="btn btn-success" id="doPaid_${orderId}">Thanh toán</button>
+                            <button class="btn btn-primary" id="btnPrint_${orderId}">
+                                <i class="fas fa-print"></i>
+                            </button>
                         </div>
                          <div id="panelCart_${orderId}" class="panelCart hide">
                             <div class="card border-dark mb-3" style="max-width: 18rem;">
@@ -568,6 +560,7 @@
             $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("");
             $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).html("");
             $("#renderBills tbody").html("");
+            $("#payment").html("");
 
 
 
@@ -585,17 +578,26 @@
                              <tr >
                                 <td class="">${orderItem.title}</td>
                                 <td class="text-end">${orderItem.quantity}</td>
-                                <td class="text-end">${orderItem.price}</td>
-                                <td class="text-end">${orderItem.price*orderItem.quantity}</td>
+                                <td class="text-end">${App.formatNumberSpace(orderItem.price)}</td>
+                                <td class="text-end">${App.formatNumberSpace(orderItem.price*orderItem.quantity)}</td>
                              </tr>
                            `
 
                 $("#renderBills tbody").prepend(std);
                 $("#customerBills span").text(orderItem.fullName);
-                $("#totalAmountBills span").text(orderItem.grandTotal);
+                $("#totalAmountBills").text(App.formatNumberSpace((orderItem.grandTotal)) + " đ")
+
+                let paid = App.formatNumberSpace(orderItem.paid);
+
+                let stt = `
+                    <td colspan="3" class="fw-bold" style="font-weight: 700;">Đã thanh toán: </td>
+                    <td id="totalPayments">${paid} đ</td>
+                `
+                $("#payment").append(stt);
+
                 let newDate = new Date();
-                $("#timeBills span").text(moment(newDate).format("DD/MM/YYYY"))
-                $("#timeSendBills span").text(moment(newDate).format("hh:mm:ss"));
+                $("#timeBills span").text(moment(orderItem.createdAt).format("DD/MM/YYYY"))
+                $("#timeSendBills span").text(moment(newDate).format("DD/MM/YYYY"));
 
             })
 
@@ -606,7 +608,9 @@
 
                 $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(std);
                 doPaid();
+
             }
+            handleShowPrint();
             handleShowHistoryPayment();
             handleShowHistoryPayments();
         })
@@ -672,6 +676,7 @@
                         <div class="card-body">
                             <button class="btn btn-success" id="doPaid">Thanh toán</button>
                         </div>
+
                   </div>
                    `
                 let amount =  $(`#debt_${newOrderId}`).text();
@@ -692,6 +697,7 @@
                     timeout: 1500,
                     message: 'Thanh toán đơn hàng thành công!!'
                 });
+                doPaid();
 
             })
             .fail((jqXHR) => {
@@ -730,11 +736,8 @@
                 $("#tbListOrder tbody").prepend(str);
 
             })
-
             handleClick();
             handleEvent();
-
-
         })
     }
 
@@ -753,9 +756,8 @@
             if (expanded === true) {
                 $(`#tbListOrder tbody .payment_info_${orderId}`).removeClass("show").addClass("hide");
             }
-            handleShowPrint();
-            handleUpdatePayment();
 
+            handleUpdatePayment();
         })
     }
 
@@ -881,9 +883,12 @@
         })
     }
     function handleShowPrint(){
-        $("#showPrint").removeClass('d-none');
-        window.print();
-        $("#showPrint").addClass('d-none')
+        $(`#btnPrint_${orderId}`).on("click", function (){
+            $("#showPrint").removeClass('d-none');
+            window.print();
+            $("#showPrint").addClass('d-none')
+        })
+
     }
 
     $('.collapse').collapse()

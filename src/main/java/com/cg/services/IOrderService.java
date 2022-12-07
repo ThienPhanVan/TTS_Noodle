@@ -25,27 +25,10 @@ public interface IOrderService {
 
     List<OrderResult> findAllByUserId(Long userId);
 
-//    List<OrderResult> getAllOrderByUserId(Long userId);
 
     OrderResult createOrderExport(OrderParam orderParam);
 
-    List<OrderListPurchase> findAllByOrderTypePurchaseList ();
-
-    List<OrderListPurchase> findAllByOrderTypeCustomerList();
-
-    List<OrderResult> findAllByOrderTypePurchase ();
-
     List<OrderResult> findAllByOrderTypeCustomer ();
-
-    List<OrderResult> findAllByOrderStatusPending ();
-
-    List<OrderResult> findAllByOrderStatusComplete ();
-
-    List<OrderResult> findAllByOrderStatusCancel ();
-
-    List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword);
-
-    void updateOrderStatus (OrderResult orderResult);
 
     List<OrderResultChart> findOrderSevenDay();
     List<OrderResultChart> findOrderOneMonth();
@@ -64,13 +47,9 @@ public interface IOrderService {
 
     List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(String keySearch);
 
-    List<OrderResult> getAllOrderByRole();
-
     BigDecimal chartOneDay();
 
     List<OrderResultDTOS> findAllOrderStatusPending();
-
-    OrderResultDTO setStatusOrderPending(Long id);
 
     OrderChangeStatus changeStatus(OrderChangeStatus orderChangeStatus);
 
@@ -79,7 +58,9 @@ public interface IOrderService {
     OrderResultDTOS findAllByOrderViewById(Long id);
 
      BigDecimal totalOrderOneMonth();
-    OrderResultPaidDTO findOrderByIdPaidCustomer(Long id);
+
+        OrderResultPaidDTO findOrderByIdPaidCustomer(Long id);
+
      PaymentPurchaseResult doPaid(OrderPaid orderPaid);
 
  }

@@ -5097,3 +5097,6 @@ thead{
 .card-title{
   padding-bottom: 15px;
 }
+.table{
+  width: 100%;
+}

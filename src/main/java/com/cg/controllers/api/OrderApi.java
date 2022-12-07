@@ -211,14 +211,6 @@ public class OrderApi {
         List<OrderResultChart> chartSevenDay = orderService.findOrderOneMonth();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
-
-    @GetMapping("/getAllOrderByRole")
-    public ResponseEntity<?> getAllOrderByRole(){
-        List<OrderResult> orders = orderService.getAllOrderByRole();
-        return new ResponseEntity<>(orders, HttpStatus.OK);
-
-    }
-
     @PatchMapping("/update")
     public ResponseEntity<?> changeStatusOrder(@RequestBody OrderChangeStatus orderChangeStatus){
 

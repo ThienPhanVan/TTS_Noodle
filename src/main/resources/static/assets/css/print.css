@@ -39,6 +39,11 @@
     display: none
 }
 
+thead{
+    background-color: #1d335a;
+    color: whitesmoke;
+}
+
 #spinner-div {
     position: fixed;
     display: none;
@@ -52,17 +57,30 @@
 }
 
 @media print {
+    body *:not(#showPrint):not(#showPrint *){
+        visibility: hidden;
+    }
+    #showPrint{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     /*head .noPrint {*/
     /*    display: none !important;*/
     /*}*/
-    .noPrint {
-        display: none !important;
-    }
+    /*.noPrint {*/
+    /*    display: none !important;*/
+    /*}*/
 }
 
 @page {
-    size: auto;
-    margin: 5px;
+    size: A4 landscape;
+    margin: 10%;
+}
+
+.center {
+    margin-left: 280px;
+    margin-right: 280px;
 }
 
 /*@media screen {*/

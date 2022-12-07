@@ -38,8 +38,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     OrderResultPaidDTO findOrderByIdPaidCustomer(@Param("orderId") Long id);
 
 
-    List<Order> findAllByOrderStatus(OrderStatus orderStatus);
-
     @Query(name = "sp_chartSevenDay", nativeQuery = true)
     List<OrderResultChart> findOrderSevenDay();
 
@@ -94,8 +92,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') OR u.address LIKE CONCAT('%',:keySearch,'%')  AND o.orderType = 'CUSTOMER' ")
     List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(@Param("keySearch") String keySearch);
 
-    @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
-    List<Order> getAllOrderByRole();
 
     @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();
