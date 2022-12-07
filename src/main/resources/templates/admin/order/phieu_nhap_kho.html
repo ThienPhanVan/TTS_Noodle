@@ -3,6 +3,11 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
+    <style>
+        .yesPrint {
+        display: block !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -253,7 +258,7 @@
 
                 order = item;
 
-                order.createdat = $.FormatDateTime(order.createdat);
+                order.createdat =  moment(order.createdat).format("DD/MM/YYYY - hh:mm");
 
                 let str =  renderOrder(item);
 
@@ -364,7 +369,7 @@
                 $.each(data, (i,item)=>{
                     order = item;
 
-                    order.createdat = $.FormatDateTime(order.createdat);
+                    order.createdat =  moment(order.createdat).format("DD/MM/YYYY - hh:mm");
 
                     let str =  renderOrder(item);
 
@@ -410,7 +415,7 @@
             $.each(data, (i,item)=>{
                 order = item;
 
-                order.createdat = $.FormatDateTime(order.createdat);
+                order.createdat =  moment(order.createdat).format("DD/MM/YYYY - hh:mm");
 
 
                 let str =  renderOrder(item);
@@ -458,7 +463,7 @@
 
                     order = item;
 
-                    order.createdat = $.FormatDateTime(order.createdat);
+                    order.createdat = moment(order.createdat).format("DD/MM/YYYY - hh:mm");
 
 
                     let str =  renderOrder(item);
@@ -560,8 +565,9 @@
             "url": "http://localhost:8080/api/order-items/" + orderId
         })
         .done( (data) => {
-            $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("")
-            $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).html("")
+            $(`#trh_${orderId} .payment_info_tr #tbItemPurchase tbody`).html("");
+            $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).html("");
+            $("#renderBills tbody").html("");
 
 
 
@@ -575,8 +581,25 @@
 
                 $(`#trh_${orderId}`).removeClass("hide").addClass("show");
 
+                let std = `
+                             <tr >
+                                <td class="">${orderItem.title}</td>
+                                <td class="text-end">${orderItem.quantity}</td>
+                                <td class="text-end">${orderItem.price}</td>
+                                <td class="text-end">${orderItem.price*orderItem.quantity}</td>
+                             </tr>
+                           `
+
+                $("#renderBills tbody").prepend(std);
+                $("#customerBills span").text(orderItem.fullName);
+                $("#totalAmountBills span").text(orderItem.grandTotal);
+                let newDate = new Date();
+                $("#timeBills span").text(moment(newDate).format("DD/MM/YYYY"))
+                $("#timeSendBills span").text(moment(newDate).format("hh:mm:ss"));
 
             })
+
+
 
             if(orderItem.paid !== orderItem.grandTotal){
                 let std = renderInfoPayment(orderItem);
@@ -698,7 +721,7 @@
 
                 order = item;
 
-                order.createdat = $.FormatDateTime(order.createdat);
+                order.createdat = moment(order.createdat).format("DD/MM/YYYY - hh:mm");
 
                 let str =  renderOrder(item);
 
@@ -706,11 +729,12 @@
 
                 $("#tbListOrder tbody").prepend(str);
 
-
             })
+
             handleClick();
             handleEvent();
-            handleShowPrint();
+
+
         })
     }
 
@@ -729,8 +753,9 @@
             if (expanded === true) {
                 $(`#tbListOrder tbody .payment_info_${orderId}`).removeClass("show").addClass("hide");
             }
-
+            handleShowPrint();
             handleUpdatePayment();
+
         })
     }
 
@@ -757,12 +782,11 @@
             "url": "http://localhost:8080/api/orders/imports"
         })
         .done((data) => {
-
             $.each(data , (i,item) => {
 
                 order = item;
 
-                order.createdat = $.FormatDateTime(order.createdat);
+                order.createdat = moment(order.createdat).format("DD/MM/YYYY - hh:mm");
 
                 let str =  renderOrder(item);
 
@@ -825,14 +849,15 @@
             $(".dropdown .dropdown-menu").html("");
 
             let stdHeader = `
-                            <p class="dropdown-header" style="color: #1a179e;font: initial;background-color: #acacac;font-weight: 700;text-align: center;">Lịch sử thanh toán</p>
-                         `;
+                                <p class="dropdown-header" style="color: #1a179e;font: initial;background-color: #acacac;font-weight: 700;text-align: center;">Lịch sử thanh toán</p>
+                            `;
             $(".dropdown .dropdown-menu").append(stdHeader);
+
             $.each(data , (i,item) => {
 
                 paymentPurchase = item;
 
-                paymentPurchase.createdAt = $.FormatDateTime(paymentPurchase.createdAt);
+                paymentPurchase.createdAt = moment(paymentPurchase.createdAt).format("DD/MM/YYYY - hh:mm")
 
                 paymentPurchase.paid = App.formatNumberSpace(paymentPurchase.paid);
 
@@ -856,9 +881,9 @@
         })
     }
     function handleShowPrint(){
-        $("#btnPrint").on("click", function (){
-            window.print();
-        })
+        $("#showPrint").removeClass('d-none');
+        window.print();
+        $("#showPrint").addClass('d-none')
     }
 
     $('.collapse').collapse()
