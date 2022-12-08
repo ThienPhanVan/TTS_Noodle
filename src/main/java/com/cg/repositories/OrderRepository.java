@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.management.remote.rmi._RMIConnection_Stub;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
@@ -69,11 +70,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "o.orderType, " +
             "o.orderStatus, " +
             "o.grandTotal, " +
-            "p.paid) " +
+            "SUM(p.paid)) " +
             "FROM Order AS o " +
             "JOIN User AS u ON u.id = o.userId " +
             "JOIN PaymentPurchase AS p ON p.orderId = o.id " +
-            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'")
+            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'" +
+            "GROUP BY o.id" )
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 
 
