@@ -596,8 +596,8 @@
                 $("#payment").append(stt);
 
                 let newDate = new Date();
-                $("#timeBills span").text(moment(orderItem.createdAt).format("DD/MM/YYYY"))
-                $("#timeSendBills span").text(moment(newDate).format("DD/MM/YYYY"));
+                $("#timeBills span").text(moment(orderItem.createdAt).format("DD/MM/YYYY - hh:mm:ss"))
+                $("#timeSendBills span").text(moment(newDate).format("DD/MM/YYYY - hh:mm:ss"));
 
             })
 
@@ -756,12 +756,7 @@
             if (expanded === true) {
                 $(`#tbListOrder tbody .payment_info_${orderId}`).removeClass("show").addClass("hide");
             }
-<<<<<<< HEAD
-=======
             // handleShowPrint();
-            handleUpdatePayment();
->>>>>>> development
-
             handleUpdatePayment();
         })
     }
