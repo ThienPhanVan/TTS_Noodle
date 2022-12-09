@@ -19,7 +19,31 @@
 
     <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
-    <th:block th:replace="/layout/topNav/topNav :: topNav"></th:block>
+
+    <div class="iq-top-navbar">
+        <div style="margin-top: 13px;" class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+                <div class="iq-search-bar">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h2><a class="font-size-36 font-weight-bold" href="/customer">Đơn Hàng</a></h2>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li class="line-height">
+                        <div></div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -28,11 +52,6 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="iq-header-title">
-                                <a class="font-size-20 font-weight-bold" href="/customer">Đơn Hàng</a>
-                            </div>
-                        </div>
 
                         <div class="iq-card-body">
                             <div class="table-responsive">
@@ -87,14 +106,14 @@
     <div class="text-center mt-5 fw-bold"><h1>ĐƠN HÀNG</h1></div>
     <div class="row mt-5">
         <div class="col-12">
-            <div id="dayCre" class="fw-bold font-size-40">Ngày bán: <span></span></div>
-            <div id="createBy" class="fw-bold font-size-40">Người bán: <span></span></div>
-            <div id="cus" class="fw-bold font-size-40 ">Khách hàng: <span></span></div>
+            <div id="dayCre" class="fw-bold  ">Ngày bán: <span></span></div>
+            <div id="createBy" class="fw-bold  ">Người bán: <span></span></div>
+            <div id="cus" class="fw-bold ">Khách hàng: <span></span></div>
         </div>
     </div>
 
 
-    <table class="font-size-40 table mt-2" id="tbPrintOrder">
+    <table class="  table mt-2" id="tbPrintOrder">
         <thead>
         <tr class="text-center mr-3">
             <th>STT</th>
@@ -110,10 +129,10 @@
     </table>
     <hr>
     <div class="col-12">
-        <div id="totalBills" class="fw-bold font-size-40 mt-4">Tổng tiền hàng: <span></span></div>
+        <div id="totalBills" class="fw-bold   mt-4">Tổng tiền hàng: <span></span></div>
     </div>
 
-    <div style="position: absolute; bottom: 100px;left: 410px" class=" font-size-40">Cảm ơn quý khách hẹn gặp lại !
+    <div style="position: absolute; bottom: 100px;left: 410px" class="  ">Cảm ơn quý khách hẹn gặp lại !
     </div>
 </div>
 
@@ -166,7 +185,7 @@
                           <td>${moment(orderItem.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
                           <td> ${createBy}</td>
                           <td>${orderItem.fullName}</td>
-                          <td style="margin-top: 20px;  padding: 4px" class="badge  " >${orderItem.orderStatus}</td>
+                          <td style="margin-top: 20px;  padding: 4px"  >${orderItem.orderStatus}</td>
                           <td>${new Intl.NumberFormat('vi-VN').format(orderItem.grandTotal)}</td>
                           <td class="w-45">
                                     <a  class="btn btn-outline-primary"
