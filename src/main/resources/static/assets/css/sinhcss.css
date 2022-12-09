@@ -54,3 +54,52 @@
 .label + input{
     font-size: 18px;
 }
+
+@page {
+    size: A4;
+    margin: 20px;
+}
+@media print {
+
+    #noPrint {
+        display: none;
+    }
+    #content-page {
+        display: none;
+    }
+
+    .iq-sidebar {
+        display: none;
+    }
+
+    .iq-top-navbar {
+        display: none;
+    }
+
+    .iq-footer {
+        display: none;
+    }
+
+    .noPrint {
+        display: none;
+    }
+
+    head {
+        display: none;
+    }
+}
+
+.error{
+
+}
+
+label.error{
+    display: flex;
+}
+.ri-search-line:hover{
+    cursor: pointer;
+}
+
+.item .error{
+    color: black;
+}

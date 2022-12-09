@@ -172,7 +172,6 @@
             let totalOrder = 0;
             let totalDebts = 0;
             $.each(user, (i, userList) => {
-                console.log(userList, "list")
                 let paymentPurchase = 0;
                 getPaymentByUserid(userList.id).then((payment) => {
                     $.each(payment, (i, paymentList) => {
@@ -189,7 +188,7 @@
                             totalOrder += orders.grandTotal;
                             debt = total - paymentPurchase;
                         })
-                        totalDebts += debt   ;
+                        totalDebts += debt;
 
                         let str = `
                 <tr id="tr_${userList.id}">
@@ -292,6 +291,10 @@
     let btnCreate = $("#btnCreateSup");
 
     btnCreate.on("click", function () {
+        $("#frmCreateSup").submit();
+    })
+
+    function doCreate() {
         let createUser = {
             "roleId": 0,
             "fullName": $('#nameSup').val(),
@@ -300,8 +303,7 @@
             "address": $('#addressSup').val(),
             "avatarUrl": "https://enshaafuture.com/public/img/default-avatar.jpg",
         }
-        console.log(createUser)
-        $.ajax({
+         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'content-type': 'application/json'
@@ -310,8 +312,7 @@
             url: "http://localhost:8080/api/users/createSupplier",
             data: JSON.stringify(createUser)
         }).done((data) => {
-            console.log(data)
-            let str = renderUser(data)
+             let str = renderUser(data)
             $("#tbSupplier tbody").prepend(str);
             App.iziToast.showSuccessAlert("Thêm mới thành công")
             $("#modalCreateSupplier").modal('hide')
@@ -320,14 +321,33 @@
         }).fail((jqHRX) => {
             console.log(jqHRX)
         });
-    })
+    }
 
     $("#modalCreateSupplier").on("hidden.bs.modal", function () {
-        // $("#modalUpdateProduct .modal-alert-danger").empty();
+        $("#modalUpdateProduct .modal-alert-danger").empty();
         $("#frmCreateSup")[0].reset();
-        // $("#frmCreateCus").validate().resetForm();
+        $("#frmCreateSup").validate().resetForm();
         $('#modalCreateSupplier .modal-alert-danger').removeClass('show').addClass('hide');
     });
+
+    $("#btnCreateSup").on("click", function () {
+        $('#modalCreateSupplier .modal-alert-danger').removeClass('show').addClass('hide');
+        $("#modalCreateSupplier .modal-alert-danger").empty();
+        $('#frmCreateSup').submit();
+    })
+
+    $("#modalUpdateSup").on("hidden.bs.modal", function () {
+        $("#modalUpdateSup .modal-alert-danger").empty();
+        $("#frmUpdateSup")[0].reset();
+        $("#frmUpdateSup").validate().resetForm();
+        $('#modalUpdateSup .modal-alert-danger').removeClass('show').addClass('hide');
+    });
+
+    $("#btnCreateSup").on("click", function () {
+        $('#modalUpdateSup .modal-alert-danger').removeClass('show').addClass('hide');
+        $("#modalUpdateSup .modal-alert-danger").empty();
+        $('#frmUpdateSup').submit();
+    })
 
 
     function showModalUpdateSup() {
@@ -346,7 +366,12 @@
     }
 
     let btnUpdateCus = $('#btnUpdateSup');
+
     btnUpdateCus.on('click', function () {
+        $('#frmUpdateSup').submit();
+    })
+
+    function doUpdate() {
         let userId = $('#idSupUp').val();
         let createUser = {
             "fullName": $('#nameSupUp').val(),
@@ -372,7 +397,6 @@
             })
 
         })
-
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -409,13 +433,12 @@
         }).fail((jqHRX) => {
             console.log(jqHRX)
         });
-    })
+    }
 
     function doSearchUser() {
         $('#btnSearchSupp').on('click', function () {
             let keyword = $('#inputSearchSupp').val();
-            console.log(keyword)
-            $('#tbSupplier tbody').html("")
+             $('#tbSupplier tbody').html("")
             $.ajax({
                 headers: {
                     "Accept": "application/json",
@@ -424,6 +447,8 @@
                 type: "GET",
                 url: "http://localhost:8080/api/users/searchSup/" + keyword
             }).done((data) => {
+                let totalOrder = 0;
+                let totalDebts = 0;
                 $.each(data, (i, user) => {
                     let total = 0;
                     let days = "Chưa Mua Hàng";
@@ -436,20 +461,20 @@
                     })
                     getOrderById(user.id).then((userId) => {
                         $.each(userId, (i, itemUser) => {
-                            console.log(itemUser, "usserid")
-                            total += itemUser.grandTotal;
+                             total += itemUser.grandTotal;
                             days = itemUser.createdAt;
                             totalDebt = total - paymentSup
                         })
+                        totalOrder += total;
+                        totalDebts += totalDebt;
                     })
-                    console.log(total + "+" + days, "daytotal")
-                    let str = ` <tr id="tr_${user.id}">
+                     let str = ` <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
                     <td>${user.fullName}</td>
                     <td>${user.email}</td>
                     <td>${user.phone}</td>
                     <td>${user.address}</td>
-                    <td id="cra"> moment(days).format('DD/MM/YYYY -- hh:mm')</td>
+                    <td id="cra"> ${moment(days).format('DD/MM/YYYY -- hh:mm')}</td>
                     <td id="to">${new Intl.NumberFormat('vi-VN').format(total)}</td>
                     <td id="debt">${new Intl.NumberFormat('vi-VN').format(totalDebt)}</td>
                     <td class="w-45">
@@ -462,6 +487,11 @@
                 </tr>   `;
                     $('#tbSupplier tbody').prepend(str)
                     showModalUpdateSup()
+                    let sum = `
+                        <span>Khách Hàng: ${data.length} / </span>
+                        <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN').format(totalOrder)} / </span>
+                        <span class="i text-danger"> Tổng nợ: ${new Intl.NumberFormat('vi-VN').format(totalDebts)} </span> `;
+                    $("#totalSup").html(sum);
                 })
             }).fail((jqXHR) => {
                 console.log(jqXHR)
@@ -475,6 +505,114 @@
         $(".update").off('click')
     }
 
+
+    $("#frmCreateSup").validate({
+        rules: {
+            nameSup: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+
+            },
+            emailSup: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            phoneSup: {
+                required: true,
+                minlength: 5,
+                maxlength: 12
+            },
+            addressSup: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            }
+        },
+        messages: {
+            nameSup: {
+                required: "Tên không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            emailSup: {
+                required: "Email không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            phoneSup: {
+                required: "Số điện thoại không được trống !",
+                max: "Số không quá tối đa 12"
+            },
+            addressSup: {
+                required: "Địa chị không được trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            }
+        },
+        onkeyup: function (element) {
+            $(element).valid()
+        },
+        onclick: false,
+        onfocusout: false,
+        submitHandler: function () {
+            doCreate();
+        }
+    })
+
+    $("#frmUpdateSup").validate({
+        rules: {
+            nameSupUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+
+            },
+            emailSupUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            phoneSupUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 12
+            },
+            addressSupUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            }
+        },
+        messages: {
+            nameSupUp: {
+                required: "Tên không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            emailSupUp: {
+                required: "Email không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            phoneSupUp: {
+                required: "Số điện thoại không được trống !",
+                max: "Số không quá tối đa 12"
+            },
+            addressSupUp: {
+                required: "Địa chị không được trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            }
+        },
+        onkeyup: function (element) {
+            $(element).valid()
+        },
+        submitHandler: function () {
+            doUpdate();
+        }
+    })
 </script>
 
 </html>

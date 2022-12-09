@@ -3,7 +3,7 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"></th:block>
-    <title>Lợi Nhuận</title>
+    <title>Profit</title>
 </head>
 
 <body>
@@ -182,7 +182,6 @@
     $("#addRow").on('click', function (){
         // value  = +$(".item .stt").text();
         value++;
-        console.log("value", value)
 
         let str = `
         <tr id="${value}" >
@@ -234,8 +233,7 @@
                 url: "http://localhost:8080/api/products",
             }).done((data) => {
                 user = data
-                console.log(user, "1")
-            }).fail((jxHQR) => {
+             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
         )
@@ -288,12 +286,11 @@
             async: false,
             url: "http://localhost:8080/api/order-items/getProfit1Day",
         }).done((data) => {
-            console.log("1dd")
-            let id;
+             let id;
             let nameProduct;
             let quantity = data[0].quantity;
             let totalOrder = 0;
-            let quantityRice = quantity / 2.4;
+            let quantityRice = Math.floor(quantity / 2.4);
             let cost = quantityRice * 10000;
             let profit = 0;
 
@@ -356,8 +353,7 @@
             type: "GET",
             url: "http://localhost:8080/api/order-items/getProfit1Week",
         }).done((data) => {
-            console.log("1ww")
-            let sumTotalOrder = 0;
+             let sumTotalOrder = 0;
             let sumCost = 0;
             let sumProfit = 0;
             $.each(data, (i, item) => {
@@ -365,15 +361,14 @@
                 let nameProduct;
                 let quantity = item.quantity;
                 let totalOrder = 0;
-                let quantityRice = quantity / 2.4;
+                let quantityRice = Math.floor(quantity / 2.4);
                 let cost = quantityRice * 10000;
                 let profit = 0;
                 let days = item.createdAt;
 
                 sumCost += cost;
                 getProductById(item.productId).then((product) => {
-                    console.log(product, "product")
-                    id = product.id;
+                     id = product.id;
                     nameProduct = product.title;
                     totalOrder = quantity * product.price;
                     profit = totalOrder - cost;
@@ -428,8 +423,7 @@
             type: "GET",
             url: "http://localhost:8080/api/profits",
         }).done((data) => {
-            console.log(data,"dataa")
-             let sumTotalOrder = 0;
+              let sumTotalOrder = 0;
             let sumCost = 0;
             let sumProfit = 0;
             let id;
@@ -443,7 +437,6 @@
 
             })
             $.each(data, (i, item) => {
-                console.log(item, "item")
 
                 let cost = item.bag + item.powder + item.staff + item.rice + item.water + item.electric;
                 let turnover = item.turnover;
@@ -452,7 +445,6 @@
                 sumTotalOrder += turnover;
                 sumCost += cost;
                 sumProfit += profit;
-                console.log(cost + "+" + turnover, "cost")
 
                     let str = `
                                 <tr  id="tr_${id}">

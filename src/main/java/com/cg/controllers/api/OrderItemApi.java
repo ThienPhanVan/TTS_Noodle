@@ -80,4 +80,10 @@ public class OrderItemApi {
         List<OrderItemProfit> orderItemProfits= orderItemService.getProfit1Week();
         return new ResponseEntity<>(orderItemProfits,HttpStatus.OK);
     }
+
+    @GetMapping("/getByOrderId/{id}")
+    public ResponseEntity<?> getByOrderId(@PathVariable Long id){
+        List<OrderItemResult> orderItemResultList= orderItemService.findAllByOrderId(id);
+        return new ResponseEntity<>(orderItemResultList,HttpStatus.OK);
+    }
 }
