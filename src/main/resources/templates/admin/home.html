@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
+    <title>Home</title>
 </head>
 
 <body>
@@ -17,6 +18,28 @@
 
     <!-- TOP Nav Bar -->
     <th:block th:replace="/layout/topNav/topNav :: topNav"/>
+    <div class="iq-top-navbar">
+        <div style="margin-top: 13px;" class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+
+                <div class="iq-search-bar">
+                    <div>
+                        <h3 class="text-primary">Tổng Quan</h3>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li class="line-height">
+                        <div></div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -27,7 +50,7 @@
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-primary">
-                                <i class="ri-focus-2-line"></i>
+                                <i class="ri-currency-line"></i>
                             </div>
                             <p class="text-secondary">Doanh Số</p>
                             <div id="doanhSo" class="d-flex align-items-center justify-content-between">
@@ -39,7 +62,7 @@
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-danger">
-                                <i class="ri-pantone-line"></i>
+                                <i class=" ri-funds-line"></i>
                             </div>
                             <p class="text-secondary">Số Đơn Gạo
                             <div id="donNhap" class="d-flex align-items-center justify-content-between">
@@ -52,7 +75,7 @@
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-success">
-                                <i class="ri-database-2-line"></i>
+                                <i class=" ri-funds-fill"></i>
                             </div>
                             <p class="text-secondary">Số Đơn Bún</p>
                             <div id="donXuat" class="d-flex align-items-center justify-content-between">
@@ -65,7 +88,7 @@
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
-                                <i class="ri-pie-chart-2-line"></i>
+                                <i class="ri-money-dollar-circle-fill"></i>
                             </div>
                             <p class="text-secondary">Khách Hàng Nợ</p>
                             <div id="totalDebtCus" class="d-flex align-items-center justify-content-between">
@@ -78,7 +101,7 @@
                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-body iq-box-relative">
                             <div class="iq-box-absolute icon iq-icon-box rounded-circle iq-bg-warning">
-                                <i class="ri-pie-chart-2-line"></i>
+                                <i class="ri-money-dollar-circle-fill"></i>
                             </div>
                             <p class="text-secondary">Nợ NCC</p>
                             <div id="totalDebtSup" class="d-flex align-items-center justify-content-between">

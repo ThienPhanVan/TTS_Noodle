@@ -3,14 +3,12 @@ package com.cg.repositories;
 
 import com.cg.dto.order.*;
 import com.cg.repositories.model.Order;
-import com.cg.repositories.model.OrderStatus;
 import com.cg.repositories.model.OrderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.management.remote.rmi._RMIConnection_Stub;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;

@@ -3,14 +3,15 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
+    <title>Order</title>
 </head>
 
 <body>
 <!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -75,66 +76,11 @@
 
 <!-- Wrapper END -->
 <!-- Footer -->
-<!--<footer class="iq-footer">-->
-<!--    <div class="container-fluid">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-6">-->
-<!--                <ul class="list-inline mb-0">-->
-<!--                    <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>-->
-<!--                    <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="col-lg-6 text-right">-->
-<!--                Copyright 2020 <a href="#">FinDash</a> All Rights Reserved.-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</footer>-->
-<script>
-    var colors = ['#007bff', '#28a745', '#444444', '#c3e6cb', '#dc3545', '#6c757d'];
+<th:block th:replace="/layout/footer/footer.html"></th:block>
 
-    var chBar = document.getElementById("chBar");
-    var chartData = {
-        labels: ["Monday", "Tusday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        datasets: [
 
-            {
-                data: [489, 135, 483, 290, 189, 603, 600],
-                backgroundColor: colors[0]
-            },
-            {
-                data: [639, 465, 493, 478, 589, 632, 674],
-                backgroundColor: colors[1]
-            }]
-    };
-
-    if (chBar) {
-        new Chart(chBar, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                scales: {
-                    xAxes: [{
-                        barPercentage: 0.4,
-                        categoryPercentage: 0.5
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: false
-                        }
-                    }]
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
-    }
-
-</script>
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
-<th:block th:replace="/layout/footer/footer :: footer" />
 <th:block th:replace="/admin/order/modalChangeStatus :: modalChangeStatus" />
 <th:block th:replace="/admin/order/print_order :: print_order"/>
 

@@ -160,13 +160,13 @@ body{
     margin-left: -2rem;
 }
 
-label.error {
-    display: list-item;
-}
+/*label.error {*/
+/*    display: list-item;*/
+/*}*/
 
-input.error {
-    border: solid 1px red;
-}
+/*input.error {*/
+/*    border: solid 1px red;*/
+/*}*/
 .error{
     color: red;
 }
