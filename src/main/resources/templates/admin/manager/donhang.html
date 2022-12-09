@@ -4,6 +4,8 @@
 <head>
     <th:block th:replace="/layout/script/head :: head"></th:block>
     <title>List Order</title>
+    <link rel="stylesheet" href="/assets/css/sinhPrint.css">
+
 </head>
 
 <body>
@@ -77,7 +79,7 @@
 
 </div>
 
-<div class="container-fluid showPrint d-none">
+<div class="container-fluid showPrint">
     <div class="text-left mb-3">
         <h1>TST - NOODLE</h1>
         <h2 class="">Địa chỉ : Số 28 NGUYỄN TRI PHƯƠNG</h2>
@@ -166,7 +168,7 @@
                           <td>${moment(orderItem.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
                           <td> ${createBy}</td>
                           <td>${orderItem.fullName}</td>
-                          <td style="margin-top: 20px;  padding: 4px" class="badge  " >${orderItem.orderStatus}</td>
+                          <td style="margin-top: 20px;  padding: 4px" >${orderItem.orderStatus}</td>
                           <td>${new Intl.NumberFormat('vi-VN').format(orderItem.grandTotal)}</td>
                           <td class="w-45">
                                     <a  class="btn btn-outline-primary"
@@ -229,6 +231,7 @@
         let name;
         let day;
         let customer;
+        let price;
         let createBy = "";
         $.each(role, (i, item) => {
 
