@@ -5082,7 +5082,7 @@ thead{
   background-color: #1e3d73;
   color: white;
   text-align: center;
-  font: initial;
+  /*font: initial;*/
 }
 .panelCart{
   background-color: #fdfbfb;
