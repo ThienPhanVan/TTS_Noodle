@@ -140,7 +140,6 @@
 
 <th:block th:replace="/user/supplier/modalCreateSupplier :: createSupplier"/>
 <th:block th:replace="/layout/footer/footer :: footer" />
-
 <script>
     var colors = ['#007bff', '#28a745', '#444444', '#c3e6cb', '#dc3545', '#6c757d'];
 
@@ -536,48 +535,62 @@
 
         orderPayment.userId = $(".search-supplier").attr("id");
 
-        orderPayment.createdAt = $("#dateID").val();
+        let suplierId = $("#supplier").val();
 
-        orderPayment.paid = $("#cusPayment").val();
-
-        orderPayment.orderItemPurchases = arr;
-
-        $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "POST",
-            url: "http://localhost:8080/api/orders/create/import",
-            data: JSON.stringify(orderPayment)
-        })
-        .done((data) => {
-
-            order = data;
-
-            user = order.user;
-
-            iziToast.success({
-                title: 'OK',
-                position: 'bottomLeft',
-                timeout: 1500,
-                message: 'Nhập hàng thành công!!'
-            });
-
-            window.location.href = ("/purchase");
-        })
-        .fail((jqXHR)=> {
-
-            console.log(jqXHR);
-
+        if ( suplierId  === undefined){
             iziToast.error({
                 title: 'ERROR',
                 position: 'bottomLeft',
                 timeout: 2000,
-                message: 'Nhập hàng thất bại!'
+                message: 'Nhà cung cấp không được để trống!'
             });
+        }else {
 
-        })
+            orderPayment.createdAt = $("#dateID").val();
+
+            orderPayment.paid = $("#cusPayment").val();
+
+            orderPayment.orderItemPurchases = arr;
+
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "POST",
+                url: "http://localhost:8080/api/orders/create/import",
+                data: JSON.stringify(orderPayment)
+            })
+                .done((data) => {
+
+                    order = data;
+
+                    user = order.user;
+
+                    iziToast.success({
+                        title: 'OK',
+                        position: 'bottomLeft',
+                        timeout: 1500,
+                        message: 'Nhập hàng thành công!!'
+                    });
+
+                    window.location.href = ("/purchase");
+                })
+                .fail((jqXHR)=> {
+
+                    console.log(jqXHR);
+
+                    iziToast.error({
+                        title: 'ERROR',
+                        position: 'bottomLeft',
+                        timeout: 2000,
+                        message: 'Nhập hàng thất bại!'
+                    });
+
+                })
+        }
+
+
     }
 
     function handleImportOrder(){

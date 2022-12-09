@@ -526,7 +526,7 @@
                             </li>
                             <li  class="list-group-item">
                                     <span style="float: left">Thanh toán</span>
-                                    <input type="number" name="paidCr" style="float: right; text-align: right" id="paid"/>
+                                    <input type="number" name="paidCr" style="float: right; text-align: right" id="paid_${orderId}"/>
                             </li>
                         </li >
                         <div class="card-body">
@@ -640,39 +640,61 @@
 
             console.log(orderId);
 
-            paymentPurchase.paid = $(`#paid_${paymentPurchase.orderId}`).val();
+            let debt = $(`#debt_${paymentPurchase.orderId}`).text().replaceAll("Nợ", "").replaceAll(" ", "").replaceAll("(","").replaceAll(")", "").replaceAll("đ", "");;
 
-            $.ajax({
-                "headers": {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                "type": "POST",
-                "url": "http://localhost:8080/api/orders/payable",
-                "data": JSON.stringify(paymentPurchase)
-            })
-            .done((data) => {
-                paymentPurchase = data;
+            console.log(debt);
 
-                let newOrderId = orderId.replaceAll("trh_", "");
+            let paid = $(`#paid_${paymentPurchase.orderId}`).val();
 
-                let oldPaid  = $(`#payment_${newOrderId}`).text().replaceAll(" ", "").replaceAll("đ", "");
+            if (paid <= 0){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2000,
+                    message: 'Số tiền thanh toán phải lớn hơn 0!!'
+                });
+            }else
+            if(paid > debt){
+            iziToast.error({
+                title: 'ERROR',
+                position: 'bottomLeft',
+                timeout: 2000,
+                message: 'Số tiền thanh toán phải nhỏ hơn số tiền nợ!!'
+            });
+            }else {
+                paymentPurchase.paid = paid;
 
-                let newPaid = +oldPaid + +paymentPurchase.paid;
+                $.ajax({
+                    "headers": {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    "type": "POST",
+                    "url": "http://localhost:8080/api/orders/payable",
+                    "data": JSON.stringify(paymentPurchase)
+                })
+                    .done((data) => {
+                        paymentPurchase = data;
 
-                let debt = $(`#debt_${newOrderId}`).text().replaceAll(" ", "").replaceAll("đ", "").replaceAll("Nợ", "").replaceAll(")", "").replaceAll("(","");
+                        let newOrderId = orderId.replaceAll("trh_", "");
 
-                console.log(debt);
+                        let oldPaid  = $(`#payment_${newOrderId}`).text().replaceAll(" ", "").replaceAll("đ", "");
 
-                let newDebt = +debt - +paymentPurchase.paid;
+                        let newPaid = +oldPaid + +paymentPurchase.paid;
 
-                console.log(newDebt);
+                        let debt = $(`#debt_${newOrderId}`).text().replaceAll(" ", "").replaceAll("đ", "").replaceAll("Nợ", "").replaceAll(")", "").replaceAll("(","");
 
-                $(`#trh_${newOrderId} .payment_info_tr #trc_${newOrderId} .payment .card`).html("");
+                        console.log(debt);
 
-                $(`#debt_${newOrderId}`).html("");
+                        let newDebt = +debt - +paymentPurchase.paid;
 
-                let std = `
+                        console.log(newDebt);
+
+                        $(`#trh_${newOrderId} .payment_info_tr #trc_${newOrderId} .payment .card`).html("");
+
+                        $(`#debt_${newOrderId}`).html("");
+
+                        let std = `
                   <div class="card">
                         <ul  class="list-group list-group-flush">
                            <li  class="list-group-item">
@@ -690,47 +712,56 @@
                         </li >
                         <div class="card-body">
                             <button class="btn btn-success" type="button" id="doPaid_${newOrderId}">Thanh toán</button>
+                            <button class="btn btn-primary" id="btnPrint_${orderId}">
+                             <i class="fas fa-print"></i>
+                           </button>
                         </div>
-
                   </div>
                    `
 
+                        let stt = `
+                   <i style="color: red;font-size: smaller;" id="debt_${newOrderId}">Nợ (${newDebt} đ)</i>
+                `
 
-
-                $(`#trh_${newOrderId} .payment_info_tr #trc_${newOrderId} .payment .card`).prepend(std);
-
-                let print = `
+                        if (newDebt === 0){
+                            let print = `
                       <div class="">
                           <button style="float: left" class="btn btn-primary" id="btnPrint_${orderId}">
                              <i class="fas fa-print"></i>
                            </button>
                        </div>
                 `
-                $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(print);
+                            $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(print);
 
-                let stt = `
-                   <i style="color: red;font-size: smaller;" id="debt_${newOrderId}">Nợ (${newDebt} đ)</i>
-                `
 
-                $(`#debt_${newOrderId}`).prepend(stt);
+                        }else {
+                            $(`#trh_${newOrderId} .payment_info_tr #trc_${newOrderId} .payment .card`).prepend(std);
 
-                iziToast.success({
-                    title: 'OK',
-                    position: 'bottomLeft',
-                    timeout: 1500,
-                    message: 'Thanh toán đơn hàng thành công!!'
-                });
-                doPaid();
-            })
-            .fail((jqXHR) => {
-                console.log(jqXHR);
-                iziToast.error({
-                    title: 'ERROR',
-                    position: 'bottomLeft',
-                    timeout: 2000,
-                    message: 'Thanh toán đơn hàng thất bại!!'
-                });
-            })
+                            $(`#debt_${newOrderId}`).prepend(stt);
+                        }
+
+                        iziToast.success({
+                            title: 'OK',
+                            position: 'bottomLeft',
+                            timeout: 1500,
+                            message: 'Thanh toán đơn hàng thành công!!'
+                        });
+                        doPaid();
+                        handleShowPrint();
+
+                    })
+                    .fail((jqXHR) => {
+                        console.log(jqXHR);
+                        iziToast.error({
+                            title: 'ERROR',
+                            position: 'bottomLeft',
+                            timeout: 2000,
+                            message: 'Thanh toán đơn hàng thất bại!!'
+                        });
+                    })
+            }
+
+
         })
     }
 
