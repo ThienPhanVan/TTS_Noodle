@@ -3439,7 +3439,7 @@ button.close-popup {
 .custom-radio.custom-radio-color input.bg-primary~label::before,
 .custom-radio.custom-radio-color-checked input:checked.bg-primary~label::before,
 .custom-switch.custom-switch-color input:checked.bg-primary~label::before {
- 
+
   border-color: var(--iq-primary) !important;
 }
 
@@ -5082,7 +5082,6 @@ thead{
   background-color: #1e3d73;
   color: white;
   text-align: center;
-  font: initial;
 }
 .panelCart{
   background-color: #fdfbfb;
