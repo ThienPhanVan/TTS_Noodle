@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +27,10 @@ public class OrderItemView {
 
     private BigDecimal grandTotal;
 
+    private Instant createdAt;
+
     private BigDecimal paid;
+
+
 
 }

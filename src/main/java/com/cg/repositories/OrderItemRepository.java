@@ -48,6 +48,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
                 "pd.title," +
                 "u.fullName," +
                 "o.grandTotal," +
+                "o.createdAt," +
                 "SUM(p.paid)" +
                 ")" +
                 "FROM OrderItem AS oi " +

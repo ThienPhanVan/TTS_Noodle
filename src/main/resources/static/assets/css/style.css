@@ -5079,9 +5079,10 @@ body.two-sidebar.sidebar-main .iq-sidebar {
   text-align: right;
 }
 thead{
-  /*background-color: #1e3d73;*/
-  color: black;
+  background-color: #1e3d73;
+  color: white;
   text-align: center;
+  font: initial;
 }
 .panelCart{
   background-color: #fdfbfb;
@@ -5095,4 +5096,7 @@ thead{
 }
 .card-title{
   padding-bottom: 15px;
+}
+.table{
+  width: 100%;
 }

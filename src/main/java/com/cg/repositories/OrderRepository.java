@@ -3,7 +3,6 @@ package com.cg.repositories;
 
 import com.cg.dto.order.*;
 import com.cg.repositories.model.Order;
-import com.cg.repositories.model.OrderStatus;
 import com.cg.repositories.model.OrderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -38,8 +37,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     OrderResultPaidDTO findOrderByIdPaidCustomer(@Param("orderId") Long id);
 
 
-    List<Order> findAllByOrderStatus(OrderStatus orderStatus);
-
     @Query(name = "sp_chartSevenDay", nativeQuery = true)
     List<OrderResultChart> findOrderSevenDay();
 
@@ -71,11 +68,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "o.orderType, " +
             "o.orderStatus, " +
             "o.grandTotal, " +
-            "p.paid) " +
+            "SUM(p.paid)) " +
             "FROM Order AS o " +
             "JOIN User AS u ON u.id = o.userId " +
             "JOIN PaymentPurchase AS p ON p.orderId = o.id " +
-            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'")
+            "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') AND o.orderType = 'PURCHASE'" +
+            "GROUP BY o.id" )
     List<OrderPurchaseView> findOrderByFullNameContainsAndOrderType(@Param("keySearch") String keySearch);
 
 
@@ -94,8 +92,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "WHERE u.fullName LIKE CONCAT('%',:keySearch,'%') OR u.address LIKE CONCAT('%',:keySearch,'%')  AND o.orderType = 'CUSTOMER' ")
     List<OrderResultDTO> findOrderByFullNameAndAddressContainsAndOrderType(@Param("keySearch") String keySearch);
 
-    @Query(value = "call noodle.getallorderbyrole()", nativeQuery = true)
-    List<Order> getAllOrderByRole();
 
     @Query(value = "call totalOneday()", nativeQuery = true)
     BigDecimal chartOneDay();

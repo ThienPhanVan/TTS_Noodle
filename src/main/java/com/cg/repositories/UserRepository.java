@@ -16,7 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
       User getByUsername(String username);
 
-     Optional<User> findByUsername(String username);
+      Optional<User> findByUsername(String username);
+
     List<User> getAllByRoleId(long id);
 
 //    @Query(value = "SELECT new com.cg.dto.userDTO.UserResult (" +
@@ -32,7 +33,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "WHERE u.fullName LIKE %?1% " +
 //            "OR u.phone LIKE %?1% ")
 //    List<User> findUserByFullNameOrPhone(String keyword);
-
     boolean findUserByRoleId (Long roleId);
 
     @Query(value =
@@ -43,16 +43,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
 
-    @Query(value = "FROM User AS u WHERE u.roleId = 2 and u.fullName LIKE %?1% ")
+    @Query(value = "FROM User AS u WHERE u.roleId = 2 and u.fullName LIKE %?1%")
     List<User> searchCustomer(String keyword);
 
-    @Query(value = "FROM User AS u WHERE u.roleId = 3 and u.fullName LIKE %?1% ")
+    @Query(value = "FROM User AS u WHERE u.roleId = 3 and u.fullName LIKE %?1%")
     List<User> searchSupplier(String keyword);
 
     @Query(value = "SELECT SUM(o.grandTotal) FROM  Order o where o.userId = :id")
     BigDecimal totalOrderOfUser(@Param("id") Long id);
 
-
-
-//
 }

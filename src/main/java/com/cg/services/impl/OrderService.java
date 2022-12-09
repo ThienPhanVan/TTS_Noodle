@@ -90,6 +90,7 @@ public class OrderService implements IOrderService {
     @Transactional
     public OrderResult createOrderExport(OrderParam orderParam) {
         //order Item
+        Double quantityPrice = 0.0;
         Long userId = orderParam.getUserId();
         if (userId != null && !userRepository.existsById(userId))
             throw new NotFoundException("Id khach hang khong hop le");
@@ -117,6 +118,7 @@ public class OrderService implements IOrderService {
             BigDecimal price = productOptional.get().getPrice();
             // lấy số lượng customer order
             int quantityCustomer = itemParam.getQuantity();
+            quantityPrice = (quantityCustomer/2.4);
             //tổng giá sản phẩm = giá sản phẩm * số lượng sản phẩm khách hàng order
             grandTotal = price.multiply(new BigDecimal(quantityCustomer));
             order.setGrandTotal(grandTotal);
@@ -133,10 +135,11 @@ public class OrderService implements IOrderService {
                 if (quantityCustomer == 0) {
                     break;
                 }
+
                 int available = item.getAvailable();
                 int orderItemSold;
                 if (quantityCustomer >= available) {
-                    quantityCustomer = quantityCustomer - available;
+                    quantityCustomer = (quantityCustomer - available);
                     item.setAvailable(0);
                     orderItemSold = available;
                     int itemSold = item.getSold() + available;
@@ -149,6 +152,7 @@ public class OrderService implements IOrderService {
                     item.setSold(itemSold);
                     quantityCustomer = 0;
                 }
+
                 OrderItem orderItem = new OrderItem();
                 orderItem.setQuantity(orderItemSold);
                 orderItem.setProductId(item.getProductId());
@@ -161,8 +165,6 @@ public class OrderService implements IOrderService {
         PaymentCustomer paymentCustomer = new PaymentCustomer();
 
         BigDecimal paymentInput = orderParam.getPaid();
-        BigDecimal newTotal = new BigDecimal(0);
-        BigDecimal totalAmount = grandTotal.subtract(paymentInput);
         paymentCustomer.setOrderId(order.getId());
 
         if (userId == null) {
@@ -192,53 +194,17 @@ public class OrderService implements IOrderService {
         }
     }
 
-    @Override
-    public List<OrderListPurchase> findAllByOrderTypePurchaseList() {
-        return orderRepository.findAllByOrderType(OrderType.PURCHASE)
-                .stream()
-                .map(order -> orderMapper.toDTOList(order))
-                .collect(Collectors.toList());
-    }
 
-    @Override
-    public List<OrderListPurchase> findAllByOrderTypeCustomerList() {
-        return orderRepository.findAllByOrderType(OrderType.CUSTOMER)
-                .stream()
-                .map(order -> orderMapper.toDTOList(order))
-                .collect(Collectors.toList());
-    }
 
-    @Override
-    public List<OrderResult> findAllByOrderTypePurchase() {
-        return orderRepository.findAllByOrderType(OrderType.PURCHASE).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
-    }
+
+
+
 
     @Override
     public List<OrderResult> findAllByOrderTypeCustomer() {
         return orderRepository.findAllByOrderType(OrderType.CUSTOMER)
                 .stream().map(order -> orderMapper.toDTO(order))
                 .collect(Collectors.toList());
-    }
-
-//    @Override
-//    public List<OrderResult> findAllByCreatedAtAndOrderType(Instant data, OrderType orderType) {
-//        return orderRepository.findAllByCreatedAtAndOrderType(data, OrderType.CUSTOMER)
-//                .stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
-//    }
-
-    @Override
-    public List<OrderResult> findAllByOrderStatusPending() {
-        return orderRepository.findAllByOrderStatus(OrderStatus.PENDING).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OrderResult> findAllByOrderStatusComplete() {
-        return orderRepository.findAllByOrderStatus(OrderStatus.COMPLETED).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OrderResult> findAllByOrderStatusCancel() {
-        return orderRepository.findAllByOrderStatus(OrderStatus.CANCELLED).stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 
 
@@ -340,15 +306,6 @@ public class OrderService implements IOrderService {
 
 
     @Override
-    public List<OrderListPurchase> searchOrderBySupplierOOrCreatedAt(String keyword) {
-        return null;
-//        return orderRepository.searchOrderBySupplierOOrCreatedAt(keyword)
-//                .stream()
-//                .map(order -> orderMapper.toDTOList(order))
-//                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<OrderResult> findAllByUserId(Long userId) {
         return orderRepository.findOrderByUserId(userId).stream()
                 .map(order -> orderMapper.toDTO(order))
@@ -365,11 +322,11 @@ public class OrderService implements IOrderService {
 
         return orderRepository.findAllOrderPurchase();
     }
-
-    @Override
-    public List<OrderResult> getAllOrderByRole() {
-        return orderRepository.getAllOrderByRole().stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
-    }
+//
+//    @Override
+//    public List<OrderResult> getAllOrderByRole() {
+//        return orderRepository.getAllOrderByRole().stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+//    }
 
     @Override
     public List<OrderPurchaseDTO> findAllOrderPurchaseStatusPending() {
@@ -431,21 +388,6 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderResultDTOS> findAllOrderStatusPending() {
         return orderRepository.findAllOrderStatusPending();
-    }
-
-    @Override
-    public OrderResultDTO setStatusOrderPending(Long id) {
-//        Optional<Order> orderOptional = orderRepository.findById(orderChangeStatus.getId());
-//
-//        Order newOrder = orderOptional.get();
-//
-//        System.out.println(newOrder);
-//
-//        newOrder.setOrderStatus(orderChangeStatus.getOrderStatus());
-//
-//        orderRepository.save(newOrder);
-
-        return null;
     }
 
     @Transactional
@@ -540,7 +482,7 @@ public class OrderService implements IOrderService {
         //kiem tra order ton tai
 
         if (!orderOpt.isPresent())
-            System.out.println("tu xu");
+            System.out.println("Id khách hàng không tồn tại!");
         //throw
         Order order = orderOpt.get();
         BigDecimal grandTotal =order.getGrandTotal();
@@ -557,7 +499,6 @@ public class OrderService implements IOrderService {
 //            newAmount = newAmount.add(amount);
 //        }
         BigDecimal newTotal = newwTotal.add(paid);
-
         PaymentCustomer newPaymentCustomer = new PaymentCustomer();
 //        if (grandTotal.compareTo(newTotal) > 0) {
 //
@@ -572,10 +513,9 @@ public class OrderService implements IOrderService {
 //
 //        }
         if (grandTotal.compareTo(newTotal) < 0) {
-            throw new DataInputException("Lỗi hệ thống vui lòng liên hệ quản trị viên!!");
+            throw new DataInputException("Vui lòng nhập đúng số tiền cần trả!!");
         }
         if (grandTotal.compareTo(newTotal) == 0) {
-
             order.setOrderStatus(OrderStatus.COMPLETED);
 
 //            newPaymentCustomer.setUserId(userId);
@@ -585,7 +525,6 @@ public class OrderService implements IOrderService {
 //            paymentCustomerRepository.save(newPaymentCustomer);
 //
 //            return paymentMapper.toDTO(newPaymentCustomer);
-
         }
         newPaymentCustomer.setUserId(userId);
         newPaymentCustomer.setOrderId(orderCustomerPaid.getOrderId());
