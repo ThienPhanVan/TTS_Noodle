@@ -468,6 +468,7 @@
         })
 
         $(".grandTotal").attr("grandTotal", grandTotal);
+
         $(".grandTotal").text(App.formatNumberSpace(grandTotal + "đ"));
 
     }
@@ -581,9 +582,13 @@
     function handleImportOrder(){
         $("#btnImportOrder").on("click", () => {
 
-            let grandTotal = +$("#grandTotal").text();
+            let grandTotal = +$(".grandTotal").text();
+
+            console.log(grandTotal)
 
             let payment = +$("#cusPayment").val();
+
+            console.log(payment);
 
             let quantity = $("#productQuantity").val();
 
@@ -607,6 +612,14 @@
                 });
             }
 
+            if (payment == ""){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2500,
+                    message: 'Vui lòng nhập số tiền thanh toán!!'
+                });
+            }else
             if (payment > grandTotal){
                 iziToast.error({
                     title: 'ERROR',
@@ -614,16 +627,17 @@
                     timeout: 2500,
                     message: 'Số tiền thanh toán phải nhỏ hơn tổng giá trị đơn hàng!!'
                 });
-            }
-            if (payment < 0){
+            }else if (payment < 0){
                 iziToast.error({
                     title: 'ERROR',
                     position: 'bottomLeft',
                     timeout: 2500,
                     message: 'Số tiền thanh toán phải lớn hơn 0!'
                 });
+            }else {
+                importPurchaseOrder();
             }
-            importPurchaseOrder();
+
         })
     }
 
