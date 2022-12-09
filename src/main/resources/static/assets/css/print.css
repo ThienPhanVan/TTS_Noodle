@@ -57,26 +57,34 @@ thead{
 }
 
 @media print {
-    body *:not(#showPrint):not(#showPrint *){
-        visibility: hidden;
-    }
-    #showPrint{
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-    /*head .noPrint {*/
-    /*    display: none !important;*/
+
+    /*body *:not(#showPrint):not(#showPrint *){*/
+    /*    visibility: hidden;*/
     /*}*/
-    /*.noPrint {*/
-    /*    display: none !important;*/
-    /*}*/
+
+    .content-page{
+        display: none;
+    }
+   .col-lg-5{
+       display: none;
+   }
+    .title_menu{
+        display: none;
+    }
+    .button_create_order{
+        display: none;
+    }
+    .fade{
+        display: none;
+    }
+    .showPrint{
+        display: block;
+    }
 }
-
-@page {
+@page  {
     size: A4 landscape;
-    margin: 10%;
-
+    margin-bottom: auto;
+    margin-top: auto;
 }
 
 .center {

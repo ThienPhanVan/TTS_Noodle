@@ -37,8 +37,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value =
             "FROM User AS u " +
-                    "WHERE u.fullName LIKE %:keyword%" +
-                    "OR u.phone LIKE %:keyword%")
+                    "WHERE u.fullName LIKE %:keyword% " +
+                    "OR u.phone LIKE %:keyword% ")
     List<User> findAllByFullNameOrPhone(String keyword);
 
 

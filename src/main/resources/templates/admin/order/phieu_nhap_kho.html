@@ -262,6 +262,7 @@
                 $("#tbListOrder tbody").prepend(std);
             }
             handleClick();
+            doPaid();
         })
         .fail((jqXHR) => {
             console.log(jqXHR);
@@ -547,6 +548,20 @@
     return std;
     }
 
+    function renderBill(orderItem){
+
+        let std = `
+                            <tr >
+                                <td class="">${orderItem.title}</td>
+                                <td class="text-end">${orderItem.quantity}</td>
+                                <td class="text-end">${App.formatNumberSpace(orderItem.price)}</td>
+                                <td class="text-end">${App.formatNumberSpace(orderItem.price*orderItem.quantity)}</td>
+                             </tr>
+                    `
+
+        return std;
+    }
+
     function handleUpdatePayment(){
 
         $.ajax({
@@ -563,7 +578,7 @@
             $("#renderBills tbody").html("");
             $("#payment").html("");
 
-
+            let std = null;
 
             $.each(data, (i,item)=>{
 
@@ -575,16 +590,9 @@
 
                 $(`#trh_${orderId}`).removeClass("hide").addClass("show");
 
-                let std = `
-                             <tr >
-                                <td class="">${orderItem.title}</td>
-                                <td class="text-end">${orderItem.quantity}</td>
-                                <td class="text-end">${App.formatNumberSpace(orderItem.price)}</td>
-                                <td class="text-end">${App.formatNumberSpace(orderItem.price*orderItem.quantity)}</td>
-                             </tr>
-                           `
 
-                $("#renderBills tbody").prepend(std);
+                std = renderBill(orderItem);
+
                 $("#customerBills span").text(orderItem.fullName);
                 $("#totalAmountBills").text(App.formatNumberSpace((orderItem.grandTotal)) + " đ")
 
@@ -594,13 +602,18 @@
                     <td colspan="3" class="fw-bold" style="font-weight: 700;">Đã thanh toán: </td>
                     <td id="totalPayments">${paid} đ</td>
                 `
+
+
                 $("#payment").append(stt);
+                $("#renderBills tbody").prepend(std);
 
                 let newDate = new Date();
                 $("#timeBills span").text(moment(orderItem.createdAt).format("DD/MM/YYYY - hh:mm:ss"))
                 $("#timeSendBills span").text(moment(newDate).format("DD/MM/YYYY - hh:mm:ss"));
 
             })
+
+
 
 
 
@@ -646,6 +659,8 @@
 
             let paid = $(`#paid_${paymentPurchase.orderId}`).val();
 
+            console.log(paid)
+
             if (paid <= 0){
                 iziToast.error({
                     title: 'ERROR',
@@ -653,14 +668,13 @@
                     timeout: 2000,
                     message: 'Số tiền thanh toán phải lớn hơn 0!!'
                 });
-            }else
-            if(paid > debt){
+            }else if(paid > debt){
             iziToast.error({
                 title: 'ERROR',
                 position: 'bottomLeft',
                 timeout: 2000,
                 message: 'Số tiền thanh toán phải nhỏ hơn số tiền nợ!!'
-            });
+            })
             }else {
                 paymentPurchase.paid = paid;
 
