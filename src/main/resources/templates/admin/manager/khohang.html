@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"></th:block>
+    <title>Warehouse</title>
 
 </head>
 
@@ -19,7 +20,26 @@
 
     <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
     <!-- TOP Nav Bar -->
-    <th:block th:replace="/layout/topNav/topNav :: topNav"></th:block>
+     <div class="iq-top-navbar">
+        <div style="margin-top: 13px;" class="iq-navbar-custom">
+            <nav class="navbar navbar-expand-lg navbar-light p-0">
+
+                <div class="iq-search-bar">
+                    <h4 class="text-primary font-weight-bolder">Thông Tin Kho Hàng</h4>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-list">
+
+                    </ul>
+                </div>
+                <ul class="navbar-list">
+                    <li class="line-height">
+                        <div></div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- TOP Nav Bar END -->
 
     <!-- Page Content  -->
@@ -28,18 +48,13 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
-                        <div class="iq-card-header d-flex justify-content-between">
-                            <div class="iq-header-title">
-                                <a class="font-size-20 font-weight-bold" href="/khohang">Kho Hàng Hóa</a>
-                            </div>
-                        </div>
                         <div>
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item  ">
-                                    <a class="nav-link active " href="#rice" role="tab" data-toggle="tab">Gạo</a>
+                                    <a class="nav-link active font-weight-bolder " href="#rice" role="tab" data-toggle="tab">Gạo</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#noodle" role="tab" data-toggle="tab">Bún</a>
+                                    <a class="nav-link font-weight-bold" href="#noodle" role="tab" data-toggle="tab">Bún</a>
                                 </li>
                             </ul>
 
@@ -57,7 +72,7 @@
                                                     <th>Tên</th>
                                                     <th>Số Lượng</th>
                                                     <th>Vốn Tồn Kho (đ)</th>
-                                                    <th>...</th>
+                                                    <th>Chi tiết</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody class="text-center">
@@ -81,7 +96,6 @@
                                                     <th>Số Lượng</th>
                                                     <th>Đã Bán</th>
                                                     <th>Giá Trị Tồn (đ)</th>
-<!--                                                    <th>...</th>-->
                                                 </tr>
                                                 </thead>
                                                 <tbody class="text-center">
@@ -148,9 +162,10 @@
                             console.log(noodle, "noodel")
                             available += noodle.available;
                             sold += noodle.sold ;
-                            sum = noodle.available * noodle.price;
-                            console.log(noodle, "2")
+                            sum = available * noodle.price;
+
                         })
+                        console.log(sum, "2")
                         let strNoodle = `
                         <tr id="tr_${item.id}">
                             <td>${item.id}</td>

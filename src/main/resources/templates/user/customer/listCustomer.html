@@ -26,7 +26,7 @@
                 <div class="iq-search-bar">
                     <form class="searchbox">
                         <label>
-                            <input id="inputSearch" type="text" class="text search-input" placeholder="Search...">
+                            <input th:autocomplete="off" id="inputSearch" type="text" class="text search-input" placeholder="Search...">
                         </label>
                         <a id="btnSearch" class="search-link"><i class="ri-search-line"></i></a>
                     </form>
@@ -77,7 +77,7 @@
                                         <th>Tổng tiền (đ)</th>
                                         <th>Nợ (đ)</th>
                                         <th>Lần Cuối MH</th>
-                                        <th>Action</th>
+                                        <th id="action">Tùy Chọn</th>
                                     </tr>
                                     </thead>
                                     <tbody class="text-center">
@@ -176,24 +176,20 @@
                 let paymentCustomer = 0;
                 getPaymentByUserid(userList.id).then((payment) => {
                     $.each(payment, (i, paymentList) => {
-                        // console.log(paymentList, "payment")
-                        paymentCustomer += paymentList.paid;
+                         paymentCustomer += paymentList.paid;
                     })
-                    console.log(paymentCustomer, "tiền trả")
                 })
                 let total = 0;
                 let days;
-                let debts= 0;
+                let debts = 0;
                 getOrderById(userList.id).then((orderItem) => {
-                     $.each(orderItem, (i, orders) => {
-                        // console.log(orders, "order")
-                        total += orders.grandTotal;
+                    $.each(orderItem, (i, orders) => {
+                         total += orders.grandTotal;
                         days = orders.createdAt;
                         totalOrder += orders.grandTotal
-                         debts = total - paymentCustomer;
+                        debts = total - paymentCustomer;
                     })
                     totalDebts += debts;
-                    console.log(paymentCustomer, "nợ")
                     let str = `
                 <tr id="tr_${userList.id}">
                     <td><img height="50" src=${userList.avatarUrl} alt="noavatar"></td>
@@ -220,7 +216,7 @@
             let sum = `
                 <span>Khách Hàng: ${data.length} / </span>
                 <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN').format(totalOrder)} / </span>
-                <span class="i text-danger"> Tổng nợ:${new Intl.NumberFormat('vi-VN').format(totalDebts)} </span>
+                <span class="i text-danger"> Tổng nợ: ${new Intl.NumberFormat('vi-VN').format(totalDebts)} </span>
                 `;
             $("#totalCus").prepend(sum);
 
@@ -244,8 +240,7 @@
                 async: false,
                 url: "http://localhost:8080/api/orders/byIdUser/" + userId,
             }).done((data) => {
-                // console.log(data,"data")
-            }).fail((jxHQR) => {
+             }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
         )
@@ -293,6 +288,11 @@
 
     let btnCreate = $("#btnCreateCus");
     btnCreate.on("click", function () {
+        $('#formCreate').submit();
+    })
+
+    // btnCreate.on("click", function () {
+    function doCreate() {
         let createUser = {
             "roleId": 0,
             "fullName": $('#nameCus').val(),
@@ -301,7 +301,6 @@
             "address": $('#addressCus').val(),
             "avatarUrl": "https://img.pikbest.com/png-images/qianku/default-avatar_2404265.png!bw700",
         }
-        // console.log(createUser)
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -321,12 +320,19 @@
         }).fail((jqHRX) => {
             console.log(jqHRX)
         });
-    })
+
+    }
 
     $("#modalCreateCustomer").on("hidden.bs.modal", function () {
         $("#frmCreateCus")[0].reset();
+        $("#frmCreateCus").validate().resetForm();
         $('#modalCreateCustomer .modal-alert-danger').removeClass('show').addClass('hide');
     });
+    $("#btnCreateCus").on("click", function () {
+        $('#modalCreateCustomer .modal-alert-danger').removeClass('show').addClass('hide');
+        $("#modalCreateCustomer .modal-alert-danger").empty();
+        $('#frmCreateCus').submit();
+    })
 
 
     function showModalUpdateCus() {
@@ -334,8 +340,7 @@
             let userId = $(this).data("id");
             getUserById(userId).then((data) => {
 
-                console.log(data, "dataa0f  ;p")
-                $('#idCusUp').val(userId)
+                 $('#idCusUp').val(userId)
                 $('#nameCusUp').val(data.fullName);
                 $('#emailCusUp').val(data.email);
                 $('#phoneCusUp').val(data.phone);
@@ -348,7 +353,12 @@
     }
 
     let btnUpdateCus = $('#btnUpdateCus');
+
     btnUpdateCus.on('click', function () {
+        $('#btnUpdateCus').submit();
+    })
+
+    function doUpdate() {
         let userId = $('#idCusUp').val();
 
         let updateUser = {
@@ -359,9 +369,9 @@
             "avatarUrl": $('#avatarUp').val(),
         }
         let total = 0;
-        let days ;
+        let days;
         let debt = 0;
-        let totalDebt= 0;
+        let totalDebt = 0;
         getPaymentByUserid(userId).then((paymentId) => {
             $.each(paymentId, (i, itemPayment) => {
                 debt += itemPayment.paid;
@@ -369,7 +379,7 @@
         })
         getOrderById(userId).then((orderId) => {
             $.each(orderId, (i, itemOrder) => {
-                 total += itemOrder.grandTotal;
+                total += itemOrder.grandTotal;
                 days = itemOrder.createdAt
                 totalDebt = total - debt;
             })
@@ -392,8 +402,8 @@
                     <td>${user.email}</td>
                     <td>${user.phone}</td>
                     <td>${user.address}</td>
-                    <td>${total}</td>
-                    <td style="color: red">${totalDebt} </td>
+                    <td>${new Intl.NumberFormat('vi-VN').format(total)}</td>
+                    <td style="color: red">${new Intl.NumberFormat('vi-VN').format(totalDebt)} </td>
                     <td >${days === undefined ? "Chưa Mua Hàng" : moment(days).format("DD/MM/YYYY - hh:mm")}</td>
                     <td class="w-45">
                                <a class="btn btn-outline-warning update" data-id="${user.id}" data-toggle="tooltip"
@@ -414,7 +424,7 @@
             console.log(jqHRX)
         });
 
-    })
+    }
 
     function doSearchUser() {
         $('#btnSearch').on('click', function () {
@@ -428,15 +438,32 @@
                 type: "GET",
                 url: "http://localhost:8080/api/users/searchCus/" + keyword
             }).done((data) => {
+                let totalOrder = 0;
+                let totalDebts = 0;
                 $.each(data, (i, user) => {
                     let total = 0;
                     let days = "Chưa Mua Hàng";
+                    let debt = 0;
+                    let totalDebt = 0;
+
+                    getPaymentByUserid(user.id).then((paymentId) => {
+                        $.each(paymentId, (i, itemPayment) => {
+                            debt += itemPayment.paid;
+                        })
+                    })
+
                     getOrderById(user.id).then((userId) => {
                         $.each(userId, (i, itemUser) => {
                             total += itemUser.grandTotal;
                             days = itemUser.createdAt;
+                            totalDebt = total - debt
+
                         })
+                        totalOrder += total;
+                        totalDebts += totalDebt;
+
                     })
+
                     let str =
                         ` <tr id="tr_${user.id}">
                     <td><img height="50" src=${user.avatarUrl} alt="noavatar"></td>
@@ -444,19 +471,21 @@
                     <td>${user.email}</td>
                     <td>${user.phone}</td>
                     <td>${user.address}</td>
-                    <td >${total} </td>
-                    <td id="crb">${0}</td>
+                    <td >${new Intl.NumberFormat('vi-VN').format(total)} </td>
+                    <td style="color: red;">${new Intl.NumberFormat('vi-VN').format(totalDebt)}</td>
                     <td >${moment(days).format("DD/MM/YYYY - hh:mm")}</td
-                    <td class="w-45">
-                               <a class="btn btn-outline-warning update" data-id="${user.id}" data-toggle="tooltip"
-                                data-toggle="modal" data-target="#modalUpdateCus"
-                                data-original-title="Edit" >
-                                  <i class="ri-pencil-line" ></i>
-                               </a>
-                    </td>
-                </tr>   `;
+
+                            </tr>   `;
+                    $('#action').hide();
                     $('#tbCustomer tbody').prepend(str)
-                    showModalUpdateCus()
+
+                    let sum = `
+                        <span>Khách Hàng: ${data.length} / </span>
+                        <span class="bold text-primary">Tổng tiền: ${new Intl.NumberFormat('vi-VN').format(totalOrder)} / </span>
+                        <span class="i text-danger"> Tổng nợ:${new Intl.NumberFormat('vi-VN').format(totalDebts)} </span>
+                        `;
+                    $("#totalCus").html(sum);
+
                 })
             }).fail((jqXHR) => {
                 console.log(jqXHR)
@@ -466,6 +495,127 @@
 
     doSearchUser();
 
+
+    $("#frmCreateCus").validate({
+        rules: {
+            nameCus: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+
+            },
+            emailCus: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            phoneCus: {
+                required: true,
+                minlength: 5,
+                maxlength: 12
+            },
+            addressCus: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            }
+        },
+        messages: {
+            nameCus: {
+                required: "Tên không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            emailCus: {
+                required: "Email không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            phoneCus: {
+                required: "Số điện thoại không được trống !",
+                max: "Số không quá tối đa 12"
+            },
+            addressCus: {
+                required: "Địa chị không được trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            }
+        },
+        onkeyup: function (element) {
+            $(element).valid()
+        },
+        onclick: false,
+        onfocusout: false,
+        submitHandler: function () {
+            doCreate();
+        }
+    })
+
+    $("#modalUpdateCus").on("hidden.bs.modal", function () {
+        $("#frmUpdateCus")[0].reset();
+        $("#frmUpdateCus").validate().resetForm();
+        $('#modalUpdateCus .modal-alert-danger').removeClass('show').addClass('hide');
+    });
+    $("#btnUpdateCus").on("click", function () {
+        $('#modalUpdateCus .modal-alert-danger').removeClass('show').addClass('hide');
+        $("#modalUpdateCus .modal-alert-danger").empty();
+        $('#frmUpdateCus').submit();
+    })
+
+    $("#frmUpdateCus").validate({
+        rules: {
+            nameCusUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+
+            },
+            emailCusUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            phoneCusUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 12
+            },
+            addressCusUp: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            }
+        },
+        messages: {
+            nameCusUp: {
+                required: "Tên không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            emailCusUp: {
+                required: "Email không được để trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            },
+            phoneCusUp: {
+                required: "Số điện thoại không được trống !",
+                maxlength: "Số không quá tối đa 12 kí tự"
+            },
+            addressCusUp: {
+                required: "Địa chị không được trống !",
+                minlength: "Tên tối thiểu 5 ký tự",
+                maxlength: "Tên tối đa 50 ký tự"
+            }
+        },
+        onkeyup: function (element) {
+            $(element).valid()
+        },
+        onclick: false,
+        onfocusout: false,
+        submitHandler: function () {
+            doUpdate();
+        }
+    })
 
 </script>
 

@@ -27,6 +27,17 @@ class App {
                 message: t
             });
         }
+        static showSuccessProfit(){
+            return  Swal.fire({
+                title: "Bạn Muốn Đến Trang Lợi Nhuận Không ?",
+                icon: 'question',
+                iconHtml: "?",
+                confirmButtonText: "Có",
+                cancelButtonText: "Không",
+                showCancelButton: true,
+                showCloseButton: true
+            })
+        }
     };
 
     static sweetAlert = class {

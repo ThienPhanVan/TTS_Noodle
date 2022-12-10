@@ -3,6 +3,9 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"></th:block>
+    <title>List Order</title>
+    <link rel="stylesheet" href="/assets/css/sinhPrint.css">
+
 </head>
 
 <body>
@@ -13,7 +16,7 @@
 </div>
 <!-- loader END -->
 <!-- Wrapper Start -->
-<div class="wrapper">
+<div class="wrapper noPrint">
     <!-- Sidebar  -->
 
     <th:block th:replace="/layout/sidebar/left_side_bar.html"></th:block>
@@ -32,22 +35,7 @@
                                 <a class="font-size-20 font-weight-bold" href="/customer">Đơn Hàng</a>
                             </div>
                         </div>
-<!--                        <div class="list_form_show">-->
-<!--                            <div class="filter_product_box">-->
-<!--                                <nav class="navbar navbar-light bg-light">-->
-<!--                                    <form class="form-inline">-->
-<!--                                        <input id="inputSearch" style="margin-left: -16px"-->
-<!--                                               class="form-control form-control-sm mr-sm-1"-->
-<!--                                               type="search" placeholder="Tìm kiếm" aria-label="Search">-->
-<!--                                        <div id="btnSearch" class="input-group-append">-->
-<!--                                            <button class="btn btn-outline-warning" type="button">-->
-<!--                                                <i class="fa fa-search"></i>-->
-<!--                                            </button>-->
-<!--                                        </div>-->
-<!--                                    </form>-->
-<!--                                </nav>-->
-<!--                            </div>-->
-<!--                        </div>-->
+
                         <div class="iq-card-body">
                             <div class="table-responsive">
                                 <input type="hidden" id="currentRow">
@@ -89,30 +77,70 @@
 
     <!-- Footer END -->
 
-    <!-- modal them khach hang -->
-    <th:block th:replace="/user/customer/modalCreateCustomer :: createCustomer"></th:block>
-
-    <th:block th:replace="/user/customer/modalUpdateCustomer :: updateCustomer"></th:block>
-
-    <!--    End modal create-->
 </div>
+
+<div class="container-fluid showPrint">
+    <div class="text-left mb-3">
+        <h1>TST - NOODLE</h1>
+        <h2 class="">Địa chỉ : Số 28 NGUYỄN TRI PHƯƠNG</h2>
+        <h2 class="">Điện thoại: 023-456-7891 </h2>
+    </div>
+
+    <div class="text-center mt-5 fw-bold"><h1>ĐƠN HÀNG</h1></div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div id="dayCre" class="fw-bold font-size-40">Ngày bán: <span></span></div>
+            <div id="createBy" class="fw-bold font-size-40">Người bán: <span></span></div>
+            <div id="cus" class="fw-bold font-size-40 ">Khách hàng: <span></span></div>
+        </div>
+    </div>
+
+
+    <table class="font-size-40 table mt-2" id="tbPrintOrder">
+        <thead>
+        <tr class="text-center mr-3">
+            <th>STT</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Giá</th>
+            <th>Số Lượng</th>
+            <th>Thành tiền (đ)</th>
+        </tr>
+        </thead>
+        <tbody class="text-center">
+
+        </tbody>
+    </table>
+    <hr>
+    <div class="col-12">
+        <div id="totalBills" class="fw-bold font-size-40 mt-4">Tổng tiền hàng: <span></span></div>
+    </div>
+
+    <div style="position: absolute; bottom: 100px;left: 410px" class=" font-size-40">Cảm ơn quý khách hẹn gặp lại !
+    </div>
+</div>
+
 <!--<script src="/static/assets/js/app.js"></script>-->
 <th:block th:replace="/layout/script/footer :: footer"></th:block>
 </body>
 
 <script>
+
     let order = new Order();
     let user = new User()
     let role = new Role();
+    let product = new Product();
 
     function enableTootip() {
         $('[data-toggle="tooltip"]').tooltip();
     }
+
     enableTootip();
 
     console.log(user)
 
+
     function loadOrderCustomer() {
+        // $(".showPrint").css("display", "none")
         $.ajax({
             headers: {
                 'accept': "application/json",
@@ -121,33 +149,30 @@
             type: "GET",
             url: "http://localhost:8080/api/orders/exports"
         }).done((data) => {
-            console.log(data,  "customer")
+            // console.log(data, "customer")
             let createBy = "";
             $.each(role, (i, item) => {
 
-                 if (item.id === 1) {
+                if (item.id === 1) {
                     createBy = item.code
                 }
 
             })
-            console.log(data, "created")
+            // console.log(data, "created")
             let sumTotal = 0;
             data.forEach(orderItem => {
                 sumTotal += orderItem.grandTotal;
-
-
-                console.log(createBy, "code")
                 let str = `
                    <tr id="tr_${orderItem.id}">
-                          <td>${orderItem.id}</td>
+                          <td class="idOrder">${orderItem.id}</td>
                           <td>${moment(orderItem.createdAt).format('DD/MM/YYYY - hh:mm')}</td>
                           <td> ${createBy}</td>
                           <td>${orderItem.fullName}</td>
-                          <td style="margin-top: 20px;  padding: 4px" class="badge badge-success " >${orderItem.orderStatus}</td>
+                          <td style="margin-top: 20px;  padding: 4px" >${orderItem.orderStatus}</td>
                           <td>${new Intl.NumberFormat('vi-VN').format(orderItem.grandTotal)}</td>
                           <td class="w-45">
-                                    <a class="btn btn-outline-warning delete"
-                                    data-id="${orderItem.id}"
+                                    <a  class="btn btn-outline-primary"
+                                    id="${orderItem.id}" onclick="printOrder(this)"
                                      data-toggle="tooltip"
                                      data-original-title="Print">
                                      <i class=" ri-printer-line"></i>
@@ -164,8 +189,9 @@
                 currency: 'VND'
             }).format(sumTotal)}</span>
 <!--                <span class="i text-warning">Tổng nợ: 68,000 </span>--> `;
-
             $("#totalO ").prepend(sum);
+
+
         }).fail((jqXHR) => {
             console.log(jqXHR)
         })
@@ -173,6 +199,119 @@
 
     loadOrderCustomer();
 
+    function getProduct() {
+        return $.ajax({
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/products/"
+        }).done((data) => {
+            product = data;
+            console.log(product)
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
+
+    getProduct();
+
+    function printOrder(orderId) {
+        $("#tbPrintOrder tbody").empty()
+        $("#totalBills span").empty();
+        $("#dayCre span").empty();
+        $("#cus span").empty();
+        $("#createBy span").empty();
+        // $(".showPrint").css("display", "block")
+
+        $(".showPrint").removeClass("d-none");
+        let id = $(orderId).attr("id");
+        let name;
+        let day;
+        let customer;
+        let price;
+        let createBy = "";
+        $.each(role, (i, item) => {
+
+            if (item.id === 1) {
+                createBy = item.code
+            }
+
+        })
+        $.each(product, (i, item) => {
+            name = item.title
+            price = item.price;
+        })
+        getOrderById(id).then((item) => {
+            console.log(item, "iteaamm")
+            day = item.createdAt;
+            customer = item.fullName;
+        })
+        // console.log(day,"dayy")
+        console.log(name + price, "name")
+        getOrderItemByOrderId(id).then((item) => {
+            let quantity;
+            let total;
+            $.each(item, (i, order) => {
+                quantity = order.quantity
+                total = quantity * price;
+            })
+            console.log(name + "-" + price + "-" + "-" + quantity + "-" + total)
+
+            let str = `
+                   <tr>
+                      <td>1</td>
+                      <td>${name}</td>
+                      <td> ${price}</td>
+                      <td>${quantity}</td>
+                      <td>${new Intl.NumberFormat('vi-VN').format(total)}</td>
+                   </tr>
+          `;
+            $("#tbPrintOrder tbody").append(str);
+            let totalBill = `
+               <span class="float-right">${new Intl.NumberFormat('vi-VN').format(total)}</span>
+                              `;
+            $("#totalBills span").html(totalBill)
+
+        })
+
+        let dayCre = `
+              <span>${moment(day).format('DD/MM/YYYY - hh:mm')}</span>
+        `;
+        $("#dayCre span").html(dayCre)
+        let customers = `
+              <span>${customer}</span>
+        `;
+        $("#cus span").html(customers)
+        let creBy = `
+              <span>${createBy}</span>
+        `;
+        $("#createBy span").html(creBy);
+
+        window.print();
+
+        $(".showPrint").addClass("d-none");
+    }
+
+
+    function getOrderItemByOrderId(orderId) {
+        return $.ajax({
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/order-items/getByOrderId/" + orderId
+        }).done((data) => {
+            role = data;
+            // console.log(role, "role")
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
 
     function getRole() {
         return $.ajax({
@@ -185,13 +324,30 @@
             url: "http://localhost:8080/api/orders/getAllRole"
         }).done((data) => {
             role = data;
-            console.log(role, "role")
+            // console.log(role, "role")
         }).fail((jqXHR) => {
             console.log(jqXHR)
         })
     }
 
     getRole();
+
+    function getOrderById(orderId) {
+        return $.ajax({
+            headers: {
+                'accept': "application/json",
+                'content-type': "application/json"
+            },
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/api/orders/" + orderId
+        }).done((data) => {
+            order = data;
+            console.log(order, "role")
+        }).fail((jqXHR) => {
+            console.log(jqXHR)
+        })
+    }
 
 </script>
 

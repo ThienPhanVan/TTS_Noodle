@@ -3,14 +3,17 @@
 
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
+    <title>Order</title>
+    <link rel="stylesheet" href="/assets/css/print.css">
+
 </head>
 
 <body>
 <!-- loader Start -->
-<!--<div id="loading">-->
-<!--    <div id="loading-center">-->
-<!--    </div>-->
-<!--</div>-->
+<div id="loading">
+    <div id="loading-center">
+    </div>
+</div>
 <!-- loader END -->
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -75,66 +78,11 @@
 
 <!-- Wrapper END -->
 <!-- Footer -->
-<!--<footer class="iq-footer">-->
-<!--    <div class="container-fluid">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-6">-->
-<!--                <ul class="list-inline mb-0">-->
-<!--                    <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>-->
-<!--                    <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="col-lg-6 text-right">-->
-<!--                Copyright 2020 <a href="#">FinDash</a> All Rights Reserved.-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</footer>-->
-<script>
-    var colors = ['#007bff', '#28a745', '#444444', '#c3e6cb', '#dc3545', '#6c757d'];
+<th:block th:replace="/layout/footer/footer.html"></th:block>
 
-    var chBar = document.getElementById("chBar");
-    var chartData = {
-        labels: ["Monday", "Tusday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        datasets: [
 
-            {
-                data: [489, 135, 483, 290, 189, 603, 600],
-                backgroundColor: colors[0]
-            },
-            {
-                data: [639, 465, 493, 478, 589, 632, 674],
-                backgroundColor: colors[1]
-            }]
-    };
-
-    if (chBar) {
-        new Chart(chBar, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                scales: {
-                    xAxes: [{
-                        barPercentage: 0.4,
-                        categoryPercentage: 0.5
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: false
-                        }
-                    }]
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
-    }
-
-</script>
 <!-- Footer END -->
 <th:block th:replace="/layout/script/footer :: footer" />
-<th:block th:replace="/layout/footer/footer :: footer" />
 <th:block th:replace="/admin/order/modalChangeStatus :: modalChangeStatus" />
 <th:block th:replace="/admin/order/print_order :: print_order"/>
 
@@ -653,11 +601,11 @@
 
             console.log(orderId);
 
-            let debt = $(`#debt_${paymentPurchase.orderId}`).text().replaceAll("Nợ", "").replaceAll(" ", "").replaceAll("(","").replaceAll(")", "").replaceAll("đ", "");;
+            let debt = +$(`#debt_${paymentPurchase.orderId}`).text().replaceAll("Nợ", "").replaceAll(" ", "").replaceAll("(","").replaceAll(")", "").replaceAll("đ", "");
 
             console.log(debt);
 
-            let paid = $(`#paid_${paymentPurchase.orderId}`).val();
+            let paid = +$(`#paid_${paymentPurchase.orderId}`).val();
 
             console.log(paid)
 
@@ -668,13 +616,14 @@
                     timeout: 2000,
                     message: 'Số tiền thanh toán phải lớn hơn 0!!'
                 });
-            }else if(paid > debt){
-            iziToast.error({
-                title: 'ERROR',
-                position: 'bottomLeft',
-                timeout: 2000,
-                message: 'Số tiền thanh toán phải nhỏ hơn số tiền nợ!!'
-            })
+            }else
+            if( paid > debt ){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2000,
+                    message: 'Số tiền thanh toán phải nhỏ hơn số tiền nợ!!'
+                })
             }else {
                 paymentPurchase.paid = paid;
 
@@ -688,6 +637,7 @@
                     "data": JSON.stringify(paymentPurchase)
                 })
                     .done((data) => {
+                        $("#payment").html("");
                         paymentPurchase = data;
 
                         let newOrderId = orderId.replaceAll("trh_", "");
@@ -709,42 +659,51 @@
                         $(`#debt_${newOrderId}`).html("");
 
                         let std = `
-                  <div class="card">
-                        <ul  class="list-group list-group-flush">
-                           <li  class="list-group-item">
-                                <span style="float: left">Còn nợ</span>
-                                <span style="float: right; color: red" id="debt_${newOrderId}">${App.formatNumberSpace(newDebt)} đ</span>
-                            </li >
-                            <li  class="list-group-item">
-                                 <span style="float: left" id="pay_money_${newOrderId}">Đã trả</span>
-                                 <span style="float: right;" id="payment_${newOrderId}">${newPaid} đ</span>
-                            </li >
-                            <li  class="list-group-item">
-                                    <span style="float: left">Thanh toán</span>
-                                    <input type="number" name="paid" style="float: right; text-align: right" id="paid"/>
-                            </li>
-                        </li >
-                        <div class="card-body">
-                            <button class="btn btn-success" type="button" id="doPaid_${newOrderId}">Thanh toán</button>
-                            <button class="btn btn-primary" id="btnPrint_${orderId}">
-                             <i class="fas fa-print"></i>
-                           </button>
-                        </div>
-                  </div>
-                   `
+                          <div class="card">
+                                <ul  class="list-group list-group-flush">
+                                   <li  class="list-group-item">
+                                        <span style="float: left">Còn nợ</span>
+                                        <span style="float: right; color: red" id="debt_${newOrderId}">${App.formatNumberSpace(newDebt)} đ</span>
+                                    </li >
+                                    <li  class="list-group-item">
+                                         <span style="float: left" id="pay_money_${newOrderId}">Đã trả</span>
+                                         <span style="float: right;" id="payment_${newOrderId}">${newPaid} đ</span>
+                                    </li >
+                                    <li  class="list-group-item">
+                                            <span style="float: left">Thanh toán</span>
+                                            <input type="number" name="paid" style="float: right; text-align: right" id="paid"/>
+                                    </li>
+                                </li >
+                                <div class="card-body">
+                                    <button class="btn btn-success" type="button" id="doPaid_${newOrderId}">Thanh toán</button>
+                                    <button class="btn btn-primary" id="btnPrint_${orderId}">
+                                     <i class="fas fa-print"></i>
+                                   </button>
+                                </div>
+                          </div>
+                        `
 
                         let stt = `
                    <i style="color: red;font-size: smaller;" id="debt_${newOrderId}">Nợ (${newDebt} đ)</i>
                 `
 
+                        let sts = `
+                                        <td colspan="3" class="fw-bold" style="font-weight: 700;">Đã thanh toán: </td>
+                                        <td id="totalPayments">${newPaid} đ</td>
+                                    `
+
+
+                        $("#payment").append(sts);
+
                         if (newDebt === 0){
                             let print = `
-                      <div class="">
-                          <button style="float: left" class="btn btn-primary" id="btnPrint_${orderId}">
-                             <i class="fas fa-print"></i>
-                           </button>
-                       </div>
-                `
+                                      <div class="">
+                                          <button style="float: left" class="btn btn-primary" id="btnPrint_${orderId}">
+                                             <i class="fas fa-print"></i>
+                                           </button>
+                                       </div>
+                                    `
+
                             $(`#trh_${orderId} .payment_info_tr #trc_${orderId} .payment`).prepend(print);
 
 

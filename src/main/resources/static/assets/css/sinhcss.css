@@ -54,3 +54,19 @@
 .label + input{
     font-size: 18px;
 }
+
+
+.error{
+
+}
+
+label.error{
+    display: flex;
+}
+.ri-search-line:hover{
+    cursor: pointer;
+}
+
+.item .error{
+    color: black;
+}
