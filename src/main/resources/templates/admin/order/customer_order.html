@@ -268,7 +268,6 @@
 
 
     function doUpdatePayment(){
-        console.log("orderID = ", ids)
         let newUpdatePayment = {
                 "orderId": ids,
                 "paid": +$("#inputPricePayments").val()
@@ -319,7 +318,6 @@
     function handleShowUpdateModal() {
         $(".editPayment").on("click", function () {
             let orderID = $(this).data("id");
-            console.log(orderID, "id")
             let debts = 0;
             $("#tbPaymentCustomer tbody").html("");
             $("#renderBills tbody").html("");
@@ -426,8 +424,6 @@
                 //     $(this).val(n.toLocaleString());
                 // });
 
-
-
             }).fail((jqXHR) => {
                 alert(jqXHR);
             });
@@ -448,7 +444,6 @@
             }).done((data) => {
                 order = data;
                 ids = orderID;
-                console.log("userIdPaid = ", orderID)
                 handleShowPrint();
             }).fail((jxHQR) => {
                     console.log(jxHQR)
@@ -550,9 +545,7 @@
                 url: "http://localhost:8080/api/orders/searchCustomer/" + keyword
             }).done((data) => {
                 $.each(data, (i, user) => {
-
                     order = user ;
-                    console.log(user,"user")
                     let grandTotal = order.grandTotal;
                     let paid = order.paid;
                     let liabilities = grandTotal - paid;
