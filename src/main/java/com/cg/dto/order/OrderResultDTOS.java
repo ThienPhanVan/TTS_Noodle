@@ -5,7 +5,6 @@ import java.util.Date;
 
 public interface OrderResultDTOS {
 
-
     Long getId();
     Date getCreatedAt();
     String getOrderStatus();
@@ -13,4 +12,5 @@ public interface OrderResultDTOS {
     String getAddress();
     BigDecimal getPaid();
     BigDecimal getGrandTotal();
+
 }

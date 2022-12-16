@@ -171,6 +171,14 @@ public class OrderApi {
         return new ResponseEntity<>(orderResultDTOS, HttpStatus.OK);
     }
 
+//    @PostMapping("/changeStatus/{id}")
+//    public ResponseEntity<?> changeStatusOrderPending(@PathVariable Long id) {
+//        Optional<OrderResultDTO> orderResultDTOS = .f();
+//        orderResultDTOS.
+//        List<OrderResultDTO> orderResultDTOS = orderService.f();
+//        return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
+//    }
+
     @GetMapping("/statusPending")
     public ResponseEntity<?> getStatusPendingCustomer() {
         List<OrderResultDTOS> orderResultDTOS = orderService.findAllOrderStatusPending();
@@ -203,6 +211,14 @@ public class OrderApi {
         List<OrderResultChart> chartSevenDay = orderService.findOrderOneMonth();
         return new ResponseEntity<>(chartSevenDay, HttpStatus.OK);
     }
+
+    @GetMapping("/getAllOrderByRole")
+    public ResponseEntity<?> getAllOrderByRole(){
+        List<OrderResult> orders = orderService.getAllOrderByRole();
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+
+    }
+
     @PatchMapping("/update")
     public ResponseEntity<?> changeStatusOrder(@RequestBody OrderChangeStatus orderChangeStatus){
 

@@ -4,8 +4,6 @@
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
     <title>Order Customer</title>
-    <link rel="stylesheet" href="/assets/css/print.css">
-
 </head>
 
 <body>
@@ -19,6 +17,7 @@
 <div class="wrapper">
     <!-- Sidebar  -->
     <th:block th:replace="/layout/sidebar/left_side_bar :: left_side_bar"/>
+
     <!-- TOP Nav Bar -->
     <!--    <th:block th:replace="/layout/topNav/topNav :: topNav"/>-->
     <div class="iq-top-navbar">
@@ -27,10 +26,10 @@
                 <div class="iq-search-bar">
                     <form action="#" class="searchbox">
                         <label>
-                            <input id="inputSearchOrderCustomer" type="text" class="text search-input"
+                            <input id="inputSearchSupp" type="text" class="text search-input"
                                    placeholder="Type here to search...">
                         </label>
-                        <a id="btnSearchOrderCustomer" class="search-link" href="#"><i class="ri-search-line"></i></a>
+                        <a id="btnSearchSupp" class="search-link" href="#"><i class="ri-search-line"></i></a>
                     </form>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -44,7 +43,73 @@
                     </ul>
                 </div>
                 <ul class="navbar-list">
-
+                    <li class="line-height">
+                        <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
+                            <img src="/assets/images/user/1.jpg" class="img-fluid rounded mr-3" alt="user">
+                            <div class="caption">
+                                <h6 class="mb-0 line-height">Barry Tech</h6>
+                                <p class="mb-0">Manager</p>
+                            </div>
+                        </a>
+                        <div class="iq-sub-dropdown iq-user-dropdown">
+                            <div class="iq-card shadow-none m-0">
+                                <div class="iq-card-body p-0 ">
+                                    <div class="bg-primary p-3">
+                                        <h5 class="mb-0 text-white line-height">Hello Barry Tech</h5>
+                                        <span class="text-white font-size-12">Available</span>
+                                    </div>
+                                    <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
+                                        <div class="media align-items-center">
+                                            <div class="rounded iq-card-icon iq-bg-primary">
+                                                <i class="ri-file-user-line"></i>
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">My Profile</h6>
+                                                <p class="mb-0 font-size-12">View personal profile details.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="profile-edit.html" class="iq-sub-card iq-bg-primary-hover">
+                                        <div class="media align-items-center">
+                                            <div class="rounded iq-card-icon iq-bg-primary">
+                                                <i class="ri-profile-line"></i>
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Edit Profile</h6>
+                                                <p class="mb-0 font-size-12">Modify your personal details.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
+                                        <div class="media align-items-center">
+                                            <div class="rounded iq-card-icon iq-bg-primary">
+                                                <i class="ri-account-box-line"></i>
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Account settings</h6>
+                                                <p class="mb-0 font-size-12">Manage your account parameters.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-hover">
+                                        <div class="media align-items-center">
+                                            <div class="rounded iq-card-icon iq-bg-primary">
+                                                <i class="ri-lock-line"></i>
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Privacy Settings</h6>
+                                                <p class="mb-0 font-size-12">Control your privacy parameters.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="d-inline-block w-100 text-center p-3">
+                                        <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Sign out<i
+                                                class="ri-login-box-line ml-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -125,11 +190,9 @@
 
     <!-- Footer END -->
 
-    <th:block th:replace="/admin/order/show_view_detail :: show_view_detail"/>
-
-    <th:block th:replace="/layout/script/footer :: footer"/>
-
     <th:block th:replace="/admin/order/debt_deduction :: debt_deduction"/>
+    <th:block th:replace="/admin/order/show_view_detail :: show_view_detail"/>
+    <th:block th:replace="/layout/script/footer :: footer"/>
 </div>
 </body>
 
@@ -161,10 +224,10 @@
         let s1 = "";
         switch (order.orderStatus) {
             case "PENDING":
-                s1 = "<option value='PENDING' style='color: #ffe101;font: inherit;'>Đang xử lý</option>";
+                s1 = "<option value='PENDING'>Đang xử lý</option>";
                 break;
             case "COMPLETED":
-                s1 = "<option value='COMPLETED' style='color: #1e3d73;font: inherit;'>Hoàn thành</option>";
+                s1 = "<option value='COMPLETED'>Hoàn thành</option>";
                 break;
             case "CANCELLED":
                 s1 = "<option value='CANCELLED'>Đã hủy</option>";
@@ -271,7 +334,19 @@
 
 
     $("#savePayment").on('click', () =>{
+
         $("#modalDebtDeduction").modal("show");
+        // let inputPrice = $("#inputPricePayments").val();
+        // let debts = $("#debts").val();
+        // if(inputPrice > debts){
+        //     iziToast.warning({
+        //         title: 'FAIL',
+        //         position: 'topRight',
+        //         timeout: 1500,
+        //         message: "Số tiền trả nhập vào không đc quá số tiền nợ!"
+        //     });
+        //     // return false;
+        // }
         doUpdatePayment();
     })
 
@@ -293,14 +368,18 @@
             data: JSON.stringify(newUpdatePayment)
         })
             .done((data) => {
+                let totalOrder = 0;
+                let totalLiabilities = 0;
+                    totalOrder = item.grandTotal;
+                console.log("totalOrder = ", totalOrder);
+                    totalLiabilities += (item.grandTotal - item.paid);
                 iziToast.success({
                     title: 'OK',
                     position: 'topRight',
                     timeout: 1500,
                     message: 'Trả tiền thành công!!'
                 })
-                $("#inputPricePayments").val(0);
-                loadOrders();
+
             }).fail((jqXHR) => {
             iziToast.warning({
                 title: 'FAIL',
@@ -311,20 +390,6 @@
         })
     }
 
-    function handleShowPrint(){
-        $("#btnPrint").on("click", function (){
-
-            $("#modalDebtDeduction").modal("hide");
-
-            $("#showPrint").removeClass('d-none');
-
-            window.print();
-
-            $("#showPrint").addClass('d-none')
-
-        })
-    }
-
 
     function handleShowUpdateModal() {
         $(".editPayment").on("click", function () {
@@ -332,91 +397,59 @@
             console.log(orderID, "id")
             let debts = 0;
             $("#tbPaymentCustomer tbody").html("");
-            $("#renderBills tbody").html("");
-            $("#payment").html("");
             getOrderPaymentCustomerById(orderID).then((item) => {
                 let str = `
-                                 <tr class="col-12 text-center">
-                                    <td id="quantityCustomer" class="col-4">
-                                                <span>${item.quantity}</span>
-                                                <hr>
-                                    </td>
-                                    <td class="col-4" id="pricePay">
-                                        <span>${new Intl.NumberFormat('vi-VN', {
-                                                style: "currency",
-                                                currency: 'VND'
-                                            }).format(item.price)}
-                                        </span>
-                                        <hr>
-                                    </td>
-                                    <td class="col-4" id="totalPrice">
-                                          <span>${new Intl.NumberFormat('vi-VN', {
-                                                style: "currency",
-                                                currency: 'VND'
-                                            }).format(item.grandTotal)}
-                                        </span>
-                                        <hr>
-                                    </td>
-                                </tr>
-                                <tr class="col-12 mt-4">
-                                    <td class="fullNamePayment">
-                                        Tên khách hàng :  <span>${item.fullName}</span>
-                                        <hr>
-                                    </td>
-                                    <td class="col-4" style="left: 127px; color: blue">
-                                        Tổng tiền :     <span>${new Intl.NumberFormat('vi-VN', {
-                                                            style: "currency",
-                                                            currency: 'VND'
-                                                        }).format(item.grandTotal)}
-                                                         </span>
-                                                         <hr>
-                                    </td>
-                                </tr>
-                                <tr class="col-12 text-center">
-                                    <td class="fullNamePayment">
-                                        Lịch sử : <span>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</span>
-                                    </td>
-                                    <td class="col-4" style="left: 129px">
-                                        Đã trả :  <span>${new Intl.NumberFormat('vi-VN', {
+                                         <tr class="col-12 text-center">
+
+                                            <td id="quantityCustomer" class="col-4">
+                                                        <span>${item.quantity}</span>
+                                                        <hr>
+                                            </td>
+                                            <td class="col-4" id="pricePay">
+                                                <span>${new Intl.NumberFormat('vi-VN', {
                                                         style: "currency",
                                                         currency: 'VND'
-                                                    }).format(item.paid)}
-                                                         </span>
-                                    </td>
-                                </tr>
+                                                    }).format(item.price)}
+                                                </span>
+                                                <hr>
+                                            </td>
+                                            <td class="col-4" id="totalPrice">
+                                                  <span>${new Intl.NumberFormat('vi-VN', {
+                                                        style: "currency",
+                                                        currency: 'VND'
+                                                    }).format(item.grandTotal)}
+                                                </span>
+                                                <hr>
+                                            </td>
+                                        </tr>
+                                        <tr class="col-12 mt-4">
+                                            <td class="fullNamePayment">
+                                                Tên khách hàng :  <span>${item.fullName}</span>
+                                                <hr>
+                                            </td>
+                                            <td class="col-4" style="left: 127px; color: blue">
+                                                Tổng tiền :     <span>${new Intl.NumberFormat('vi-VN', {
+                                                                    style: "currency",
+                                                                    currency: 'VND'
+                                                                }).format(item.grandTotal)}
+                                                                 </span>
+                                                                 <hr>
+                                            </td>
+                                        </tr>
+                                        <tr class="col-12 text-center">
+                                            <td class="fullNamePayment">
+                                                Lịch sử : <span>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</span>
+                                            </td>
+                                            <td class="col-4" style="left: 129px">
+                                                Đã trả :  <span>${new Intl.NumberFormat('vi-VN', {
+                                                                style: "currency",
+                                                                currency: 'VND'
+                                                            }).format(item.paid)}
+                                                                 </span>
+                                            </td>
+                                        </tr>
                         `;
                 $("#tbPaymentCustomer tbody").append(str);
-
-                let std = `
-                            <tr >
-                                <td class="">Bún</td>
-                                <td class="text-end">${item.quantity}</td>
-                                <td class="text-end">${App.formatNumberSpace(item.price)}</td>
-                                <td class="text-end">${App.formatNumberSpace(item.price*item.quantity)}</td>
-                             </tr>
-                    `
-
-
-
-                let paid = App.formatNumberSpace(item.paid)
-
-
-
-                let stt = `
-                    <td colspan="3" class="fw-bold" style="font-weight: 700;">Đã thanh toán: </td>
-                    <td id="totalPayments">${paid} đ</td>
-                `
-
-                $("#customerBills span").text(item.fullName);
-
-                let newDate = new Date();
-
-                $("#timeBills span").text(moment(item.createdAt).format("DD/MM/YYYY - hh:mm:ss"))
-                $("#timeSendBills span").text(moment(newDate).format("DD/MM/YYYY - hh:mm:ss"));
-
-
-                $("#payment").append(stt);
-                $("#renderBills tbody").prepend(std);
 
                 debts = item.grandTotal - item.paid;
                 let debtsSp = `  <span>${new Intl.NumberFormat('vi-VN', {
@@ -426,8 +459,6 @@
                                  </span>`
                 $("#debts").html(debtsSp);
 
-                $("#totalAmountBills").text(App.formatNumberSpace((item.grandTotal)) + " đ")
-
                 $("#modalDebtDeduction").modal("show");
 
                 // $(".inputPricePms").on('keyup', function(){
@@ -435,8 +466,6 @@
                 //     console.log(n ,"nn")
                 //     $(this).val(n.toLocaleString());
                 // });
-
-
 
             }).fail((jqXHR) => {
                 alert(jqXHR);
@@ -459,7 +488,6 @@
                 order = data;
                 ids = orderID;
                 console.log("userIdPaid = ", orderID)
-                handleShowPrint();
             }).fail((jxHQR) => {
                     console.log(jxHQR)
                 }
@@ -547,72 +575,6 @@
         })
     }
 
-    function doSearchOrderCustomer() {
-        $('#btnSearchOrderCustomer').on('click', function () {
-            let keyword = $('#inputSearchOrderCustomer').val();
-            $('#tbOrder tbody').html("")
-            $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/orders/searchCustomer/" + keyword
-            }).done((data) => {
-                $.each(data, (i, user) => {
-
-                    order = user ;
-                    console.log(user,"user")
-                    let grandTotal = order.grandTotal;
-                    let paid = order.paid;
-                    let liabilities = grandTotal - paid;
-                    let ss2 = "";
-                    if(liabilities !== 0)
-                    {
-                        ss2 = `<span id=\"inDebt\">(Nợ: ${new Intl.NumberFormat('vi-VN').format(liabilities)})</span>`
-                    }
-
-                    let s1 = "";
-                    switch (order.orderStatus) {
-                        case "PENDING":
-                            s1 = "<option value='PENDING'>Đang xử lý</option>";
-                            break;
-                        case "COMPLETED":
-                            s1 = "<option value='COMPLETED'>Hoàn thành</option>";
-                            break;
-                        case "CANCELLED":
-                            s1 = "<option value='CANCELLED'>Đã hủy</option>";
-                            break;
-                    }
-
-                    let s2 = ""
-                    let str = `
-                <tr class="text-center" id="#tr_${order.id}" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
-                    <td>${order.id}</td>
-                    <td>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</td>
-                    <td>${order.fullName}</td>
-                    <td>${order.address}</td>
-                    <td>${s1}</td>
-                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>${ss2}
-                    </td>
-                    <td>
-                          <button class="btn btn-outline-primary editPayment" data-id="${order.id}"
-                            data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-
-
-            `;
-                    $('#tbOrder tbody').prepend(str)
-                })
-            }).fail((jqXHR) => {
-                console.log(jqXHR)
-            })
-        })
-    }
-    doSearchOrderCustomer();
     findAllStatusCompleted();
 
     loadOrders();

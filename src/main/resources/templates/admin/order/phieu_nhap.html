@@ -4,8 +4,6 @@
 <head>
     <th:block th:replace="/layout/script/head :: head"/>
     <title>Order Supplier</title>
-    <link rel="stylesheet" href="/assets/css/print.css">
-
 </head>
 
 <body>
@@ -48,7 +46,7 @@
                                             <div class="dropdown">
                                                 <input style="width: 217px;" class="form-control search" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" id="searchProduct" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <div style="width: 216px;font-size: 14px;" class="dropdown-item" >Vui lòng nhập tên sản phẩm</div>
+                                                    <div style="width: 216px" class="dropdown-item" >Vui lòng nhập tên sản phẩm</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -79,6 +77,7 @@
                         </div>
                     </div>
                     <div class="list-group col-md-4">
+<!--                        <form id="purchaseForm">-->
                             <div class="purchase-info">
                                 <h5 style="font: initial;font-size: large;">Thông tin phiếu nhập hàng</h5>
                                 <div class="filter_product_box">
@@ -98,24 +97,21 @@
                                 </div>
                                 <input class="form-control mt-2" id="dateID" type="datetime-local" min="2022-01-01T13:00" name="dateTime" value="Ngày tạo"/>
                             </div>
-                            <div class="bill_info" style="margin-top: 20px;">
-                                <h5 style="font: initial;font-size: large;margin-bottom: 7px;">Thông tin thanh toán</h5>
+                            <div class="bill_info" style="margin-top: 15px;">
+                                <h5 style="font: initial;font-size: large;">Thông tin thanh toán</h5>
                                 <span style="font: initial;font-size: medium;">Tổng cộng</span>
                                 <span class="grandTotal"></span>
                             </div>
                             <div class="payment_purchase">
-                                <div style="margin-bottom: 20px;margin-top: 10px;">
-                                    <span style="font: initial;font-size: medium;">Đã thanh toán:</span>
-                                    <input class="form-control form-control-sm" style="float: right; width: 240px; text-align: right" type="number" id="cusPayment"/>
-                                </div>
-                                <div>
-                                    <span style="font: initial;font-size: medium;">Còn nợ: </span>
-                                    <span class="paid" style="float: right; color: red; font-weight: 600; font-size: 17px"></span>
-                                </div>
+                                <span style="font: initial;font-size: medium;">Tiền trả:</span>
+                                <input class="form-control form-control-sm" type="number" id="cusPayment"/>
+                                <span style="font: initial;font-size: medium;">Còn nợ: </span>
+                                <span class="paid" style="float: right; color: red; font-weight: 600; font-size: 17px"></span>
                             </div>
-                            <button type="button" id="btnImportOrder" class="btn btn-primary" style="font: initial;font-size: large;margin-top: 5px;">
+                            <button type="button" id="btnImportOrder" class="btn btn-primary" style="font: initial;font-size: large;">
                                 Nhập hàng
                             </button>
+<!--                        </form>-->
                     </div>
             </div>
         </div>
@@ -123,24 +119,24 @@
 </div>
 <!-- Wrapper END -->
 <!-- Footer -->
-<!--<footer class="iq-footer">-->
-<!--    <div class="container-fluid">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-6">-->
-<!--                <ul class="list-inline mb-0">-->
-<!--                    <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>-->
-<!--                    <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="col-lg-6 text-right">-->
-<!--                Copyright 2020 <a href="#">FinDash</a> All Rights Reserved.-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</footer>-->
+<footer class="iq-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-right">
+                Copyright 2020 <a href="#">FinDash</a> All Rights Reserved.
+            </div>
+        </div>
+    </div>
+</footer>
 
 <th:block th:replace="/user/supplier/modalCreateSupplier :: createSupplier"/>
-<th:block th:replace="/layout/footer/footer :: footer" />
+
 <script>
     var colors = ['#007bff', '#28a745', '#444444', '#c3e6cb', '#dc3545', '#6c757d'];
 
@@ -203,7 +199,6 @@
 
 
     $(document).ready(function() {
-
         let date = new Date();
 
         let day = date.getDate();
@@ -212,29 +207,52 @@
         let hours = date.getHours();
         let minutes = date.getMinutes()
 
-        let todays = moment(date).format("DD-MM-YYYY hh:mm")
-
         if (month < 10) month = "0" + month;
         if (day < 10) day = "0" + day;
 
         let today = year + "-" + month + "-" + day +"T00:00";
         $("#dateID").attr("value", today);
-
     });
+
+    // $(
+    //     function(){
+    //         //Display Only Date till today //
+    //
+    //         let dtToday = new Date();
+    //
+    //         let month = dtToday.getMonth() + 1;
+    //         let day = dtToday.getDate();
+    //         let year = dtToday.getFullYear();
+    //         if(month < 10)
+    //             month = '0' + month.toString();
+    //         if(day < 10)
+    //             day = '0' + day.toString();
+    //
+    //         let maxDate = year + '-' + month + '-' + day;
+    //
+    //         $('#dateID').attr('max', maxDate );
+    //     }
+    // )
+    //
+    // document.getElementById('dateID').value = new Date().toISOString().slice(0,16);
+
+
+
+    $("#purchaseForm").validate({
+        rules: {
+            supplier: "required",
+            dateTime: "date"
+        },
+        messages: {
+            supplier: "Vui lòng nhập tên nhà cung cấp!",
+            dateTime: "Vui lòng nhập đúng định dạng ngày tháng!"
+        }
+    })
+
 
     function renderProduct(obj){
 
         let totalAmount = +obj.price * +obj.quantity;
-
-        if (totalAmount < 0){
-            totalAmount = 0;
-        }
-        if (obj.price < 0){
-            totalAmount = 0;
-        }
-        if (obj.quantity < 0){
-            totalAmount = 0;
-        }
 
 
         let str = `
@@ -455,18 +473,10 @@
 
         $("#cusPayment").on("input", function (){
             let payment = +$("#cusPayment").val();
-
             let newPayment = grandTotal - payment;
 
-            if (newPayment < 0){
 
-                $(".paid").text("0đ");
-
-            }else {
-
-                $(".paid").text(App.formatNumberSpace(newPayment + "đ"));
-
-            }
+            $(".paid").text(App.formatNumberSpace(newPayment + "đ"));
         })
 
         $(".grandTotal").attr("grandTotal", grandTotal);
@@ -522,113 +532,53 @@
 
         orderPayment.userId = $(".search-supplier").attr("id");
 
-        let supplierId = $("#supplier").val();
+        orderPayment.createdAt = $("#dateID").val();
 
-        if ( supplierId  === ""){
+        orderPayment.paid = $("#cusPayment").val();
+
+        orderPayment.orderItemPurchases = arr;
+
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/orders/create/import",
+            data: JSON.stringify(orderPayment)
+        })
+        .done((data) => {
+
+            order = data;
+
+            user = order.user;
+
+            iziToast.success({
+                title: 'OK',
+                position: 'bottomLeft',
+                timeout: 1500,
+                message: 'Nhập hàng thành công!!'
+            });
+
+            window.location.href = ("/purchase");
+        })
+        .fail((jqXHR)=> {
+
+            console.log(jqXHR);
+
             iziToast.error({
                 title: 'ERROR',
                 position: 'bottomLeft',
                 timeout: 2000,
-                message: 'Nhà cung cấp không được để trống!'
+                message: 'Nhập hàng thất bại!'
             });
-        }else {
 
-            orderPayment.createdAt = $("#dateID").val();
-
-            orderPayment.paid = $("#cusPayment").val();
-
-            orderPayment.orderItemPurchases = arr;
-
-            $.ajax({
-                headers: {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                type: "POST",
-                url: "http://localhost:8080/api/orders/create/import",
-                data: JSON.stringify(orderPayment)
-            })
-                .done((data) => {
-
-                    order = data;
-
-                    user = order.user;
-
-                    iziToast.success({
-                        title: 'OK',
-                        position: 'bottomLeft',
-                        timeout: 1500,
-                        message: 'Nhập hàng thành công!!'
-                    });
-
-                    window.location.href = ("/purchase");
-                })
-                .fail((jqXHR)=> {
-
-                    console.log(jqXHR);
-
-                    iziToast.error({
-                        title: 'ERROR',
-                        position: 'bottomLeft',
-                        timeout: 2000,
-                        message: 'Nhập hàng thất bại!'
-                    });
-
-                })
-        }
-
-
+        })
     }
 
     function handleImportOrder(){
         $("#btnImportOrder").on("click", () => {
-
-            let grandTotal = +$("#grandTotal").text();
-
-            let payment = +$("#cusPayment").val();
-
-            let quantity = $("#productQuantity").val();
-
-            let price = $("#productPrice").val();
-
-            if (quantity <= 0){
-                iziToast.error({
-                    title: 'ERROR',
-                    position: 'bottomLeft',
-                    timeout: 2500,
-                    message: 'Số lượng nhập vào phải lớn hơn 0!!'
-                });
-            }
-
-            if (price <= 0){
-                iziToast.error({
-                    title: 'ERROR',
-                    position: 'bottomLeft',
-                    timeout: 2500,
-                    message: 'Giá tiền sản phẩm phải lớn hơn 0!!'
-                });
-            }
-
-            if (payment > grandTotal){
-                iziToast.error({
-                    title: 'ERROR',
-                    position: 'bottomLeft',
-                    timeout: 2500,
-                    message: 'Số tiền thanh toán phải nhỏ hơn tổng giá trị đơn hàng!!'
-                });
-            }
-            if (payment < 0){
-                iziToast.error({
-                    title: 'ERROR',
-                    position: 'bottomLeft',
-                    timeout: 2000,
-                    message: 'Số tiền thanh toán phải lớn hơn 0!'
-                });
-            }
-                importPurchaseOrder();
-
-
-
+            importPurchaseOrder();
         })
     }
 

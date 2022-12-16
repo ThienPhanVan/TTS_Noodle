@@ -42,7 +42,7 @@ public class AuthApi {
 
         User userLogin = userService.saves(userMapper.toModel(user));
 
-        return new ResponseEntity<>(userLogin, HttpStatus.CREATED);
+            return new ResponseEntity<>(userLogin, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
