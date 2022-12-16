@@ -480,6 +480,7 @@
         })
 
         $(".grandTotal").attr("grandTotal", grandTotal);
+
         $(".grandTotal").text(App.formatNumberSpace(grandTotal + "đ"));
 
     }
@@ -578,7 +579,65 @@
 
     function handleImportOrder(){
         $("#btnImportOrder").on("click", () => {
-            importPurchaseOrder();
+       importPurchaseOrder()
+
+
+            let grandTotal = +$(".grandTotal").text();
+
+            console.log(grandTotal)
+
+            let payment = +$("#cusPayment").val();
+
+            console.log(payment);
+
+            let quantity = $("#productQuantity").val();
+
+            let price = $("#productPrice").val();
+
+            if (quantity <= 0){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2500,
+                    message: 'Số lượng nhập vào phải lớn hơn 0!!'
+                });
+            }
+
+            if (price <= 0){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2500,
+                    message: 'Giá tiền sản phẩm phải lớn hơn 0!!'
+                });
+            }
+
+            if (payment == ""){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2500,
+                    message: 'Vui lòng nhập số tiền thanh toán!!'
+                });
+            }else
+            if (payment > grandTotal){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2500,
+                    message: 'Số tiền thanh toán phải nhỏ hơn tổng giá trị đơn hàng!!'
+                });
+            }else if (payment < 0){
+                iziToast.error({
+                    title: 'ERROR',
+                    position: 'bottomLeft',
+                    timeout: 2500,
+                    message: 'Số tiền thanh toán phải lớn hơn 0!'
+                });
+            }else {
+                importPurchaseOrder();
+            }
+
         })
     }
 

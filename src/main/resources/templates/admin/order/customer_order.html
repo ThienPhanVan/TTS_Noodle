@@ -353,7 +353,6 @@
 
 
     function doUpdatePayment(){
-        console.log("orderID = ", ids)
         let newUpdatePayment = {
                 "orderId": ids,
                 "paid": +$("#inputPricePayments").val()
@@ -394,7 +393,6 @@
     function handleShowUpdateModal() {
         $(".editPayment").on("click", function () {
             let orderID = $(this).data("id");
-            console.log(orderID, "id")
             let debts = 0;
             $("#tbPaymentCustomer tbody").html("");
             getOrderPaymentCustomerById(orderID).then((item) => {
@@ -487,7 +485,11 @@
             }).done((data) => {
                 order = data;
                 ids = orderID;
+
                 console.log("userIdPaid = ", orderID)
+
+                handleShowPrint();
+
             }).fail((jxHQR) => {
                     console.log(jxHQR)
                 }
@@ -574,6 +576,71 @@
             })
         })
     }
+
+    function doSearchOrderCustomer() {
+        $('#btnSearchOrderCustomer').on('click', function () {
+            let keyword = $('#inputSearchOrderCustomer').val();
+            $('#tbOrder tbody').html("")
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/orders/searchCustomer/" + keyword
+            }).done((data) => {
+                $.each(data, (i, user) => {
+                    order = user ;
+                    let grandTotal = order.grandTotal;
+                    let paid = order.paid;
+                    let liabilities = grandTotal - paid;
+                    let ss2 = "";
+                    if(liabilities !== 0)
+                    {
+                        ss2 = `<span id=\"inDebt\">(Nợ: ${new Intl.NumberFormat('vi-VN').format(liabilities)})</span>`
+                    }
+
+                    let s1 = "";
+                    switch (order.orderStatus) {
+                        case "PENDING":
+                            s1 = "<option value='PENDING'>Đang xử lý</option>";
+                            break;
+                        case "COMPLETED":
+                            s1 = "<option value='COMPLETED'>Hoàn thành</option>";
+                            break;
+                        case "CANCELLED":
+                            s1 = "<option value='CANCELLED'>Đã hủy</option>";
+                            break;
+                    }
+
+                    let s2 = ""
+                    let str = `
+                <tr class="text-center" id="#tr_${order.id}" data-toggle="collapse" data-target="#tr_${order.id}" aria-expanded="false" aria-controls="#tr_${order.id}">
+                    <td>${order.id}</td>
+                    <td>${moment(order.createdAt).format("DD/MM/YYYY - hh:mm")}</td>
+                    <td>${order.fullName}</td>
+                    <td>${order.address}</td>
+                    <td>${s1}</td>
+                    <td id="remainingAmount">${new Intl.NumberFormat('vi-VN').format(order.grandTotal)}<br>${ss2}
+                    </td>
+                    <td>
+                          <button class="btn btn-outline-primary editPayment" data-id="${order.id}"
+                            data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+
+
+            `;
+                    $('#tbOrder tbody').prepend(str)
+                })
+            }).fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+        })
+    }
+    doSearchOrderCustomer();
 
     findAllStatusCompleted();
 

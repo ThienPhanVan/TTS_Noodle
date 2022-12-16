@@ -35,9 +35,9 @@
                         <div class="mr-5">
                             <label>
                                 <select id="selectDay" class="selectProfit text-center">
-                                    <option selected value="toDay">Hôm Nay</option>
+                                    <option value="toDay">Hôm Nay</option>
                                     <option value="sevenDay">7 Ngày Gần Nhất</option>
-                                    <option value="oneMonth">1 Tháng</option>
+                                    <option selected value="oneMonth">1 Tháng</option>
                                 </select>
                             </label>
                         </div>
@@ -179,7 +179,7 @@
     let user = new User();
     let product = new Product();
     let value = 1;
-    $("#addRow").on('click', function (){
+    $("#addRow").on('click', function () {
         // value  = +$(".item .stt").text();
         value++;
 
@@ -233,11 +233,12 @@
                 url: "http://localhost:8080/api/products",
             }).done((data) => {
                 user = data
-             }).fail((jxHQR) => {
+            }).fail((jxHQR) => {
                 console.log(jxHQR)
             })
         )
     }
+
     getProduct();
 
     $("#selectDay").on('change', () => {
@@ -272,6 +273,7 @@
     let costs = $("#chiphi");
     let profits = $("#loinhuan");
 
+
     function getProfit1Day() {
         $("#s1 tbody").empty();
         turnover.empty();
@@ -286,7 +288,7 @@
             async: false,
             url: "http://localhost:8080/api/order-items/getProfit1Day",
         }).done((data) => {
-             let id;
+            let id;
             let nameProduct;
             let quantity = data[0].quantity;
             let totalOrder = 0;
@@ -337,7 +339,7 @@
         })
     }
 
-    getProfit1Day();
+    // getProfit1Day();
 
     function getProfit1Week() {
         $("#s2 tbody").empty();
@@ -353,7 +355,7 @@
             type: "GET",
             url: "http://localhost:8080/api/order-items/getProfit1Week",
         }).done((data) => {
-             let sumTotalOrder = 0;
+            let sumTotalOrder = 0;
             let sumCost = 0;
             let sumProfit = 0;
             $.each(data, (i, item) => {
@@ -368,7 +370,7 @@
 
                 sumCost += cost;
                 getProductById(item.productId).then((product) => {
-                     id = product.id;
+                    id = product.id;
                     nameProduct = product.title;
                     totalOrder = quantity * product.price;
                     profit = totalOrder - cost;
@@ -423,16 +425,16 @@
             type: "GET",
             url: "http://localhost:8080/api/profits",
         }).done((data) => {
-              let sumTotalOrder = 0;
+            let sumTotalOrder = 0;
             let sumCost = 0;
             let sumProfit = 0;
             let id;
             let nameProduct;
-            $.each(user, (i,item)=>{
-                if (item.id ===1){
-                    return(
-                    id = item.id ,
-                    nameProduct = item.title)
+            $.each(user, (i, item) => {
+                if (item.id === 1) {
+                    return (
+                        id = item.id ,
+                            nameProduct = item.title)
                 }
 
             })
@@ -446,17 +448,26 @@
                 sumCost += cost;
                 sumProfit += profit;
 
-                    let str = `
+                let str = `
                                 <tr  id="tr_${id}">
                                         <td>${id}</td>
                                         <td>${nameProduct}</td>
                                         <td>${moment(days).format("DD/MM/YYYY")}</td>
-                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(turnover)}</td>
-                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(cost)}</td>
-                                        <td>${new Intl.NumberFormat("vi-VN", {style: 'currency', currency: 'VND'}).format(profit)}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(turnover)}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(cost)}</td>
+                                        <td>${new Intl.NumberFormat("vi-VN", {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(profit)}</td>
                                 </tr>
                                 `;
-                    $("#s3 tbody").append(str);
+                $("#s3 tbody").append(str);
 
             })
             let doanhso = `<h4><b>${new Intl.NumberFormat("vi-VN", {
@@ -479,7 +490,8 @@
         })
     }
 
-    // getProfit1Month();
+    getProfit1Month();
+
 
     function getProductById(productId) {
         return (
@@ -498,7 +510,6 @@
             })
         )
     }
-
 
 
 </script>
